@@ -2,11 +2,7 @@
    <v-app id="inspire">
       <!-- side menu -->
       <v-navigation-drawer v-model="drawer" app>
-         <router-link to="/">Nori</router-link>
-         <br />
-         <router-link to="/cmmu">Community</router-link>
-         <br />
-         <router-link to="/mypage">My Page</router-link>
+         <router-view name="side" class="sidemenu" />
       </v-navigation-drawer>
 
       <v-app-bar app class="root-header">
@@ -27,7 +23,7 @@
 export default {
    name: 'App',
 
-   data: () => ({ drawer: null }),
+   data: () => ({ drawer: false }),
 };
 </script>
 
@@ -75,5 +71,10 @@ export default {
 
 .v-btn__content i {
    color: rgba(147, 217, 20) !important;
+}
+
+.sidemenu {
+   margin-top: 56px;
+   /* background-color: red; */
 }
 </style>

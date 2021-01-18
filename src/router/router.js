@@ -14,7 +14,7 @@ Vue.use(VueRouter);
  */
 
 //사이드 바 import
-// import Sidebar from '@/components/Sidebar.vue'
+import SideMenu from '@/components/SideMenu.vue'
 
 //아래 바뀌는 모든 화면단을 import
 import Main from '../views/Main.vue'
@@ -29,6 +29,7 @@ const routes = [
         path: '/',
         name: 'Main',
         components: {
+            side : SideMenu,
             default: Main,
         },
     },
@@ -36,6 +37,7 @@ const routes = [
         path: '/cmmu',
         name: 'Main',
         components: {
+            side : SideMenu,
             default: Community,
         },
     },
@@ -43,6 +45,7 @@ const routes = [
         path: '/mypage',
         name: 'Main',
         components: {
+            side : SideMenu,
             default: Mypage,
         },
     },
