@@ -20,6 +20,7 @@ import SideMenu from '@/components/SideMenu.vue'
 import Main from '../views/Main.vue'
 import Community from '../views/Community.vue'
 import Mypage from '../views/Mypage.vue'
+import ContentsCreate from '../views/ContentsCreate.vue'
 
 // ==============================
 
@@ -47,6 +48,13 @@ const routes = [
         components: {
             side : SideMenu,
             default: Mypage,
+        },
+    },
+    {
+        path: '/contentscreate',
+        name: 'ContentsCreate',
+        components: {
+            default: ContentsCreate,
         },
     },
 ];
