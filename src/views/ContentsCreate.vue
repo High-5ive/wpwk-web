@@ -2,27 +2,11 @@
    <div class="container">
       <draggable :list="itemList" :options="{ animation: 300 }">
          <div class="item-wrapper" v-for="(item, idx) in itemList" :key="idx">
-            <button @click="deleteItem(item.index)">X</button>
-            <br />
-            Page{{ idx + 1 }}
-            <p>
-               {{ item.index }}
-            </p>
-            <div class="else-title">
-               <div class="photo" v-if="item.photo != ''">
-                  <img :src="item.photo.preview" />
-               </div>
-               <div class="youtube" v-else-if="item.youtube != ''">
-                  유튜브 링크
-               </div>
-               <div class="text" v-else>
-                  사진, 영상 둘다 없음
-               </div>
-            </div>
+            {{ idx }}
+            <photo-item :sendPhoto="item"></photo-item>
             <p>
                {{ item.description }}
             </p>
-            <input type="textarea" style="background-color:red" />
          </div>
       </draggable>
       <br />
@@ -59,11 +43,13 @@
 
 <script>
 import draggable from 'vuedraggable';
+import PhotoItem from '@/components/contents-create/PhotoItem.vue';
 
 export default {
    name: 'ContentsCreate',
    components: {
       draggable,
+      PhotoItem,
    },
    data: function() {
       return {
@@ -136,6 +122,7 @@ export default {
       // 사진 업로드 시 itemList에 넣기
       createItemPhoto: function(p) {
          const newItem = {
+            type: 'photo',
             youtube: this.youtube,
             photo: p,
             video: this.video,
@@ -152,13 +139,6 @@ export default {
 </script>
 
 <style scoped>
-.else-title .photo > img {
-   position: relative;
-   /* width: 190px; */
-   height: 100px;
-   z-index: 10;
-}
-
 .item-wrapper {
    border: 1px solid black;
    width: 100%;
