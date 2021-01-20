@@ -20,6 +20,7 @@ Vue.use(VueRouter);
 import Main from '../views/Main.vue'
 import Community from '../views/Community.vue'
 import Mypage from '../views/Mypage.vue'
+import ContentsView from '../views/ContentsView.vue'
 
 // ==============================
 
@@ -44,6 +45,13 @@ const routes = [
         name: 'Main',
         components: {
             default: Mypage,
+        },
+    },
+    {
+        path: '/view',
+        name: 'Main',
+        components: {
+            default: ContentsView,
         },
     },
 ];
