@@ -36,7 +36,7 @@ const routes = [
     },
     {
         path: '/cmmu',
-        name: 'Main',
+        name: 'communiny',
         components: {
             side : SideMenu,
             default: Community,
@@ -44,7 +44,7 @@ const routes = [
     },
     {
         path: '/mypage',
-        name: 'Main',
+        name: 'mypage',
         components: {
             side : SideMenu,
             default: Mypage,
