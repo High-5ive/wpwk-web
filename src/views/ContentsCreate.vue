@@ -1,36 +1,38 @@
 <template>
-   <div class="container">
-      <draggable :list="itemList" :options="{ animation: 300 }">
-         <div class="item-wrapper" v-for="(item, idx) in itemList" :key="idx">
-            {{ idx }}
-            <photo-item :sendPhoto="item"></photo-item>
-            <p>
-               {{ item.description }}
-            </p>
-         </div>
+  <div class="container">
+      <draggable :list="items" :options="{animation:300}">
+        <div 
+          v-for="(item, idx) in items"
+          :key="idx"
+        >
+          <ContentsYoutubeItem
+            v-if="item.type=='youtube'"
+            :item="item"
+            :idx="idx"
+            @delete-item="deleteItem"
+            @item-change="onItemChange"
+          />
+
+          <photo-item :sendPhoto="item"></photo-item>
+
+          <ContentsTextItem
+            v-else
+            :item="item"
+            :idx="idx"
+            @delete-item="deleteItem"
+            @item-change="onItemChange"
+          />
+        </div>
+        
       </draggable>
-      <br />
-      <br />
       <div>
-         <input type="text" v-model="description" @keypress.enter="createItem" />
-         <input type="button" value="add" @click="createItem" />
       </div>
-      <p v-for="(iii, ix) in itemList" :key="ix" style="color: red">
-         {{ iii }}
-         <br />
-         <!-- 추가 : {{ iii.photo.file.name }} -->
-      </p>
-      <br />
-      <br />
-      <div class="footer">
-         <v-btn tile color="success">
-            <v-icon left>
-               mdi-youtube
-            </v-icon>
-            유튜브 검색
-         </v-btn>
-         <br /><br />
-         <v-btn tile color="success" @click="axiosFileSelect">
+      <div class="d-flex footer"> 
+        <YoutubeCreate 
+          @select-video="onSelectVideo"
+        />
+        <v-btn @click="createTextItem" color="secondary" dark>텍스트 항목 추가</v-btn>
+        <v-btn tile color="success" @click="axiosFileSelect">
             <v-icon left>
                mdi-image-multiple
             </v-icon>
@@ -38,60 +40,33 @@
          </v-btn>
          <input type="file" id="fileUpload" ref="files" style="display:none" @change="axiosFileChange" multiple />
       </div>
+      
    </div>
 </template>
 
 <script>
-import draggable from 'vuedraggable';
+import draggable from 'vuedraggable'
+import YoutubeCreate from '../components/contents-create/YoutubeCreate.vue'
+import ContentsYoutubeItem from '@/components/contents-create/ContentsYoutubeItem.vue'
+import ContentsTextItem from '@/components/contents-create/ContentsTextItem.vue'
 import PhotoItem from '@/components/contents-create/PhotoItem.vue';
 
 export default {
    name: 'ContentsCreate',
    components: {
       draggable,
+      YoutubeCreate,
+      ContentsYoutubeItem,
+      ContentsTextItem,
       PhotoItem,
    },
    data: function() {
       return {
-         itemList: [
-            // {
-            //    index: '',
-            //    youtube: {},
-            //    photo: {
-            //       file: '',
-            //       preview: '',
-            //    },
-            //    video: '',
-            //    description: '',
-            // },
-         ],
-
-         youtube: '',
-         photo: '',
-         video: '',
-         description: '',
-         index: 0,
-      };
+        items: [],
+      }
    },
    methods: {
-      createItem: function() {
-         const newItem = {
-            youtube: this.youtube,
-            photo: this.photo,
-            video: this.video,
-            description: this.description,
-            index: this.index,
-         };
-         this.itemList.push(newItem);
-         this.description = '';
-         this.index = this.index + 1;
-      },
-      deleteItem: function(index) {
-         console.log(index);
-      },
-
-      // 사진 버튼 클릭 시 -> 파일 선택 창 호출
-      axiosFileSelect: function() {
+     axiosFileSelect: function() {
          var elem = document.getElementById('fileUpload');
          elem.click();
       },
@@ -133,17 +108,49 @@ export default {
          this.description = '';
          this.index = this.index + 1;
       },
+
+      deleteItem: function (index) {
+        this.items.splice(index, 1)
+      },
+      onSelectVideo: function (video) {
+        // 새 아이템 생성
+        const newItem = {
+          type: 'youtube',
+          youtube: video,
+          photo: '',
+          video: '',
+          description: '',
+        }
+        this.items.push(newItem)
+      },
+      createTextItem: function () {
+        const newItem = {
+          type: 'text',
+          youtube: {},
+          photo: {},
+          video: '',
+          description: '',
+        }
+        this.items.push(newItem)
+      },
+
+      onItemChange: function (itemInfo) {
+        this.items[itemInfo[1]].description = itemInfo[0]
+      }
    },
-   mounted() {},
-};
+}
 </script>
 
 <style scoped>
+.footer {
+  position: absolute;
+  bottom: 0;
+}
 .item-wrapper {
    border: 1px solid black;
    width: 100%;
    height: 300px;
    margin-bottom: 10px;
    background-color: aliceblue;
-}
+}   
 </style>
