@@ -1,61 +1,95 @@
 <template>
   <div class="container">
       <draggable :list="items" :options="{animation:300}">
-        <div
+        <div 
           v-for="(item, idx) in items"
           :key="idx"
         >
-				Page{{ idx + 1 }} - {{ item }}
-        <button @click="deleteItem(item.index)">X</button>
-				</div>
-      </draggable>
+          <ContentsYoutubeItem
+            v-if="item.type=='youtube'"
+            :item="item"
+            :idx="idx"
+            @delete-item="deleteItem"
+            @item-change="onItemChange"
+          />
 
+          <ContentsTextItem
+            v-else
+            :item="item"
+            :idx="idx"
+            @delete-item="deleteItem"
+            @item-change="onItemChange"
+          />
+        </div>
+        
+      </draggable>
       <div>
-         <input type="text" v-model="description" @keypress.enter="createItem">
-         <input type="button" value="add" @click="createItem">
       </div>
+      <div class="d-flex footer"> 
+        <YoutubeCreate 
+          @select-video="onSelectVideo"
+        />
+        <v-btn @click="createTextItem" color="secondary" dark>텍스트 항목 추가</v-btn>
+      </div>
+      
    </div>
 </template>
 
 <script>
 import draggable from 'vuedraggable'
+import YoutubeCreate from '../components/contents-create/YoutubeCreate.vue'
+import ContentsYoutubeItem from '@/components/contents-create/ContentsYoutubeItem.vue'
+import ContentsTextItem from '@/components/contents-create/ContentsTextItem.vue'
 
 export default {
    name: 'ContentsCreate',
    components: {
-			draggable
+      draggable,
+      YoutubeCreate,
+      ContentsYoutubeItem,
+      ContentsTextItem
    },
    data: function () {
       return {
         items: [],
-        link: '',
-        photo: '',
-        video: '',
-        description: '',
-        index: 0,
       }
    },
    methods: {
-      createItem: function () {
+      deleteItem: function (index) {
+        this.items.splice(index, 1)
+      },
+      onSelectVideo: function (video) {
+        // 새 아이템 생성
         const newItem = {
-          link: this.link,
-          photo: this.photo,
-          video: this.video,
-          description: this.description,
-          index: this.index
+          type: 'youtube',
+          youtube: video,
+          photo: '',
+          video: '',
+          description: '',
         }
         this.items.push(newItem)
-        this.description = ''
-        this.index = this.index + 1
       },
-      deleteItem: function (index) {
-        console.log(index)
+      createTextItem: function () {
+        const newItem = {
+          type: 'text',
+          youtube: {},
+          photo: {},
+          video: '',
+          description: '',
+        }
+        this.items.push(newItem)
+      },
+
+      onItemChange: function (itemInfo) {
+        this.items[itemInfo[1]].description = itemInfo[0]
       }
    },
-   mounted() {}
 }
 </script>
 
 <style scoped>
-   
+.footer {
+  position: absolute;
+  bottom: 0;
+}   
 </style>
