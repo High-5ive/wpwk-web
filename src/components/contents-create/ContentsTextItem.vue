@@ -1,8 +1,23 @@
 <template>
   <div>
+    Page{{ idx + 1 }} -
     <span @click="onEdit" v-if="editInput==false">{{ item.description }}</span>
-    <input style="border: black solid 1px" v-if="fInputShow" @change="onItemChange" type="text" v-model="description" placeholder="영상에 대한 설명을 적어주세요">
-    <input style="border: black solid 1px" v-if="editInput" @change="onItemChange" type="text" v-model="description" :placeholder="item.description">
+    <input 
+      style="border: black solid 1px" 
+      v-if="item.description==false" 
+      @change="onItemChange" 
+      type="text" 
+      v-model="description" 
+      placeholder="영상에 대한 설명을 적어주세요"
+    >
+    <input 
+      style="border: black solid 1px" 
+      v-if="editInput" 
+      @change="onItemChange" 
+      type="text" 
+      v-model="description"
+      :placeholder="item.description" 
+      >
     <button @click="deleteItem">X</button>
   </div>
 </template>
@@ -16,7 +31,6 @@ export default {
   data: function () {
     return {
       description: '',
-      fInputShow: true,
       editInput: false
     }
   },
@@ -32,7 +46,8 @@ export default {
     onEdit: function () {
       this.editInput = true
     }
-  }  
+  },
+    
 }
 </script>
 <style>

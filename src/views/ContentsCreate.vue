@@ -1,11 +1,11 @@
 <template>
   <div class="container">
-      <draggable :list="items" :options="{animation:300}">
+      <draggable :list="itemList" :options="{animation:300}">
         <div 
-          v-for="(item, idx) in items"
+          v-for="(item, idx) in itemList"
           :key="idx"
         >
-          <ContentsYoutubeItem
+          <contents-youtube-item
             v-if="item.type=='youtube'"
             :item="item"
             :idx="idx"
@@ -13,9 +13,15 @@
             @item-change="onItemChange"
           />
 
-          <photo-item :sendPhoto="item"></photo-item>
+          <contents-photo-item 
+            v-else-if="item.type=='photo'"
+            :item="item"
+            :idx="idx"
+            @delete-item="deleteItem"
+            @item-change="onItemChange"
+          />
 
-          <ContentsTextItem
+          <contents-text-item
             v-else
             :item="item"
             :idx="idx"
@@ -49,7 +55,7 @@ import draggable from 'vuedraggable'
 import YoutubeCreate from '../components/contents-create/YoutubeCreate.vue'
 import ContentsYoutubeItem from '@/components/contents-create/ContentsYoutubeItem.vue'
 import ContentsTextItem from '@/components/contents-create/ContentsTextItem.vue'
-import PhotoItem from '@/components/contents-create/PhotoItem.vue';
+import ContentsPhotoItem from '@/components/contents-create/ContentsPhotoItem.vue';
 
 export default {
    name: 'ContentsCreate',
@@ -58,11 +64,11 @@ export default {
       YoutubeCreate,
       ContentsYoutubeItem,
       ContentsTextItem,
-      PhotoItem,
+      ContentsPhotoItem,
    },
    data: function() {
       return {
-        items: [],
+        itemList: [],
       }
    },
    methods: {
@@ -98,19 +104,16 @@ export default {
       createItemPhoto: function(p) {
          const newItem = {
             type: 'photo',
-            youtube: this.youtube,
+            youtube: {},
             photo: p,
-            video: this.video,
-            description: this.description,
-            index: this.index,
+            video: '',
+            description: '',
          };
          this.itemList.push(newItem);
-         this.description = '';
-         this.index = this.index + 1;
       },
 
       deleteItem: function (index) {
-        this.items.splice(index, 1)
+        this.itemList.splice(index, 1)
       },
       onSelectVideo: function (video) {
         // 새 아이템 생성
@@ -121,7 +124,7 @@ export default {
           video: '',
           description: '',
         }
-        this.items.push(newItem)
+        this.itemList.push(newItem)
       },
       createTextItem: function () {
         const newItem = {
@@ -131,11 +134,11 @@ export default {
           video: '',
           description: '',
         }
-        this.items.push(newItem)
+        this.itemList.push(newItem)
       },
 
       onItemChange: function (itemInfo) {
-        this.items[itemInfo[1]].description = itemInfo[0]
+        this.itemList[itemInfo[1]].description = itemInfo[0]
       }
    },
 }
