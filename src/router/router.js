@@ -54,6 +54,7 @@ const routes = [
         path: '/contentscreate',
         name: 'ContentsCreate',
         components: {
+            side : SideMenu,
             default: ContentsCreate,
         },
     },

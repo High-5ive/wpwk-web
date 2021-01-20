@@ -1,7 +1,7 @@
 <template>
    <div class="container">
-      <draggable :list="items" :options="{ animation: 300 }">
-         <div class="item-wrapper" v-for="(item, idx) in items" :key="idx">
+      <draggable :list="itemList" :options="{ animation: 300 }">
+         <div class="item-wrapper" v-for="(item, idx) in itemList" :key="idx">
             <button @click="deleteItem(item.index)">X</button>
             <br />
             Page{{ idx + 1 }}
@@ -10,9 +10,9 @@
             </p>
             <div class="else-title">
                <div class="photo" v-if="item.photo != ''">
-                  <img :src="item.photo[item.index].preview" />
+                  <img :src="item.photo.preview" />
                </div>
-               <div class="link" v-else-if="item.link != ''">
+               <div class="youtube" v-else-if="item.youtube != ''">
                   유튜브 링크
                </div>
                <div class="text" v-else>
@@ -22,6 +22,7 @@
             <p>
                {{ item.description }}
             </p>
+            <input type="textarea" style="background-color:red" />
          </div>
       </draggable>
       <br />
@@ -30,8 +31,10 @@
          <input type="text" v-model="description" @keypress.enter="createItem" />
          <input type="button" value="add" @click="createItem" />
       </div>
-      <p v-for="(iii, ix) in items" :key="ix" style="color: red">
+      <p v-for="(iii, ix) in itemList" :key="ix" style="color: red">
          {{ iii }}
+         <br />
+         <!-- 추가 : {{ iii.photo.file.name }} -->
       </p>
       <br />
       <br />
@@ -64,10 +67,10 @@ export default {
    },
    data: function() {
       return {
-         items: [
+         itemList: [
             // {
             //    index: '',
-            //    link: '',
+            //    youtube: {},
             //    photo: {
             //       file: '',
             //       preview: '',
@@ -77,27 +80,23 @@ export default {
             // },
          ],
 
-         link: '',
+         youtube: '',
          photo: '',
          video: '',
          description: '',
          index: 0,
-
-         files: [], //업로드용 파일
-         //  filesPreview: [],
-         uploadImageIndex: 0, // 이미지 업로드를 위한 변수
       };
    },
    methods: {
       createItem: function() {
          const newItem = {
-            link: this.link,
+            youtube: this.youtube,
             photo: this.photo,
             video: this.video,
             description: this.description,
             index: this.index,
          };
-         this.items.push(newItem);
+         this.itemList.push(newItem);
          this.description = '';
          this.index = this.index + 1;
       },
@@ -115,46 +114,35 @@ export default {
          this.axiosFileUpload();
       },
 
-      // 파일 업로드 기능
+      // 파일 업로드 기능 + 업로드 되자마자 item 만들기
       axiosFileUpload: function() {
          console.log('axiosFileUpload : ', this.$refs.files.files);
 
          // this.files = [...this.files, this.$refs.files.files];
          //하나의 배열로 넣기
-         let num = -1;
          for (let i = 0; i < this.$refs.files.files.length; i++) {
-            this.files = [
-               ...this.files,
-               //이미지 업로드
-               {
-                  //실제 파일
-                  file: this.$refs.files.files[i],
-                  //이미지 프리뷰
-                  preview: URL.createObjectURL(this.$refs.files.files[i]),
-                  //삭제및 관리를 위한 number
-                  number: i,
-               },
-            ];
-            num = i;
-            this.createItemPhoto(this.files);
-            console.log(this.files);
+            console.log(i + '번 째 -> ' + this.$refs.files.files[i].name);
+            const photoFile = {
+               //실제 파일
+               file: this.$refs.files.files[i],
+               //이미지 프리뷰
+               preview: URL.createObjectURL(this.$refs.files.files[i]),
+            };
+            // num = i;
+            this.createItemPhoto(photoFile);
          }
-         this.uploadImageIndex = num + 1; //이미지 index의 마지막 값 + 1 저장
-         console.log('LAST : ', this.files);
-         //  console.log('LAST : ', this.filesPreview);
-         console.log('LAST : ', this.uploadImageIndex);
       },
 
-      // 사진 업로드 시 items에 넣기
+      // 사진 업로드 시 itemList에 넣기
       createItemPhoto: function(p) {
          const newItem = {
-            link: this.link,
+            youtube: this.youtube,
             photo: p,
             video: this.video,
             description: this.description,
             index: this.index,
          };
-         this.items.push(newItem);
+         this.itemList.push(newItem);
          this.description = '';
          this.index = this.index + 1;
       },
@@ -174,7 +162,7 @@ export default {
 .item-wrapper {
    border: 1px solid black;
    width: 100%;
-   height: 200px;
+   height: 300px;
    margin-bottom: 10px;
    background-color: aliceblue;
 }

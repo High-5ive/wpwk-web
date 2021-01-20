@@ -4,6 +4,7 @@
          <router-link to="/">Nori</router-link>
          <router-link to="/cmmu">Community</router-link>
          <router-link to="/mypage">My Page</router-link>
+         <router-link to="/ContentsCreate">[임시] 콘텐츠 제작</router-link>
       </div>
    </div>
 </template>
