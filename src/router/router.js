@@ -21,6 +21,7 @@ import Main from '../views/Main.vue'
 import Community from '../views/Community.vue'
 import Mypage from '../views/Mypage.vue'
 import ContentsCreate from '../views/ContentsCreate.vue'
+import ContentsView from '../views/ContentsView.vue'
 
 // ==============================
 
@@ -55,6 +56,13 @@ const routes = [
         name: 'ContentsCreate',
         components: {
             default: ContentsCreate,
+        },
+    },
+    {
+        path: '/view',
+        name: 'Main',
+        components: {
+            default: ContentsView,
         },
     },
 ];
