@@ -6,8 +6,8 @@
          style="border: black solid 1px" 
          v-if="item.description==false" 
          @change="onItemChange" 
-         type="text" 
          v-model="description" 
+         type="text" 
          placeholder="사진에 대한 설명을 적어주세요"
       >
       <input 

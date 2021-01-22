@@ -7,7 +7,7 @@
       @change="onItemChange" 
       type="text" 
       v-model="description" 
-      placeholder="내용을 적어주세요."
+      placeholder="영상에 대한 설명을 적어주세요."
     >
     <input 
       style="border: black solid 1px" 

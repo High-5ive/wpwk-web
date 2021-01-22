@@ -1,22 +1,21 @@
 
 <template>
-  <v-row justify="start">
+  <v-row>
+    <v-btn
+      color="secondary"
+      dark
+      @click="onYoutubeClick"
+    >
+      <v-icon>mdi-youtube</v-icon>
+    </v-btn>
     <v-dialog
+      transition="dialog-bottom-transition"
       v-model="dialog"
       persistent
       max-width="600px"
+      @click.stop="dialog = true"
     >
       <!-- 영상 추가하기 버튼 -->
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          color="secondary"
-          dark
-          v-bind="attrs"
-          v-on="on"
-        >
-          유튜브 영상 추가하기
-        </v-btn>
-      </template>
       <v-card>
         <v-card-title fixed-header>
           <span class="headline">
@@ -75,13 +74,17 @@ export default {
     YoutubeItem,
     infiniteLoading
   },
+  props: {
+    isAdded: Boolean
+  },
   data: function () {
     return {
       dialog: false,
+      infLoading: false,
+      videoAdded: false,
       videos: [],
       query: '',
       nextPageToken: '',
-      infLoading: false,
     }
   },
   methods: {
@@ -102,20 +105,36 @@ export default {
       })
       .catch(err => console.log(err))
     },
+
     onSelectVideo: function (video) {
       this.$emit('select-video', video)
+      this.videoAdded = true
       this.dialog = false
-      this.query = ''
-      this.videos = []
-      
-    },
-    onCancel: function () {
-      this.dialog = false
-      this.query = ''
-      this.videos = []
       this.infLoading = false
+      this.query = ''
+      this.videos = []
     },
 
+    onCancel: function () {
+      this.dialog = false
+      this.infLoading = false
+      this.query = ''
+      this.videos = []
+    },
+
+    onYoutubeClick: function () {
+      if (this.videoAdded==true) {
+        alert('유튜브 항목은 한 개만 넣을 수 있습니다')
+        this.dialog = false
+        this.infLoading = false
+        this.query = ''
+        this.videos = []
+      } else {
+        this.dialog = true
+      }
+    },
+    
+    // 무한 스크롤 (다음 페이지에 있는 요청결과 가져와서 원래 video list 와 합치기)
     infiniteHandler($state) {      
       axios.get(YOUTUBE_API_URL, {
         params: {
@@ -139,9 +158,15 @@ export default {
         }, 1000)
       })
     },
+  },
+  watch: {
+    isAdded: function () {
+      if (this.isAdded==false) {
+        this.videoAdded = false
+      }
+    }
   }
 }
 </script>
-<style>
-  
+<style scoped>
 </style>
