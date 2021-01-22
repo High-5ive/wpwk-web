@@ -1,38 +1,19 @@
 <template>
-  <div class="container">
-      <draggable :list="items" :options="{animation:300}">
-        <div 
-          v-for="(item, idx) in items"
-          :key="idx"
-        >
-          <ContentsYoutubeItem
-            v-if="item.type=='youtube'"
-            :item="item"
-            :idx="idx"
-            @delete-item="deleteItem"
-            @item-change="onItemChange"
-          />
+   <div class="container">
+      <draggable :list="items" :options="{ animation: 300 }">
+         <div v-for="(item, idx) in items" :key="idx">
+            <ContentsYoutubeItem v-if="item.type == 'youtube'" :item="item" :idx="idx" @delete-item="deleteItem" @item-change="onItemChange" />
 
-          <photo-item :sendPhoto="item"></photo-item>
+            <photo-item :sendPhoto="item"></photo-item>
 
-          <ContentsTextItem
-            v-else
-            :item="item"
-            :idx="idx"
-            @delete-item="deleteItem"
-            @item-change="onItemChange"
-          />
-        </div>
-        
+            <ContentsTextItem :item="item" :idx="idx" @delete-item="deleteItem" @item-change="onItemChange" />
+         </div>
       </draggable>
-      <div>
-      </div>
-      <div class="d-flex footer"> 
-        <YoutubeCreate 
-          @select-video="onSelectVideo"
-        />
-        <v-btn @click="createTextItem" color="secondary" dark>텍스트 항목 추가</v-btn>
-        <v-btn tile color="success" @click="axiosFileSelect">
+      <div></div>
+      <div class="d-flex footer">
+         <YoutubeCreate @select-video="onSelectVideo" />
+         <v-btn @click="createTextItem" color="secondary" dark>텍스트 항목 추가</v-btn>
+         <v-btn tile color="success" @click="axiosFileSelect">
             <v-icon left>
                mdi-image-multiple
             </v-icon>
@@ -40,15 +21,14 @@
          </v-btn>
          <input type="file" id="fileUpload" ref="files" style="display:none" @change="axiosFileChange" multiple />
       </div>
-      
    </div>
 </template>
 
 <script>
-import draggable from 'vuedraggable'
-import YoutubeCreate from '../components/contents-create/YoutubeCreate.vue'
-import ContentsYoutubeItem from '@/components/contents-create/ContentsYoutubeItem.vue'
-import ContentsTextItem from '@/components/contents-create/ContentsTextItem.vue'
+import draggable from 'vuedraggable';
+import YoutubeCreate from '../components/contents-create/YoutubeCreate.vue';
+import ContentsYoutubeItem from '@/components/contents-create/ContentsYoutubeItem.vue';
+import ContentsTextItem from '@/components/contents-create/ContentsTextItem.vue';
 import PhotoItem from '@/components/contents-create/PhotoItem.vue';
 
 export default {
@@ -62,11 +42,11 @@ export default {
    },
    data: function() {
       return {
-        items: [],
-      }
+         items: [],
+      };
    },
    methods: {
-     axiosFileSelect: function() {
+      axiosFileSelect: function() {
          var elem = document.getElementById('fileUpload');
          elem.click();
       },
@@ -109,42 +89,42 @@ export default {
          this.index = this.index + 1;
       },
 
-      deleteItem: function (index) {
-        this.items.splice(index, 1)
+      deleteItem: function(index) {
+         this.items.splice(index, 1);
       },
-      onSelectVideo: function (video) {
-        // 새 아이템 생성
-        const newItem = {
-          type: 'youtube',
-          youtube: video,
-          photo: '',
-          video: '',
-          description: '',
-        }
-        this.items.push(newItem)
+      onSelectVideo: function(video) {
+         // 새 아이템 생성
+         const newItem = {
+            type: 'youtube',
+            youtube: video,
+            photo: '',
+            video: '',
+            description: '',
+         };
+         this.items.push(newItem);
       },
-      createTextItem: function () {
-        const newItem = {
-          type: 'text',
-          youtube: {},
-          photo: {},
-          video: '',
-          description: '',
-        }
-        this.items.push(newItem)
+      createTextItem: function() {
+         const newItem = {
+            type: 'text',
+            youtube: {},
+            photo: {},
+            video: '',
+            description: '',
+         };
+         this.items.push(newItem);
       },
 
-      onItemChange: function (itemInfo) {
-        this.items[itemInfo[1]].description = itemInfo[0]
-      }
+      onItemChange: function(itemInfo) {
+         this.items[itemInfo[1]].description = itemInfo[0];
+      },
    },
-}
+};
 </script>
 
 <style scoped>
 .footer {
-  position: absolute;
-  bottom: 0;
+   position: absolute;
+   bottom: 0;
 }
 .item-wrapper {
    border: 1px solid black;
@@ -152,5 +132,5 @@ export default {
    height: 300px;
    margin-bottom: 10px;
    background-color: aliceblue;
-}   
+}
 </style>
