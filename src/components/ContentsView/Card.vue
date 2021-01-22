@@ -1,22 +1,7 @@
 <template>
 <div>
-  <v-card
-    :loading="loading"
-    class="mx-auto my-12"
-    max-width="374"
-  >
-    <template slot="progress">
-      <v-progress-linear
-        color="deep-purple"
-        height="10"
-        indeterminate
-      ></v-progress-linear>
-    </template>
-
-    <v-img
-      height="250"
-      :src= "img"
-    ></v-img>
+  <v-card class="mx-auto my-12" max-width="374">
+    <v-img height="250" :src= "img"></v-img>
 
     <v-card-text>
       <div>{{ description }}</div>
@@ -31,6 +16,7 @@ export default {
     name: "Card",
     props: {
         card: Object,
+        pageNum: Number,
     },
     data: function () {
         return {
@@ -47,6 +33,14 @@ export default {
     },
     created: function () {
         this.getCard()
+    },
+    watch: {
+        pageNum: function () {
+            this.getCard()
+        }
     }
 }
 </script>
+
+<style scoped>
+</style>
