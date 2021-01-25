@@ -41,6 +41,7 @@ const naverServiceAuth = () => {
 export default {
    mounted() {
       naverServiceAuth();
+
       this.$router.push('/');
    },
 };

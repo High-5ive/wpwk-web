@@ -5,11 +5,7 @@
 </template>
 
 <script>
-export default {
-   mounted() {
-      console.log();
-   },
-};
+export default {};
 </script>
 
 <style scoped>

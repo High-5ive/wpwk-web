@@ -87,7 +87,8 @@ export default new Vuex.Store({
 
                 this.commit("loginSuccess", sample);
             } else {
-                alert("정보가 없습니다.");
+                alert("로그인을 먼저 해주세요!");
+                router.push('/landingTest');
             }
         },
     }
