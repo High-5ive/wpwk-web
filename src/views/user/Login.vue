@@ -8,11 +8,13 @@
             <div class="input-email">
                <label for="email">이메일 </label>
                <input type="text" v-bind:class="{ error: error.email, complete: !error.email && email.length !== 0 }" v-model="email" id="email" placeholder="이메일을 입력하세요." />
-               <div class="error-text" v-if="error.email">{{ error.email }}</div>
+               <div class="error-text" v-if="error.email">
+                  <v-icon>
+                     mdi-alert-decagram
+                  </v-icon>
+                  {{ error.email }}
+               </div>
             </div>
-            <br />
-            <hr />
-            <br />
             <div class="input-password">
                <label for="password">비밀번호 </label>
                <input
@@ -23,16 +25,14 @@
                   placeholder="비밀번호를 입력하세요."
                   @keyup.enter="doLogin({ email, password })"
                />
-               <div class="error-text" v-if="error.password">{{ error.password }}</div>
+               <div class="error-text" v-if="error.password"><v-icon> mdi-alert-decagram </v-icon> {{ error.password }}</div>
             </div>
          </div>
          <div class="feature-wrapper">
             <p>비밀번호를 잊었나요?</p>
             <v-btn color="success" @click="doLogin({ email, password })">로그인</v-btn>
-            <br />
-            아직 회원이 아닌가요? <router-link to="Join">5초 회원가입</router-link> <br />
+            <p>아직 회원이 아닌가요? <router-link to="Join">5초 회원가입</router-link></p>
          </div>
-         <hr />
          <div class="social-wrapper">
             <p>SNS 간편 로그인</p>
          </div>
@@ -65,7 +65,7 @@ export default {
          } else this.error.email = false; //조건 충족시, 화면 다시 없애도록
 
          if (this.password.length > 0 && !this.checkPW(this.password)) {
-            this.error.password = '조건(영문, 숫자 혼합 6-20)을 다시 확인하세요.';
+            this.error.password = '영문, 숫자 혼합 6-20을 다시 확인.';
          } else this.error.password = false; //조건 충족시, 화면 다시 없애도록
       },
 
@@ -112,19 +112,76 @@ export default {
    margin-bottom: 10px;
 }
 
+.input-wrapper .error {
+   background-color: transparent !important;
+   border: 1px solid rgb(227, 35, 21) !important;
+}
+
+.wrapper {
+   background-color: white;
+   min-width: 360px;
+   min-height: 500px;
+   width: 50%;
+   height: 80%;
+   margin: 0 auto;
+   margin-top: 50px;
+   padding: 60px 0px;
+
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+
+   box-shadow: 0px 9px 20px 0px #56565629;
+}
+
 .input-wrapper input {
-   border: 1px solid grey;
+   width: 250px;
+   height: 50px;
+   border-radius: 25px;
+   background-color: #a2d646;
+
+   padding-left: 20px;
+   /* border-bottom: 2px solid rgb(8, 89, 40); */
+}
+.input-wrapper input:nth-child(2n + 1) {
+   background-color: #f4b740;
+   /* border-bottom: 2px solid rgb(8, 89, 40); */
+}
+
+.input-wrapper label {
+   text-align: center;
+   font-size: 12px;
+   font-weight: 600;
 }
 
 input:focus {
    outline: none;
 }
 
-.input-wrapper .error {
-   background-color: white !important;
+input::placeholder {
+   color: white;
+   font-style: italic;
+   font-size: 10pt;
 }
 
-.wrapper {
-   background-color: whitesmoke;
+.input-password,
+.input-email {
+   margin-top: 30px;
+}
+
+.error-text {
+   position: absolute;
+   margin-top: 4px;
+   color: rgb(255, 81, 81);
+   font-size: 13px;
+}
+
+.error-text i {
+   color: rgb(255, 81, 81);
+   font-size: 17px;
+}
+
+.feature-wrapper {
+   margin-top: 50px;
 }
 </style>
