@@ -16,7 +16,6 @@
           <photo-item :sendPhoto="item"></photo-item>
 
           <ContentsTextItem
-            v-else
             :item="item"
             :idx="idx"
             @delete-item="deleteItem"

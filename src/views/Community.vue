@@ -1,8 +1,19 @@
 <template>
    <div class="container">
-      여긴 커뮤니티 입니다!
+      <ArticleList />
    </div>
 </template>
+
+<script>
+import ArticleList from '@/components/Community/ArticleList'
+
+export default {
+   name: "community",
+   components: {
+      ArticleList
+   }
+}
+</script>
 
 <style scoped>
 .container {
