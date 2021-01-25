@@ -26,7 +26,7 @@ export default {
   methods: {
     onSelectVideo: function () {
       const video = {
-        thumbnailSrc: this.video.snippet.thumbnails.default.url,
+        thumbnailSrc: `https://img.youtube.com/vi/${this.video.id.videoId}/hqdefault.jpg`,
         title: _.unescape(this.video.snippet.title),
         videoId: this.video.id.videoId,
         videoCaption: this.video.snippet.description

@@ -1,35 +1,61 @@
 <template>
-  <div>
+  <div >
     <!-- 노리 제작 헤더 -->
-    <v-app-bar
+    <div
       dense
+      class="d-flex justify-space-between align-center contentHeader"
     > 
-      <v-icon @click="createCancel">mdi-close</v-icon>
-      <span class="display-1">노리 만들기</span>
-      <guideline />
-      <category-and-time-info :title="title" :itemList="itemList"/>
-    </v-app-bar>
+      <v-icon 
+        @click="createCancel"
+      >mdi-close</v-icon>
+      <span style="font-size: 150%">노리 만들기</span>
+      <div 
+        class="d-flex align-center"
+        style="margin-right: 10px"
+      >
+        <guideline 
+          style="margin-right: 10px"
+        />
+        <category-and-time-info :title="title" :itemList="itemList"/>
+      </div>
+    </div>
     <div class="container">
       <v-text-field
         v-model="title"
         label="제목"
-        hint="ex) [11세]집에서 할 수 있는 신체활동"
+        hint="ex) [11세]집에서 할 수 있는 축구게임"
         outlined
+        style="margin-top: 25px;"
       ></v-text-field>
+      <v-divider></v-divider>
       <!-- 노리의 항목들 -->
-      <draggable :list="itemList" :options="{animation:300}">
+      <draggable 
+        :list="itemList" 
+        :options="{animation:300, handle:'.handle'}"
+      >
         <div 
           v-for="(item, idx) in itemList"
           :key="idx"
+          class="item-wrapper d-flex align-center justify-space-between"
+          
         >
           <!-- 노리의 유튜브 항목 -->
+          <div class="d-flex align-center">
+            <span class="handle">
+              <v-icon>
+                mdi-menu
+              </v-icon>
+            </span>
+            <p style="font-size: 12px; margin-top: 15px; color:gray;">PAGE {{ idx + 1 }}</p>            
+          </div>
+          
           <contents-youtube-item
             v-if="item.type=='youtube'"
             :item="item"
             :idx="idx"
-            
             @delete-item="deleteItem"
             @item-change="onItemChange"
+            style="width: 70%;"
           />
           <!-- 노리의 사진항목 -->
           <contents-photo-item 
@@ -38,6 +64,7 @@
             :idx="idx"
             @delete-item="deleteItem"
             @item-change="onItemChange"
+            style="width: 70%;"
           />
           <!-- 노리의 텍스트 항목 -->
           <contents-text-item
@@ -46,12 +73,19 @@
             :idx="idx"
             @delete-item="deleteItem"
             @item-change="onItemChange"
+            style="width: 70%;"
           />
+          <button 
+            @click="deleteItem(idx)"
+            style="margin-top: 0"
+          >
+          <v-icon>mdi-trash-can</v-icon>
+          </button>
         </div>
         
       </draggable>
       <!-- 항목 추가 위한 버튼들 -->
-      <div class="d-flex footer">
+      <div class="d-flex footer align-center">
         <YoutubeCreate
           :isAdded="youtubeAdded" 
           @select-video="onSelectVideo"
@@ -96,6 +130,7 @@ export default {
         title: '',
         itemList: [],
         youtubeAdded: false,
+        uploadPercentage: 0,
       }
    },
    methods: {
@@ -110,19 +145,21 @@ export default {
 
       // 파일 업로드 기능 + 업로드 되자마자 item 만들기
       axiosFileUpload: function() {
-         console.log('axiosFileUpload : ', this.$refs.files.files);
+        //  console.log('axiosFileUpload : ', this.$refs.files.files);
 
          // this.files = [...this.files, this.$refs.files.files];
          //하나의 배열로 넣기
          for (let i = 0; i < this.$refs.files.files.length; i++) {
-            console.log(i + '번 째 -> ' + this.$refs.files.files[i].name);
+            // console.log(i + '번 째 -> ' + this.$refs.files.files[i].name);
             const photoFile = {
                //실제 파일
                file: this.$refs.files.files[i],
                //이미지 프리뷰
                preview: URL.createObjectURL(this.$refs.files.files[i]),
+               
             };
             // num = i;
+            this.uploadPercentage = parseInt( Math.round((ProgressEvent.loded / ProgressEvent.total) * 100))
             this.createItemPhoto(photoFile);
          }
       },
@@ -194,15 +231,32 @@ export default {
 </script>
 
 <style scoped>
+.contentHeader {
+  padding: 5px;
+  box-shadow: 0 3px 5px lightgray;
+  background-color: #F2F1F2;
+  margin-top: 10px;
+}
 .footer {
   position: absolute;
-  bottom: 0;
+  bottom: 10px;
 }
 .item-wrapper {
-   border: 1px solid black;
+   border: 1px solid gray;
    width: 100%;
-   height: 300px;
-   margin-bottom: 10px;
-   background-color: aliceblue;
+   height: 150px;
+   padding: 20px;
+   margin-top: 15px;
+   margin-bottom: 15px;
+   border-radius: 3px;
+   box-shadow: 0 4px 4px lightgray;
+}
+.sortable-chosen {
+  opacity: 0.7;
+  background-color:#dcdcdc;
+}
+
+.sortable-ghost {
+  background-color:#dcdcdc;
 }   
 </style>

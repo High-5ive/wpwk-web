@@ -1,25 +1,29 @@
 <template lang="">
-   <div class="photo-wrapper">
-      Page{{ idx + 1 }} - <img :src="item.photo.preview" />
-       - <span @click="onEdit" v-if="editInput==false">{{ item.description }}</span>
-      <input 
-         style="border: black solid 1px" 
-         v-if="item.description==false" 
-         @change="onItemChange" 
-         v-model="description" 
-         type="text" 
-         placeholder="사진에 대한 설명을 적어주세요"
-      >
-      <input 
-         style="border: black solid 1px" 
-         v-if="editInput" 
-         @change="onItemChange" 
-         type="text" 
+   <div class="d-flex align-center justify-space-around">
+      <img :src="item.photo.preview" />
+      <span class="text" @click="onEdit" v-if="textShow">{{ item.description }}</span>
+      <textarea 
+         cols="12" 
+         rows="3"
+         v-if="fInputShow"
+         @keypress.enter="onItemChange"
+         @change="onItemChange"
          v-model="description"
-         :placeholder="item.description"
-         >
-      <button @click="deleteItem">X</button>
-      </div>
+         class="decriptionInput"
+         maxlength="200"
+         placeholder="사진에 대한 설명을 적어주세요"
+      ></textarea>
+      <textarea 
+         cols="12" 
+         rows="3"
+         v-if="editInput"
+         @keypress.enter="onItemChange" 
+         @change="onItemChange"
+         v-model="description"
+         class="decriptionInput"
+         maxlength="200"
+      ></textarea>
+   </div>
 </template>
 <script>
 export default {
@@ -31,19 +35,21 @@ export default {
    data: () => {
       return {
          description: '',
+         textShow: false,
+         fInputShow: true,
          editInput: false
       }
    },
    methods: {
-      deleteItem: function () {
-         this.$emit('delete-item', this.idx)
-      },
       onItemChange: function () {
          this.$emit('item-change', [this.description, this.idx])
+         this.textShow = true
          this.fInputShow = false
          this.editInput = false
       },
       onEdit: function () {
+         this.textShow = false
+         this.fInputShow = false
          this.editInput = true
       }
    },
@@ -51,9 +57,23 @@ export default {
 </script>
 <style scoped>
 img {
-   position: relative;
-   /* width: 190px; */
-   height: 150px;
-   z-index: 10;
+   width: 40%;
+   height: 40%; 
+}
+.decriptionInput {
+  padding: 8px;
+  box-shadow: 0 4px 4px lightgray;
+  resize: none;
+  width: 35%;
+  font-size: 11px;
+}
+.text {
+  width: 35%;
+  max-height: 100px;
+  overflow: scroll;
+  font-size: 11px;
+}
+.text::-webkit-scrollbar {
+  display: none
 }
 </style>
