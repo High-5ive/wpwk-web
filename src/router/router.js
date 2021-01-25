@@ -25,6 +25,9 @@ import ContentsView from '../views/ContentsView.vue'
 import LandingPage from '@/views/user/LandingPage.vue'
 import Login from '@/views/user/Login.vue'
 import Join from '@/views/user/Join.vue'
+import Auth from '@/views/user/Auth.vue'
+
+
 
 // ==============================
 
@@ -89,6 +92,13 @@ const routes = [
         name: 'Join',
         components: {
             default: Join,
+        },
+    },
+    {
+        path: '/auth',
+        name: 'Auth',
+        components: {
+            default: Auth,
         },
     },
 ];

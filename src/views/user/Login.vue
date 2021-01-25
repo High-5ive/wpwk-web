@@ -28,14 +28,48 @@
                <div class="error-text" v-if="error.password"><v-icon> mdi-alert-decagram </v-icon> {{ error.password }}</div>
             </div>
          </div>
+
          <div class="feature-wrapper">
-            <p>비밀번호를 잊었나요?</p>
-            <v-btn color="success" @click="doLogin({ email, password })">로그인</v-btn>
-            <p>아직 회원이 아닌가요? <router-link to="Join">5초 회원가입</router-link></p>
+            <span class="find_pw" @click="clickModal">비밀번호를 잊었나요?</span>
+            <br />
+            <v-btn id="submit" color="success" @click="doLogin({ email, password })">로그인</v-btn>
+            <p style="font-size: 12px;">아직 회원이 아닌가요? <router-link to="Join">5초 회원가입</router-link></p>
          </div>
          <div class="social-wrapper">
             <p>SNS 간편 로그인</p>
+            <!-- 네이버아이디로로그인 버튼 노출 영역 -->
+            <naver-login></naver-login>
          </div>
+
+         <!-- 비밀번호 찾기 모달 -->
+         <v-dialog v-model="find_modal" persistent max-width="400">
+            <v-card>
+               <v-card-title class="headline">
+                  비밀번호 리셋
+               </v-card-title>
+               <v-card-text>
+                  <v-text-field label="Email*" required v-model="email" id="email" placeholder="이메일을 입력하세요."></v-text-field>
+                  <div class="error-text" v-if="error.email" style="margin-top:0px">
+                     <v-icon>
+                        mdi-alert-decagram
+                     </v-icon>
+                     {{ error.email }}
+                  </div>
+                  <br />
+                  비밀번호 재설정 메일을 발송합니다.
+               </v-card-text>
+
+               <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="green darken-1" text @click="find_modal = false">
+                     Disagree
+                  </v-btn>
+                  <v-btn color="green darken-1" text @click="find_modal = false">
+                     Agree
+                  </v-btn>
+               </v-card-actions>
+            </v-card>
+         </v-dialog>
       </div>
    </div>
 </template>
@@ -44,7 +78,12 @@
 import * as EmailValidator from 'email-validator';
 import { mapActions } from 'vuex';
 
+import NaverLogin from '@/components/user/NaverLogin.vue';
+
 export default {
+   components: {
+      NaverLogin,
+   },
    data() {
       return {
          email: '',
@@ -54,6 +93,8 @@ export default {
             password: false,
          },
          isSubmit: false,
+
+         find_modal: false,
       };
    },
    methods: {
@@ -76,6 +117,10 @@ export default {
          if (reg_pwd.test(str) === true) {
             return true;
          } else return false;
+      },
+
+      clickModal() {
+         this.find_modal = true;
       },
    },
 
@@ -118,7 +163,9 @@ export default {
 }
 
 .wrapper {
-   background-color: white;
+   background-color: rgba(241, 249, 255, 0.555);
+   border-radius: 45px;
+
    min-width: 360px;
    min-height: 500px;
    width: 50%;
@@ -131,7 +178,7 @@ export default {
    flex-direction: column;
    align-items: center;
 
-   box-shadow: 0px 9px 20px 0px #56565629;
+   /* box-shadow: 0px 9px 20px 0px #56565629; */
 }
 
 .input-wrapper input {
@@ -182,6 +229,35 @@ input::placeholder {
 }
 
 .feature-wrapper {
-   margin-top: 50px;
+   margin-top: 30px;
+   text-align: center;
+}
+
+.feature-wrapper .find_pw {
+   color: grey;
+   font-size: 10pt;
+   text-decoration: underline;
+}
+.feature-wrapper .find_pw:hover {
+   color: rgb(1, 1, 1);
+   font-size: 10pt;
+}
+
+.feature-wrapper #submit {
+   margin-top: 40px;
+   margin-bottom: 10px;
+
+   color: #f4b740;
+   font-size: 10pt;
+   border-radius: 20px;
+   background-color: white !important;
+   border: 2px #f4b740 solid !important;
+   padding: 20px 70px;
+
+   font-weight: 600;
+}
+
+.social-wrapper {
+   margin-top: 30px;
 }
 </style>

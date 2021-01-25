@@ -23,7 +23,9 @@ export default new Vuex.Store({
 
         //로그아웃 시 
         logout(state) {
-            localStorage.removeItem("log");
+            // localStorage.removeItem("log");
+            localStorage.clear();
+
             console.log('1', state);
             state.isLogin = false;
             // state.userInfo = null;
@@ -75,8 +77,9 @@ export default new Vuex.Store({
 
         getUserInfo() {
             let log = localStorage.getItem("log");
+            let social = localStorage.getItem("com.naver.nid.oauth.state_token");
 
-            if (log != null) {
+            if (log != null || social != null) {
                 let sample = {
                     email: 'a@a.com',
                     nickname: '위파',
