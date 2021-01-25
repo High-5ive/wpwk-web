@@ -1,0 +1,24 @@
+@import "../vars";
+
+.content-wrapper{
+    background-color: $orange;
+    width: 100%;
+    height: 250px;
+    border-radius: 50px;
+
+    .img-wrapper{
+        width: 100%;
+        height: 60%;
+        img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: 0px -60px;
+        }
+    };
+
+    .desc-wrapper{
+        height: 40%;
+    }
+}
+
