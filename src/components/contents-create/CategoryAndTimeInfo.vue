@@ -95,20 +95,24 @@
                   <v-list-item-title>해시태그도 추가해보세요! (선택)</v-list-item-title>
                   <v-row align="center" justify="center">
                     <v-col
+                      aling="center"
                       class="d-flex"
                       cols="12"
                       sm="6"
-                    >                 
-                      <v-icon>mdi-pound</v-icon>
-                      <v-text-field
-                        label="해시태그"
-                        hint="ex) #아이교육 #시간때우기"
-                        outlined
-                        v-model.trim="hashtag"
-                        @keypress.enter="addHashtag"
-                      ></v-text-field>
-                      
-                      <v-icon @click="addHashtag">mdi-plus-circle</v-icon>                                          
+                    > 
+                      <div class="d-flex align-center">
+                        <v-icon>mdi-pound</v-icon>
+                        <v-text-field
+                          label="해시태그"
+                          hint="ex) #아이교육 #시간때우기"
+                          outlined
+                          v-model.trim="hashtag"
+                          @keypress.enter="addHashtag"
+                        ></v-text-field>
+                        
+                        <v-icon tag="dpgppg" @click="addHashtag">mdi-plus-circle</v-icon>                                          
+                        
+                      </div>                
                     </v-col>
                   </v-row>
                   <v-row>
@@ -188,8 +192,10 @@ export default {
     addHashtag: function () {
       const newTag = this.hashtag.replaceAll(" ", "_")
       if (this.hashtags.indexOf(newTag) >= 0) {
-        console.log("중복")
+        alert("이미 추가된 해시태그입니다")
         this.hashtag = ''
+      } else if (this.hashtag.length == 0) {
+        alert("내용을 적어주세요")
       } else {
         this.hashtags.push(newTag)
         this.hashtag = ''

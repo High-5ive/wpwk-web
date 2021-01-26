@@ -1,13 +1,8 @@
 
 <template>
   <v-row>
-    <v-btn
-      color="secondary"
-      dark
-      @click="onYoutubeClick"
-    >
-      <v-icon>mdi-youtube</v-icon>
-    </v-btn>
+    <v-icon @click="onYoutubeClick">mdi-youtube</v-icon>
+    
     <v-dialog
       transition="dialog-bottom-transition"
       v-model="dialog"
@@ -17,20 +12,31 @@
     >
       <!-- 영상 추가하기 버튼 -->
       <v-card>
-        <v-card-title fixed-header>
+        <v-card-title fixed-header class="justify-space-between">
           <span class="headline">
             유튜브 영상 추가하기
           </span>
+          <v-btn
+            color="blue darken-1"
+            text
+            @click="onCancel" 
+          >
+            취소
+          </v-btn>
         </v-card-title>
         <v-card-text>
           <v-container>
             <v-row>
               <!-- 검색창 -->
-              <div class="d-flex align-center justify-space-around">
+              <div 
+                class="d-flex align-center justify-space-around"
+                style="width: 100%" 
+              >
                 <v-text-field
                   label="검색어를 입력하세요"
                   v-model="query"
                   @keypress.enter="onSearchInput"
+                  style="margin-right: 30px;"
                 ></v-text-field> 
                 <v-btn @click="onSearchInput">검색</v-btn>
               </div>
@@ -40,21 +46,17 @@
                 :key="idx"
                 :video="video"
                 @select-video="onSelectVideo"
+                style="margin-bottom: 30px;"
               />
-            <infinite-loading v-if="infLoading" @infinite="infiniteHandler"></infinite-loading>
+              <infinite-loading 
+                v-if="infLoading" 
+                @infinite="infiniteHandler"              
+              ></infinite-loading>
+
             </v-row>
           </v-container>
         </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="blue darken-1"
-            text
-            @click="onCancel" 
-          >
-            취소
-          </v-btn>
-        </v-card-actions>
+
       </v-card>
     </v-dialog>
   </v-row>

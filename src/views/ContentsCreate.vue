@@ -89,15 +89,18 @@
         <YoutubeCreate
           :isAdded="youtubeAdded" 
           @select-video="onSelectVideo"
+          class="footerButtons"
         />
-        <v-btn @click="createTextItem" color="secondary" dark>
-          <v-icon>mdi-note-text-outline</v-icon>
-        </v-btn>
-        <v-btn tile color="success" @click="axiosFileSelect">
-            <v-icon left>
-                mdi-image-multiple
-            </v-icon>
-        </v-btn>
+        <v-icon 
+          @click="axiosFileSelect"
+          class="footerButtons"
+        >
+            mdi-image-multiple
+        </v-icon>
+        <v-icon 
+          @click="createTextItem"
+          class="footerButtons"
+        >mdi-note-text-outline</v-icon>        
         <input type="file" id="fileUpload" ref="files" style="display:none" @change="axiosFileChange" multiple />
       </div>
         
@@ -235,11 +238,15 @@ export default {
   padding: 5px;
   box-shadow: 0 3px 5px lightgray;
   background-color: #F2F1F2;
-  margin-top: 10px;
+  margin-top: 10px; 
 }
 .footer {
   position: absolute;
   bottom: 10px;
+}
+.footerButtons {
+  margin-left: 20px;
+  margin-right: 20px;
 }
 .item-wrapper {
    border: 1px solid gray;

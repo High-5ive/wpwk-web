@@ -1,7 +1,9 @@
 <template>
-  <div class="d-flex align-center justify-space-around">
-    <img :src="thumbnailSrc" alt="video thumbnail">
-    <span style="margin-left: 5px;">{{ video.snippet.title | unescape }}</span>
+  <div class="d-flex align-center justify-space-between" style="width: 100%" >
+    <div class="d-flex align-center">
+      <img :src="thumbnailSrc" alt="video thumbnail">
+      <span style="margin-left: 30px; width: 50%;">{{ video.snippet.title | unescape }}</span>
+    </div>
     <v-btn @click="onSelectVideo">선택</v-btn>
   </div>
 </template>
