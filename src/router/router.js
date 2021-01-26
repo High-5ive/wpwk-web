@@ -22,16 +22,23 @@ import Community from '../views/Community.vue'
 import Mypage from '../views/Mypage.vue'
 import ContentsCreate from '../views/ContentsCreate.vue'
 import ContentsView from '../views/ContentsView.vue'
+import LandingPage from '@/views/user/LandingPage.vue'
+import Login from '@/views/user/Login.vue'
+import Join from '@/views/user/Join.vue'
+import Auth from '@/views/user/Auth.vue'
+
+
 
 // ==============================
 
 // 여러개 태울 때, routes 변수 생성
 const routes = [
+
     {
         path: '/',
         name: 'Main',
         components: {
-            side : SideMenu,
+            side: SideMenu,
             default: Main,
         },
     },
@@ -39,7 +46,7 @@ const routes = [
         path: '/cmmu',
         name: 'communiny',
         components: {
-            side : SideMenu,
+            side: SideMenu,
             default: Community,
         },
     },
@@ -47,7 +54,7 @@ const routes = [
         path: '/mypage',
         name: 'mypage',
         components: {
-            side : SideMenu,
+            side: SideMenu,
             default: Mypage,
         },
     },
@@ -55,7 +62,7 @@ const routes = [
         path: '/contentscreate',
         name: 'ContentsCreate',
         components: {
-            side : SideMenu,
+            side: SideMenu,
             default: ContentsCreate,
         },
     },
@@ -66,10 +73,38 @@ const routes = [
             default: ContentsView,
         },
     },
+
+    {
+        path: '/landingTest',
+        components: {
+            default: LandingPage,
+        },
+    },
+    {
+        path: '/login',
+        name: 'Login',
+        components: {
+            default: Login,
+        },
+    },
+    {
+        path: '/join',
+        name: 'Join',
+        components: {
+            default: Join,
+        },
+    },
+    {
+        path: '/auth',
+        name: 'Auth',
+        components: {
+            default: Auth,
+        },
+    },
 ];
 
 const router = new VueRouter({
-    mode: 'history',        //뒤에 # 을 없애줌
+    mode: 'history', //뒤에 # 을 없애줌
     // base: process.env.BASE_URL,
     routes,
 });
