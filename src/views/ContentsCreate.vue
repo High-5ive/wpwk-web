@@ -10,34 +10,31 @@
          </div>
       </div>
       <div class="container">
-         <v-text-field v-model="title" label="제목" hint="ex) [11세]집에서 할 수 있는 축구게임" outlined style="margin-top: 25px;"></v-text-field>
+         <v-text-field v-model="title" label="제목" hint="ex) [11세]집에서 할 수 있는 축구게임" style="margin-top: 25px;"></v-text-field>
          <v-divider></v-divider>
          <!-- 노리의 항목들 -->
          <draggable :list="itemList" :options="{ animation: 300, handle: '.handle' }">
-            <div v-for="(item, idx) in itemList" :key="idx" class="item-wrapper d-flex align-center justify-space-between">
+            <div v-for="(item, idx) in itemList" :key="idx" class="div-wrapper d-flex align-center justify-space-between">
                <!-- 노리의 유튜브 항목 -->
-               <div class="left-wrapper d-flex align-center">
-                  <span class="handle">
+               <div class="circle">{{ idx + 1 }}</div>
+               <div class="item-wrapper d-flex align-center justify-space-between">
+                  <span class="left-wrapper handle">
                      <v-icon>
                         mdi-menu
                      </v-icon>
                   </span>
-
-                  <!-- <v-btn color="accent" elevation="2" outlined rounded></v-btn> -->
-                  <div class="circle">{{ idx + 1 }}</div>
-                  <!-- <p class="pageNum"></p> -->
-               </div>
-               <div class="middle-wrapper">
-                  <contents-youtube-item v-if="item.type == 'youtube'" :item="item" :idx="idx" @delete-item="deleteItem" @item-change="onItemChange" style="width: 70%;" />
-                  <!-- 노리의 사진항목 -->
-                  <contents-photo-item v-else-if="item.type == 'photo'" :item="item" :idx="idx" @delete-item="deleteItem" @item-change="onItemChange" style="width: 70%;" />
-                  <!-- 노리의 텍스트 항목 -->
-                  <contents-text-item v-else :item="item" :idx="idx" @delete-item="deleteItem" @item-change="onItemChange" style="width: 70%;" />
-               </div>
-               <div class="right-wrapper">
-                  <button @click="deleteItem(idx)">
-                     <v-icon>mdi-trash-can</v-icon>
-                  </button>
+                  <div class="middle-wrapper">
+                     <contents-youtube-item v-if="item.type == 'youtube'" :item="item" :idx="idx" @delete-item="deleteItem" @item-change="onItemChange"/>
+                     <!-- 노리의 사진항목 -->
+                     <contents-photo-item v-else-if="item.type == 'photo'" :item="item" :idx="idx" @delete-item="deleteItem" @item-change="onItemChange"/>
+                     <!-- 노리의 텍스트 항목 -->
+                     <contents-text-item v-else :item="item" :idx="idx" @delete-item="deleteItem" @item-change="onItemChange"/>
+                  </div>
+                  <div class="right-wrapper">
+                     <button @click="deleteItem(idx)">
+                        <v-icon>mdi-trash-can</v-icon>
+                     </button>
+                  </div>
                </div>
             </div>
          </draggable>
@@ -191,67 +188,116 @@ export default {
    background-color: #f2f1f2;
    margin-top: 10px;
 }
+.div-wrapper {
 
-.item-wrapper {
-   border: 1px solid gray;
-   width: 100%;
-   height: 150px;
-   padding: 10px;
-   margin-top: 15px;
-   margin-bottom: 15px;
-   border-radius: 3px;
+   .circle {
+      width: 30px;
 
-   background-color: rgb(247, 247, 247);
-   box-shadow: 0 4px 4px lightgray;
+      // line-height와 height를 일치시키면, 텍스트 한줄 중앙 정렬
+      height: 30px;
+      line-height: 30px;
 
-   .left-wrapper {
-      width: 20%;
-      padding-left: 20px;
+      background-color: lightgray;
+      border-radius: 25px;
+      text-align: center;
+      color: white;
+      margin-right: 10px;
 
-      .circle {
-         width: 35px;
-
-         // line-height와 height를 일치시키면, 텍스트 한줄 중앙 정렬
-         height: 35px;
-         line-height: 35px;
-
-         background-color: yellow;
-         border-radius: 25px;
-         text-align: center;
-
-         padding-right: 0px !important;
-      }
-
-      .pageNum {
-         font-size: 20pt;
-         // margin-top: 15px;
-         color: rgba(128, 128, 128, 0.297);
-      }
+      padding-right: 0px !important;
    }
+   .item-wrapper {
+      border: 1px solid gray;
+      width: 95%;
+      height: 150px;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      border-radius: 3px;
 
-   .middle-wrapper {
-      // background-color: red;
-      width: 70%;
-      height: 100%;
+      background-color: rgb(247, 247, 247);
+      box-shadow: 0 4px 4px lightgray;
 
-      .text-item-wrapper {
-         width: 100% !important;
+      .left-wrapper {
+         width: 10%;
+      }
+
+      .middle-wrapper {
+         // background-color: red;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         width: 80%;
          height: 100%;
-         // background-color: yellow;
 
-         textarea::placeholder {
-            color: rgb(171, 171, 171);
-            font-style: italic;
-            font-size: 14pt;
-            text-align: center;
+         .text-item-wrapper {
+            width: 80%;
+            height: 80%;
+            // background-color: yellow;
+            .text {
+               max-height: 100%;
+               width: 100%;
+               text-align: center;
+               overflow: scroll;
+               font-size: 12px;
+            }
+            textarea {
+               width: 100%;
+               height: 100%;
+               padding: 8px;
+               box-shadow: 0 4px 4px lightgray;
+               resize: none;
+               font-size: 11px;
+            }
+
+            textarea::placeholder {
+               color: rgb(171, 171, 171);
+               font-style: italic;
+               font-size: 12pt;
+               text-align: center;
+            }
+         }
+         .photo-item-wrapper {
+            height: 100%;
+            // background-color: red;
+            .image-wrapper {
+               width: 50%;
+               height: 90%;
+               img {
+                  width: 100%;
+                  height: 100%;
+                  object-fit: cover;
+               }  
+            }
+            .desc-wrapper {
+               width: 40%;
+               height: 70%;
+               textarea {
+                  width: 100%;
+                  height: 100%;
+                  padding: 8px;
+                  box-shadow: 0 4px 4px lightgray;
+                  resize: none;
+                  font-size: 12px;
+                  }
+               .text {
+                  text-align: center;
+                  width: 100%; 
+                  max-height: 100%;
+                  overflow: scroll;
+                  font-size: 12px;
+                  }
+               .text::-webkit-scrollbar {
+                  display: none
+                  }
+            }
          }
       }
-   }
 
-   .right-wrapper {
-      width: 10%;
-      text-align: center;
-      // background-color: yellow;
+      .right-wrapper {
+         width: 10%;
+         text-align: center;
+         // background-color: yellow;
+      }
    }
 }
 .sortable-chosen {
@@ -293,7 +339,7 @@ export default {
       // background-color: red !important;
       width: 30px;
       height: 30px;
-      margin-right: 10px !important;
+      margin-right: 12px !important;
 
       .mdi-youtube {
          font-size: 25pt;
