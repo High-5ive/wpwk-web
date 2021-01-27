@@ -1,8 +1,13 @@
 <template>
    <div class="container">
-      <div v-for="(nori, idx) in NoriList" :key="idx">
+      <div class="nori-wrapper" v-for="(nori, idx) in NoriList" :key="idx">
          <nori-content :sendNori="nori"></nori-content>
          <br />
+      </div>
+      <div class="btn-create">
+         <v-icon>
+            mdi-lead-pencil
+         </v-icon>
       </div>
    </div>
 </template>
@@ -12,7 +17,8 @@ import NoriContent from '@/components/main/NoriContent.vue';
 
 const dummyInsert = (list) => {
    const nori = {
-      title: '테스트입니당',
+      idx: 0,
+      title: '아빠와 함께하는 레고 블럭 놀이!',
       itemList: [1, 2],
       time: {
          hour: 2,
@@ -23,11 +29,9 @@ const dummyInsert = (list) => {
    };
 
    var i = 1;
-   while (i++ < 5) {
+   while (i++ < 4) {
       list.push(nori);
    }
-
-   console.log(nori);
 };
 
 export default {
