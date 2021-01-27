@@ -16,33 +16,43 @@
          <draggable :list="itemList" :options="{ animation: 300, handle: '.handle' }">
             <div v-for="(item, idx) in itemList" :key="idx" class="item-wrapper d-flex align-center justify-space-between">
                <!-- 노리의 유튜브 항목 -->
-               <div class="d-flex align-center">
+               <div class="left-wrapper d-flex align-center">
                   <span class="handle">
                      <v-icon>
                         mdi-menu
                      </v-icon>
                   </span>
-                  <p style="font-size: 12px; margin-top: 15px; color:gray;">PAGE {{ idx + 1 }}</p>
-               </div>
 
-               <contents-youtube-item v-if="item.type == 'youtube'" :item="item" :idx="idx" @delete-item="deleteItem" @item-change="onItemChange" style="width: 70%;" />
-               <!-- 노리의 사진항목 -->
-               <contents-photo-item v-else-if="item.type == 'photo'" :item="item" :idx="idx" @delete-item="deleteItem" @item-change="onItemChange" style="width: 70%;" />
-               <!-- 노리의 텍스트 항목 -->
-               <contents-text-item v-else :item="item" :idx="idx" @delete-item="deleteItem" @item-change="onItemChange" style="width: 70%;" />
-               <button @click="deleteItem(idx)" style="margin-top: 0">
-                  <v-icon>mdi-trash-can</v-icon>
-               </button>
+                  <!-- <v-btn color="accent" elevation="2" outlined rounded></v-btn> -->
+                  <div class="circle">{{ idx + 1 }}</div>
+                  <!-- <p class="pageNum"></p> -->
+               </div>
+               <div class="middle-wrapper">
+                  <contents-youtube-item v-if="item.type == 'youtube'" :item="item" :idx="idx" @delete-item="deleteItem" @item-change="onItemChange" style="width: 70%;" />
+                  <!-- 노리의 사진항목 -->
+                  <contents-photo-item v-else-if="item.type == 'photo'" :item="item" :idx="idx" @delete-item="deleteItem" @item-change="onItemChange" style="width: 70%;" />
+                  <!-- 노리의 텍스트 항목 -->
+                  <contents-text-item v-else :item="item" :idx="idx" @delete-item="deleteItem" @item-change="onItemChange" style="width: 70%;" />
+               </div>
+               <div class="right-wrapper">
+                  <button @click="deleteItem(idx)">
+                     <v-icon>mdi-trash-can</v-icon>
+                  </button>
+               </div>
             </div>
          </draggable>
          <!-- 항목 추가 위한 버튼들 -->
-         <div class="d-flex footer align-center">
-            <YoutubeCreate :isAdded="youtubeAdded" @select-video="onSelectVideo" class="footerButtons" />
-            <v-icon @click="axiosFileSelect" class="footerButtons">
-               mdi-image-multiple
-            </v-icon>
-            <v-icon @click="createTextItem" class="footerButtons">mdi-note-text-outline</v-icon>
-            <input type="file" id="fileUpload" ref="files" style="display:none" @change="axiosFileChange" multiple />
+         <div class="footer">
+            <div class="btn-wrapper"><YoutubeCreate :isAdded="youtubeAdded" @select-video="onSelectVideo" class="footerButtons" /></div>
+            <div class="btn-wrapper">
+               <v-icon @click="axiosFileSelect" class="footerButtons">
+                  mdi-image-multiple
+               </v-icon>
+            </div>
+            <div class="btn-wrapper">
+               <v-icon @click="createTextItem" class="footerButtons">mdi-note-text-outline</v-icon>
+               <input type="file" id="fileUpload" ref="files" style="display:none" @change="axiosFileChange" multiple />
+            </div>
          </div>
       </div>
    </div>
@@ -172,30 +182,77 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss">
+// 트렐로 배경색 : rgb(235,236,240)
+
 .contentHeader {
    padding: 5px;
    box-shadow: 0 3px 5px lightgray;
    background-color: #f2f1f2;
    margin-top: 10px;
 }
-.footer {
-   position: absolute;
-   bottom: 10px;
-}
-.footerButtons {
-   margin-left: 20px;
-   margin-right: 20px;
-}
+
 .item-wrapper {
    border: 1px solid gray;
    width: 100%;
    height: 150px;
-   padding: 20px;
+   padding: 10px;
    margin-top: 15px;
    margin-bottom: 15px;
    border-radius: 3px;
+
+   background-color: rgb(247, 247, 247);
    box-shadow: 0 4px 4px lightgray;
+
+   .left-wrapper {
+      width: 20%;
+      padding-left: 20px;
+
+      .circle {
+         width: 35px;
+
+         // line-height와 height를 일치시키면, 텍스트 한줄 중앙 정렬
+         height: 35px;
+         line-height: 35px;
+
+         background-color: yellow;
+         border-radius: 25px;
+         text-align: center;
+
+         padding-right: 0px !important;
+      }
+
+      .pageNum {
+         font-size: 20pt;
+         // margin-top: 15px;
+         color: rgba(128, 128, 128, 0.297);
+      }
+   }
+
+   .middle-wrapper {
+      // background-color: red;
+      width: 70%;
+      height: 100%;
+
+      .text-item-wrapper {
+         width: 100% !important;
+         height: 100%;
+         // background-color: yellow;
+
+         textarea::placeholder {
+            color: rgb(171, 171, 171);
+            font-style: italic;
+            font-size: 14pt;
+            text-align: center;
+         }
+      }
+   }
+
+   .right-wrapper {
+      width: 10%;
+      text-align: center;
+      // background-color: yellow;
+   }
 }
 .sortable-chosen {
    opacity: 0.7;
@@ -204,5 +261,50 @@ export default {
 
 .sortable-ghost {
    background-color: #dcdcdc;
+}
+
+.footer {
+   width: 200px;
+   background-color: #f2f1f2;
+   position: fixed;
+   z-index: 100;
+   left: 50%;
+   transform: translateX(-50%);
+   bottom: 10px;
+
+   margin: 0 auto;
+   margin-bottom: 10px;
+
+   border-radius: 15px;
+
+   padding-left: 20px;
+
+   height: 50px;
+
+   display: flex;
+   justify-content: center;
+
+   align-items: center;
+
+   border: 1px solid gray;
+   box-shadow: 0 4px 4px lightgray;
+
+   .row.footerButtons {
+      // background-color: red !important;
+      width: 30px;
+      height: 30px;
+      margin-right: 10px !important;
+
+      .mdi-youtube {
+         font-size: 25pt;
+         color: grey;
+      }
+   }
+
+   .footerButtons {
+      font-size: 25pt;
+      // margin-left: 20px;
+      margin-right: 8px;
+   }
 }
 </style>
