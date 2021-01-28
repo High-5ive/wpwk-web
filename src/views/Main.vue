@@ -4,7 +4,7 @@
          <nori-content :sendNori="nori"></nori-content>
          <br />
       </div>
-      <div class="btn-create">
+      <div class="btn-create" @click="goCreate">
          <v-icon>
             mdi-lead-pencil
          </v-icon>
@@ -45,6 +45,11 @@ export default {
    },
    created() {
       dummyInsert(this.NoriList);
+   },
+   methods: {
+      goCreate: function() {
+         this.$router.push({ name: 'ContentsCreate' });
+      },
    },
 };
 </script>
