@@ -18,7 +18,8 @@
             유튜브 영상 추가하기
           </span>
           <v-btn
-            color="blue darken-1"
+            color="#F47E9B"
+            class="header-button"
             text
             @click="onCancel" 
           >
@@ -30,7 +31,7 @@
             <v-row>
               <!-- 검색창 -->
               <div 
-                class="d-flex align-center justify-space-around"
+                class="searchbar-wrapper d-flex align-center justify-space-around"
                 style="width: 100%" 
               >
                 <v-text-field
@@ -39,7 +40,7 @@
                   @keypress.enter="onSearchInput"
                   style="margin-right: 30px;"
                 ></v-text-field> 
-                <v-btn @click="onSearchInput">검색</v-btn>
+                <v-btn color="#f4b740" @click="onSearchInput">검색</v-btn>
               </div>
               <!-- 검색 결과 하위 컴포넌트로 보내줌 -->
               <YoutubeItem 
@@ -47,10 +48,12 @@
                 :key="idx"
                 :video="video"
                 @select-video="onSelectVideo"
-                style="margin-bottom: 30px;"
+                class="youtube-result-basic"
+                v-bind:class="{ 'youtube-result' : isEven(idx) }"
               />
               <infinite-loading 
-                v-if="infLoading" 
+                v-if="infLoading"
+                spinner="spiral"
                 @infinite="infiniteHandler"              
               ></infinite-loading>
 
@@ -124,7 +127,13 @@ export default {
       this.query = ''
       this.videos = []
     },
-
+    isEven: function (idx) {
+      if (idx % 2) {
+        return false
+      } else {
+        return true
+      }
+    },
     onYoutubeClick: function () {
       if (this.videoAdded==true) {
         alert('유튜브 항목은 한 개만 넣을 수 있습니다')
@@ -175,7 +184,65 @@ export default {
 .v-dialog {
   .card {
     .modal-header-wrapper {
-      
+      .header-button {
+        font-size: 12pt;
+      }
+    }
+    .v-card__text {
+      .container {
+        
+        .youtube-result-basic {
+          padding: 12px;
+        }
+        .youtube-result {
+          background-color: #F2F1F2;        
+        }
+        .row {
+          .infinite-loading-container {
+            margin-top: 10px;
+            width: 100%;
+          }
+          .searchbar-wrapper {
+            width: 100%;
+            .v-btn {
+              color:#F2F1F2;
+            }
+          }
+          .youtube-search-item-wrapper {
+            width: 100%;
+            height: 100%;
+            // border-bottom: 1px solid gray;
+            .image-wrapper {
+              width: 40%;
+              img {
+                width: 100%;
+                height: 100%;
+              }
+            }
+            .middle-wrapper {
+              width: 30%;
+              div {
+                height: 40%;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+              }
+            }
+            .right-wrapper {
+              width: 15%;
+              button {
+                background-color: #89BA17;
+                white-space: nowrap;
+                padding: 5px 10px 5px 10px;
+                border-radius: 15px;
+                box-shadow: 0 4px 4px lightgray;
+                color: #F2F1F2;
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

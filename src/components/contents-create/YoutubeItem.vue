@@ -1,10 +1,16 @@
 <template>
-  <div class="d-flex align-center justify-space-between" style="width: 100%" >
-    <div class="d-flex align-center">
+  <div class="youtube-search-item-wrapper d-flex align-center justify-space-between" style="width: 100%" >
+    <div class="image-wrapper">
       <img :src="thumbnailSrc" alt="video thumbnail">
-      <span style="margin-left: 30px; width: 50%;">{{ video.snippet.title | unescape }}</span>
     </div>
-    <v-btn @click="onSelectVideo">선택</v-btn>
+    <div class="middle-wrapper">
+      <div :title="video.snippet.title | unescape">{{ video.snippet.title | unescape }}</div>
+    </div>
+    <div class="right-wrapper d-flex justify-center">
+      <button
+      @click="onSelectVideo"
+      >선택</button>
+    </div>
   </div>
 </template>
 <script>
@@ -17,7 +23,7 @@ export default {
   },
   computed: {
     thumbnailSrc: function () {
-      return this.video.snippet.thumbnails.default.url
+      return `https://img.youtube.com/vi/${this.video.id.videoId}/hqdefault.jpg`
     }
   },
   filters: {

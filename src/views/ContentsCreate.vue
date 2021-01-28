@@ -3,7 +3,7 @@
       <!-- 노리 제작 헤더 -->
       <div dense class="d-flex justify-space-between align-center contentHeader">
          <v-icon @click="createCancel">mdi-close</v-icon>
-         <span style="font-size: 150%">노리 만들기</span>
+         <span class="header-title">노리 만들기</span>
          <div class="d-flex align-center" style="margin-right: 10px">
             <guideline style="margin-right: 10px" />
             <category-and-time-info :title="title" :itemList="itemList" />
@@ -184,9 +184,12 @@ export default {
 
 .contentHeader {
    padding: 5px;
-   box-shadow: 0 3px 5px lightgray;
-   background-color: #f2f1f2;
+   // box-shadow: 0 3px 5px lightgray;
+   // background-color: #f4b740;
    margin-top: 10px;
+   .header-title {
+      font-size: 1.25rem;
+   }
 }
 .div-wrapper {
 
@@ -197,7 +200,7 @@ export default {
       height: 30px;
       line-height: 30px;
 
-      background-color: lightgray;
+      background-color: #f4b740;
       border-radius: 25px;
       text-align: center;
       color: white;
@@ -206,7 +209,7 @@ export default {
       padding-right: 0px !important;
    }
    .item-wrapper {
-      border: 1px solid gray;
+      // border: 1px solid gray;
       width: 95%;
       height: 150px;
       padding: 10px;
@@ -314,7 +317,7 @@ export default {
 
 .footer {
    width: 200px;
-   background-color: #f2f1f2;
+   background-color: #F2F1F2;
    position: fixed;
    z-index: 100;
    left: 50%;
@@ -335,7 +338,7 @@ export default {
 
    align-items: center;
 
-   border: 1px solid gray;
+   // border: 1px solid gray;
    box-shadow: 0 4px 4px lightgray;
    
 
@@ -347,7 +350,7 @@ export default {
 
       .mdi-youtube {
          font-size: 25pt;
-         color: grey;
+         // color: grey;
       }
    }
 

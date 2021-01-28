@@ -6,6 +6,7 @@
       <v-btn
         color="#89BA17"
         class="ma-2"
+        small
         dark
         @click="onNextClicked"
       >
@@ -15,29 +16,31 @@
         v-model="dialog"
         fullscreen
         hide-overlay
-        transition="dialog-top-transition"
+        transition="dialog-bottom-transition"
         scrollable
       >
-        <v-card tile>
+        <v-card tile class="card">
           <v-toolbar
             flat
             dark
-            color="#F47E9B"
+            class="toolbar"
+            justify="between"
+            color="white"
             max-height="4rem"
           >
             <v-btn
               icon
               dark
+              color="black"
               @click="dialog = false"
             >
               <v-icon>mdi-close</v-icon>
             </v-btn>
-            <v-toolbar-title>마지막 단계</v-toolbar-title>
+            <v-toolbar-title class="toolbar-title">마지막 단계</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
               <v-btn
-                dark
-                text
+                class="complete-button"
                 @click="dialog = false"
               >
                 완료
@@ -237,7 +240,31 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style lang="scss">
+.v-dialog {
+  padding-top: 55px;
+  border: 0;
+  box-shadow: none;
+  .card {
+    .toolbar {
+      .toolbar-title {
+        color: black;
+      }
+      .v-toolbar__content {
+        .v-toolbar__items {
+          display: flex;
+          align-items: center;
+          .complete-button {
+            height: 30px !important;
+            border-radius: 5px;
+            background-color: #89BA17;
+            color:white;
+          }
+        }
+      }
+    }
+  }
+}
 .hashtag {
   /* display: inline !important; */
   width: 300px;
