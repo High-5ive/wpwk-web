@@ -68,7 +68,7 @@ const routes = [
     },
     {
         path: '/view',
-        name: 'Main',
+        name: 'ContentsView',
         components: {
             default: ContentsView,
         },
