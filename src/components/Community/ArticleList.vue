@@ -1,35 +1,31 @@
 <template>
   <div>
-      {{ articles }}
-    <!-- <Article
+    <Article
       v-for="(article, idx) in articles"
       :key="idx"
       :article="article"
-    /> -->
+    />
   </div>
 </template>
 
 <script>
-// import Article from './Article'
+import Article from './Article'
 
 export default {
   name: 'ArticleList',
   props: {
     articles: Array,
   },
-//   components: {
-//     Article
-//   },
-  methods: {
-    getArticles: function () {
-    }
+  components: {
+    Article
   },
-  created: function () {
-    this.getArticles()
+  methods: {
+    getSubject: function () {
+      this.subject_final = this.subject
+    }
   }
 }
 </script>
 
 <style>
-
 </style>
