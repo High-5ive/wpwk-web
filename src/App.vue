@@ -10,7 +10,8 @@
          <v-toolbar-title
             ><router-link to="/"><img src="@/assets/wpwk_logo.png"/></router-link
          ></v-toolbar-title>
-         <div class="btn-search"><i class="fas fa-search"></i></div>
+         <div class="btn-search" @click="showSearch = !showSearch"><i class="fas fa-search"></i></div>
+         <search v-if="showSearch"></search>
       </v-app-bar>
 
       <v-main>
@@ -20,10 +21,15 @@
 </template>
 
 <script>
+import Search from '@/components/main/Search.vue';
+
 export default {
    name: 'App',
-
-   data: () => ({ drawer: false }),
+   components: { Search },
+   data: () => ({
+      drawer: false,
+      showSearch: false,
+   }),
 };
 </script>
 
