@@ -1,27 +1,74 @@
 .content-wrapper {
-  background-color: #f4b740;
   width: 100%;
-  height: 250px;
-  border-radius: 50px;
-  box-shadow: 0px 3px 0px 0px #8e8e8edb;
+  height: 300px;
+  padding: 10px;
+  padding-bottom: 0px;
 }
 .content-wrapper .img-wrapper {
   width: 100%;
-  height: 60%;
+  height: 70%;
 }
 .content-wrapper .img-wrapper img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 0px -50px;
-  border-radius: 50px 50px 0px 0px;
+  border-radius: 30px;
+  object-position: 0px 0px;
+}
+@media (min-width: 335px) and (max-width: 757px) {
+  .content-wrapper .img-wrapper img {
+    object-position: 0px 0px;
+  }
+}
+@media (min-width: 758px) and (max-width: 1023px) {
+  .content-wrapper .img-wrapper img {
+    object-position: 0px -50px;
+  }
+}
+.content-wrapper .img-wrapper .badge-cate {
+  position: relative;
+  top: -95%;
+  left: 3%;
+}
+.content-wrapper .img-wrapper .badge-cate span {
+  background-color: #EF960C;
+  border-radius: 20px;
+  padding: 3px;
+  margin-right: 6px;
+  font-weight: 600;
+  font-size: 10pt;
+  color: white;
 }
 .content-wrapper .desc-wrapper {
-  height: 40%;
+  height: 30%;
   font-size: 10pt;
-  border-radius: 0px 0px 50px 50px;
-  background-color: white;
+  padding: 2px 20px 0px 20px;
 }
-.content-wrapper .desc-wrapper .title {
-  color: red;
+.content-wrapper .desc-wrapper h1 {
+  color: #282828;
+  font-size: 20px;
+}
+.content-wrapper .desc-wrapper span {
+  color: #EF960C;
+  font-weight: 600;
+  margin-right: 10px;
+}
+.content-wrapper .desc-wrapper h6 {
+  color: #282828;
+  margin-top: 4px;
+  font-size: 12px;
+}
+.content-wrapper .desc-wrapper .btn-like {
+  background-color: #f4b740;
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
+  position: relative;
+  left: 90%;
+  top: -50px;
+  text-align: center;
+  line-height: 40px;
+}
+.content-wrapper .desc-wrapper .btn-like i {
+  color: white;
 }
