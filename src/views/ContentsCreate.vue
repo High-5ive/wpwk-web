@@ -212,7 +212,7 @@ export default {
       padding: 10px;
       margin-top: 10px;
       margin-bottom: 10px;
-      border-radius: 3px;
+      border-radius: 5px;
 
       background-color: rgb(247, 247, 247);
       box-shadow: 0 4px 4px lightgray;
@@ -239,6 +239,9 @@ export default {
                text-align: center;
                overflow: scroll;
                font-size: 12px;
+            }
+            .text::-webkit-scrollbar {
+               display: none
             }
             textarea {
                width: 100%;
@@ -334,6 +337,7 @@ export default {
 
    border: 1px solid gray;
    box-shadow: 0 4px 4px lightgray;
+   
 
    .row.footerButtons {
       // background-color: red !important;

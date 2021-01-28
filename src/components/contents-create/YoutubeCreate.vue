@@ -1,18 +1,19 @@
 
 <template>
-  <v-row>
+  <v-row class="modal">
     <v-icon @click="onYoutubeClick">mdi-youtube</v-icon>
     
     <v-dialog
       transition="dialog-bottom-transition"
       v-model="dialog"
+      class="dialog"
       persistent
       max-width="600px"
       @click.stop="dialog = true"
     >
       <!-- 영상 추가하기 버튼 -->
-      <v-card>
-        <v-card-title fixed-header class="justify-space-between">
+      <v-card class="card"> 
+        <v-card-title class="modal-header-wrapper justify-space-between">
           <span class="headline">
             유튜브 영상 추가하기
           </span>
@@ -170,5 +171,12 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style lang="scss">
+.v-dialog {
+  .card {
+    .modal-header-wrapper {
+      
+    }
+  }
+}
 </style>

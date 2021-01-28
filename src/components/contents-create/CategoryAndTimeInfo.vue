@@ -4,12 +4,12 @@
       justify="center"
     >
       <v-btn
-        color="#F47E9B"
+        color="#89BA17"
         class="ma-2"
         dark
         @click="onNextClicked"
       >
-        다음 단계
+        다음
       </v-btn>
       <v-dialog
         v-model="dialog"
