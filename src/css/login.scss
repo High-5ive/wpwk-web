@@ -1,0 +1,183 @@
+@import "vars";
+@import "mixins";
+
+.container {
+    background-color: white;
+ 
+    /* 전체화면 가리기 */
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+ 
+    /* 창 덮기 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+
+    .wrapper {
+
+        font-family: 'Poor Srtoy',sans-serif !important;
+
+        background-color: rgba(241, 249, 255, 0.555);
+        border-radius: 45px;
+     
+        min-width: 360px;
+        min-height: 500px;
+        width: 50%;
+        height: 80%;
+        margin: 0 auto;
+        margin-top: 50px;
+        padding: 60px 0px;
+     
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+     
+        /* box-shadow: 0px 9px 20px 0px #56565629; */
+
+        .title{
+            display: block;
+            height: 100px;
+            // background-color: red;
+
+            text-align: center;
+
+
+            //  회원가입
+            .join-img{
+                width: 30px;
+            }
+
+            span {
+                display: block;
+                color: $main-green;
+                font-size: 24px;
+                font-family: 'Poor Story';
+                font-weight: 600;
+            }
+        }
+
+        .input-wrapper{
+            label {
+                display: block;
+                margin-bottom: 10px;
+
+             }
+    
+             .error {
+                background-color: white !important;
+                border: 1px solid rgb(227, 35, 21) !important;
+             }
+
+             input {
+                width: 250px;
+                height: 50px;
+                border-radius: 25px;
+                border: 1px solid $main-green;
+
+               //  회원가입
+                &.join{
+                border: 1px solid $main-orange;
+                display: block;
+
+                  &-retry{
+                     margin-top: 25px;
+                     border: 1px solid $main-orange;
+                  }
+                };
+
+                background-color: white;
+             
+                padding-left: 20px;
+                /* border-bottom: 2px solid rgb(8, 89, 40); */
+             }
+             
+             label {
+                 text-align: center;
+                 font-size: 12px;
+                 font-weight: 600;
+                }
+            }
+        }
+
+        .feature-wrapper {
+           margin-top: 30px;
+           text-align: center;
+       
+           .find_pw {
+               color: grey;
+               font-size: 10pt;
+               text-decoration: underline;
+            }
+       
+            .find_pw:hover {
+               color: rgb(1, 1, 1);
+               font-size: 10pt;
+            }
+       
+            #submit {
+               margin-top: 40px;
+               margin-bottom: 10px;
+            
+               color: #f4b740;
+               font-size: 10pt;
+               border-radius: 20px;
+               background-color: white !important;
+               border: 2px #f4b740 solid !important;
+               padding: 20px 70px;
+            
+               font-weight: 600;
+
+               //  회원가입
+               &.join{
+                  color: $green;
+                  background-color: white !important;
+                  border: 2px $green solid !important;
+               }
+            }
+       }
+       
+       .social-wrapper {
+           margin-top: 30px;
+        }
+        
+
+ }
+ 
+ .input-wrapper 
+ .input-wrapper input:nth-child(2n + 1) {
+    background-color: #f4b740;
+    /* border-bottom: 2px solid rgb(8, 89, 40); */
+ }
+ 
+ .input-wrapper 
+ 
+ input:focus {
+    outline: none;
+ }
+ 
+ input::placeholder {
+    color: rgb(184, 184, 184);
+    font-style: italic;
+    font-size: 10pt;
+ }
+ 
+ .input-password,
+ .input-email {
+    margin-top: 30px;
+ }
+ 
+ .error-text {
+    position: absolute;
+    margin-top: 4px;
+    color: rgb(255, 81, 81);
+    font-size: 13px;
+
+    i {
+        color: rgb(255, 81, 81);
+        font-size: 17px;
+     }
+ }

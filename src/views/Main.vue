@@ -4,16 +4,13 @@
          <nori-content :sendNori="nori"></nori-content>
          <br />
       </div>
-      <div class="btn-create" @click="goCreate">
-         <v-icon>
-            mdi-lead-pencil
-         </v-icon>
-      </div>
+      <speed-dial></speed-dial>
    </div>
 </template>
 
 <script>
 import NoriContent from '@/components/main/NoriContent.vue';
+import SpeedDial from '@/components/main/SpeedDial.vue';
 
 const dummyInsert = (list) => {
    const nori = {
@@ -37,6 +34,7 @@ const dummyInsert = (list) => {
 export default {
    components: {
       NoriContent,
+      SpeedDial,
    },
    data() {
       return {

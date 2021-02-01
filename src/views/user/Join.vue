@@ -1,88 +1,132 @@
-<template lang="">
+<template>
    <div class="container">
       <div class="wrapper">
-         <h3>우리 서비스에 함께 해주세요</h3>
-         <br />
-         <label for="email">이메일 </label>
-         <input type="text" v-model="email" id="email" placeholder="이메일을 입력하세요." />
-         <v-text-field
-            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-            :rules="[rules.required, rules.min]"
-            :type="show1 ? 'text' : 'password'"
-            name="input-10-2"
-            label="Not visible"
-            hint="At least 8 characters"
-            value=""
-            class="input-group--focused"
-            @click:append="show1 = !show1"
-         ></v-text-field>
-         <v-text-field
-            :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
-            :rules="[rules.required, rules.emailMatch]"
-            :type="show2 ? 'text' : 'password'"
-            name="input-10-2"
-            label="Error"
-            hint="At least 8 characters"
-            value=""
-            error
-            @click:append="show2 = !show2"
-         ></v-text-field>
+         <div class="title">
+            <img class="join-img" src="@/assets/c_wp.png" />
+            <span>우리와 함께해요!</span>
+         </div>
+         <div class="input-wrapper">
+            <div class="input-email">
+               <label for="email">이메일을 입력해주세요! </label>
+               <input
+                  class="join"
+                  type="text"
+                  v-bind:class="{ error: error.email, complete: !error.email && join_email.length !== 0 }"
+                  v-model="join_email"
+                  id="email"
+                  placeholder="이메일을 입력하세요."
+               />
+               <div class="error-text" v-if="error.email">
+                  <v-icon>
+                     mdi-alert-decagram
+                  </v-icon>
+                  {{ error.email }}
+               </div>
+            </div>
+            <div class="input-password">
+               <label for="password">비밀번호 </label>
+               <input
+                  type="password"
+                  class="join"
+                  v-bind:class="{ error: error.password, complete: !error.password && join_pw.length !== 0 }"
+                  v-model="join_pw"
+                  id="password"
+                  placeholder="비밀번호를 입력하세요."
+               />
+               <div class="error-text" v-if="error.password"><v-icon> mdi-alert-decagram </v-icon> {{ error.password }}</div>
 
-         <router-link to="login">뒤로가기</router-link>
+               <input
+                  type="password"
+                  class="join-retry"
+                  v-bind:class="{ error: error.password2, complete: !error.password2 && join_pw2.length !== 0 }"
+                  v-model="join_pw2"
+                  id="password"
+                  placeholder="비밀번호를 다시 입력하세요."
+               />
+               <div class="error-text" v-if="error.password2"><v-icon> mdi-alert-decagram </v-icon> {{ error.password2 }}</div>
+            </div>
+         </div>
+         <div class="feature-wrapper">
+            <v-btn id="submit" class="join" color="success" @click="doJoin">회원가입</v-btn>
+         </div>
+         <br />
+         <router-link to="Login">뒤로가기</router-link>
       </div>
    </div>
 </template>
 <script>
+// import PV from 'password-validator';
+import * as EmailValidator from 'email-validator';
+import { mapActions } from 'vuex';
+
 export default {
    data() {
       return {
-         email: '',
-         show1: false,
-         show2: false,
-         password: 'Password',
-         rules: {
-            required: (value) => !!value || 'Required.',
-            min: (v) => v.length >= 8 || 'Min 8 characters',
-            emailMatch: () => `The email and password you entered don't match`,
+         join_email: '',
+         join_pw: '',
+         join_pw2: '',
+         error: {
+            email: false,
+            password: false,
+            password2: false,
          },
       };
    },
+   methods: {
+      ...mapActions(['doLogin']),
+
+      checkForm() {
+         if (this.join_email.length > 0 && !EmailValidator.validate(this.join_email)) {
+            this.error.email = '이메일 형식이 아닙니다.';
+         } else this.error.email = false; //조건 충족시, 화면 다시 없애도록
+
+         if (this.join_pw.length > 0 && !this.checkPW(this.join_pw)) {
+            this.error.password = '영문과 숫자를 섞고, 6-20글자로 해주세요';
+         } else this.error.password = false; //조건 충족시, 화면 다시 없애도록
+      },
+
+      checkFormPW() {
+         if (this.join_pw.length > 0 && this.join_pw !== this.join_pw2) {
+            this.error.password2 = '일치하지 않아요. 다시 확인해주세요';
+         } else this.error.password2 = false;
+      },
+
+      checkPW(str) {
+         // 영문, 숫자 혼합 6글자 이내
+         var reg_pwd = /^.*(?=.{6,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/;
+         // test()
+         if (reg_pwd.test(str) === true) {
+            return true;
+         } else return false;
+      },
+
+      doJoin() {
+         if (this.join_email !== '' && this.join_pw !== '' && this.join_pw2 !== '') {
+            if (!this.error.email && !this.error.password && !this.error.password2) {
+               alert('회원가입이 되었습니다!');
+               this.$router.push('login');
+            } else {
+               alert('입력 정보를 다시 확인해주세요.');
+            }
+         } else {
+            alert('모든 항목을 채워주세요');
+         }
+      },
+   },
+
+   watch: {
+      join_email: function() {
+         this.checkForm();
+      },
+      join_pw: function() {
+         this.checkForm();
+      },
+      join_pw2: function() {
+         this.checkFormPW();
+      },
+   },
 };
 </script>
-<style scoped>
-.container {
-   background-color: white;
-
-   /* 전체화면 가리기 */
-   width: 100%;
-   max-width: 100%;
-   height: 100%;
-   padding: 0px;
-   margin: 0px;
-
-   /* 창 덮기 */
-   position: fixed;
-   top: 0;
-   left: 0;
-   z-index: 10;
-}
-
-.wrapper {
-   background-color: rgba(241, 249, 255, 0.555);
-   border-radius: 45px;
-
-   min-width: 360px;
-   min-height: 500px;
-   width: 50%;
-   height: 80%;
-   margin: 0 auto;
-   margin-top: 50px;
-   padding: 60px 0px;
-
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-
-   /* box-shadow: 0px 9px 20px 0px #56565629; */
-}
+<style lang="scss" scoped>
+@import 'src/css/login';
 </style>
