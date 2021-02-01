@@ -2,7 +2,7 @@
    <div>
       <!-- 노리 제작 헤더 -->
       <div dense class="d-flex justify-space-between align-center contentHeader">
-         <v-icon @click="createCancel">mdi-close</v-icon>
+         <v-icon class="close" @click="createCancel">mdi-close</v-icon>
          <span class="header-title">노리 만들기</span>
          <div class="d-flex align-center" style="margin-right: 10px">
             <guideline style="margin-right: 10px" />
@@ -183,6 +183,10 @@ export default {
 // 트렐로 배경색 : rgb(235,236,240)
 
 .contentHeader {
+   .close {
+      padding-left: 10px;
+      color: black;
+   }
    padding: 5px;
    // box-shadow: 0 3px 5px lightgray;
    // background-color: #f4b740;

@@ -2,6 +2,7 @@
   <div>
     <v-row
       justify="center"
+      class="last-dialog"
     >
       <v-btn
         color="#89BA17"
@@ -15,6 +16,7 @@
       <v-dialog
         v-model="dialog"
         fullscreen
+        
         hide-overlay
         transition="dialog-bottom-transition"
         scrollable
@@ -24,7 +26,6 @@
             flat
             dark
             class="toolbar"
-            justify="between"
             color="white"
             max-height="4rem"
           >
@@ -36,15 +37,15 @@
             >
               <v-icon>mdi-close</v-icon>
             </v-btn>
-            <v-toolbar-title class="toolbar-title">마지막 단계</v-toolbar-title>
-            <v-spacer></v-spacer>
+            <v-toolbar-title class="toolbar-title">(수정예정)마지막 단계</v-toolbar-title>
+            
             <v-toolbar-items>
-              <v-btn
+              <button
                 class="complete-button"
                 @click="dialog = false"
               >
                 완료
-              </v-btn>
+              </button>
             </v-toolbar-items>
           </v-toolbar>
           <v-card-text>
@@ -82,14 +83,24 @@
               <v-list-item>
                 <v-list-item-content>
                   <v-list-item-title>이 노리를 분류하자면?</v-list-item-title>
-                  <v-select
+                  <div
+                    v-for="(category, idx) in categories"
+                    :key="idx"
+                    class="categories"  
+                  >
+                  <category-item 
+                    @on-cate-select="onCategorySelect"
+                    :category="category"
+                  />
+                  </div>
+                  <!-- <v-select
                     v-model="selectedCategories"
                     :items="categories"
                     chips
                     label="중복 선택 가능"
                     multiple
                     outlined
-                  ></v-select>
+                  ></v-select> -->
                 </v-list-item-content>
               </v-list-item>
               <v-divider></v-divider>
@@ -113,7 +124,7 @@
                           @keypress.enter="addHashtag"
                         ></v-text-field>
                         
-                        <v-icon tag="dpgppg" @click="addHashtag">mdi-plus-circle</v-icon>                                          
+                        <v-icon @click="addHashtag">mdi-plus-circle</v-icon>                                          
                         
                       </div>                
                     </v-col>
@@ -152,9 +163,13 @@
 </template>
 <script>
 // import axios from 'axios'
+import CategoryItem from './CategoryItem.vue'
 
 export default {
   name: 'CategoryAndTimeInfo',
+  components: {
+    CategoryItem
+  },
   props: {
     title: String,
     itemList: Array
@@ -205,6 +220,15 @@ export default {
       }
       
     },
+    onCategorySelect: function (category) {
+      console.log("선택")
+      const targetIndex = this.selectedCategories.indexOf(category)
+      if (targetIndex >= 0) {
+        this.selectedCategories.splice(targetIndex, 1)
+      } else {
+        this.selectedCategories.push(category)
+      }
+    },
     deleteTag: function (index) {
       this.hashtags.splice(index, 1)
     },
@@ -241,24 +265,57 @@ export default {
 }
 </script>
 <style lang="scss">
+.last-dialog {
+  .v-btn {
+    width: 50px;
+    .v-btn__content {
+      font-size: 11pt;
+    }
+  }
+}
 .v-dialog {
-  padding-top: 55px;
+  margin-top: 55px;
   border: 0;
   box-shadow: none;
   .card {
     .toolbar {
       .toolbar-title {
         color: black;
+        padding-right: 50px;
       }
       .v-toolbar__content {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
         .v-toolbar__items {
           display: flex;
           align-items: center;
           .complete-button {
-            height: 30px !important;
+            height: 30px;
+            width: 50px;
+            box-shadow: 0 3px 3px lightgray;
             border-radius: 5px;
             background-color: #89BA17;
             color:white;
+          }
+        }
+      }
+    }
+    .v-card__text {
+      .v-list {
+        .v-list-item {
+          .v-list-item__content {
+            width: 100%;
+            .categories {
+              .item-wrapper {
+                background-color: aquamarine;
+                width: 80px;
+              }
+              .selected {
+                background-color: lightgray;
+                width: 80px;
+              }
+            }
           }
         }
       }
