@@ -40,7 +40,8 @@ export default {
       content: '',
       itemList: [],
       subjects: ['동네맛집', '동네카페', '아이교육/학원', '살림/청소/정리'],
-      subject_final: ''
+      subject_final: '',
+      subject: ''
     }
   },
   components: {

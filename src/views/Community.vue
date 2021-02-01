@@ -10,7 +10,7 @@
         label="subject"
         @change ="getSubject"
       ></v-select>
-      <ArticleList :articles="articles"/>
+      <ArticleList :articles="articles" :subject_select="subject_select"/>
       <div>
     <v-row justify="center">
     <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
@@ -53,14 +53,18 @@ export default {
          dialog: false,
          articles: [],
          subjects: ['동네맛집', '동네카페', '아이교육/학원', '살림/청소/정리'],
-         subject_final: ''
+         subject_select: '',
+         subject: ''
       }
    },
    methods: {
       createArticle: function (article) {
          this.dialog = false
          this.articles.push(article)
-      }
+      },
+      getSubject: function () {
+         this.subject_select = this.subject
+      },
    }
 }
 </script>
