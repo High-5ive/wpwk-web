@@ -2,13 +2,11 @@
    <v-card id="create">
       <v-speed-dial v-model="fab" :top="top" :bottom="bottom" :right="right" :left="left" :direction="direction" :open-on-hover="hover" :transition="transition">
          <template v-slot:activator>
-            <v-btn v-model="fab" color="blue darken-2" dark fab>
+            <v-btn id="main-dial" v-model="fab" color="blue darken-2" dark fab>
                <v-icon v-if="fab">
                   mdi-close
                </v-icon>
-               <v-icon v-else>
-                  mdi-account-circle
-               </v-icon>
+               <img v-else src="@/assets/c_wk.png" style="width:35px" />
             </v-btn>
          </template>
          <v-btn fab dark small color="green">
@@ -77,6 +75,19 @@ export default {
    bottom: 40px;
    right: 30px;
    z-index: 5;
+
+   button {
+      &#main-dial {
+         width: 60px;
+         height: 60px;
+         background-color: white !important;
+         border: 2px orange solid !important;
+
+         i {
+            color: red;
+         }
+      }
+   }
 }
 #create .v-btn--floating {
    position: relative;
