@@ -10,7 +10,8 @@
          <v-toolbar-title
             ><router-link to="/"><img src="@/assets/wpwk_logo.png"/></router-link
          ></v-toolbar-title>
-         <div class="btn-search"><i class="fas fa-search"></i></div>
+         <div class="btn-search" @click="showSearch = !showSearch"><i class="fas fa-search"></i></div>
+         <search v-if="showSearch"></search>
       </v-app-bar>
 
       <v-main>
@@ -20,10 +21,15 @@
 </template>
 
 <script>
+import Search from '@/components/main/Search.vue';
+
 export default {
    name: 'App',
-
-   data: () => ({ drawer: false }),
+   components: { Search },
+   data: () => ({
+      drawer: false,
+      showSearch: false,
+   }),
 };
 </script>
 
@@ -33,48 +39,50 @@ export default {
 }
 </style>
 
-<style scoped>
+<style lang="scss" scoped>
 #inspire {
    /* background-color: blue; */
    font-family: 'Noto Sans KR', sans-serif;
-}
 
-.v-toolbar__title {
-   margin: 0 auto;
-   padding-left: 0px !important;
-   padding-right: 30px !important;
-}
+   .v-toolbar__title {
+      margin: 0 auto;
+      padding-left: 0px !important;
+      padding-right: 30px !important;
+   }
 
-.root-header img {
-   height: 40px;
-}
+   .root-header {
+      img {
+         height: 40px;
+      }
 
-.root-header .btn-search {
-   height: 48px;
-   width: 48px;
-   /* margin-right: -12px; */
-   /* background-color: red; */
+      .btn-search {
+         height: 48px;
+         width: 48px;
+         /* margin-right: -12px; */
+         /* background-color: red; */
 
-   position: absolute;
-   /* top: -10px; */
-   right: 12px;
-}
+         position: absolute;
+         /* top: -10px; */
+         right: 12px;
+      }
+   }
 
-.btn-search i {
-   height: 24px;
-   width: 24px;
-   color: rgba(255, 180, 0);
-   font-size: 18px;
+   .btn-search i {
+      height: 24px;
+      width: 24px;
+      color: rgba(255, 180, 0);
+      font-size: 18px;
 
-   margin: 14px 0 0 14px;
-}
+      margin: 14px 0 0 14px;
+   }
 
-.v-btn__content i {
-   color: rgba(147, 217, 20) !important;
-}
+   .v-btn__content i {
+      color: rgba(147, 217, 20) !important;
+   }
 
-.sidemenu {
-   margin-top: 56px;
-   /* background-color: red; */
+   .sidemenu {
+      margin-top: 56px;
+      /* background-color: red; */
+   }
 }
 </style>
