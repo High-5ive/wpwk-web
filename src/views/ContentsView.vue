@@ -1,12 +1,16 @@
 <template>
 <div class="container">
+  <!-- evaluation값에 따라 페이지 변환 -->
+  <!-- 평가페이지 -->
   <div v-if="evaluationValue">
     <v-icon @click="back">
         mdi-backup-restore
     </v-icon>
     <Evaluations />
   </div>
+  <!-- 카드페이지 -->
   <div v-else>
+    {{ this.title }}
     <CardList :cards="cards" @evaluationPage="evaluation" />
   </div>  
   <br>
@@ -36,6 +40,8 @@
     </v-dialog>
     </v-row>
   </div>
+  <!-- 댓글창 끝 -->
+
 </div>
 </template>
 
@@ -45,13 +51,47 @@ import Evaluations from '@/components/ContentsView/Evaluations'
 import CommentList from '@/components/ContentsView/CommentList'
 import CommentForm from '@/components/ContentsView/CommentForm'
 
-// img, description은 제공받는 데이터에서 가져옴(임의의 값 설정)
-const data = [
-    {img: "https://cdn.vuetifyjs.com/images/cards/cooking.png",
-    description: 'Small plates, salads & sandwiches - an intimate setting with 12 indoor seats plus patio seating.'},
-    {img: "https://cdn.vuetifyjs.com/images/cards/cooking.png",
-    description: 'an intimate setting with 12 indoor seats plus patio seating.'},
-    ]
+// img, photo, description은 제공받는 데이터에서 가져옴(임의의 값 설정)
+const noriContent = {
+        title: '노리 컨텐츠입니다.',
+        itemList: [
+          {type: 'youtube',
+          youtube: {
+            thumbnaeilSrc: '',
+            title: '',
+            videoId: "y315L6tkNxQ",
+          },
+          photo: {},
+          video: '',
+          description: '유튜브입니다.'},
+
+          {type: 'photo',
+          youtube: {
+            thumbnaeilSrc: '',
+            title: '',
+            videoId: '',
+          },
+          photo:  "https://cdn.vuetifyjs.com/images/cards/cooking.png" ,
+          video: '',
+          description: '사진입니다.'},
+
+          {type: 'text',
+          youtube: {
+            thumbnaeilSrc: '',
+            title: '',
+            videoId: '',
+          },
+          photo: {},
+          video: '',
+          description: '글입니다.'},
+        ],
+        time: {
+          hour: 0,
+          minute: 0
+        },
+        selectedCategories: [],
+        hashtags: []
+    }
 
 export default {
     name: 'ContentsView',
@@ -64,6 +104,7 @@ export default {
     data: function () {
         return {
             cards: [],
+            title: '',
             evaluationValue: false,
             dialog: false,
             comments: [],
@@ -71,8 +112,12 @@ export default {
     },
     methods: {
         //card, comment 임의의 값 입력
+        // getCards: function () {
+        //     this.cards = data
+        // },
         getCards: function () {
-            this.cards = data
+            this.cards = noriContent.itemList
+            this.title = noriContent.title
         },
         evaluation(value) {
             this.evaluationValue = value
