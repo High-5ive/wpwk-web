@@ -4,15 +4,9 @@
       justify="center"
       class="last-dialog"
     >
-      <v-btn
-        color="#89BA17"
-        class="ma-2"
-        small
-        dark
-        @click="onNextClicked"
-      >
+      <span class="right-button" @click="onNextClicked">
         다음
-      </v-btn>
+      </span>
       <v-dialog
         v-model="dialog"
         fullscreen
@@ -265,14 +259,6 @@ export default {
 }
 </script>
 <style lang="scss">
-.last-dialog {
-  .v-btn {
-    width: 50px;
-    .v-btn__content {
-      font-size: 11pt;
-    }
-  }
-}
 .v-dialog {
   margin-top: 55px;
   border: 0;
