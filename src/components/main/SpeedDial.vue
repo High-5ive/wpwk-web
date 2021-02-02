@@ -6,23 +6,28 @@
                <v-icon v-if="fab">
                   mdi-close
                </v-icon>
-               <img v-else src="@/assets/c_wk.png" style="width:35px" />
+               <v-icon v-else>
+                  mdi-baby-carriage
+               </v-icon>
+               <!-- <img v-else src="@/assets/c_wk.png" style="width:35px" /> -->
             </v-btn>
          </template>
          <v-btn fab dark small color="green">
-            <v-icon>mdi-pencil</v-icon>
-         </v-btn>
-         <v-btn fab dark small color="indigo">
-            <v-icon>mdi-plus</v-icon>
+            <router-link to="/ContentsCreate"><v-icon>mdi-pencil</v-icon></router-link>
          </v-btn>
          <v-btn fab dark small color="red">
-            <v-icon>mdi-delete</v-icon>
+            <v-icon>mdi-heart</v-icon>
+         </v-btn>
+         <v-btn fab dark small color="indigo" @click="scrollTop">
+            <v-icon>mdi-chevron-up</v-icon>
          </v-btn>
       </v-speed-dial>
    </v-card>
 </template>
 
 <script>
+// import _ from 'lodash';
+
 export default {
    data: () => ({
       direction: 'top',
@@ -64,6 +69,26 @@ export default {
          this.right = !val;
       },
    },
+
+   methods: {
+      scrollTop: function() {
+         this.intervalId = setInterval(() => {
+            if (window.pageYOffset === 0) {
+               clearInterval(this.intervalId);
+            }
+            window.scroll(0, window.pageYOffset - 50);
+         }, 20);
+      },
+      scrollListener: function() {
+         this.visible = window.scrollY > 150;
+      },
+   },
+   mounted: function() {
+      window.addEventListener('scroll', this.scrollListener);
+   },
+   beforeDestroy: function() {
+      window.removeEventListener('scroll', this.scrollListener);
+   },
 };
 </script>
 
@@ -80,13 +105,13 @@ export default {
       &#main-dial {
          width: 60px;
          height: 60px;
-         background-color: white !important;
-         border: 2px orange solid !important;
-
-         i {
-            color: red;
-         }
+         background-color: orange !important;
+         border: 2px white solid !important;
       }
+   }
+   a {
+      color: white !important;
+      text-decoration: none !important;
    }
 }
 #create .v-btn--floating {

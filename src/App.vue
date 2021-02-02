@@ -42,6 +42,7 @@ export default {
 <style lang="scss" scoped>
 #inspire {
    /* background-color: blue; */
+   // font-family: 'Poor Story', sans-serif;
    font-family: 'Noto Sans KR', sans-serif;
 
    .v-toolbar__title {
