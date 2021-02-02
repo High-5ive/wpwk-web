@@ -19,6 +19,7 @@ import SideMenu from '@/components/SideMenu.vue'
 //아래 바뀌는 모든 화면단을 import
 import Main from '../views/Main.vue'
 import Community from '../views/Community.vue'
+import ArticleDetail from '../views/ArticleDetail.vue'
 import Mypage from '../views/Mypage.vue'
 import ContentsCreate from '../views/ContentsCreate.vue'
 import ContentsView from '../views/ContentsView.vue'
@@ -48,6 +49,14 @@ const routes = [
         components: {
             side: SideMenu,
             default: Community,
+        },
+    },
+    {
+        path: '/cmmu/:articleId',
+        name: 'articledetail',
+        components: {
+            side: SideMenu,
+            default: ArticleDetail,
         },
     },
     {

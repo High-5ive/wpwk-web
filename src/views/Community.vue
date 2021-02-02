@@ -1,12 +1,21 @@
 <template>
    <div class="container">
-      <ArticleList :articles="articles"/>
-
+      <v-select
+        v-model="subject"
+        :items="subjects"
+        dense
+        outlined
+        hide-details
+        class="ma-2 subject"
+        label="subject"
+        @change ="getSubject"
+      ></v-select>
+      <ArticleList :articles="articles" :subject_select="subject_select"/>
       <div>
     <v-row justify="center">
     <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="primary"  fab dark v-bind="attrs" v-on="on">
+        <v-btn class="write" color="primary"  fab dark v-bind="attrs" v-on="on">
            <v-icon> mdi-pencil </v-icon>
          </v-btn>
       </template>
@@ -43,16 +52,31 @@ export default {
       return {
          dialog: false,
          articles: [],
+         subjects: ['동네맛집', '동네카페', '아이교육/학원', '살림/청소/정리'],
+         subject_select: '',
+         subject: ''
       }
    },
    methods: {
       createArticle: function (article) {
          this.dialog = false
          this.articles.push(article)
-      }
+      },
+      getSubject: function () {
+         this.subject_select = this.subject
+      },
    }
 }
 </script>
 
 <style scoped>
+.write {
+   position: fixed;
+   top: 500px;
+   right: 100px;
+}
+.subject {
+  position: fixed;
+  top: 70px;
+}
 </style>
