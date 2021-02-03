@@ -36,7 +36,7 @@ export default {
     },
   },
   created: function () {
-    this.getArticles()
+    this.selected_articles = this.articles
   },
   watch: {
     subject_select: function () {
