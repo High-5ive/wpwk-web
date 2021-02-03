@@ -270,6 +270,15 @@ export default {
 }
 
 .div-wrapper {
+  animation: 0.3s ease-out 0s 1 slideInFromBottom;
+  @keyframes slideInFromBottom {
+    0% {
+      transform: translateY(30px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
   .circle {
     width: 30px;
 
@@ -306,7 +315,7 @@ export default {
 
     // background-color: rgb(247, 247, 247);
     // box-shadow: 0 4px 4px lightgray;
-
+    
     .left-wrapper {
       width: 10%;
     }
@@ -337,10 +346,14 @@ export default {
           width: 100%;
           height: 100%;
           padding: 8px;
-          box-shadow: 0 4px 4px lightgray;
+          background-color: #ffffff4e;
+          // box-shadow: 0 4px 4px lightgray;
           resize: none;
           font-size: 11px;
         }
+        textarea:focus {
+            outline: none;
+          }
 
         textarea::placeholder {
           color: rgb(171, 171, 171);
@@ -368,9 +381,13 @@ export default {
             width: 100%;
             height: 100%;
             padding: 8px;
-            box-shadow: 0 4px 4px lightgray;
+            background-color: #ffffff4e;
+            // box-shadow: 0 4px 4px lightgray;
             resize: none;
             font-size: 12px;
+          }
+          textarea:focus {
+            outline: none;
           }
           .text {
             text-align: center;
@@ -413,13 +430,13 @@ export default {
   }
 }
 .sortable-chosen {
-  transform: rotate(-15deg);
-  
+  // transform: rotate(-15deg);
+  opacity: 0.7;
   // background-color: #dcdcdc;
 }
 
 .sortable-ghost {
-  transform: rotate(0deg);
+  // transform: rotate(0deg);
   // background-color: #dcdcdc;
 }
 
@@ -492,11 +509,20 @@ export default {
   width: 100% !important;
   margin-left: -10px !important;
   position: fixed;
-  bottom: 130px;
+  bottom: 150px;
   text-align: center;
     width: 80%;
   /* left, right는 해당 요소의 위치 시작점을 결정한다. 그런데, 이때, margin의 양 값을 auto로 줌으로써 마진을 주어 해당 요소의 양 끝 위치를 각각 0으로 만들어준다. */
   margin: 0 auto;
+  animation: 1s ease-out 0s 1 slideInFromTop;
+  @keyframes slideInFromTop {
+    0% {
+      transform: translateY(-30px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
   p{
     font-size: 20pt;
     color: rgb(179, 179, 179);
