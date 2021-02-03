@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import router from "../router/router";
-import { login, getMemberInfo } from "@/api/user.js";
+import jwt_decode from "jwt-decode";
 
 Vue.use(Vuex);
 
@@ -20,65 +20,24 @@ export default new Vuex.Store({
       state.userInfo = payload;
     },
 
+    // 로그인이 실패했을 때
+    loginError(state) {
+      state.isLogin = false;
+      state.isLoginError = true;
+    },
+
     //로그아웃 시
     logout(state) {
       localStorage.removeItem("accessToken");
       state.isLogin = false;
       state.userInfo = null;
     },
-
-    setUserInfo(state, userInfo) {
-      state.isLogin = true;
-      state.userInfo = userInfo;
-    },
   },
   actions: {
-    // 비즈니스 로직 : state 반영 전 데이터 조회 및 가공
-    //로그인 처리
-    doLogin({ dispatch }, loginObj) {
-      // 전체 유저에서 해당 이메일로 유저를 찾는다.
-      localStorage.setItem("access-token", "");
-      login(
-        loginObj,
-        (res) => {
-          // 로그인에 성공한 경우
-          if (res.status === 201) {
-            let token = res.data["access-token"];
-            localStorage.setItem("access-token", token);
-            dispatch("getMemberInfo", true);
-            // this.$router.push("/");
-          } else {
-            this.isLoginError = true;
-          }
-        },
-        (err) => {
-          console.log("err : " + err);
-          // 401 -> 인증되지 않은 경우
-          if (err.status === 401) {
-            alert("인증되지 않은 이메일입니다.");
-            // router.push({ name: "home" })
-          }
-
-          if (err.status === 404) {
-            alert("이메일 또는 비밀번호를 확인하세요.");
-          }
-        }
-      );
-    },
-
-    getMemberInfo({ commit }, isFirst) {
-        getUserInfo(
-            (res) => {
-                commit("loginSuccess", userInfo);
-                if (isFirst === true) {
-                    //  router.push({ name: "home" });
-                }
-            },
-            (err) => {
-                alert("유저정보를 가져올 수 없습니다.");
-                console.log(error);
-            }
-        )
+    doLogout({ commit }) {
+      commit("logout");
+      localStorage.removeItem("accessToken");
+      // axios.defaults.headers.common["auth-token"] = undefined;
     },
 
     //비동기로 받은 데이터에 닉네임이 있는지 판별
@@ -93,20 +52,19 @@ export default new Vuex.Store({
       }
     },
 
-    doLogout() {
-      this.commit("logout");
-      alert("로그아웃 완료");
-
-      router.push({
-        path: "/landingTest",
-      });
-    },
-
-    getUserInfo() {
-      let log = localStorage.getItem("log");
+    getUserInfo({commit}) {
+      let log = localStorage.getItem("accessToken");
       let social = localStorage.getItem("com.naver.nid.oauth.state_token");
 
-      if (log != null || social != null) {
+      if (log != null) {
+        let token = localStorage.getItem("accessToken");
+        let decode = jwt_decode(token);
+        let userInfo = {
+          userId: decode.userId,
+          nickname: decode.nickname,
+        };
+        commit("loginSuccess", userInfo);
+      } else if (social != null) {
         let sample = {
           email: "a@a.com",
           nickname: "위파",
