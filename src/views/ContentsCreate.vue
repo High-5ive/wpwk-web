@@ -21,7 +21,10 @@
       >
         <!-- 노리의 유튜브 항목 -->
         <div class="circle">{{ idx + 1 }}</div>
-        <div class="item-wrapper d-flex align-center justify-space-between">
+        <div 
+          class="item-wrapper d-flex align-center justify-space-between"
+          :class="{'text-wrapper': isText(item), 'youtube-wrapper': isYoutube(item), 'photo-wrapper': isPhoto(item) }"
+        >
           <span class="left-wrapper handle">
             <v-icon>
               mdi-menu
@@ -52,10 +55,11 @@
               @item-change="onItemChange"
             />
           </div>
-          <div class="right-wrapper">
+          <div class="right-wrapper d-flex flex-column justify-space-between">
             <button @click="deleteItem(idx)">
               <v-icon>mdi-trash-can</v-icon>
             </button>
+            <div :class="{'text-rightbottom':isText(item), 'youtube-rightbottom':isYoutube(item), 'photo-rightbottom':isPhoto(item)}"></div>
           </div>
         </div>
       </div>
@@ -134,6 +138,27 @@ export default {
     };
   },
   methods: {
+    isText: function (item) {
+      if (item.type=="text") {
+        return true
+      } else {
+        return false
+      }
+    },
+    isYoutube: function (item) {
+      if (item.type=="youtube") {
+        return true
+      } else {
+        return false
+      }
+    },
+    isPhoto: function (item) {
+      if (item.type=="photo") {
+        return true
+      } else {
+        return false
+      }
+    },
     axiosFileSelect: function() {
       var elem = document.getElementById("fileUpload");
       elem.click();
@@ -252,13 +277,22 @@ export default {
     height: 30px;
     line-height: 30px;
 
-    background-color: #f4b740;
+    background-color: lightgray;
     border-radius: 25px;
     text-align: center;
     color: white;
     margin-right: 10px;
 
     padding-right: 0px !important;
+  }
+  .text-wrapper {
+    background-color: #ebeac1;
+  }
+  .youtube-wrapper {
+    background-color: #e1a8a6;
+  }
+  .photo-wrapper {
+    background-color: #98c3e7 ;
   }
   .item-wrapper {
     // border: 1px solid gray;
@@ -268,10 +302,10 @@ export default {
     padding: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
-    border-radius: 5px;
+    // border-radius: 5px;
 
-    background-color: rgb(247, 247, 247);
-    box-shadow: 0 4px 4px lightgray;
+    // background-color: rgb(247, 247, 247);
+    // box-shadow: 0 4px 4px lightgray;
 
     .left-wrapper {
       width: 10%;
@@ -353,19 +387,40 @@ export default {
     }
 
     .right-wrapper {
-      width: 10%;
+      height: 100%;
+      width: 30px;
       text-align: center;
       // background-color: yellow;
+      .text-rightbottom {
+        margin-bottom: -10px;
+        margin-right: -15px;
+        border-left: 40px solid #eede85;
+        border-bottom : 40px solid #ffffff;
+      }
+      .youtube-rightbottom {
+        margin-bottom: -10px;
+        margin-right: -15px;
+        border-left: 40px solid #956361;
+        border-bottom : 40px solid #ffffff;
+      }
+      .photo-rightbottom {
+        margin-bottom: -10px;
+        margin-right: -15px;
+        border-left: 40px solid #6d869c;
+        border-bottom : 40px solid #ffffff;
+      }
     }
   }
 }
 .sortable-chosen {
-  opacity: 0.7;
-  background-color: #dcdcdc;
+  transform: rotate(-15deg);
+  
+  // background-color: #dcdcdc;
 }
 
 .sortable-ghost {
-  background-color: #dcdcdc;
+  transform: rotate(0deg);
+  // background-color: #dcdcdc;
 }
 
 .footer {
