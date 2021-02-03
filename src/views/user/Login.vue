@@ -77,7 +77,6 @@
 // import PV from 'password-validator';
 import * as EmailValidator from 'email-validator';
 import { mapActions } from 'vuex';
-
 import NaverLogin from '@/components/user/NaverLogin.vue';
 
 export default {

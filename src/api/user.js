@@ -5,19 +5,26 @@ const instance = createInstance();
 //   headers: { "access-token": localStorage.getItem("access-token") }
 // };
 
+function registerUser(user, success, fail) {
+    instance
+        .post(`users`, JSON.stringify(user))
+        .then(success)
+        .catch(fail)
+}
+
 function login(user, success, fail) {
   instance.defaults.headers["access-token"] = window.localStorage.getItem(
     "access-token"
   );
   const body = {
-    userid: user.userid,
-    userpwd: user.userpwd
+    email: user.email,
+    password: user.password
   };
 
   instance
-    .post("user/confirm/login", JSON.stringify(body))
+    .post("/login", JSON.stringify(body))
     .then(success)
-    .catch(fail);
+    .catch(fail)
 }
 
 async function findById(userid, success, fail) {
@@ -27,7 +34,19 @@ async function findById(userid, success, fail) {
   await instance
     .get(`/user/info/${userid}`)
     .then(success)
-    .catch(fail);
+    .catch(fail)
 }
 
-export { login, findById };
+async function getUserInfo() {
+  instance.defaults.headers["access-token"] = window.localStorage.getItem(
+    "access-token"
+  );
+  await instance
+    .post(`/loginUser`)
+    .then(success)
+    .catch(fail)
+}
+
+
+
+export { login, findById, registerUser, getUserInfo };
