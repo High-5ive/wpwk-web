@@ -18,4 +18,18 @@ function createTags(id, param, success, fail) {
     .catch(fail);
 }
 
-export { createContents, createTags };
+function findAllContents(success, fail) {
+  instance
+    .get('/contents')
+    .then(success)
+    .catch(fail);
+}
+
+function findContentsBy(id, success, fail) {
+  instance
+    .get(`/contents/${id}`)
+    .then(success)
+    .catch(fail);
+}
+
+export { createContents, createTags, findAllContents, findContentsBy };

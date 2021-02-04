@@ -216,6 +216,7 @@ export default {
         spendTime: this.time.hour + ':' + this.time.minute + ':00',
         abilities: this.selectedCategories,
       };
+      console.log(content);
 
       //contents.js 안의 정의 되어있는 axios 호출
       const token = localStorage.getItem('access-token');
