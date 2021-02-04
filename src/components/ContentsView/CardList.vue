@@ -53,7 +53,7 @@ export default {
             this.evaluation = true
             this.$emit('evaluationPage', this.evaluation)
         },
-        getCard() {
+        getCard () {
             this.card = this.cards[this.pageNum - 1]
         }
     },
@@ -61,7 +61,7 @@ export default {
         Card,
     },
     props: {
-        cards: Array,
+        cards: Array
     },
     created: function () {
         this.getCard()
