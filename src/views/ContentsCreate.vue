@@ -189,8 +189,10 @@ export default {
       const newItem = {
         type: 'youtube',
         youtube: video,
-        photo: {},
         youtubeId: video.videoId,
+        youtubeTitle: video.title,
+        youtubeThumbnail: video.thumbnailSrc,
+        photo: {},
         description: '',
       };
       if (this.itemList.length <= 9) {
