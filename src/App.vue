@@ -1,7 +1,7 @@
 <template>
    <v-app id="inspire">
       <!-- side menu -->
-      <v-navigation-drawer v-model="drawer" app>
+      <v-navigation-drawer v-model="drawer" app style="z-index: 1000">
          <router-view name="side" class="sidemenu" />
       </v-navigation-drawer>
 
@@ -39,7 +39,7 @@ export default {
 }
 </style>
 
-<style lang="scss" scoped>
+<style lang="scss">
 #inspire {
    /* background-color: blue; */
    // font-family: 'Poor Story', sans-serif;
@@ -78,12 +78,14 @@ export default {
    }
 
    .v-btn__content i {
-      color: rgba(147, 217, 20) !important;
+      // color: rgba(147, 217, 20) !important;
    }
 
-   .sidemenu {
-      margin-top: 56px;
-      /* background-color: red; */
+   .v-navigation-drawer__content {
+      .sidemenu {
+         margin-top: 56px;
+         /* background-color: red; */
+      }
    }
 }
 </style>

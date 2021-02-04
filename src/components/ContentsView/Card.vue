@@ -1,6 +1,18 @@
 <template>
-   <div>
-      <v-card class="mx-auto my-12" width="320">
+   <div class="card-wrapper">
+      <div v-show="this.card.type !== 'text'" class="card-content">
+         <div v-if="this.card.type == 'photo'">
+            <img :src="img" />
+         </div>
+         <div v-else-if="this.card.type == 'youtube'">
+            <iframe :src="videoUrl"> </iframe>
+         </div>
+      </div>
+      <div class="card-desc bubble">
+         <div class="bubble">{{ description }}</div>
+      </div>
+
+      <!-- <v-card class="mx-auto my-12" width="320">
          <div v-if="this.card.type == 'photo'">
             <v-img height="250" :src="img"></v-img>
          </div>
@@ -10,7 +22,7 @@
          <v-card-text>
             <div>{{ description }}</div>
          </v-card-text>
-      </v-card>
+      </v-card> -->
    </div>
 </template>
 

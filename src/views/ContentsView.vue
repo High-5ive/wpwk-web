@@ -10,8 +10,12 @@
       </div>
 
       <!-- 카드페이지 -->
-      <div v-else>
-         {{ this.title }}
+      <div v-else class="cv-card-wrapper">
+         <div class="card-top-wrapper">
+            <p class="title">{{ this.title }}</p>
+            <p class="writer">관악구최강대디</p>
+         </div>
+
          <CardList :cards="cards" @evaluationPage="evaluation" />
       </div>
       <br />

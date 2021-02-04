@@ -4,96 +4,210 @@
 // ContentsView.vue
 .cv-container {
     height: 100%;
-    background-color: orange;
+    // background-color: orange;
 
     overflow: hidden;
 
-    //CardList.vue
-    .cl-container{
-        background-color: blue;
-        height: inherit;
+    // ContentsView.vue
+    .cv-card-wrapper {
+        margin-top: 20px;
+        // background-color: blue;
+        height: 100%;
+        padding-bottom: 100px;
 
-        // 하단 푸터
-        .cl-footer {
-           display: flex;
-           flex-direction: column;
-           position: fixed;
-           z-index: 100;
-           left: 50%;
-           bottom: -26px;
-           transform: translateX(-50%);
-           margin-bottom: 25px;
-           background-color: white;
-     
-           width: 100%;
-           height: 100px;
+        .card-top-wrapper {
+            height: 50px;
 
-            // 페이지네이션
-           .footer-pagination{
-            .v-pagination.v-pagination--circle{
-                margin-top: 4px;        // 하단 버튼을 바닥에 붙이기 위함...
-                margin-bottom : 10px !important;
-                
-                .v-pagination__item{
-                    font-size: 3pt;
-                    color: rgb(24, 24, 24);
-
-                    &:focus {
-                        outline: none;
-                    }
-
-                    min-height: 25px !important;
-                    height: 25px !important;
-                    min-width: 25px !important;
-
-                    box-shadow: none !important;
-                    background-color: rgb(245, 206, 107); 
-                    border: 2px solid rgb(255, 242, 219);
-                    
-                    &--active{
-                        border: 2px solid rgb(255, 242, 219) !important;
-                        background-color: $orange !important;
-                    }
-                }
-                .v-pagination__navigation{
-                    display: none !important;
-                }
+            .title {
+                text-align: center;
+                font-size: 20px !important;
+                margin-bottom: 2px;
             }
-           }
 
-           // 최하단 좌우 이동 버튼
-           .footer-navi {
-            width: 100%;
-            // margin-top: 20px;
-            display: flex;
+            .writer {
+                text-align: center;
+                font-size: 13px !important;
+                color: gray;
+            }
 
-            .left-button {
-              height: 50px;
-              background-color: #f4b740;
-              width: 50%;
-              padding-top: 12px;
-              text-align: center;
-            }
-            .right-button {
-              background-color: #a2d646;
-              padding-top: 12px;
-              width: 50%;
-              text-align: center;
-            }
-          }
         }
+
+        //CardList.vue
+        .cl-container {
+            background-color: darkcyan;
+            height: 100%;
+
+            // 카드 한장
+            // Card.vue
+            .card-wrapper {
+                background-color: white;
+                width: 100%;
+                height: 100%;
+
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                .card-content {
+                    $content_h: 30vh;
+                    width: 100%;
+                    height: $content_h;
+                    padding: 20px;
+
+                    img {
+                        width: 100%;
+                        height: $content_h;
+                        object-fit: cover;
+                        object-position: 0px 0px;
+                    }
+
+                    iframe {
+                        width: 100%;
+                        height: $content_h;
+                        border: none;
+                    }
+                }
+
+                .card-desc {
+                    width: 90%;
+                    height: 60vh;
+                    
+                    .bubble {
+                        position: relative;
+                        width: 100%;
+                        min-height: 140px;
+                        padding: 20px;
+                        background: #FFFFFF;
+                        -webkit-border-radius: 34px;
+                        -moz-border-radius: 34px;
+                        border-radius: 34px;
+                        border: #7F7F7F solid 2px;
+                    }
+
+                    .bubble:after {
+                        content: '';
+                        position: absolute;
+                        border-style: solid;
+                        border-width: 0 15px 12px;
+                        border-color: #FFFFFF transparent;
+                        display: block;
+                        width: 0;
+                        z-index: 1;
+                        top: -12px;
+                        left: 45%;
+                    }
+
+                    .bubble:before {
+                        content: '';
+                        position: absolute;
+                        border-style: solid;
+                        border-width: 0 16px 13px;
+                        border-color: #7F7F7F transparent;
+                        display: block;
+                        width: 0;
+                        z-index: 0;
+                        top: -15px;
+                        left: 45%;
+                    }
+                }
+            }
+
+            // 하단 푸터
+            .cl-footer {
+                display: flex;
+                flex-direction: column;
+                position: fixed;
+                z-index: 100;
+                left: 50%;
+                bottom: -26px;
+                transform: translateX(-50%);
+                margin-bottom: 25px;
+                //    background-color: white;
+
+                width: 100%;
+                height: 100px;
+
+                // 페이지네이션
+                .footer-pagination {
+                    .v-pagination.v-pagination--circle {
+                        margin-top: 4px; // 하단 버튼을 바닥에 붙이기 위함...
+                        margin-bottom: 10px !important;
+
+                        .v-pagination__item {
+                            font-size: 3pt;
+                            color: rgb(24, 24, 24);
+
+                            &:focus {
+                                outline: none;
+                            }
+
+                            min-height: 25px !important;
+                            height: 25px !important;
+                            min-width: 25px !important;
+
+                            box-shadow: none !important;
+                            background-color: rgb(245, 206, 107);
+                            border: 2px solid rgb(255, 242, 219);
+
+                            &--active {
+                                border: 2px solid rgb(255, 242, 219) !important;
+                                background-color: $orange !important;
+                            }
+                        }
+
+                        .v-pagination__navigation {
+                            display: none !important;
+                        }
+                    }
+                }
+
+                // 최하단 좌우 이동 버튼
+                .footer-navi {
+                    width: 100%;
+                    // margin-top: 20px;
+                    display: flex;
+
+                    .left-button {
+                        height: 50px;
+                        background-color: #f4b740;
+                        width: 50%;
+                        padding-top: 12px;
+                        text-align: center;
+                    }
+
+                    .right-button {
+                        background-color: #a2d646;
+                        padding-top: 12px;
+                        width: 50%;
+                        text-align: center;
+                    }
+                }
+            }
+        }
+
+
     }
+
 
     // ContentsView.vue
-    .comment-modal{
+    .comment-modal {
         position: fixed;
-        bottom: 300px;
-        right: 20px;
-        display: inline;
-        background-color:blue;
+        bottom: 73px;
+        right: 40px;
+        z-index: 200;
 
-        #btn-comment{
-            background-color:red;
+        display: inline;
+
+        #btn-comment {
+            width: 40px;
+            height: 40px;
+            border-radius: 30px;
+
+            background-color: white;
+            border: 2px solid gray;
+
+            color: gray !important;
+            font-size: 14pt;
         }
     }
- }
+}
