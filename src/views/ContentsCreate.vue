@@ -274,9 +274,11 @@ export default {
   @keyframes slideInFromBottom {
     0% {
       transform: translateY(30px);
+      opacity: 0;
     }
     100% {
       transform: translateY(0);
+      opacity: 1;
     }
   }
   .circle {
@@ -437,6 +439,7 @@ export default {
 
 .sortable-ghost {
   // transform: rotate(0deg);
+  opacity: 0.7;
   // background-color: #dcdcdc;
 }
 
@@ -489,18 +492,20 @@ export default {
   .footer-navi {
     width: 100%;
     margin-top: 20px;
+    height: 50px;
     .left-button {
-      height: 50px;
       background-color: #f4b740;
       width: 50%;
       padding-top: 12px;
       text-align: center;
+      font-size: 13pt;
     }
     .right-button {
       background-color: #a2d646;
       padding-top: 12px;
       width: 50%;
       text-align: center;
+      font-size: 13pt;
     }
   }
 }
@@ -518,9 +523,11 @@ export default {
   @keyframes slideInFromTop {
     0% {
       transform: translateY(-30px);
+      opacity: 0;
     }
     100% {
       transform: translateY(0);
+      opacity: 1;
     }
   }
   p{
