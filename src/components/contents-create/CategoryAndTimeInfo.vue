@@ -121,7 +121,6 @@
   </div>
 </template>
 <script>
-// import axios from 'axios'
 import CategoryItem from './CategoryItem.vue';
 import { createContents } from '@/api/contents.js';
 import { createTags } from '@/api/contents.js';
@@ -193,16 +192,6 @@ export default {
     deleteTag: function(index) {
       this.hashtags.splice(index, 1);
     },
-    setToken: function() {
-      const token = localStorage.getItem('access-token');
-
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-      return config;
-    },
     createContent: function() {
       let len = this.itemList.length;
       let cnt = 1;
@@ -219,17 +208,12 @@ export default {
       console.log(content);
 
       //contents.js 안의 정의 되어있는 axios 호출
-      const token = localStorage.getItem('access-token');
-
-      const config = `Bearer ${token}`;
-
       const tags = {
         tagList: this.hashtags,
       };
 
       createContents(
         content,
-        config,
         (success) => {
           this.contentsId = success.data;
           console.log('create contents suc msg ', success);

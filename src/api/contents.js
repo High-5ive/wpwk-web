@@ -2,11 +2,12 @@ import { createInstance } from './index.js';
 
 const instance = createInstance();
 
-function createContents(param, config, success, fail) {
+function createContents(param, success, fail) {
   //body값 다시 만들고 JSON 파싱하기
-  instance.defaults.headers['Authorization'] = config;
+  let token = window.localStorage.getItem("accessToken");      
+  let config = {headers: { Authorization: `Bearer ${token}` }};
   instance
-    .post('/contents', JSON.stringify(param))
+    .post('/contents', JSON.stringify(param), config)
     .then(success)
     .catch(fail);
 }
