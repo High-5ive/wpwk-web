@@ -209,7 +209,7 @@ export default {
         title: this.title,
         contentsItemList: this.itemList,
         spendTime: this.time.hour + ':' + this.time.minute + ':00',
-        abilities: abilitiesStr,
+        ability: abilitiesStr,
       };
 
       console.log(content);
