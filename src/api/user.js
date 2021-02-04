@@ -5,29 +5,35 @@ const instance = createInstance();
 //   headers: { "access-token": localStorage.getItem("access-token") }
 // };
 
+function registerUser(user, success, fail) {
+    instance
+        .post(`users`, JSON.stringify(user))
+        .then(success)
+        .catch(fail)
+}
+
 function login(user, success, fail) {
-  instance.defaults.headers["access-token"] = window.localStorage.getItem(
-    "access-token"
-  );
   const body = {
-    userid: user.userid,
-    userpwd: user.userpwd
+    email: user.email,
+    password: user.password
   };
 
   instance
-    .post("user/confirm/login", JSON.stringify(body))
+    .post(`/login`, JSON.stringify(body))
     .then(success)
-    .catch(fail);
+    .catch(fail)
 }
 
-async function findById(userid, success, fail) {
-  instance.defaults.headers["access-token"] = window.localStorage.getItem(
-    "access-token"
-  );
+async function findById(userId, success, fail) {
+  let token = window.localStorage.getItem("accessToken");    
+  
+  const config = {headers: { Authorization: `Bearer ${token}` }};
   await instance
-    .get(`/user/info/${userid}`)
+    .get(`/loginUser/${userId}`, config)
     .then(success)
     .catch(fail);
 }
 
-export { login, findById };
+
+
+export { login, findById, registerUser };
