@@ -8,8 +8,8 @@
             <iframe :src="videoUrl"> </iframe>
          </div>
       </div>
-      <div class="card-desc bubble">
-         <div class="bubble">{{ description }}</div>
+      <div class="card-desc">
+         <div class="desc nf">{{ description }}</div>
       </div>
 
       <!-- <v-card class="mx-auto my-12" width="320">

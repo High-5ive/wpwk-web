@@ -12,13 +12,12 @@
       <!-- 카드페이지 -->
       <div v-else class="cv-card-wrapper">
          <div class="card-top-wrapper">
-            <p class="title">{{ this.title }}</p>
-            <p class="writer">관악구최강대디</p>
+            <p class="title nf">{{ this.title }}</p>
+            <p class="writer nf">도곡동슈퍼맘</p>
          </div>
 
          <CardList :cards="cards" @evaluationPage="evaluation" />
       </div>
-      <br />
 
       <!-- 댓글창 전체 모달 -->
       <div class="comment-modal">
@@ -56,18 +55,18 @@ import CommentForm from '@/components/ContentsView/CommentForm';
 
 // img, photo, description은 제공받는 데이터에서 가져옴(임의의 값 설정)
 const noriContent = {
-   title: '노리 컨텐츠입니다.',
+   title: '아이 창의력 키우는, 손바닥 물감 놀이! 재밌어요!',
    itemList: [
       {
          type: 'youtube',
          youtube: {
             thumbnaeilSrc: '',
             title: '',
-            videoId: 'y315L6tkNxQ',
+            videoId: 'I83Y3B_C1A0',
          },
          photo: {},
          video: '',
-         description: '유튜브입니다.',
+         description: '물감은 문구점에서 3000원 정도면 살 수 있어요! 로켓배송으로 시켰더니 바로 오네요ㅎㅎㅎ 바쁘시면 영상 4분 부터 보시면 돼요!',
       },
 
       {
@@ -77,9 +76,10 @@ const noriContent = {
             title: '',
             videoId: '',
          },
-         photo: 'https://cdn.vuetifyjs.com/images/cards/cooking.png',
+         photo:
+            'https://lh3.googleusercontent.com/proxy/3oCuTlX37vsqTUpYyt1UYpUbTQ8BkOLxNN9qX85n8Zn0ACI5qAALt6m6RJJ970ct7ZX5roxGZqLRg7Y4ADrSVjMuHV1hSWJV8gKT2MJKNQMS_oLfMSA0tJheKEQyN5-BDauU3hka30pNuH_-NL4bR2MX4m0',
          video: '',
-         description: '사진입니다.',
+         description: '아이들이 시간 가는 줄 몰라하네요 ㅎㅎㅎ',
       },
 
       {
@@ -91,7 +91,7 @@ const noriContent = {
          },
          photo: {},
          video: '',
-         description: '글입니다.',
+         description: '물감 많이 튀니, 비닐 깔고 하시는거 추천드려요. 김장 비닐 다이소에서 천원이래요~',
       },
    ],
    time: {

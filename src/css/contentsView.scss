@@ -3,16 +3,16 @@
 
 // ContentsView.vue
 .cv-container {
-    height: 100%;
+    height: 90vh;
+    overflow: hidden;
     // background-color: orange;
 
-    overflow: hidden;
 
     // ContentsView.vue
     .cv-card-wrapper {
         margin-top: 20px;
         // background-color: blue;
-        height: 100%;
+        height: 90vh;
         padding-bottom: 100px;
 
         .card-top-wrapper {
@@ -34,80 +34,65 @@
 
         //CardList.vue
         .cl-container {
-            background-color: darkcyan;
-            height: 100%;
+            padding: 20px; //전체로부터 카드를 안으로...
+            padding-bottom: 100px;
+
+            // background-color: darkcyan;
+            height: 90vh;
 
             // 카드 한장
             // Card.vue
             .card-wrapper {
-                background-color: white;
-                width: 100%;
-                height: 100%;
+                $card_radisu : 40px; //카드의 모서를 둥글게
 
+                background-color: white;
+                border-radius: $card_radisu;
+                border: 1px rgb(230, 230, 230) solid;
+                box-shadow: 0px 9px 20px 0px #5656560f;
+
+                width: 100%;
+                height: 90%;
+ 
                 display: flex;
                 flex-direction: column;
                 align-items: center;
 
                 .card-content {
-                    $content_h: 30vh;
-                    width: 100%;
+                    $content_h: 40vh;
                     height: $content_h;
-                    padding: 20px;
-
+                    width: 100%;
+                    
                     img {
                         width: 100%;
                         height: $content_h;
                         object-fit: cover;
                         object-position: 0px 0px;
                     }
-
+                    
                     iframe {
                         width: 100%;
                         height: $content_h;
                         border: none;
                     }
+
+                    img,iframe{
+                        border-radius: $card_radisu $card_radisu 0px 0px;
+                        border-bottom: 1px solid rgb(199, 199, 199);
+                    }
                 }
 
                 .card-desc {
-                    width: 90%;
+                    border-radius: 0px 0px $card_radisu $card_radisu;
+                    overflow: scroll;
+
+                    
+                    width: 100%;
                     height: 60vh;
                     
-                    .bubble {
-                        position: relative;
-                        width: 100%;
-                        min-height: 140px;
-                        padding: 20px;
-                        background: #FFFFFF;
-                        -webkit-border-radius: 34px;
-                        -moz-border-radius: 34px;
-                        border-radius: 34px;
-                        border: #7F7F7F solid 2px;
-                    }
-
-                    .bubble:after {
-                        content: '';
-                        position: absolute;
-                        border-style: solid;
-                        border-width: 0 15px 12px;
-                        border-color: #FFFFFF transparent;
-                        display: block;
-                        width: 0;
-                        z-index: 1;
-                        top: -12px;
-                        left: 45%;
-                    }
-
-                    .bubble:before {
-                        content: '';
-                        position: absolute;
-                        border-style: solid;
-                        border-width: 0 16px 13px;
-                        border-color: #7F7F7F transparent;
-                        display: block;
-                        width: 0;
-                        z-index: 0;
-                        top: -15px;
-                        left: 45%;
+                    padding: 20px;
+                    
+                    .desc{
+                        text-align: center;
                     }
                 }
             }
@@ -128,6 +113,7 @@
                 height: 100px;
 
                 // 페이지네이션
+                // CardList.vue
                 .footer-pagination {
                     .v-pagination.v-pagination--circle {
                         margin-top: 4px; // 하단 버튼을 바닥에 붙이기 위함...
@@ -173,6 +159,10 @@
                         width: 50%;
                         padding-top: 12px;
                         text-align: center;
+
+                        &:hover{
+                        background-color: #ca9834;
+                        }
                     }
 
                     .right-button {
@@ -180,6 +170,10 @@
                         padding-top: 12px;
                         width: 50%;
                         text-align: center;
+
+                        &:hover{
+                        background-color: #8dbb3e;
+                        }
                     }
                 }
             }

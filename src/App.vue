@@ -33,17 +33,11 @@ export default {
 };
 </script>
 
-<style>
-* {
-   /* border: 1px dashed green; */
-}
-</style>
-
 <style lang="scss">
+@import 'src/css/common.scss';
+
 #inspire {
    /* background-color: blue; */
-   // font-family: 'Poor Story', sans-serif;
-   font-family: 'Noto Sans KR', sans-serif;
 
    .v-toolbar__title {
       margin: 0 auto;
@@ -75,10 +69,6 @@ export default {
       font-size: 18px;
 
       margin: 14px 0 0 14px;
-   }
-
-   .v-btn__content i {
-      // color: rgba(147, 217, 20) !important;
    }
 
    .v-navigation-drawer__content {
