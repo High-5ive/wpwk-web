@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card class="mx-auto" max-width="400">
+    <v-card @click="articleDetail" class="mx-auto" max-width="400">
       <div v-if="this.article.itemList.length">
         <v-img class="white--text align-end" height="200px" :src="img"> </v-img>
       </div>
@@ -13,8 +13,8 @@
       </v-card-text>
 
       <v-card-actions>
-        <v-btn color="orange" text> 좋아요 </v-btn>
-        <v-btn color="orange" text> 댓글 </v-btn>
+        <v-btn color="orange" text @click="like"> 좋아요 </v-btn>
+        <v-btn color="orange" text @click="articleDetail"> 댓글 </v-btn>
       </v-card-actions>
     </v-card>
     <br>
@@ -33,6 +33,8 @@ export default {
             subject: '',
             img : '' ,
             content : '',
+            // 임의의 articleId값 부여
+            articleId: 0
         }
     },
     methods: {
@@ -43,6 +45,14 @@ export default {
             this.content = this.article.content
             this.subject = this.article.subject
         },
+        articleDetail: function () {
+          // 실제로는 id값만 보내서 article정보를 받지만 일단 모두 전달
+          // this.$router.push({ name: 'articleDetail', params: { articleId: this.articleId }})
+          this.articleId = 1
+          this.$router.push({ name: 'ArticleDetail', params: { articleId: this.articleId, article: this.article }})
+        },
+        like: function () {
+        }
     },
     created: function () {
         this.getCard()

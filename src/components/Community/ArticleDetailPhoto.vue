@@ -1,6 +1,7 @@
 <template>
    <div>
-      <img :src="item.photo.preview" />
+      <v-img class="white--text align-end" height="200px" :src="item.photo.preview" />
+      <br>
    </div>
 </template>
 
@@ -14,8 +15,4 @@ export default {
 };
 </script>
 <style scoped>
-img {
-   width: 30%;
-   height: 30%;
-}
 </style>
