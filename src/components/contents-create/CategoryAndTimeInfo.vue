@@ -142,7 +142,7 @@ export default {
         hour: 0,
         minute: 0,
       },
-      selectedCategories: [],
+      selectedCategories: [0, 0, 0, 0, 0, 0, 0, 0],
       hashtag: '',
       hashtags: [],
       // 임시 데이터(나중에는 vuex사용하기..?)
@@ -162,7 +162,7 @@ export default {
   },
   methods: {
     onNextClicked: function() {
-      if ((this.itemList.length > 0) & (this.title.length > 0)) {
+      if (this.itemList.length > 0 && this.title.length > 0) {
         this.dialog = true;
       } else {
         alert('내용을 작성해 주세요.');
@@ -181,12 +181,12 @@ export default {
       }
     },
     onCategorySelect: function(category) {
-      console.log('선택');
-      const targetIndex = this.selectedCategories.indexOf(category);
-      if (targetIndex >= 0) {
-        this.selectedCategories.splice(targetIndex, 1);
+      const targetIndex = this.categories.indexOf(category);
+
+      if (this.selectedCategories[targetIndex] == 0) {
+        this.selectedCategories[targetIndex] = 1;
       } else {
-        this.selectedCategories.push(category);
+        this.selectedCategories[targetIndex] = 0;
       }
     },
     deleteTag: function(index) {
@@ -199,12 +199,19 @@ export default {
         this.itemList[i].pageNo = cnt++;
       }
       this.dialog = false;
+      var abilitiesStr = '';
+      for (let i = 0; i < this.selectedCategories.length; i++) {
+        abilitiesStr = abilitiesStr.concat(this.selectedCategories[i]);
+      }
+      console.log(this.selectedCategories);
+      console.log(abilitiesStr);
       const content = {
         title: this.title,
         contentsItemList: this.itemList,
         spendTime: this.time.hour + ':' + this.time.minute + ':00',
-        abilities: this.selectedCategories,
+        abilities: abilitiesStr,
       };
+
       console.log(content);
 
       //contents.js 안의 정의 되어있는 axios 호출
