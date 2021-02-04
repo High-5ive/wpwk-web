@@ -1,0 +1,73 @@
+.cv-container {
+  height: 100%;
+  background-color: orange;
+  overflow: hidden;
+}
+.cv-container .cl-container {
+  background-color: blue;
+  height: inherit;
+}
+.cv-container .cl-container .cl-footer {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  z-index: 100;
+  left: 50%;
+  bottom: -26px;
+  transform: translateX(-50%);
+  margin-bottom: 25px;
+  background-color: white;
+  width: 100%;
+  height: 100px;
+}
+.cv-container .cl-container .cl-footer .footer-pagination .v-pagination.v-pagination--circle {
+  margin-top: 4px;
+  margin-bottom: 10px !important;
+}
+.cv-container .cl-container .cl-footer .footer-pagination .v-pagination.v-pagination--circle .v-pagination__item {
+  font-size: 3pt;
+  color: #181818;
+  min-height: 25px !important;
+  height: 25px !important;
+  min-width: 25px !important;
+  box-shadow: none !important;
+  background-color: #f5ce6b;
+  border: 2px solid #fff2db;
+}
+.cv-container .cl-container .cl-footer .footer-pagination .v-pagination.v-pagination--circle .v-pagination__item:focus {
+  outline: none;
+}
+.cv-container .cl-container .cl-footer .footer-pagination .v-pagination.v-pagination--circle .v-pagination__item--active {
+  border: 2px solid #fff2db !important;
+  background-color: #EF960C !important;
+}
+.cv-container .cl-container .cl-footer .footer-pagination .v-pagination.v-pagination--circle .v-pagination__navigation {
+  display: none !important;
+}
+.cv-container .cl-container .cl-footer .footer-navi {
+  width: 100%;
+  display: flex;
+}
+.cv-container .cl-container .cl-footer .footer-navi .left-button {
+  height: 50px;
+  background-color: #f4b740;
+  width: 50%;
+  padding-top: 12px;
+  text-align: center;
+}
+.cv-container .cl-container .cl-footer .footer-navi .right-button {
+  background-color: #a2d646;
+  padding-top: 12px;
+  width: 50%;
+  text-align: center;
+}
+.cv-container .comment-modal {
+  position: fixed;
+  bottom: 300px;
+  right: 20px;
+  display: inline;
+  background-color: blue;
+}
+.cv-container .comment-modal #btn-comment {
+  background-color: red;
+}
