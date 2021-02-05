@@ -107,8 +107,8 @@
   </div>
 </template>
 <script>
-// import axios from 'axios'
 import CategoryItem from './CategoryItem.vue'
+import { recommendTags } from '@/api/tags.js'
 
 export default {
   name: 'CategoryAndTimeInfo',
@@ -130,28 +130,7 @@ export default {
       hashtagResult: [],
       hashtag: '',
       isActive: false,
-      allHashtags: [
-        {
-          "id": 3,
-          "name": "아이",
-          "count": 7
-        },
-        {
-          "id": 4,
-          "name": "아이랑 놀아주기a",
-          "count": 5
-        },
-        {
-          "id": 1,
-          "name": "아이와 함께1",
-          "count": 2
-        },
-        {
-          "id": 14,
-          "name": "아이교육",
-          "count": 1
-        }
-      ],
+      allHashtags: [],
       hashtags: [],
       // 임시 데이터(나중에는 vuex사용하기..?)
       hours: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
@@ -180,9 +159,11 @@ export default {
       const isValid = /[^가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9|\s]/.test(this.hashtag)
       if (isValid === false && this.hashtag) {
         this.isActive = true
-        this.hashtagResult = this.allHashtags.filter((tag) => {
-          return tag.name.match(this.hashtag)
-        })
+        this.searchTag(this.hashtag)
+        return this.hashtagResult
+        // this.hashtagResult = this.allHashtags.filter((tag) => {
+        //   return tag.name.match(this.hashtag)
+        // })
       } else {
         this.isActive = false
       }
@@ -202,8 +183,21 @@ export default {
           alert("해시태그는 최대 10개까지 적을 수 있습니다.")
           this.hashtag = ''
         }
-      }
-      
+      }      
+    },
+    /**
+     * 해시태그 검색 요청 구현
+     */
+    searchTag(tag) {
+      recommendTags(
+        tag,
+        (res) => {
+          this.hashtagResult = res.data
+        },
+        (error) => {
+          console.log(error);
+        }
+      )
     },
     onCategorySelect: function (category) {
       console.log("선택")
