@@ -1,49 +1,27 @@
 <template>
   <div>
-    <v-row
-      justify="center"
-      class="last-dialog"
-    >
-      <v-btn
-        color="#89BA17"
-        class="ma-2"
-        small
-        dark
-        @click="onNextClicked"
-      >
+    <v-row justify="center" class="last-dialog">
+      <v-btn color="#89BA17" class="ma-2" small dark @click="onNextClicked">
         다음
       </v-btn>
       <v-dialog
         v-model="dialog"
         fullscreen
-        
         hide-overlay
         transition="dialog-bottom-transition"
         scrollable
       >
         <v-card tile class="card">
-          <v-toolbar
-            flat
-            dark
-            class="toolbar"
-            color="white"
-            max-height="4rem"
-          >
-            <v-btn
-              icon
-              dark
-              color="black"
-              @click="dialog = false"
-            >
+          <v-toolbar flat dark class="toolbar" color="white" max-height="4rem">
+            <v-btn icon dark color="black" @click="dialog = false">
               <v-icon>mdi-close</v-icon>
             </v-btn>
-            <v-toolbar-title class="toolbar-title">(수정예정)마지막 단계</v-toolbar-title>
-            
+            <v-toolbar-title class="toolbar-title"
+              >(수정예정)마지막 단계</v-toolbar-title
+            >
+
             <v-toolbar-items>
-              <button
-                class="complete-button"
-                @click="dialog = false"
-              >
+              <button class="complete-button" @click="createContent">
                 완료
               </button>
             </v-toolbar-items>
@@ -52,29 +30,23 @@
             <v-list>
               <v-list-item>
                 <v-list-item-content>
-                  <v-list-item-title>이 노리는 총 몇 시간 걸리나요?</v-list-item-title>
+                  <v-list-item-title
+                    >이 노리는 총 몇 시간 걸리나요?</v-list-item-title
+                  >
                   <v-row align="center">
-                    <v-col
-                      class="d-flex"
-                      cols="12"
-                      sm="6"
-                    >
+                    <v-col class="d-flex" cols="12" sm="6">
                       <v-select
                         :items="hours"
                         label="시간"
                         v-model="time.hour"
                       ></v-select>
                     </v-col>
-                    <v-col
-                      class="d-flex"
-                      cols="12"
-                      sm="6"
-                    >
+                    <v-col class="d-flex" cols="12" sm="6">
                       <v-select
                         :items="minutes"
                         label="분"
                         v-model="time.minute"
-                      ></v-select>                    
+                      ></v-select>
                     </v-col>
                   </v-row>
                 </v-list-item-content>
@@ -86,12 +58,12 @@
                   <div
                     v-for="(category, idx) in categories"
                     :key="idx"
-                    class="categories"  
+                    class="categories"
                   >
-                  <category-item 
-                    @on-cate-select="onCategorySelect"
-                    :category="category"
-                  />
+                    <category-item
+                      @on-cate-select="onCategorySelect"
+                      :category="category"
+                    />
                   </div>
                   <!-- <v-select
                     v-model="selectedCategories"
@@ -106,14 +78,11 @@
               <v-divider></v-divider>
               <v-list-item>
                 <v-list-item-content>
-                  <v-list-item-title>해시태그도 추가해보세요! (선택)</v-list-item-title>
+                  <v-list-item-title
+                    >해시태그도 추가해보세요! (선택)</v-list-item-title
+                  >
                   <v-row align="center" justify="center">
-                    <v-col
-                      aling="center"
-                      class="d-flex"
-                      cols="12"
-                      sm="6"
-                    > 
+                    <v-col aling="center" class="d-flex" cols="12" sm="6">
                       <div class="d-flex align-center">
                         <v-icon>mdi-pound</v-icon>
                         <v-text-field
@@ -123,36 +92,26 @@
                           v-model.trim="hashtag"
                           @keypress.enter="addHashtag"
                         ></v-text-field>
-                        
-                        <v-icon @click="addHashtag">mdi-plus-circle</v-icon>                                          
-                        
-                      </div>                
+
+                        <v-icon @click="addHashtag">mdi-plus-circle</v-icon>
+                      </div>
                     </v-col>
                   </v-row>
                   <v-row>
-                    <v-col
-                      class="d-flex"
-                      cols="12"
-                      sm="3"
-                    >
+                    <v-col class="d-flex" cols="12" sm="3">
                       <span
                         v-for="(tag, idx) in hashtags"
                         :key="idx"
-                        class="hashtag"  
+                        class="hashtag"
                       >
                         #{{ tag }}
-                        <v-icon
-                          @click="deleteTag(idx)"
-                        >mdi-close</v-icon>
-                      </span>                 
-
+                        <v-icon @click="deleteTag(idx)">mdi-close</v-icon>
+                      </span>
                     </v-col>
                   </v-row>
                 </v-list-item-content>
               </v-list-item>
             </v-list>
-            
-
           </v-card-text>
 
           <div style="flex: 1 1 auto;"></div>
@@ -162,26 +121,28 @@
   </div>
 </template>
 <script>
-// import axios from 'axios'
-import CategoryItem from './CategoryItem.vue'
+import CategoryItem from './CategoryItem.vue';
+import { createContents } from '@/api/contents.js';
+import { createTags } from '@/api/contents.js';
 
 export default {
   name: 'CategoryAndTimeInfo',
   components: {
-    CategoryItem
+    CategoryItem,
   },
   props: {
     title: String,
-    itemList: Array
+    itemList: Array,
   },
-  data: function () {
+  data: function() {
     return {
+      contentsId: '',
       dialog: false,
       time: {
         hour: 0,
-        minute: 0
+        minute: 0,
       },
-      selectedCategories: [],
+      selectedCategories: [0, 0, 0, 0, 0, 0, 0, 0],
       hashtag: '',
       hashtags: [],
       // 임시 데이터(나중에는 vuex사용하기..?)
@@ -195,74 +156,99 @@ export default {
         '공간지능',
         '자연지능',
         '대인지능',
-        '개인내지능'
-      ]
-    }
+        '개인내지능',
+      ],
+    };
   },
   methods: {
-    onNextClicked: function () {
-      if (this.itemList.length > 0 & this.title.length > 0) {
-        this.dialog = true
+    onNextClicked: function() {
+      if (this.itemList.length > 0 && this.title.length > 0) {
+        this.dialog = true;
       } else {
-        alert("내용을 작성해 주세요.")
+        alert('내용을 작성해 주세요.');
       }
     },
-    addHashtag: function () {
-      const newTag = this.hashtag.replaceAll(" ", "_")
+    addHashtag: function() {
+      const newTag = this.hashtag.replaceAll(' ', '_');
       if (this.hashtags.indexOf(newTag) >= 0) {
-        alert("이미 추가된 해시태그입니다")
-        this.hashtag = ''
+        alert('이미 추가된 해시태그입니다');
+        this.hashtag = '';
       } else if (this.hashtag.length == 0) {
-        alert("내용을 적어주세요")
+        alert('내용을 적어주세요');
       } else {
-        this.hashtags.push(newTag)
-        this.hashtag = ''
-      }
-      
-    },
-    onCategorySelect: function (category) {
-      console.log("선택")
-      const targetIndex = this.selectedCategories.indexOf(category)
-      if (targetIndex >= 0) {
-        this.selectedCategories.splice(targetIndex, 1)
-      } else {
-        this.selectedCategories.push(category)
+        this.hashtags.push(newTag);
+        this.hashtag = '';
       }
     },
-    deleteTag: function (index) {
-      this.hashtags.splice(index, 1)
-    },
-    setToken: function () {
-      const token = localStorage.getItem('jwt')
+    onCategorySelect: function(category) {
+      const targetIndex = this.categories.indexOf(category);
 
-      const config = {
-        headers: {
-          Authorization: `JWT ${token}`
+      if (this.selectedCategories[targetIndex] == 0) {
+        this.selectedCategories[targetIndex] = 1;
+      } else {
+        this.selectedCategories[targetIndex] = 0;
+      }
+    },
+    deleteTag: function(index) {
+      this.hashtags.splice(index, 1);
+    },
+    createContent: function() {
+      let len = this.itemList.length;
+      let cnt = 1;
+      for (let i = 0; i < len; i++) {
+        this.itemList[i].pageNo = cnt++;
+      }
+      this.dialog = false;
+      var abilitiesStr = '';
+      for (let i = 0; i < this.selectedCategories.length; i++) {
+        abilitiesStr = abilitiesStr.concat(this.selectedCategories[i]);
+      }
+      console.log(this.selectedCategories);
+      console.log(abilitiesStr);
+      const content = {
+        title: this.title,
+        contentsItemList: this.itemList,
+        spendTime: this.time.hour + ':' + this.time.minute + ':00',
+        ability: abilitiesStr,
+      };
+
+      console.log(content);
+
+      //contents.js 안의 정의 되어있는 axios 호출
+      const tags = {
+        tagList: this.hashtags,
+      };
+
+      createContents(
+        content,
+        (success) => {
+          this.contentsId = success.data;
+          console.log('create contents suc msg ', success);
+          // console.log(contentsId);
+          alert('컨텐츠 제작에 성공 했습니다.');
+          //컨텐츠 제작후 태그 제작 요청
+          console.log(this.contentsId);
+          createTags(
+            this.contentsId,
+            tags,
+            (suc) => {
+              console.log('suc tag msg ', suc);
+              this.$router.push('/');
+            },
+            (error) => {
+              console.log('error tag msg ', error);
+            }
+          );
+        },
+        (error) => {
+          console.log('create contents err msg', error);
+          alert('컨텐츠 제작에 실패 했습니다.');
+          // contentsCreate에서 itemList가 새롭게 추가되는 버그 있음
         }
-      }
-      return config
+      );
     },
-    createContent: function () {
-      // const config = this.setToken()
-
-      // const content = {
-      //   title: this.title,
-      //   itemList: this.itemList,
-      //   timeInfo: this.time,
-      //   categories: this.selectedCategories,
-      //   hashtags: this.hashtags
-      // }
-
-      // axios.post(api, content, config)
-      // .then((res) => {
-      //   console.log(res)
-      // })
-      // .catch((err) => {
-      //   console.log(err)
-      // })
-    }
-  }
-}
+  },
+};
 </script>
 <style lang="scss">
 .last-dialog {
@@ -295,8 +281,8 @@ export default {
             width: 50px;
             box-shadow: 0 3px 3px lightgray;
             border-radius: 5px;
-            background-color: #89BA17;
-            color:white;
+            background-color: #89ba17;
+            color: white;
           }
         }
       }

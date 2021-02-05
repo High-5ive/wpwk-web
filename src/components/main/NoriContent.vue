@@ -16,8 +16,8 @@
       <!-- 하단 설명글 -->
       <div class="desc-wrapper">
          <h1>{{ sendNori.title }}</h1>
-         <span v-for="(tag, idx) in sendNori.hashtags" :key="'tag' + idx"> #{{ tag }} </span>
-         <h6>{{ sendNori.writer }}</h6>
+         <span v-for="(tag, idx) in sendNori.tagList" :key="'tag' + idx"> #{{ tag.name }} </span>
+         <h6>{{ sendNori.nickname }}</h6>
          <div class="btn-like">
             <v-icon>
                mdi-heart
