@@ -38,6 +38,9 @@ export default {
 
 #inspire {
    /* background-color: blue; */
+   font-family: 'Poor Story' sans-serif !important;
+
+   padding-right: 0px !important;
 
    .v-toolbar__title {
       margin: 0 auto;

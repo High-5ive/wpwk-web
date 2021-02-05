@@ -13,7 +13,7 @@
       <div v-else class="cv-card-wrapper">
          <div class="card-top-wrapper">
             <p class="title nf">{{ this.title }}</p>
-            <p class="writer nf">도곡동슈퍼맘</p>
+            <p class="writer">도곡동슈퍼맘</p>
          </div>
 
          <CardList :cards="cards" @evaluationPage="evaluation" />
@@ -56,6 +56,7 @@ import CommentForm from '@/components/ContentsView/CommentForm';
 // img, photo, description은 제공받는 데이터에서 가져옴(임의의 값 설정)
 const noriContent = {
    title: '아이 창의력 키우는, 손바닥 물감 놀이! 재밌어요!',
+   writer: '도곡동슈퍼맘',
    itemList: [
       {
          type: 'youtube',
@@ -76,8 +77,7 @@ const noriContent = {
             title: '',
             videoId: '',
          },
-         photo:
-            'https://lh3.googleusercontent.com/proxy/3oCuTlX37vsqTUpYyt1UYpUbTQ8BkOLxNN9qX85n8Zn0ACI5qAALt6m6RJJ970ct7ZX5roxGZqLRg7Y4ADrSVjMuHV1hSWJV8gKT2MJKNQMS_oLfMSA0tJheKEQyN5-BDauU3hka30pNuH_-NL4bR2MX4m0',
+         photo: 'http://img.wemep.co.kr/deal/9/093/3840939/1d62167fc9bea5886e20bbbe134153d20dd388bf.jpg',
          video: '',
          description: '아이들이 시간 가는 줄 몰라하네요 ㅎㅎㅎ',
       },

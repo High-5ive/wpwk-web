@@ -1,16 +1,15 @@
 @import "vars";
 
-// font-family: 'Poor Story', sans-serif;
 // font-family: 'Noto Sans KR', sans-serif;
 
 * {
     // border: 1px dashed green;
     font-family: 'Noto Sans KR', sans-serif;
-
-
+    
+    
     .nf{
-        font-family: 'Poor Story' sans-serif !important;
-        color: red;
+        // color: red;
+        font-family: 'Poor Story', sans-serif !important;
 
         &-400{
             font-weight: 400;

@@ -83,8 +83,9 @@
 
                 .card-desc {
                     border-radius: 0px 0px $card_radisu $card_radisu;
-                    overflow: scroll;
 
+                    // overflow: scroll;
+                    // 오버플로우 사용시 우측, 하단에 padding 생김
                     
                     width: 100%;
                     height: 60vh;
