@@ -56,27 +56,36 @@
               <div class="bottom-top">
                 <div class="upper">
                   <v-icon>mdi-pound</v-icon>
-                  <v-text-field
-                    label="해시태그 추가(선택)"
-                    hint="ex) #아이교육 #시간때우기"
-                    outlined
-                    color="#f4b740"
-                    maxlength="10"
-                    v-on:input="filterList"
-                    v-model.trim="hashtag"
-                    @keypress.enter="addHashtag"
-                  ></v-text-field>
-                  <ul
-                    v-if="isActive"
-                    class=""
+                  <div 
+                    class="hashtag-search"
+                    @keyup.down="selectTag('down')"
+                    @keyup.up="selectTag('up')"
                   >
-                    <li
-                      v-for="tag in hashtagResult"
-                      :key="tag.id"
+                    <v-text-field
+                      label="해시태그 추가(선택)"
+                      outlined
+                      color="#f4b740"
+                      maxlength="10"
+                      v-on:input="filterList"
+                      v-model.trim="hashtag"
+                      @keypress.enter="addHashtag"
+                      style="padding: 0; margin: 0;"
+                    ></v-text-field>
+                    <ul
+                      v-if="isActive"
+                      class="hashtag-list"
+                      tabindex="0"
                     >
-                      {{ tag.name }}
-                    </li>
-                  </ul>
+                      <li
+                        v-for="tag in hashtagResult"
+                        :key="tag.id"
+                        tabindex="-1"
+                      >
+                        {{ tag.name }}
+                      </li>
+                    </ul>
+                  </div>
+                  
                   <v-icon @click="addHashtag">mdi-plus-circle</v-icon> 
                 </div>
               </div>
@@ -130,7 +139,28 @@ export default {
       hashtagResult: [],
       hashtag: '',
       isActive: false,
-      allHashtags: [],
+      allHashtags: [
+        {
+          "id": 3,
+          "name": "아이",
+          "count": 7
+        },
+        {
+          "id": 4,
+          "name": "아이랑 놀아주기",
+          "count": 5
+        },
+        {
+          "id": 1,
+          "name": "아이와 함께",
+          "count": 2
+        },
+        {
+          "id": 14,
+          "name": "아이교육",
+          "count": 1
+        }
+      ],
       hashtags: [],
       // 임시 데이터(나중에는 vuex사용하기..?)
       hours: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
@@ -159,16 +189,22 @@ export default {
       const isValid = /[^가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9|\s]/.test(this.hashtag)
       if (isValid === false && this.hashtag) {
         this.isActive = true
-        this.searchTag(this.hashtag)
-        return this.hashtagResult
-        // this.hashtagResult = this.allHashtags.filter((tag) => {
-        //   return tag.name.match(this.hashtag)
-        // })
+        // this.searchTag(this.hashtag)
+        // return this.hashtagResult
+        this.hashtagResult = this.allHashtags.filter((tag) => {
+          return tag.name.match(this.hashtag)
+        })
       } else {
         this.isActive = false
       }
     },
+    // selectTag: function () {
+    //   if (this.isActive==true) {
+
+    //   }
+    // },
     addHashtag: function () {
+      
       const newTag = this.hashtag.replaceAll(" ", "_")
       if (this.hashtags.indexOf(newTag) >= 0) {
         alert("이미 추가된 해시태그입니다")
@@ -321,19 +357,28 @@ export default {
           .upper {
             width: 70%;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
           }
-          .v-input__control {
-            position: relative;
-            padding-top: 25px;
-            margin-left: 10px;
-            margin-right: 10px;
-          }
-          ul {
-            // display: none;
-            width: 50%;
-            position: absolute;
+          .hashtag-search {
+            width: 240px; // 반응형 수정 필요
+            
+            .v-input__control {
+              position: relative;
+              padding-top: 25px;
+              // margin-left: 10px;
+              // margin-right: 10px;
+            }
+            .hashtag-list {
+              // display: none;
+              margin-top: -30px;
+              position: absolute;
+              // margin-left: 10px;
+              background-color: #a2d646;
+              width: 240px; // 반응형 수정 필요
+              
+            }
+
           }
         }
         .bottom-bt {
