@@ -1,6 +1,6 @@
 <template>
    <div>
-      <v-img class="white--text align-end" height="200px" :src="item.photo.preview" />
+      <v-img class="white--text align-end" :src="item.photo.preview" />
       <br>
    </div>
 </template>
