@@ -210,7 +210,6 @@ export default {
     deleteItem: function(index) {
       if (this.itemList[index].type == "youtube") {
         this.youtubeAdded = false;
-        this.itemList.splice(index, 1);
       }
       this.itemList.splice(index, 1);
     },
@@ -511,6 +510,7 @@ export default {
 }
 .background-text {
   // background-color: red;
+  pointer-events: none;
   width: 100% !important;
   margin-left: -10px !important;
   position: fixed;
