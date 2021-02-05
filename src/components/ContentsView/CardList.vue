@@ -15,7 +15,7 @@
             </div>
             <div class="right-button">
                <div v-if="pageNum === this.cards.length" @click="evaluationValue">
-                  <v-icon>
+                  <v-icon style="color:white">
                      mdi-flag
                   </v-icon>
                </div>

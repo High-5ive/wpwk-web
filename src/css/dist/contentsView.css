@@ -1,3 +1,16 @@
+* {
+  font-family: "Noto Sans KR", sans-serif;
+}
+* .nf {
+  font-family: "Poor Story", sans-serif !important;
+}
+* .nf-400 {
+  font-weight: 400;
+}
+* .nf-600 {
+  font-weight: 600;
+}
+
 .cv-container {
   height: 90vh;
   overflow: hidden;
@@ -51,18 +64,39 @@
   height: 40vh;
   border: none;
 }
-.cv-container .cv-card-wrapper .cl-container .card-wrapper .card-content img, .cv-container .cv-card-wrapper .cl-container .card-wrapper .card-content iframe {
+.cv-container .cv-card-wrapper .cl-container .card-wrapper .card-content img,
+.cv-container .cv-card-wrapper .cl-container .card-wrapper .card-content iframe {
   border-radius: 40px 40px 0px 0px;
   border-bottom: 1px solid #c7c7c7;
 }
 .cv-container .cv-card-wrapper .cl-container .card-wrapper .card-desc {
   border-radius: 0px 0px 40px 40px;
   width: 100%;
-  height: 60vh;
+  height: 100%;
+  position: relative;
   padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .cv-container .cv-card-wrapper .cl-container .card-wrapper .card-desc .desc {
+  position: relative;
+  padding: 10px;
   text-align: center;
+  font-size: 22pt;
+}
+.cv-container .cv-card-wrapper .cl-container .card-wrapper .card-desc::before {
+  content: "";
+  background: url("../assets/cv-bg.png");
+  background-size: cover;
+  background-position: bottom;
+  opacity: 0.4;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  border-radius: 0px 0px 40px 40px;
 }
 .cv-container .cv-card-wrapper .cl-container .cl-footer {
   display: flex;
@@ -122,6 +156,12 @@
 }
 .cv-container .cv-card-wrapper .cl-container .cl-footer .footer-navi .right-button:hover {
   background-color: #8dbb3e;
+}
+.cv-container .ev-container {
+  margin-top: 20px;
+  background-color: blue;
+  height: 90vh;
+  padding-bottom: 100px;
 }
 .cv-container .comment-modal {
   position: fixed;

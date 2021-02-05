@@ -1,5 +1,4 @@
-@import "vars";
-@import "mixins";
+@import "common";
 
 // ContentsView.vue
 .cv-container {
@@ -43,7 +42,7 @@
             // 카드 한장
             // Card.vue
             .card-wrapper {
-                $card_radisu : 40px; //카드의 모서를 둥글게
+                $card_radisu: 40px; //카드의 모서를 둥글게
 
                 background-color: white;
                 border-radius: $card_radisu;
@@ -52,7 +51,7 @@
 
                 width: 100%;
                 height: 90%;
- 
+
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -61,39 +60,70 @@
                     $content_h: 40vh;
                     height: $content_h;
                     width: 100%;
-                    
+
                     img {
                         width: 100%;
                         height: $content_h;
                         object-fit: cover;
                         object-position: 0px 0px;
                     }
-                    
+
                     iframe {
                         width: 100%;
                         height: $content_h;
                         border: none;
                     }
 
-                    img,iframe{
+                    img,
+                    iframe {
                         border-radius: $card_radisu $card_radisu 0px 0px;
                         border-bottom: 1px solid rgb(199, 199, 199);
                     }
                 }
 
                 .card-desc {
+
+                    // background-image: url('../assets/cv-bg.png');
+                    // background-repeat: no-repeat;
+                    // background-position: bottom;
+                    // background-size: cover;
+                    // opacity: 0.5;
+
                     border-radius: 0px 0px $card_radisu $card_radisu;
 
                     // overflow: scroll;
                     // 오버플로우 사용시 우측, 하단에 padding 생김
-                    
+
                     width: 100%;
-                    height: 60vh;
-                    
+                    height: 100%;
+                    position: relative;
+
                     padding: 20px;
-                    
-                    .desc{
+
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    .desc {
+                        position: relative;
+                        padding: 10px;
                         text-align: center;
+                        font-size: 22pt;
+                    }
+
+                    &::before {
+                        content: "";
+                        background: url('../assets/cv-bg.png');
+                        background-size: cover;
+                        background-position: bottom;
+                        opacity: 0.4;
+                        position: absolute;
+                        top: 0px;
+                        left: 0px;
+                        right: 0px;
+                        bottom: 0px;
+
+                        border-radius: 0px 0px $card_radisu $card_radisu;
                     }
                 }
             }
@@ -161,8 +191,8 @@
                         padding-top: 12px;
                         text-align: center;
 
-                        &:hover{
-                        background-color: #ca9834;
+                        &:hover {
+                            background-color: #ca9834;
                         }
                     }
 
@@ -172,8 +202,8 @@
                         width: 50%;
                         text-align: center;
 
-                        &:hover{
-                        background-color: #8dbb3e;
+                        &:hover {
+                            background-color: #8dbb3e;
                         }
                     }
                 }
@@ -181,6 +211,14 @@
         }
 
 
+    }
+
+    //Evaluations.vie
+    .ev-container{
+        margin-top: 20px;
+        background-color: blue;
+        height: 90vh;
+        padding-bottom: 100px;
     }
 
 

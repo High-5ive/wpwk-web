@@ -9,7 +9,7 @@
          </div>
       </div>
       <div class="card-desc">
-         <div class="desc">{{ description }}</div>
+         <div class="desc nf nf-400">{{ description }}</div>
       </div>
 
       <!-- <v-card class="mx-auto my-12" width="320">
