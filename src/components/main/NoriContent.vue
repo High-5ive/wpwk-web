@@ -3,12 +3,12 @@
    <div class="content-wrapper">
       <!-- 이미지썸네일과 뱃지들 -->
       <div class="img-wrapper">
-         <img :src="sendNori.img" alt="" />
+         <img :src="sendNori.thumb" alt="" />
          <!-- 이미지 위에 표시되는 뱃지들이 위치합니다 -->
          <!-- <div class="itemLength">{{ sendNori.itemList.length }}</div> -->
          <div class="badge-cate">
-            <span v-for="(cate, idx) in sendNori.selectedCategories" :key="idx">
-               {{ cate }}
+            <span v-for="(ability, idx) in sendNori.abilities" :key="idx">
+               {{ ability }}
             </span>
          </div>
       </div>

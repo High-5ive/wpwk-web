@@ -40,24 +40,26 @@ export default {
   },
   created() {
     this.getAllNoriList()
-    // this.dummyInsert();
   },
   methods: {
     getAllNoriList() {
       findAllContents(
         (res) => {
           this.NoriList = res.data
-          // for(i=0; i<this.NoriList.length; i++) {            
-          //   if(this.NoriList[i].ability != null) {
-          //     for(var j=0; j<this.NoriList[i].ability.length; j++) {
-          //       if(this.NoriList[i].ability.charAt(j) == '1') {
-          //         this.abilityList[i].push(this.abilities[j]);
-          //       }                
-          //     }              
-          //   }
-          // }
-          // console.log(this.abilityList)
-          
+          for(var i=0; i<this.NoriList.length; i++) {            
+            if(this.NoriList[i].ability != null) {
+
+              let abilityList = []
+              for(var j=0; j<this.NoriList[i].ability.length; j++) {
+                if(this.NoriList[i].ability.charAt(j) == '1') {
+                  abilityList.push(this.abilities[j]);
+                }                
+              }
+
+              // 각 컨텐츠마다 지능 
+              this.NoriList[i].abilities = abilityList;
+            }
+          }
         },
         (error) => {
           console.log(error);
