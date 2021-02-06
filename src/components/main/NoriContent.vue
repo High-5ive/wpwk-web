@@ -3,12 +3,12 @@
    <div class="content-wrapper">
       <!-- 이미지썸네일과 뱃지들 -->
       <div class="img-wrapper">
-         <img :src="sendNori.img" alt="" />
+         <img :src="sendNori.thumb" alt="" />
          <!-- 이미지 위에 표시되는 뱃지들이 위치합니다 -->
          <!-- <div class="itemLength">{{ sendNori.itemList.length }}</div> -->
          <div class="badge-cate">
-            <span v-for="(cate, idx) in sendNori.selectedCategories" :key="idx">
-               {{ cate }}
+            <span v-for="(ability, idx) in sendNori.abilities" :key="idx">
+               {{ ability }}
             </span>
          </div>
       </div>
@@ -16,8 +16,8 @@
       <!-- 하단 설명글 -->
       <div class="desc-wrapper">
          <h1>{{ sendNori.title }}</h1>
-         <span v-for="(tag, idx) in sendNori.hashtags" :key="'tag' + idx"> #{{ tag }} </span>
-         <h6>{{ sendNori.writer }}</h6>
+         <span v-for="(tag, idx) in sendNori.tagList" :key="'tag' + idx"> #{{ tag.name }} </span>
+         <h6>{{ sendNori.nickname }}</h6>
          <div class="btn-like">
             <v-icon>
                mdi-heart

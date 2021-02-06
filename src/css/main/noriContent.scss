@@ -21,20 +21,18 @@
             height: 100%;
             object-fit: cover;
             border-radius: 30px;
-            object-position: 0px 0px;
+            object-position: 50% 50%;
 
             //각 디바이스 크기별 동작
             @include mobile{
-                object-position: 0px 0px;
+                object-position: 50% 50%;
             };
             
             @include tablet{
                 object-position: 0px -50px;
             };
-    
         }
         
-
         .badge-cate{
             position: relative;
             top: -95%;

@@ -58,6 +58,7 @@
 // import PV from 'password-validator';
 import * as EmailValidator from 'email-validator';
 import { mapActions } from 'vuex';
+import { registerUser } from '@/api/user.js';
 
 export default {
    data() {
@@ -103,8 +104,24 @@ export default {
       doJoin() {
          if (this.join_email !== '' && this.join_pw !== '' && this.join_pw2 !== '') {
             if (!this.error.email && !this.error.password && !this.error.password2) {
-               alert('회원가입이 되었습니다!');
-               this.$router.push('login');
+
+               // 서버에 회원가입 요청하기
+               registerUser(
+                  {
+                     email: this.join_email,
+                     password: this.join_pw
+                  },
+                  () => { // 회원가입에 성공한 경우
+                     alert('회원가입이 되었습니다!');
+                     this.$router.push('login');
+                  },
+                  (error) => {
+                     // 이미 가입되어 있는 경우
+                     if(error.response.status == 409) { alert("이미 가입되어 있는 이메일입니다"); }
+                     
+                  }
+               );
+               
             } else {
                alert('입력 정보를 다시 확인해주세요.');
             }

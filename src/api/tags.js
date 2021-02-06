@@ -4,7 +4,7 @@ const instance = createInstance();
 
 function recommendTags(tag, success, fail) {
   instance
-    .post(`/tags/search`, tag)
+    .post(`tags/search`, tag)
     .then(success)
     .catch(fail);
 }
