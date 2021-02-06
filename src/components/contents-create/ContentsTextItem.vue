@@ -1,10 +1,10 @@
 <template>
    <div class="text-item-wrapper d-flex justify-center align-center">
-      <span class="text" @click="onEdit" v-if="item.description&&editInput==false">{{ item.description }}</span>
+      <span class="text" @click="onEdit" v-if="item.description && editInput == false">{{ item.description }}</span>
       <textarea
          cols="12"
          rows="3"
-         v-if="item.description==''"
+         v-if="item.description == ''"
          @keypress.enter="onItemChange"
          @change="onItemChange"
          v-model="description"
@@ -39,6 +39,4 @@ export default {
    },
 };
 </script>
-<style>
-
-</style>
+<style></style>

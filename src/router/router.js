@@ -79,6 +79,7 @@ const routes = [
         path: '/view',
         name: 'ContentsView',
         components: {
+            side: SideMenu,
             default: ContentsView,
         },
     },
