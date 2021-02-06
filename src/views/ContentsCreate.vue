@@ -1,75 +1,72 @@
 <template>
-  <div>
-    <!-- 노리 제작 헤더 -->
-    <div dense class="d-flex justify-space-between align-center contentHeader">
-      <v-icon class="close" @click="createCancel">mdi-close</v-icon>
-      <span class="header-title">노리 만들기</span>
-      <div class="d-flex align-center" style="margin-right: 10px">
-        <guideline style="margin-right: 10px" />
-        <category-and-time-info :title="title" :itemList="itemList" />
-      </div>
-    </div>
-    <div class="container">
-      <v-text-field
-        v-model="title"
-        label="제목"
-        hint="ex) [11세]집에서 할 수 있는 축구게임"
-        style="margin-top: 25px;"
-      ></v-text-field>
-      <v-divider></v-divider>
-      <!-- 노리의 항목들 -->
-      <draggable
-        :list="itemList"
-        :options="{ animation: 300, handle: '.handle' }"
+  <!-- 노리 제작 헤더 -->
+  <div class="container">
+    <guideline class="guide" style="margin-right: 10px" />
+    <v-text-field
+      id="input-title"
+      v-model="title"
+      label="제목"
+      hint="ex) [11세]집에서 할 수 있는 축구게임"
+    ></v-text-field>
+    <v-divider></v-divider>
+    <!-- 노리의 항목들 -->
+    <draggable
+      :list="itemList"
+      :options="{ animation: 300 }"
+    >
+      <div
+        v-for="(item, idx) in itemList"
+        :key="idx"
+        class="div-wrapper d-flex align-center justify-space-between"
       >
-        <div
-          v-for="(item, idx) in itemList"
-          :key="idx"
-          class="div-wrapper d-flex align-center justify-space-between"
+        <!-- 노리의 유튜브 항목 -->
+        <div class="circle">{{ idx + 1 }}</div>
+        <div 
+          class="item-wrapper d-flex align-center justify-space-between"
+          :class="{'text-wrapper': isText(item), 'youtube-wrapper': isYoutube(item), 'photo-wrapper': isPhoto(item) }"
         >
-          <!-- 노리의 유튜브 항목 -->
-          <div class="circle">{{ idx + 1 }}</div>
-          <div class="item-wrapper d-flex align-center justify-space-between">
-            <span class="left-wrapper handle">
-              <v-icon>
-                mdi-menu
-              </v-icon>
-            </span>
-            <div class="middle-wrapper">
-              <contents-youtube-item
-                v-if="item.type == 'youtube'"
-                :item="item"
-                :idx="idx"
-                @delete-item="deleteItem"
-                @item-change="onItemChange"
-              />
-              <!-- 노리의 사진항목 -->
-              <contents-photo-item
-                v-else-if="item.type == 'photo'"
-                :item="item"
-                :idx="idx"
-                @delete-item="deleteItem"
-                @item-change="onItemChange"
-              />
-              <!-- 노리의 텍스트 항목 -->
-              <contents-text-item
-                v-else
-                :item="item"
-                :idx="idx"
-                @delete-item="deleteItem"
-                @item-change="onItemChange"
-              />
-            </div>
-            <div class="right-wrapper">
-              <button @click="deleteItem(idx)">
-                <v-icon>mdi-trash-can</v-icon>
-              </button>
-            </div>
+          <span class="left-wrapper handle">
+            <v-icon>
+              mdi-menu
+            </v-icon>
+          </span>
+          <div class="middle-wrapper">
+            <contents-youtube-item
+              v-if="item.type == 'youtube'"
+              :item="item"
+              :idx="idx"
+              @delete-item="deleteItem"
+              @item-change="onItemChange"
+            />
+            <!-- 노리의 사진항목 -->
+            <contents-photo-item
+              v-else-if="item.type == 'photo'"
+              :item="item"
+              :idx="idx"
+              @delete-item="deleteItem"
+              @item-change="onItemChange"
+            />
+            <!-- 노리의 텍스트 항목 -->
+            <contents-text-item
+              v-else
+              :item="item"
+              :idx="idx"
+              @delete-item="deleteItem"
+              @item-change="onItemChange"
+            />
+          </div>
+          <div class="right-wrapper d-flex flex-column justify-space-between">
+            <button @click="deleteItem(idx)">
+              <v-icon>mdi-trash-can</v-icon>
+            </button>
+            <div :class="{'text-rightbottom':isText(item), 'youtube-rightbottom':isYoutube(item), 'photo-rightbottom':isPhoto(item)}"></div>
           </div>
         </div>
-      </draggable>
-      <!-- 항목 추가 위한 버튼들  -->
-      <div class="footer">
+      </div>
+    </draggable>
+    <!-- 항목 추가 위한 버튼들 -->
+    <div class="footer d-flex flex-column">
+      <div class="footer-buttons d-flex justify-center align-center">
         <div class="btn-wrapper">
           <YoutubeCreate
             :isAdded="youtubeAdded"
@@ -96,21 +93,33 @@
           />
         </div>
       </div>
+      <div class="footer-navi d-flex justify-space-between">
+        <div @click="cancleCreate" class="left-button">
+          취소
+        </div>
+        <div class="right-button">
+          <category-and-time-info :title="title" :itemList="itemList" />
+        </div>
+      </div>
+    </div>
+    <div class="background-text">
+      <p>아래 버튼을 눌러 <br> 컨텐츠를 추가해주세요!</p>
+      <v-icon>mdi-arrow-down</v-icon>
     </div>
   </div>
 </template>
 
 <script>
-import draggable from 'vuedraggable';
-import YoutubeCreate from '../components/contents-create/YoutubeCreate.vue';
-import ContentsYoutubeItem from '@/components/contents-create/ContentsYoutubeItem.vue';
-import ContentsTextItem from '@/components/contents-create/ContentsTextItem.vue';
-import ContentsPhotoItem from '@/components/contents-create/ContentsPhotoItem.vue';
-import Guideline from '../components/contents-create/Guideline.vue';
-import CategoryAndTimeInfo from '../components/contents-create/CategoryAndTimeInfo.vue';
+import draggable from "vuedraggable";
+import YoutubeCreate from "../components/contents-create/YoutubeCreate.vue";
+import ContentsYoutubeItem from "@/components/contents-create/ContentsYoutubeItem.vue";
+import ContentsTextItem from "@/components/contents-create/ContentsTextItem.vue";
+import ContentsPhotoItem from "@/components/contents-create/ContentsPhotoItem.vue";
+import Guideline from "../components/contents-create/Guideline.vue";
+import CategoryAndTimeInfo from "../components/contents-create/CategoryAndTimeInfo.vue";
 
 export default {
-  name: 'ContentsCreate',
+  name: "ContentsCreate",
   components: {
     draggable,
     YoutubeCreate,
@@ -122,15 +131,36 @@ export default {
   },
   data: function() {
     return {
-      title: '',
+      title: "",
       itemList: [],
       youtubeAdded: false,
       uploadPercentage: 0,
     };
   },
   methods: {
+    isText: function (item) {
+      if (item.type=="text") {
+        return true
+      } else {
+        return false
+      }
+    },
+    isYoutube: function (item) {
+      if (item.type=="youtube") {
+        return true
+      } else {
+        return false
+      }
+    },
+    isPhoto: function (item) {
+      if (item.type=="photo") {
+        return true
+      } else {
+        return false
+      }
+    },
     axiosFileSelect: function() {
-      var elem = document.getElementById('fileUpload');
+      var elem = document.getElementById("fileUpload");
       elem.click();
     },
 
@@ -162,24 +192,24 @@ export default {
 
     // 사진 업로드 시 itemList에 넣기
     createItemPhoto: function(p) {
+      console.log(p);
       const newItem = {
-        type: 'photo',
+        type: "photo",
         youtube: {},
         photo: p,
-        video: '',
-        description: '',
+        video: "",
+        description: "",
       };
       if (this.itemList.length <= 9) {
         this.itemList.push(newItem);
       } else {
-        alert('항목은 최대 10개 까지 넣을 수 있습니다.');
+        alert("항목은 최대 10개 까지 넣을 수 있습니다.");
       }
     },
     // 항목 삭제
     deleteItem: function(index) {
-      if (this.itemList[index].type == 'youtube') {
+      if (this.itemList[index].type == "youtube") {
         this.youtubeAdded = false;
-        this.itemList.splice(index, 1);
       }
       this.itemList.splice(index, 1);
     },
@@ -187,42 +217,40 @@ export default {
     onSelectVideo: function(video) {
       // 새 아이템 생성
       const newItem = {
-        type: 'youtube',
+        type: "youtube",
         youtube: video,
-        youtubeId: video.videoId,
-        youtubeTitle: video.title,
-        youtubeThumbnail: video.thumbnailSrc,
         photo: {},
-        description: '',
+        video: "",
+        description: "",
       };
       if (this.itemList.length <= 9) {
         this.itemList.push(newItem);
         this.youtubeAdded = true;
       } else {
-        alert('항목은 최대 10개 까지 넣을 수 있습니다.');
+        alert("항목은 최대 10개 까지 넣을 수 있습니다.");
       }
     },
     // 텍스트 추가
     createTextItem: function() {
       const newItem = {
-        type: 'text',
+        type: "text",
         youtube: {},
         photo: {},
-        video: '',
-        description: '',
+        video: "",
+        description: "",
       };
       if (this.itemList.length <= 9) {
         this.itemList.push(newItem);
       } else {
-        alert('항목은 최대 10개 까지 넣을 수 있습니다.');
+        alert("항목은 최대 10개 까지 넣을 수 있습니다.");
       }
     },
     // 유튜브나 사진 설명 및 텍스트 내용 바뀌면 적용
     onItemChange: function(itemInfo) {
       this.itemList[itemInfo[1]].description = itemInfo[0];
     },
-    createCancel: function() {
-      this.$router.push({ name: 'Main' });
+    cancleCreate: function() {
+      this.$router.push("/");
     },
   },
 };
@@ -230,21 +258,28 @@ export default {
 
 <style lang="scss">
 // 트렐로 배경색 : rgb(235,236,240)
-
-.contentHeader {
-  .close {
-    padding-left: 10px;
-    color: black;
-  }
-  padding: 5px;
-  // box-shadow: 0 3px 5px lightgray;
-  // background-color: #f4b740;
-  margin-top: 10px;
-  .header-title {
-    font-size: 1.25rem;
-  }
+.guide {
+  position: fixed;
+  top: 70px;
+  right: 10px;
 }
+
+#input-title {
+  margin-top: 0px !important;
+}
+
 .div-wrapper {
+  animation: 0.3s ease-out 0s 1 slideInFromBottom;
+  @keyframes slideInFromBottom {
+    0% {
+      transform: translateY(30px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
   .circle {
     width: 30px;
 
@@ -252,7 +287,7 @@ export default {
     height: 30px;
     line-height: 30px;
 
-    background-color: #f4b740;
+    background-color: lightgray;
     border-radius: 25px;
     text-align: center;
     color: white;
@@ -260,18 +295,28 @@ export default {
 
     padding-right: 0px !important;
   }
+  .text-wrapper {
+    background-color: #ebeac1;
+  }
+  .youtube-wrapper {
+    background-color: #e1a8a6;
+  }
+  .photo-wrapper {
+    background-color: #98c3e7 ;
+  }
   .item-wrapper {
     // border: 1px solid gray;
+    z-index: 50;
     width: 95%;
     height: 150px;
     padding: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
-    border-radius: 5px;
+    // border-radius: 5px;
 
-    background-color: rgb(247, 247, 247);
-    box-shadow: 0 4px 4px lightgray;
-
+    // background-color: rgb(247, 247, 247);
+    // box-shadow: 0 4px 4px lightgray;
+    
     .left-wrapper {
       width: 10%;
     }
@@ -302,10 +347,14 @@ export default {
           width: 100%;
           height: 100%;
           padding: 8px;
-          box-shadow: 0 4px 4px lightgray;
+          background-color: #ffffff4e;
+          // box-shadow: 0 4px 4px lightgray;
           resize: none;
           font-size: 11px;
         }
+        textarea:focus {
+            outline: none;
+          }
 
         textarea::placeholder {
           color: rgb(171, 171, 171);
@@ -333,9 +382,13 @@ export default {
             width: 100%;
             height: 100%;
             padding: 8px;
-            box-shadow: 0 4px 4px lightgray;
+            background-color: #ffffff4e;
+            // box-shadow: 0 4px 4px lightgray;
             resize: none;
             font-size: 12px;
+          }
+          textarea:focus {
+            outline: none;
           }
           .text {
             text-align: center;
@@ -352,63 +405,140 @@ export default {
     }
 
     .right-wrapper {
-      width: 10%;
+      height: 100%;
+      width: 30px;
       text-align: center;
       // background-color: yellow;
+      .text-rightbottom {
+        margin-bottom: -10px;
+        margin-right: -15px;
+        border-left: 40px solid #eede85;
+        border-bottom : 40px solid #ffffff;
+      }
+      .youtube-rightbottom {
+        margin-bottom: -10px;
+        margin-right: -15px;
+        border-left: 40px solid #956361;
+        border-bottom : 40px solid #ffffff;
+      }
+      .photo-rightbottom {
+        margin-bottom: -10px;
+        margin-right: -15px;
+        border-left: 40px solid #6d869c;
+        border-bottom : 40px solid #ffffff;
+      }
     }
   }
 }
 .sortable-chosen {
+  // transform: rotate(-15deg);
   opacity: 0.7;
-  background-color: #dcdcdc;
+  // background-color: #dcdcdc;
 }
 
 .sortable-ghost {
-  background-color: #dcdcdc;
+  // transform: rotate(0deg);
+  opacity: 0.7;
+  // background-color: #dcdcdc;
 }
 
 .footer {
-  width: 200px;
-  background-color: #f2f1f2;
+  width: 100%;
   position: fixed;
   z-index: 100;
   left: 50%;
+  bottom: -10px;
   transform: translateX(-50%);
-  bottom: 10px;
-
-  margin: 0 auto;
   margin-bottom: 10px;
 
-  border-radius: 15px;
-
-  padding-left: 20px;
-
-  height: 50px;
-
   display: flex;
+  direction: column;
   justify-content: center;
 
   align-items: center;
+  .footer-buttons {
+    height: 50px;
+    margin: 0 auto;
+    width: 200px;
+    padding-left: 20px;
+    background-color: #ffffff;
+    border-radius: 30px;
+    border: #a2d646 5px solid;
 
-  // border: 1px solid gray;
-  box-shadow: 0 4px 4px lightgray;
+    // border: 1px solid gray;
+    // box-shadow: 0 4px 4px lightgray;
 
-  .row.footerButtons {
-    // background-color: red !important;
-    width: 30px;
-    height: 30px;
-    margin-right: 12px !important;
+    .row.footerButtons {
+      // background-color: red !important;
+      width: 30px;
+      height: 30px;
+      margin-right: 22px !important;
+      margin-left: 4px !important;
 
-    .mdi-youtube {
+      .mdi-youtube {
+        font-size: 25pt;
+        color: #a2d646;
+      }
+    }
+
+    .footerButtons {
       font-size: 25pt;
-      // color: grey;
+      // margin-left: 20px;
+      margin-right: 18px;
+      color: #a2d646;
     }
   }
-
-  .footerButtons {
-    font-size: 25pt;
-    // margin-left: 20px;
-    margin-right: 8px;
+  .footer-navi {
+    width: 100%;
+    margin-top: 20px;
+    height: 50px;
+    .left-button {
+      background-color: #f4b740;
+      width: 50%;
+      padding-top: 12px;
+      text-align: center;
+      font-size: 13pt;
+    }
+    .right-button {
+      background-color: #a2d646;
+      padding-top: 12px;
+      width: 50%;
+      text-align: center;
+      font-size: 13pt;
+    }
   }
+}
+.background-text {
+  // background-color: red;
+  pointer-events: none;
+  width: 100% !important;
+  margin-left: -10px !important;
+  position: fixed;
+  bottom: 150px;
+  text-align: center;
+    width: 80%;
+  /* left, right는 해당 요소의 위치 시작점을 결정한다. 그런데, 이때, margin의 양 값을 auto로 줌으로써 마진을 주어 해당 요소의 양 끝 위치를 각각 0으로 만들어준다. */
+  margin: 0 auto;
+  animation: 1s ease-out 0s 1 slideInFromTop;
+  @keyframes slideInFromTop {
+    0% {
+      transform: translateY(-30px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  p{
+    font-size: 20pt;
+    color: rgb(179, 179, 179);
+  }
+  
+  i.v-icon {
+    color: rgb(179, 179, 179);
+    font-size: 40pt;
+  }
+  // z-index: -1;
 }
 </style>

@@ -7,28 +7,28 @@ function createContents(param, success, fail) {
   let token = window.localStorage.getItem("accessToken");      
   let config = {headers: { Authorization: `Bearer ${token}` }};
   instance
-    .post('/contents', JSON.stringify(param), config)
+    .post('contents', JSON.stringify(param), config)
     .then(success)
     .catch(fail);
 }
 
 function createTags(id, param, success, fail) {
   instance
-    .post(`/tags/contents/${id}`, param)
+    .post(`tags/contents/${id}`, param)
     .then(success)
     .catch(fail);
 }
 
 function findAllContents(success, fail) {
   instance
-    .get('/contents')
+    .get('contents')
     .then(success)
     .catch(fail);
 }
 
 function findContentsBy(id, success, fail) {
   instance
-    .get(`/contents/${id}`)
+    .get(`contents/${id}`)
     .then(success)
     .catch(fail);
 }

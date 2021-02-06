@@ -1,9 +1,17 @@
 <template>
   <div>
+<<<<<<< HEAD
     <v-row justify="center" class="last-dialog">
       <v-btn color="#89BA17" class="ma-2" small dark @click="onNextClicked">
+=======
+    <v-row
+      justify="center"
+      class="last-dialog"
+    >
+      <span class="right-button" @click="onNextClicked">
+>>>>>>> feature-axios-tag
         다음
-      </v-btn>
+      </span>
       <v-dialog
         v-model="dialog"
         fullscreen
@@ -12,6 +20,7 @@
         scrollable
       >
         <v-card tile class="card">
+<<<<<<< HEAD
           <v-toolbar flat dark class="toolbar" color="white" max-height="4rem">
             <v-btn icon dark color="black" @click="dialog = false">
               <v-icon>mdi-close</v-icon>
@@ -112,18 +121,116 @@
                 </v-list-item-content>
               </v-list-item>
             </v-list>
+=======
+          <v-card-text>
+            <div class="dialog-top-wrapper">
+              <div class="top-left">
+                <v-icon>
+                  mdi-alarm
+                </v-icon>
+              </div>
+              <div class="top-right">
+                <v-select
+                  class="select-input"
+                  :items="hours"
+                  label="시간"
+                  color="#f4b740"
+                  v-model="time.hour"
+                ></v-select>
+                <v-select
+                  class="select-input"
+                  :items="minutes"
+                  label="분"
+                  color="#f4b740"
+                  v-model="time.minute"
+                ></v-select> 
+              </div>
+            </div>
+            <div class="dialog-middle-wrapper">
+              <div
+                v-for="(category, idx) in categories"
+                :key="idx"
+                class="categories"  
+              >
+              <category-item 
+                @on-cate-select="onCategorySelect"
+                :category="category"
+              />
+              </div>
+            </div>
+            <div class="dialog-bottom-wrapper">
+              <div class="bottom-top">
+                <div class="upper">
+                  <v-icon>mdi-pound</v-icon>
+                  <div 
+                    class="hashtag-search"
+                    @keyup.down="selectTag('down')"
+                    @keyup.up="selectTag('up')"
+                  >
+                    <v-text-field
+                      label="해시태그 추가(선택)"
+                      outlined
+                      color="#f4b740"
+                      maxlength="10"
+                      v-on:input="filterList"
+                      v-model.trim="hashtag"
+                      @keypress.enter="addHashtag"
+                      style="padding: 0; margin: 0;"
+                    ></v-text-field>
+                    <ul
+                      v-if="isActive"
+                      class="hashtag-list"
+                      tabindex="0"
+                    >
+                      <li
+                        v-for="tag in hashtagResult"
+                        :key="tag.id"
+                        tabindex="-1"
+                      >
+                        {{ tag.name }}
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <v-icon @click="addHashtag">mdi-plus-circle</v-icon> 
+                </div>
+              </div>
+              <div class="bottom-bt">
+                <span
+                  v-for="(tag, idx) in hashtags"
+                  :key="idx"
+                  class="hashtag"  
+                >
+                  #{{ tag }}
+                  <v-icon
+                    @click="deleteTag(idx)"
+                  >mdi-close</v-icon>
+                </span> 
+              </div>
+            </div>
+            
+          <div class="dialog-footer d-flex justify-space-between">
+            <div class="dialog-footer-button d-flex justify-center">
+              <div class="dialog-footer-left" @click="dialog = false">뒤로</div>
+              <div class="dialog-footer-right" @click="dialog = false">완료</div>
+            </div>
+          </div>
+>>>>>>> feature-axios-tag
           </v-card-text>
-
-          <div style="flex: 1 1 auto;"></div>
         </v-card>
       </v-dialog>
     </v-row>
   </div>
 </template>
 <script>
+<<<<<<< HEAD
 import CategoryItem from './CategoryItem.vue';
 import { createContents } from '@/api/contents.js';
 import { createTags } from '@/api/contents.js';
+=======
+import CategoryItem from './CategoryItem.vue'
+import { recommendTags } from '@/api/tags.js'
+>>>>>>> feature-axios-tag
 
 export default {
   name: 'CategoryAndTimeInfo',
@@ -142,8 +249,36 @@ export default {
         hour: 0,
         minute: 0,
       },
+<<<<<<< HEAD
       selectedCategories: [0, 0, 0, 0, 0, 0, 0, 0],
+=======
+      selectedCategories: [],
+      hashtagResult: [],
+>>>>>>> feature-axios-tag
       hashtag: '',
+      isActive: false,
+      allHashtags: [
+        {
+          "id": 3,
+          "name": "아이",
+          "count": 7
+        },
+        {
+          "id": 4,
+          "name": "아이랑 놀아주기",
+          "count": 5
+        },
+        {
+          "id": 1,
+          "name": "아이와 함께",
+          "count": 2
+        },
+        {
+          "id": 14,
+          "name": "아이교육",
+          "count": 1
+        }
+      ],
       hashtags: [],
       // 임시 데이터(나중에는 vuex사용하기..?)
       hours: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
@@ -168,17 +303,66 @@ export default {
         alert('내용을 작성해 주세요.');
       }
     },
+<<<<<<< HEAD
     addHashtag: function() {
       const newTag = this.hashtag.replaceAll(' ', '_');
+=======
+    filterList: function () {
+      const isValid = /[^가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9|\s]/.test(this.hashtag)
+      if (isValid === false && this.hashtag) {
+        this.isActive = true
+        // this.searchTag(this.hashtag)
+        // return this.hashtagResult
+        this.hashtagResult = this.allHashtags.filter((tag) => {
+          return tag.name.match(this.hashtag)
+        })
+      } else {
+        this.isActive = false
+      }
+    },
+    // selectTag: function () {
+    //   if (this.isActive==true) {
+
+    //   }
+    // },
+    addHashtag: function () {
+      
+      const newTag = this.hashtag.replaceAll(" ", "_")
+>>>>>>> feature-axios-tag
       if (this.hashtags.indexOf(newTag) >= 0) {
         alert('이미 추가된 해시태그입니다');
         this.hashtag = '';
       } else if (this.hashtag.length == 0) {
         alert('내용을 적어주세요');
       } else {
+<<<<<<< HEAD
         this.hashtags.push(newTag);
         this.hashtag = '';
       }
+=======
+        if (this.hashtags.length < 12 ) {
+          this.hashtags.push(newTag)
+          this.hashtag = ''
+        } else {
+          alert("해시태그는 최대 10개까지 적을 수 있습니다.")
+          this.hashtag = ''
+        }
+      }      
+    },
+    /**
+     * 해시태그 검색 요청 구현
+     */
+    searchTag(tag) {
+      recommendTags(
+        tag,
+        (res) => {
+          this.hashtagResult = res.data
+        },
+        (error) => {
+          console.log(error);
+        }
+      )
+>>>>>>> feature-axios-tag
     },
     onCategorySelect: function(category) {
       const targetIndex = this.categories.indexOf(category);
@@ -251,30 +435,35 @@ export default {
 };
 </script>
 <style lang="scss">
-.last-dialog {
-  .v-btn {
-    width: 50px;
-    .v-btn__content {
-      font-size: 11pt;
-    }
-  }
-}
 .v-dialog {
   margin-top: 55px;
   border: 0;
   box-shadow: none;
   .card {
-    .toolbar {
-      .toolbar-title {
-        color: black;
-        padding-right: 50px;
-      }
-      .v-toolbar__content {
+    .v-card__text {
+      width: 100%;
+      padding: 0;
+      .dialog-top-wrapper {
+        padding-left: 10px;
+        padding-right: 10px;
+        margin-top: 30px;
         width: 100%;
         display: flex;
         justify-content: space-between;
-        .v-toolbar__items {
+        align-items: center;
+        .top-left {
+          width: 10%;
+          text-align: center;
+          margin-bottom: 10px;
+          i {
+            font-size: 25pt;
+            color: #a2d646;
+          }
+        }
+        .top-right {  
+          width: 90%;
           display: flex;
+<<<<<<< HEAD
           align-items: center;
           .complete-button {
             height: 30px;
@@ -283,25 +472,124 @@ export default {
             border-radius: 5px;
             background-color: #89ba17;
             color: white;
+=======
+          justify-content: space-between;
+          .select-input {
+            margin-left: 10px;
+            margin-right: 10px;
+>>>>>>> feature-axios-tag
           }
         }
       }
-    }
-    .v-card__text {
-      .v-list {
-        .v-list-item {
-          .v-list-item__content {
-            width: 100%;
-            .categories {
-              .item-wrapper {
-                background-color: aquamarine;
-                width: 80px;
-              }
-              .selected {
-                background-color: lightgray;
-                width: 80px;
-              }
+      .dialog-middle-wrapper {
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        .categories {
+
+          .item-wrapper {
+            width: 110px;
+            margin: 10px;
+            padding: 5px;
+            border: lightgray 5px solid;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 12pt;
+            font-weight: 900;
+            color: rgb(159, 158, 158);
+            // box-shadow: 0 4px 4px lightgray;
+          }
+          .selected {
+            color:#a2d646;
+            border: #a2d646 5px solid;
+          }
+        }
+      }
+      .dialog-bottom-wrapper {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 10px;
+        .bottom-top {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          .upper {
+            width: 70%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+          .hashtag-search {
+            width: 240px; // 반응형 수정 필요
+            
+            .v-input__control {
+              position: relative;
+              padding-top: 25px;
+              // margin-left: 10px;
+              // margin-right: 10px;
             }
+            .hashtag-list {
+              // display: none;
+              margin-top: -30px;
+              position: absolute;
+              // margin-left: 10px;
+              background-color: #a2d646;
+              width: 240px; // 반응형 수정 필요
+              
+            }
+
+          }
+        }
+        .bottom-bt {
+          
+          border-radius: 10px;
+          width: 100%;
+          padding: 0 20px;
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+          .hashtag {
+            width: initial;
+            border: #f4b740 solid 3px;
+            margin: 5px;
+            text-align: center;
+            padding: 3px;
+            border-radius: 25px;
+            .v-icon {
+              font-size: 12pt;
+              margin-bottom: 2px;
+            }
+          }
+        }
+      }
+      .dialog-footer {
+        width: 100%;
+        z-index: 100;
+        position: fixed;
+        bottom: 0;
+        height: 50px;
+        .dialog-footer-button {
+          width: 100%;
+          .dialog-footer-left{
+            background-color: #f4b740;
+            padding-top: 12px;
+            width: 50%;
+            font-size: 13pt;
+            text-align: center;
+          }
+          .dialog-footer-right{
+            background-color: #a2d646;
+            padding-top: 12px;
+            width: 50%;
+            font-size: 13pt;
+            text-align: center;
           }
         }
       }

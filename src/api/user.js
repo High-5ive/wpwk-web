@@ -19,7 +19,7 @@ function login(user, success, fail) {
   };
 
   instance
-    .post(`/login`, JSON.stringify(body))
+    .post(`login`, JSON.stringify(body))
     .then(success)
     .catch(fail)
 }
@@ -29,7 +29,7 @@ async function findById(userId, success, fail) {
   
   const config = {headers: { Authorization: `Bearer ${token}` }};
   await instance
-    .get(`/loginUser/${userId}`, config)
+    .get(`loginUser/${userId}`, config)
     .then(success)
     .catch(fail);
 }

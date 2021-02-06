@@ -191,7 +191,8 @@ export default {
     }
     .v-card__text {
       .container {
-        
+        width: 90%;
+        padding: 10px;
         .youtube-result-basic {
           padding: 12px;
         }
