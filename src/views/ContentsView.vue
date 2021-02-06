@@ -50,8 +50,8 @@
 <script>
 import CardList from '@/components/ContentsView/CardList';
 import Evaluations from '@/components/ContentsView/Evaluations';
-import CommentList from '@/components/ContentsView/CommentList';
-import CommentForm from '@/components/ContentsView/CommentForm';
+import CommentList from '@/components/Comment/CommentList';
+import CommentForm from '@/components/Comment/CommentForm';
 
 // img, photo, description은 제공받는 데이터에서 가져옴(임의의 값 설정)
 const noriContent = {

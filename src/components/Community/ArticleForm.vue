@@ -37,11 +37,12 @@ export default {
   name: 'ArticleForm',
   data: function () {
     return {
-      content: '',
+      user: '',
+      subject: '',
       itemList: [],
+      content: '',
       subjects: ['동네맛집', '동네카페', '아이교육/학원', '살림/청소/정리'],
       subject_final: '',
-      subject: ''
     }
   },
   components: {
@@ -90,14 +91,16 @@ export default {
     },
     createArticle: function () {
         // 임의의 사용자 이름 설정
-        const username = "abc"
+        const username = "수진맘"
         const now = moment().format('YYYY-MM-DD HH:mm:ss')
         const article = {
-            content: this.content,
-            user: username,
-            created_at: now,
-            itemList: this.itemList,
-            subject: this.subject_final
+          user: username,
+          subject: this.subject_final,
+          itemList: this.itemList,
+          content: this.content,
+          created_at: now,
+          likeList: [],
+          comments: []
         }
         this.$emit('createArticle', article)
         this.content = ''
