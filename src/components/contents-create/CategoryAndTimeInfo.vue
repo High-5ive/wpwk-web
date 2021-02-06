@@ -27,10 +27,11 @@
                      <div class="bottom-top">
                         <div class="upper">
                            <v-icon>mdi-pound</v-icon>
-                           <div class="hashtag-search" @keyup.down="selectTag('down')" @keyup.up="selectTag('up')">
+                           <div class="hashtag-search" @keyup.down="selectValue('down')" @keyup.up="selectValue('up')">
                               <v-text-field
                                  label="해시태그 추가(선택)"
                                  outlined
+                                 class="hashtagInput"
                                  color="#f4b740"
                                  maxlength="10"
                                  v-on:input="filterList"
@@ -38,9 +39,21 @@
                                  @keypress.enter="addHashtag"
                                  style="padding: 0; margin: 0;"
                               ></v-text-field>
-                              <ul v-if="isActive" class="hashtag-list" tabindex="0">
-                                 <li v-for="tag in hashtagResult" :key="tag.id" tabindex="-1">
-                                    {{ tag.name }}
+                              <ul
+                                 v-if="hashtagResult.length"
+                                 class="hashtag-list" 
+                                 tabindex="0"
+                                 @mouseover="removeValue"
+                              >
+      
+                                 <li 
+                                    v-for="tag in hashtagResult" 
+                                    :key="tag.id"
+                                    @click="changeValue(tag.name)"
+                                    @keyup.enter="selectValue('enter', tag.name)" 
+                                    tabindex="-1"
+                                 >
+                                    <span>{{ tag.name }}</span>
                                  </li>
                               </ul>
                            </div>
@@ -133,6 +146,7 @@ export default {
             alert('내용을 작성해 주세요.');
          }
       },
+      // 해시태그 특수문자에는 반응하지 않도록 필터링후 서버에 요청
       filterList: function() {
          const isValid = /[^가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9|\s]/.test(this.hashtag);
          if (isValid === false && this.hashtag) {
@@ -146,11 +160,59 @@ export default {
             this.isActive = false;
          }
       },
-      // selectTag: function () {
-      //   if (this.isActive==true) {
-
-      //   }
-      // },
+      // 목록에서 해시태그를 선택했을 때
+      changeValue: function (tag) {
+         this.isActive = false;
+         this.hashtag = tag;
+         this.addHashtag()
+         this.hashtagResult = []
+         document.querySelector('.hashtagInput').focus()
+         
+      },
+      removeValue: function () {
+         if (document.querySelector('.hashtag-list').classList.contains('key')) {
+            document.querySelector('.hashtag-list').classList.remove('key');
+            document.querySelector('.hashtag-list li.sel').classList.remove('sel');
+         }
+      }, 
+      // 해시태그 목록에서 위아래버튼 및 엔터버튼 눌렸을때 (해시태그 선택할 때)
+      selectValue: function (keycode, tag) {
+         if (this.isActive === true) {
+            const hasClass = document.querySelector('.hashtag-list').classList.contains('key');
+            if (keycode === 'down') {
+               if (!hasClass) {
+               const thisEl = document.querySelectorAll('.hashtag-list li')[0];
+               document.querySelector('.hashtag-list').classList.add('key');
+               thisEl.classList.add('sel');
+               thisEl.focus();
+               } else {
+               const lastEl = document.querySelector('.hashtag-list li:last-child');
+               const thisEl = document.querySelector('.hashtag-list li.sel');
+               const nextEl = thisEl.nextElementSibling;
+               if (!lastEl.classList.contains('sel')) {
+                  thisEl.classList.remove('sel');
+                  nextEl.classList.add('sel');
+                  nextEl.focus();
+               }
+               }
+            }
+            if (keycode === 'up' && hasClass) {
+               const firstEl = document.querySelectorAll('.hashtag-list li')[0];
+               const thisEl = document.querySelector('.hashtag-list li.sel');
+               const prevEl = thisEl.previousElementSibling;
+               if (!firstEl.classList.contains('sel')) {
+               thisEl.classList.remove('sel');
+               prevEl.classList.add('sel');
+               prevEl.focus();
+               } else {
+               document.querySelector('.v-input__control').focus();
+               }
+            }
+            if (keycode === 'enter' && hasClass) {
+               this.changeValue(tag)
+            }
+         }
+      },
       addHashtag: function() {
          const newTag = this.hashtag.replaceAll(' ', '_');
          if (this.hashtags.indexOf(newTag) >= 0) {
@@ -332,9 +394,12 @@ export default {
                   display: flex;
                   justify-content: center;
                   align-items: center;
+                  .v-icon {
+                     margin: 0 5px;
+                  }
                }
                .hashtag-search {
-                  width: 240px; // 반응형 수정 필요
+                  width: 200px; // 반응형 수정 필요
 
                   .v-input__control {
                      position: relative;
@@ -344,11 +409,31 @@ export default {
                   }
                   .hashtag-list {
                      // display: none;
-                     margin-top: -30px;
+                     list-style: none;
+                     padding-left: 0px;
+                     z-index: 10;
+                     // margin-left: -1px;
+                     margin-top: -40px;
                      position: absolute;
                      // margin-left: 10px;
-                     background-color: #a2d646;
-                     width: 240px; // 반응형 수정 필요
+                     border-left: rgb(164, 163, 163) solid 1px;
+                     border-bottom: rgb(164, 163, 163) solid 1px;
+                     border-right: rgb(164, 163, 163) solid 1px;
+                     border-radius: 0 0 8px 8px;
+                     background-color: #FFFFFF;
+                     width: 200px; // 반응형 수정 필요
+                     li {
+                        font-size: 12pt;
+                        padding: 8px 12px;
+                        
+                        &:hover, &.sel {
+                           background-color: #f4b8407f;
+                           color: black;
+                        }
+                        &.sel:focus {
+                           outline: none;
+                        }
+                     }
                   }
                }
             }
