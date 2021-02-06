@@ -39,7 +39,7 @@
   height: 90vh;
 }
 .cv-container .cv-card-wrapper .cl-container .card-wrapper {
-  background-color: white;
+  animation: 1s ease-out 0s 1 slideInFromTop;
   border-radius: 40px;
   border: 1px #e6e6e6 solid;
   box-shadow: 0px 9px 20px 0px #5656560f;
@@ -48,6 +48,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+@keyframes slideInFromTop {
+  0% {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 .cv-container .cv-card-wrapper .cl-container .card-wrapper .card-content {
   height: 40vh;
@@ -83,7 +93,7 @@
   position: relative;
   padding: 10px;
   text-align: center;
-  font-size: 22pt;
+  font-size: 16pt;
 }
 .cv-container .cv-card-wrapper .cl-container .card-wrapper .card-desc::before {
   content: "";
@@ -159,18 +169,10 @@
 }
 .cv-container .ev-container {
   margin-top: 20px;
-  background-color: blue;
   height: 90vh;
   padding-bottom: 100px;
 }
-.cv-container .comment-modal {
-  position: fixed;
-  bottom: 73px;
-  right: 40px;
-  z-index: 200;
-  display: inline;
-}
-.cv-container .comment-modal #btn-comment {
+.cv-container .ev-container #btn-comment {
   width: 40px;
   height: 40px;
   border-radius: 30px;
@@ -178,4 +180,54 @@
   border: 2px solid gray;
   color: gray !important;
   font-size: 14pt;
+}
+.cv-container .ev-container .ev-footer {
+  position: fixed;
+  z-index: 100;
+  left: 50%;
+  bottom: -75px;
+  transform: translateX(-50%);
+  margin-bottom: 25px;
+  width: 100%;
+  height: 100px;
+}
+.cv-container .ev-container .ev-footer .footer-eval {
+  width: 100%;
+  display: flex;
+}
+.cv-container .ev-container .ev-footer .footer-eval .left-button {
+  height: 50px;
+  background-color: #f4b740;
+  width: 20%;
+  padding-top: 12px;
+  text-align: center;
+}
+.cv-container .ev-container .ev-footer .footer-eval .left-button:hover {
+  background-color: #ca9834;
+}
+.cv-container .ev-container .ev-footer .footer-eval .middle-button {
+  height: 50px;
+  background-color: #f4b740;
+  width: 40%;
+  padding-top: 12px;
+  text-align: center;
+}
+.cv-container .ev-container .ev-footer .footer-eval .middle-button:hover {
+  background-color: #ca9834;
+}
+.cv-container .ev-container .ev-footer .footer-eval .right-button {
+  background-color: #a2d646;
+  padding-top: 12px;
+  width: 40%;
+  text-align: center;
+}
+.cv-container .ev-container .ev-footer .footer-eval .right-button:hover {
+  background-color: #8dbb3e;
+}
+.cv-container .comment-modal {
+  position: fixed;
+  bottom: 73px;
+  right: 40px;
+  z-index: 200;
+  display: inline;
 }

@@ -49,6 +49,8 @@ export default {
    }
 
    .root-header {
+      z-index: 100;
+
       img {
          height: 40px;
       }

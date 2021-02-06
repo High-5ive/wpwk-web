@@ -33,6 +33,7 @@
 
         //CardList.vue
         .cl-container {
+
             padding: 20px; //전체로부터 카드를 안으로...
             padding-bottom: 100px;
 
@@ -42,9 +43,23 @@
             // 카드 한장
             // Card.vue
             .card-wrapper {
+                animation: 1s ease-out 0s 1 slideInFromTop;
+
+                @keyframes slideInFromTop {
+                    0% {
+                        transform: translateY(-30px);
+                        opacity: 0;
+                    }
+
+                    100% {
+                        transform: translateY(0);
+                        opacity: 1;
+                    }
+                }
+
                 $card_radisu: 40px; //카드의 모서를 둥글게
 
-                background-color: white;
+                // background-color: pink;
                 border-radius: $card_radisu;
                 border: 1px rgb(230, 230, 230) solid;
                 box-shadow: 0px 9px 20px 0px #5656560f;
@@ -105,12 +120,14 @@
                     align-items: center;
 
                     .desc {
+
                         position: relative;
                         padding: 10px;
                         text-align: center;
-                        font-size: 22pt;
+                        font-size: 16pt;
                     }
 
+                    // 카드 desc 하단에 백그라운드 이미지- 가상 요소로 추가함
                     &::before {
                         content: "";
                         background: url('../assets/cv-bg.png');
@@ -213,23 +230,12 @@
 
     }
 
-    //Evaluations.vie
-    .ev-container{
+    //Evaluations.vue
+    .ev-container {
         margin-top: 20px;
-        background-color: blue;
+        // background-color: blue;
         height: 90vh;
         padding-bottom: 100px;
-    }
-
-
-    // ContentsView.vue
-    .comment-modal {
-        position: fixed;
-        bottom: 73px;
-        right: 40px;
-        z-index: 200;
-
-        display: inline;
 
         #btn-comment {
             width: 40px;
@@ -242,5 +248,78 @@
             color: gray !important;
             font-size: 14pt;
         }
+
+        //최하단 버튼
+        .ev-footer {
+            // display: flex;
+            // flex-direction: column;
+            position: fixed;
+            z-index: 100;
+            left: 50%;
+            bottom: -75px;
+            transform: translateX(-50%);
+            margin-bottom: 25px;
+            //    background-color: white;
+
+            width: 100%;
+            height: 100px;
+
+            // 최하단 좌우 이동 버튼
+            .footer-eval {
+                width: 100%;
+                // margin-top: 20px;
+                display: flex;
+
+                .left-button {
+                    height: 50px;
+                    background-color: #f4b740;
+                    width: 20%;
+                    padding-top: 12px;
+                    text-align: center;
+
+                    &:hover {
+                        background-color: #ca9834;
+                    }
+                }
+
+                .middle-button {
+                    height: 50px;
+                    background-color: #f4b740;
+                    width: 40%;
+                    padding-top: 12px;
+                    text-align: center;
+
+                    &:hover {
+                        background-color: #ca9834;
+                    }
+                }
+
+                .right-button {
+                    background-color: #a2d646;
+                    padding-top: 12px;
+                    width: 40%;
+                    text-align: center;
+
+                    &:hover {
+                        background-color: #8dbb3e;
+                    }
+                }
+            }
+        }
+    }
+
+
+
+
+    // ContentsView.vue
+    .comment-modal {
+        position: fixed;
+        bottom: 73px;
+        right: 40px;
+        z-index: 200;
+
+        display: inline;
+
+
     }
 }

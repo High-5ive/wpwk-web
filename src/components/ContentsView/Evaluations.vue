@@ -8,6 +8,23 @@
          <v-btn class="ma-3" color="warning" dark @click="goHome"> 홈으로 가기 </v-btn>
          <v-btn class="ma-3" color="success" dark> 제작자의 다른 컨텐츠 보러가기 </v-btn>
       </div>
+
+      <div class="ev-footer">
+         <div class="footer-eval">
+            <div class="left-button"><v-icon>mdi-backup-restore</v-icon> 다시보기</div>
+            <div class="middle-button">
+               <v-icon>
+                  mdi-chevron-right
+               </v-icon>
+            </div>
+            <div class="right-button">
+               <v-icon>
+                  mdi-chevron-right
+               </v-icon>
+            </div>
+         </div>
+      </div>
+
       <!-- 신고하기 모달 -->
       <div>
          <v-row justify="center">

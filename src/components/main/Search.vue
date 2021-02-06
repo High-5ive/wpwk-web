@@ -10,6 +10,20 @@ export default {
 
 <style lang="scss" scoped>
 .container {
+   // animation: 1s ease-in 0s 1 slideInFromTop;
+
+   // @keyframes slideInFromTop {
+   //    0% {
+   //       transform: translateY(-100px);
+   //       // opacity: 0;
+   //    }
+
+   //    100% {
+   //       transform: translateY(0);
+   //       // opacity: 1;
+   //    }
+   // }
+
    position: fixed;
    top: 55px;
    left: 0;
