@@ -19,6 +19,7 @@
             <v-card-actions>
                 <v-icon v-if="this.like" color="red" @click="getLike"> mdi-heart-multiple </v-icon>
                 <v-icon v-else color="red" @click="getLike"> mdi-heart-multiple-outline </v-icon>
+                <span @click="getLike"> 좋아요 </span>
 
                 <div>
                     <v-icon color="grey"> mdi-comment-multiple-outline </v-icon> 댓글 {{ this.comments.length }}

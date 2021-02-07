@@ -1,22 +1,35 @@
 <template>
   <div>
-    <v-card class="mx-auto" max-width="400">
-      <div v-if="this.article.itemList.length">
-        <v-img @click="articleDetail" class="white--text align-end" height="200px" :src="img"> </v-img>
-      </div>
-      <v-card-subtitle @click="articleDetail" class="pb-0">
-        {{ subject }}
-      </v-card-subtitle>
+    <!-- <v-card class="mx-auto" max-width="400"> -->
+    <v-card class="content-wrapper">
+      <div class="article-wrapper">
+        <div v-if="this.article.itemList.length">
+          <v-img @click="articleDetail" class="white--text align-end" height="200px" :src="img"> </v-img>
+        </div>
+        <v-card-subtitle @click="articleDetail" class="pb-0">
+          {{ subject }}
+        </v-card-subtitle>
 
-      <v-card-text @click="articleDetail" class="text--primary">
-          <div> {{ content }} </div>
-      </v-card-text>
+        <v-card-text @click="articleDetail" class="text--primary">
+            <div> {{ content }} </div>
+        </v-card-text>
+      </div>
 
       <v-card-actions>
-        <v-icon v-if="this.like" color="red" @click="getLike"> mdi-heart-multiple </v-icon>
+        <v-icon v-if="this.like" color="red" @click="getLike"> mdi-heart-multiple </v-icon> 
         <v-icon v-else color="red" @click="getLike"> mdi-heart-multiple-outline </v-icon>
-        {{ this.likeList.length }}
-        <v-icon color="grey" @click="articleDetail"> mdi-comment-multiple-outline </v-icon> 댓글 {{ this.comments.length }}
+        <span @click="getLike"> 좋아요 </span>
+        <v-icon color="grey" @click="articleDetail"> mdi-comment-multiple-outline </v-icon>
+        <div v-if="this.comments.length" @click="articleDetail">
+          댓글 {{ this.comments.length }}
+        </div>
+        <div v-else @click="articleDetail">
+          댓글쓰기
+        </div>
+
+        <div>
+          <v-icon color="red"> mdi-account-heart </v-icon> {{ this.likeList.length }}
+        </div>
       </v-card-actions>
     </v-card>
     <br>
@@ -91,5 +104,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss">
+@import '@/css/article.scss'
 </style>
