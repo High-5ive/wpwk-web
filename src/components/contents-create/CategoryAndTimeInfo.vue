@@ -1,7 +1,7 @@
 <template>
    <div>
       <v-row justify="center" class="last-dialog">
-         <span class="right-button" @click="onNextClicked">
+         <span class="right-button nf nf-600" @click="onNextClicked">
             다음
          </span>
          <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition" scrollable>
@@ -107,31 +107,8 @@ export default {
          },
          selectedCategories: [0, 0, 0, 0, 0, 0, 0, 0],
          hashtagResult: [],
-
          hashtag: '',
          isActive: false,
-         allHashtags: [
-            {
-               id: 3,
-               name: '아이',
-               count: 7,
-            },
-            {
-               id: 4,
-               name: '아이랑 놀아주기',
-               count: 5,
-            },
-            {
-               id: 1,
-               name: '아이와 함께',
-               count: 2,
-            },
-            {
-               id: 14,
-               name: '아이교육',
-               count: 1,
-            },
-         ],
          hashtags: [],
          // 임시 데이터(나중에는 vuex사용하기..?)
          hours: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],

@@ -4,7 +4,7 @@
       <img :src="thumbnailSrc" alt="video thumbnail">
     </div>
     <div class="middle-wrapper">
-      <div :title="video.snippet.title | unescape">{{ video.snippet.title | unescape }}</div>
+      <div :title="video.snippet.title | unescape" >{{ video.snippet.title | unescape }}</div>
     </div>
     <div class="right-wrapper d-flex justify-center">
       <button
