@@ -1,32 +1,59 @@
 <template>
-   <v-card id="create">
-      <v-speed-dial v-model="fab" :top="top" :bottom="bottom" :right="right" :left="left" :direction="direction" :open-on-hover="hover" :transition="transition">
-         <template v-slot:activator>
-            <v-btn id="main-dial" v-model="fab" color="blue darken-2" dark fab>
-               <v-icon v-if="fab">
-                  mdi-close
-               </v-icon>
-               <v-icon v-else>
-                  mdi-baby-carriage
-               </v-icon>
-               <!-- <img v-else src="@/assets/c_wk.png" style="width:35px" /> -->
+   <div>
+      <v-card id="create">
+         <v-speed-dial v-model="fab" :top="top" :bottom="bottom" :right="right" :left="left" :direction="direction" :open-on-hover="hover" :transition="transition">
+            <template v-slot:activator>
+               <v-btn id="main-dial" v-model="fab" color="blue darken-2" dark fab>
+                  <v-icon v-if="fab">
+                     mdi-close
+                  </v-icon>
+                  <v-icon v-else>
+                     mdi-baby-carriage
+                  </v-icon>
+                  <!-- <img v-else src="@/assets/c_wk.png" style="width:35px" /> -->
+               </v-btn>
+            </template>
+            <v-btn fab dark small color="green">
+               <router-link to="/ContentsCreate"><v-icon>mdi-baby-bottle</v-icon></router-link>
             </v-btn>
-         </template>
-         <v-btn fab dark small color="green">
-            <router-link to="/ContentsCreate"><v-icon>mdi-pencil</v-icon></router-link>
-         </v-btn>
-         <v-btn fab dark small color="red">
-            <v-icon>mdi-heart</v-icon>
-         </v-btn>
-         <v-btn fab dark small color="indigo" @click="scrollTop">
-            <v-icon>mdi-chevron-up</v-icon>
-         </v-btn>
-      </v-speed-dial>
-   </v-card>
+            <v-btn fab dark small color="yellow darken-1">
+               <router-link to="/ContentsCreate"><v-icon>mdi-pencil</v-icon></router-link>
+            </v-btn>
+            <v-btn fab dark small color="red">
+               <v-icon>mdi-heart</v-icon>
+            </v-btn>
+            <v-btn fab dark small color="indigo" @click="scrollTop">
+               <v-icon>mdi-chevron-up</v-icon>
+            </v-btn>
+         </v-speed-dial>
+      </v-card>
+
+      <v-row justify="center">
+         <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+            <template v-slot:activator="{ on, attrs }">
+               <v-btn class="write" color="primary" fab dark v-bind="attrs" v-on="on">
+                  <v-icon> mdi-pencil </v-icon>
+               </v-btn>
+            </template>
+
+            <v-card>
+               <v-toolbar dark color="success">
+                  <!-- 닫기 버튼 -->
+                  <v-btn icon dark @click="dialog = false">
+                     <v-icon>mdi-close</v-icon>
+                  </v-btn>
+
+                  <v-toolbar-title>새 글 작성</v-toolbar-title>
+               </v-toolbar>
+               <article-form @createArticle="createArticle" />
+            </v-card>
+         </v-dialog>
+      </v-row>
+   </div>
 </template>
 
 <script>
-// import _ from 'lodash';
+import ArticleForm from '@/components/Community/ArticleForm';
 
 export default {
    data: () => ({
@@ -41,6 +68,7 @@ export default {
       left: false,
       transition: 'slide-y-reverse-transition',
    }),
+   components: { ArticleForm },
    computed: {
       activeFab() {
          switch (this.tabs) {
