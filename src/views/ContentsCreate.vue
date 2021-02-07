@@ -25,10 +25,10 @@
           class="item-wrapper d-flex align-center justify-space-between"
           :class="{'text-wrapper': isText(item), 'youtube-wrapper': isYoutube(item), 'photo-wrapper': isPhoto(item) }"
         >
-          <span class="left-wrapper handle">
-            <v-icon>
-              mdi-menu
-            </v-icon>
+          <span class="left-wrapper">
+            <img src="@/assets/img/contents-create/yt_img.png" alt="" v-if="item.type === 'youtube'">
+            <img src="@/assets/img/contents-create/photo_img.png" alt="" v-if="item.type === 'photo'">
+            <img src="@/assets/img/contents-create/text_img.png" alt="" v-if="item.type==='text'">
           </span>
           <div class="middle-wrapper">
             <contents-youtube-item
@@ -94,7 +94,7 @@
         </div>
       </div>
       <div class="footer-navi d-flex justify-space-between">
-        <div @click="cancleCreate" class="left-button">
+        <div @click="cancleCreate" class="left-button nf nf-600">
           취소
         </div>
         <div class="right-button">
@@ -103,8 +103,8 @@
       </div>
     </div>
     <div class="background-text">
-      <p>아래 버튼을 눌러 <br> 컨텐츠를 추가해주세요!</p>
-      <v-icon>mdi-arrow-down</v-icon>
+      <p class="nf nf-600">아래 버튼을 눌러 <br> 컨텐츠를 추가해주세요!</p>
+      <v-icon>mdi-hand-pointing-down</v-icon>
     </div>
   </div>
 </template>
@@ -319,6 +319,10 @@ export default {
     
     .left-wrapper {
       width: 10%;
+      img {
+        width: 35px;
+        height: 100%;
+      }
     }
 
     .middle-wrapper {
@@ -338,7 +342,7 @@ export default {
           width: 100%;
           text-align: center;
           overflow: scroll;
-          font-size: 12px;
+          font-size: 11pt;
         }
         .text::-webkit-scrollbar {
           display: none;
@@ -350,7 +354,7 @@ export default {
           background-color: #ffffff4e;
           // box-shadow: 0 4px 4px lightgray;
           resize: none;
-          font-size: 11px;
+          font-size: 11pt;
         }
         textarea:focus {
             outline: none;
@@ -359,7 +363,7 @@ export default {
         textarea::placeholder {
           color: rgb(171, 171, 171);
           font-style: italic;
-          font-size: 12pt;
+          font-size: 11pt;
           text-align: center;
         }
       }
@@ -385,7 +389,7 @@ export default {
             background-color: #ffffff4e;
             // box-shadow: 0 4px 4px lightgray;
             resize: none;
-            font-size: 12px;
+            font-size: 11pt;
           }
           textarea:focus {
             outline: none;
@@ -395,7 +399,7 @@ export default {
             width: 100%;
             max-height: 100%;
             overflow: scroll;
-            font-size: 12px;
+            font-size: 11pt;
           }
           .text::-webkit-scrollbar {
             display: none;
@@ -475,7 +479,7 @@ export default {
     padding-left: 20px;
     background-color: #ffffff;
     border-radius: 30px;
-    border: rgb(160, 160, 160) 4px solid;
+    border: rgb(179, 179, 179) 4px solid;
 
     // border: 1px solid gray;
     // box-shadow: 0 4px 4px lightgray;
@@ -489,7 +493,7 @@ export default {
 
       .mdi-youtube {
         font-size: 25pt;
-        color: rgb(160, 160, 160);
+        color: rgb(179, 179, 179);
         &:hover {
           color: #f1afad;
         }
@@ -499,7 +503,7 @@ export default {
       font-size: 25pt;
       // margin-left: 20px;
       margin-right: 18px;
-      color: rgb(160, 160, 160);
+      color: rgb(179, 179, 179);
       &:hover {
         color: #a8c7f1;
       }
@@ -508,7 +512,7 @@ export default {
       font-size: 25pt;
       // margin-left: 20px;
       margin-right: 18px;
-      color: rgb(160, 160, 160);
+      color: rgb(179, 179, 179);
       &:hover {
         color:#fcf592
       }
