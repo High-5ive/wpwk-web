@@ -57,7 +57,7 @@
           </div>
           <div class="right-wrapper d-flex flex-column justify-space-between">
             <button @click="deleteItem(idx)">
-              <v-icon>mdi-trash-can</v-icon>
+              <v-icon>mdi-close</v-icon>
             </button>
             <div :class="{'text-rightbottom':isText(item), 'youtube-rightbottom':isYoutube(item), 'photo-rightbottom':isPhoto(item)}"></div>
           </div>
@@ -75,12 +75,12 @@
           />
         </div>
         <div class="btn-wrapper">
-          <v-icon @click="axiosFileSelect" class="footerButtons">
+          <v-icon @click="axiosFileSelect" class="footer-button-photo">
             mdi-image-multiple
           </v-icon>
         </div>
         <div class="btn-wrapper">
-          <v-icon @click="createTextItem" class="footerButtons"
+          <v-icon @click="createTextItem" class="footer-button-text"
             >mdi-note-text-outline</v-icon
           >
           <input
@@ -269,17 +269,17 @@ export default {
 }
 
 .div-wrapper {
-  animation: 0.3s ease-out 0s 1 slideInFromBottom;
-  @keyframes slideInFromBottom {
-    0% {
-      transform: translateY(30px);
-      opacity: 0;
-    }
-    100% {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
+  // animation: 0.3s ease-out 0s 1 slideInFromBottom;
+  // @keyframes slideInFromBottom {
+  //   0% {
+  //     transform: translateY(30px);
+  //     opacity: 0;
+  //   }
+  //   100% {
+  //     transform: translateY(0);
+  //     opacity: 1;
+  //   }
+  // }
   .circle {
     width: 30px;
 
@@ -296,13 +296,13 @@ export default {
     padding-right: 0px !important;
   }
   .text-wrapper {
-    background-color: #ebeac1;
+    background-color: #fff8d7;
   }
   .youtube-wrapper {
-    background-color: #e1a8a6;
+    background-color: #ffe6e6;
   }
   .photo-wrapper {
-    background-color: #98c3e7 ;
+    background-color: #dae6fc ;
   }
   .item-wrapper {
     // border: 1px solid gray;
@@ -406,40 +406,52 @@ export default {
 
     .right-wrapper {
       height: 100%;
-      width: 30px;
+      width: 15px;
       text-align: center;
       // background-color: yellow;
+      button:focus {
+        outline: none;
+      }
+      .v-icon {
+        position: relative;
+        top: -5px;
+        right: 5px;
+        color: gray;
+        
+      }
       .text-rightbottom {
-        margin-bottom: -10px;
+        margin-bottom: -10.2px;
         margin-right: -15px;
-        border-left: 40px solid #eede85;
-        border-bottom : 40px solid #ffffff;
+        border-left: 25px solid #fcf592;
+        border-bottom : 25px solid #ffffff;
       }
       .youtube-rightbottom {
-        margin-bottom: -10px;
+        margin-bottom: -10.2px;
         margin-right: -15px;
-        border-left: 40px solid #956361;
-        border-bottom : 40px solid #ffffff;
+        border-left: 25px solid #f1afad;
+        border-bottom : 25px solid #ffffff;
       }
       .photo-rightbottom {
-        margin-bottom: -10px;
+        margin-bottom: -10.2px;
         margin-right: -15px;
-        border-left: 40px solid #6d869c;
-        border-bottom : 40px solid #ffffff;
+        border-left: 25px solid #a8c7f1;
+        border-bottom : 25px solid #ffffff;
       }
     }
   }
 }
+// 잡힌거
 .sortable-chosen {
-  // transform: rotate(-15deg);
-  opacity: 0.7;
-  // background-color: #dcdcdc;
+  transform: rotate(-4deg);
+  // z-index: 500;
+  // opacity: 0.7;
+  // background-color: red;
 }
-
+// 뒤에거
 .sortable-ghost {
   // transform: rotate(0deg);
-  opacity: 0.7;
-  // background-color: #dcdcdc;
+  opacity: 0;
+  // z-index: 500;
 }
 
 .footer {
@@ -463,7 +475,7 @@ export default {
     padding-left: 20px;
     background-color: #ffffff;
     border-radius: 30px;
-    border: #a2d646 5px solid;
+    border: rgb(160, 160, 160) 4px solid;
 
     // border: 1px solid gray;
     // box-shadow: 0 4px 4px lightgray;
@@ -477,16 +489,31 @@ export default {
 
       .mdi-youtube {
         font-size: 25pt;
-        color: #a2d646;
+        color: rgb(160, 160, 160);
+        &:hover {
+          color: #f1afad;
+        }
       }
     }
-
-    .footerButtons {
+    .footer-button-photo {
       font-size: 25pt;
       // margin-left: 20px;
       margin-right: 18px;
-      color: #a2d646;
+      color: rgb(160, 160, 160);
+      &:hover {
+        color: #a8c7f1;
+      }
     }
+    .footer-button-text {
+      font-size: 25pt;
+      // margin-left: 20px;
+      margin-right: 18px;
+      color: rgb(160, 160, 160);
+      &:hover {
+        color:#fcf592
+      }
+    }
+    
   }
   .footer-navi {
     width: 100%;
@@ -516,7 +543,7 @@ export default {
   position: fixed;
   bottom: 150px;
   text-align: center;
-    width: 80%;
+  width: 80%;
   /* left, right는 해당 요소의 위치 시작점을 결정한다. 그런데, 이때, margin의 양 값을 auto로 줌으로써 마진을 주어 해당 요소의 양 끝 위치를 각각 0으로 만들어준다. */
   margin: 0 auto;
   animation: 1s ease-out 0s 1 slideInFromTop;
@@ -531,13 +558,13 @@ export default {
     }
   }
   p{
-    font-size: 20pt;
+    font-size: 16pt;
     color: rgb(179, 179, 179);
   }
   
   i.v-icon {
     color: rgb(179, 179, 179);
-    font-size: 40pt;
+    font-size: 30pt;
   }
   // z-index: -1;
 }
