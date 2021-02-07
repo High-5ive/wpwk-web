@@ -16,8 +16,8 @@
             <v-btn fab dark small color="green">
                <router-link to="/ContentsCreate"><v-icon>mdi-baby-bottle</v-icon></router-link>
             </v-btn>
-            <v-btn fab dark small color="yellow darken-1">
-               <router-link to="/ContentsCreate"><v-icon>mdi-pencil</v-icon></router-link>
+            <v-btn fab dark small color="yellow darken-1" @click="openCommuModal">
+               <v-icon>mdi-pencil</v-icon>
             </v-btn>
             <v-btn fab dark small color="red">
                <v-icon>mdi-heart</v-icon>
@@ -28,27 +28,21 @@
          </v-speed-dial>
       </v-card>
 
-      <v-row justify="center">
-         <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
-            <template v-slot:activator="{ on, attrs }">
-               <v-btn class="write" color="primary" fab dark v-bind="attrs" v-on="on">
-                  <v-icon> mdi-pencil </v-icon>
+      <!-- 커뮤니티 글 작성 모달 -->
+      <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+         <v-card>
+            <v-toolbar dark color="success">
+               <!-- 닫기 버튼 -->
+               <v-btn icon dark @click="dialog = false">
+                  <v-icon>mdi-close</v-icon>
                </v-btn>
-            </template>
 
-            <v-card>
-               <v-toolbar dark color="success">
-                  <!-- 닫기 버튼 -->
-                  <v-btn icon dark @click="dialog = false">
-                     <v-icon>mdi-close</v-icon>
-                  </v-btn>
+               <v-toolbar-title>새 글 작성</v-toolbar-title>
+            </v-toolbar>
 
-                  <v-toolbar-title>새 글 작성</v-toolbar-title>
-               </v-toolbar>
-               <article-form @createArticle="createArticle" />
-            </v-card>
-         </v-dialog>
-      </v-row>
+            <article-form @createArticle="createArticle" />
+         </v-card>
+      </v-dialog>
    </div>
 </template>
 
@@ -67,6 +61,8 @@ export default {
       bottom: true,
       left: false,
       transition: 'slide-y-reverse-transition',
+
+      dialog: false, //모달용 변수
    }),
    components: { ArticleForm },
    computed: {
@@ -109,6 +105,26 @@ export default {
       },
       scrollListener: function() {
          this.visible = window.scrollY > 150;
+      },
+      openCommuModal: function() {
+         this.dialog = true;
+      },
+
+      createArticle: function(article) {
+         this.dialog = false;
+         console.log('스피드다이얼 내 현 주소 : ', this.$router.currentRoute.name);
+         console.log('건내받은 아티클 : ', article);
+
+         // ArticleForm.vue로 부터 받은 article 데이터를 여기로 보내지 말고
+         // 자체적으로 비동기 처리하고, 여기선 커뮤니티로 이동하는 라우터만 남기기
+
+         if (this.$router.currentRoute.name == 'Main') {
+            console.log('메인페이지에서 커뮤니티로 넘어가기');
+            this.$router.push({ name: 'community', params: { createdArticle: article } });
+         } else {
+            console.log('그외 페이지');
+            this.$emit('emit-create', article);
+         }
       },
    },
    mounted: function() {

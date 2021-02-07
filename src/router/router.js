@@ -45,11 +45,12 @@ const routes = [
     },
     {
         path: '/cmmu',
-        name: 'communiny',
+        name: 'community',
         components: {
             side: SideMenu,
             default: Community,
         },
+        props: true,
     },
     {
         path: '/cmmu/:articleId',
