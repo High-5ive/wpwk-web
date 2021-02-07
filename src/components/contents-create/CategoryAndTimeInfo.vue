@@ -29,6 +29,7 @@
                            <v-icon>mdi-pound</v-icon>
                            <div class="hashtag-search" @keyup.down="selectValue('down')" @keyup.up="selectValue('up')">
                               <v-text-field
+                                 id="hashtagInput"
                                  label="해시태그 추가(선택)"
                                  outlined
                                  class="hashtagInput"
@@ -151,11 +152,11 @@ export default {
          const isValid = /[^가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9|\s]/.test(this.hashtag);
          if (isValid === false && this.hashtag) {
             this.isActive = true;
-            // this.searchTag(this.hashtag)
+            this.searchTag(this.hashtag)
             // return this.hashtagResult
-            this.hashtagResult = this.allHashtags.filter((tag) => {
-               return tag.name.match(this.hashtag);
-            });
+            // this.hashtagResult = this.allHashtags.filter((tag) => {
+            //    return tag.name.match(this.hashtag);
+            // });
          } else {
             this.isActive = false;
          }
@@ -166,7 +167,7 @@ export default {
          this.hashtag = tag;
          this.addHashtag()
          this.hashtagResult = []
-         document.querySelector('.hashtagInput').focus()
+         document.querySelector('#hashtagInput').focus()
          
       },
       removeValue: function () {
@@ -416,9 +417,9 @@ export default {
                      margin-top: -40px;
                      position: absolute;
                      // margin-left: 10px;
-                     border-left: rgb(164, 163, 163) solid 1px;
-                     border-bottom: rgb(164, 163, 163) solid 1px;
-                     border-right: rgb(164, 163, 163) solid 1px;
+                     border-left: #f4b740 solid 2px;
+                     border-bottom: #f4b740 solid 2px;
+                     border-right: #f4b740 solid 2px;
                      border-radius: 0 0 8px 8px;
                      background-color: #FFFFFF;
                      width: 200px; // 반응형 수정 필요
