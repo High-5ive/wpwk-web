@@ -15,6 +15,8 @@ var _Main = _interopRequireDefault(require("../views/Main.vue"));
 
 var _Community = _interopRequireDefault(require("../views/Community.vue"));
 
+var _ArticleDetail = _interopRequireDefault(require("../views/ArticleDetail.vue"));
+
 var _Mypage = _interopRequireDefault(require("../views/Mypage.vue"));
 
 var _ContentsCreate = _interopRequireDefault(require("../views/ContentsCreate.vue"));
@@ -58,6 +60,13 @@ var routes = [{
   components: {
     side: _SideMenu["default"],
     "default": _Community["default"]
+  }
+}, {
+  path: '/cmmu/:articleId',
+  name: 'articledetail',
+  components: {
+    side: _SideMenu["default"],
+    "default": _ArticleDetail["default"]
   }
 }, {
   path: '/mypage',

@@ -164,7 +164,8 @@ export default {
             this.nextPageToken = res.data.nextPageToken
             this.videos = this.videos.concat(res.data.items)
             $state.loaded()
-          } if (this.videos.length == 20) {
+          }
+          if (this.videos.length == 20) {
             $state.complete()
           }
         }, 1000)
@@ -190,7 +191,8 @@ export default {
     }
     .v-card__text {
       .container {
-        
+        width: 90%;
+        padding: 10px;
         .youtube-result-basic {
           padding: 12px;
         }

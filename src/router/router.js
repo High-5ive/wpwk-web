@@ -53,11 +53,12 @@ const routes = [
     },
     {
         path: '/cmmu/:articleId',
-        name: 'articledetail',
+        name: 'ArticleDetail',
         components: {
             side: SideMenu,
             default: ArticleDetail,
         },
+        props: true
     },
     {
         path: '/mypage',
@@ -79,6 +80,7 @@ const routes = [
         path: '/view',
         name: 'ContentsView',
         components: {
+            side: SideMenu,
             default: ContentsView,
         },
     },

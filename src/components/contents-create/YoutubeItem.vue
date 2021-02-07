@@ -40,6 +40,7 @@ export default {
         videoCaption: this.video.snippet.description
       }
       this.$emit('select-video', video)
+      console.log(video)
     }
   }
 
