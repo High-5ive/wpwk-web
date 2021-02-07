@@ -1,26 +1,23 @@
 <template>
    <div class="ev-container">
       <p>참여한 컨텐츠가 어땠는지 평가해주세요!</p>
-      <div>
-         <v-btn class="ma-2" outlined color="indigo"> 아이집중만땅! </v-btn>
-      </div>
-      <div class="">
-         <v-btn class="ma-3" color="warning" dark @click="goHome"> 홈으로 가기 </v-btn>
-         <v-btn class="ma-3" color="success" dark> 제작자의 다른 컨텐츠 보러가기 </v-btn>
-      </div>
+
+      <eval-buttons></eval-buttons>
 
       <div class="ev-footer">
          <div class="footer-eval">
-            <div class="left-button"><v-icon>mdi-backup-restore</v-icon> 다시보기</div>
-            <div class="middle-button">
-               <v-icon>
+            <div class="left-button" @click="goReView"><v-icon>mdi-backup-restore</v-icon> 다시보기</div>
+            <div class="middle-button" @click="goHome">
+               <!-- <v-icon>
                   mdi-chevron-right
-               </v-icon>
+               </v-icon> -->
+               홈으로 가기
             </div>
             <div class="right-button">
-               <v-icon>
+               <!-- <v-icon>
                   mdi-chevron-right
-               </v-icon>
+               </v-icon> -->
+               제작자의 다른 콘텐츠 보러 가기
             </div>
          </div>
       </div>
@@ -49,21 +46,29 @@
 </template>
 
 <script>
+import EvalButtons from './EvalButtons.vue';
+
 export default {
    name: 'Evaluations',
+   components: {
+      EvalButtons,
+   },
    data: function() {
       return {
-         evaluation1: 0,
+         evaluation: false,
          dialog: false,
       };
    },
    methods: {
-      click1: function() {
-         this.evaluation1 += 1;
-      },
       goHome: function() {
          this.$router.push({ name: 'Main' });
          this.$router.go(this.$router.currentRoute);
+      },
+      goReView: function() {
+         alert('초기화면으로 돌아갑니다');
+         this.evaluation = false;
+         console.log(this.evaluation);
+         this.$emit('evaluationPage', this.evaluation);
       },
    },
 };
