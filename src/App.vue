@@ -49,6 +49,7 @@ export default {
    }
 
    .root-header {
+      background-color: rgb(250, 250, 250) !important;
       z-index: 200;
 
       img {

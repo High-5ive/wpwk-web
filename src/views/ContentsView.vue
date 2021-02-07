@@ -3,10 +3,10 @@
       <!-- evaluation값에 따라 페이지 변환 -->
       <!-- 평가페이지 -->
       <div v-if="evaluationValue">
-         <v-icon @click="back">
+         <!-- <v-icon @click="back">
             mdi-backup-restore
-         </v-icon>
-         <Evaluations />
+         </v-icon> -->
+         <Evaluations @evaluationPage="evaluation" />
       </div>
 
       <!-- 카드페이지 -->
