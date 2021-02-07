@@ -8,7 +8,10 @@
          <div class="left">
             작성 글
          </div>
-         <div class="center">
+         <div class="center1">
+            작성 댓글
+         </div>
+         <div class="center2">
             작성 노리
          </div>
          <div class="right">
