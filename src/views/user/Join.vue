@@ -59,6 +59,7 @@
 import * as EmailValidator from 'email-validator';
 import { mapActions } from 'vuex';
 import { registerUser } from '@/api/user.js';
+import router from '../../router/router'
 
 export default {
    data() {
@@ -113,7 +114,7 @@ export default {
                   },
                   () => { // 회원가입에 성공한 경우
                      alert('회원가입이 되었습니다!');
-                     this.$router.push('login');
+                     router.push({name:"JoinSuccess"});
                   },
                   (error) => {
                      // 이미 가입되어 있는 경우

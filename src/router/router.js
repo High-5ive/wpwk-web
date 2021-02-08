@@ -1,8 +1,8 @@
 /* 1. 기본 셋팅
  - npm으로 라우터 설치(모듈 시스템 이용)시, 임포트 후 명시적으로 추가
 */
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vue from "vue";
+import VueRouter from "vue-router";
 
 Vue.use(VueRouter);
 
@@ -14,111 +14,134 @@ Vue.use(VueRouter);
  */
 
 //사이드 바 import
-import SideMenu from '@/components/SideMenu.vue'
+import SideMenu from "@/components/SideMenu.vue";
 
 //아래 바뀌는 모든 화면단을 import
-import Main from '../views/Main.vue'
-import Community from '../views/Community.vue'
-import ArticleDetail from '../views/ArticleDetail.vue'
-import Mypage from '../views/Mypage.vue'
-import ContentsCreate from '../views/ContentsCreate.vue'
-import ContentsView from '../views/ContentsView.vue'
-import LandingPage from '@/views/user/LandingPage.vue'
-import Login from '@/views/user/Login.vue'
-import Join from '@/views/user/Join.vue'
-import Auth from '@/views/user/Auth.vue'
-
-
+import Main from "../views/Main.vue";
+import Community from "../views/Community.vue";
+import ArticleDetail from "../views/ArticleDetail.vue";
+import Mypage from "../views/Mypage.vue";
+import ContentsCreate from "../views/ContentsCreate.vue";
+import ContentsView from "../views/ContentsView.vue";
+import LandingPage from "@/views/user/LandingPage.vue";
+import Login from "@/views/user/Login.vue";
+import Join from "@/views/user/Join.vue";
+import Auth from "@/views/user/Auth.vue";
+import JoinSuccess from "@/views/user/JoinSuccess.vue";
+import JoinConfirm from "@/views/user/JoinConfirm.vue";
 
 // ==============================
 
 // 여러개 태울 때, routes 변수 생성
+const onlyAuthUser = (to, from, next) => {
+  if (localStorage.getItem("accessToken") !== null) {
+    next();
+  } else {
+    alert("로그인이 필요한 페이지입니다. ");
+    // alert(store.state.userInfo)
+    next("/login");
+  }
+};
+
 const routes = [
+  {
+    path: "/",
+    name: "Main",
+    beforeEnter: onlyAuthUser,
+    components: {
+      side: SideMenu,
+      default: Main,
+    },
+  },
+  {
+    path: "/cmmu",
+    name: "communiny",
+    components: {
+      side: SideMenu,
+      default: Community,
+    },
+  },
+  {
+    path: "/cmmu/:articleId",
+    name: "ArticleDetail",
+    components: {
+      side: SideMenu,
+      default: ArticleDetail,
+    },
+    props: true,
+  },
+  {
+    path: "/mypage",
+    name: "mypage",
+    components: {
+      side: SideMenu,
+      default: Mypage,
+    },
+  },
+  {
+    path: "/contentscreate",
+    name: "ContentsCreate",
+    components: {
+      side: SideMenu,
+      default: ContentsCreate,
+    },
+  },
+  {
+    path: "/view",
+    name: "ContentsView",
+    components: {
+      side: SideMenu,
+      default: ContentsView,
+    },
+  },
 
-    {
-        path: '/',
-        name: 'Main',
-        components: {
-            side: SideMenu,
-            default: Main,
-        },
+  {
+    path: "/landingTest",
+    components: {
+      default: LandingPage,
     },
-    {
-        path: '/cmmu',
-        name: 'communiny',
-        components: {
-            side: SideMenu,
-            default: Community,
-        },
+  },
+  {
+    path: "/login",
+    name: "Login",
+    components: {
+      default: Login,
     },
-    {
-        path: '/cmmu/:articleId',
-        name: 'ArticleDetail',
-        components: {
-            side: SideMenu,
-            default: ArticleDetail,
-        },
-        props: true
+  },
+  {
+    path: "/join",
+    name: "Join",
+    components: {
+      default: Join,
     },
-    {
-        path: '/mypage',
-        name: 'mypage',
-        components: {
-            side: SideMenu,
-            default: Mypage,
-        },
+  },
+  {
+    path: "/auth",
+    name: "Auth",
+    components: {
+      default: Auth,
     },
-    {
-        path: '/contentscreate',
-        name: 'ContentsCreate',
-        components: {
-            side: SideMenu,
-            default: ContentsCreate,
-        },
+  },
+  {
+    path: "/joinSuccess",
+    name: "JoinSuccess",
+    components: {
+      default: JoinSuccess,
     },
-    {
-        path: '/view',
-        name: 'ContentsView',
-        components: {
-            side: SideMenu,
-            default: ContentsView,
-        },
+  },
+  {
+    path: "/users/confirm",
+    name: "JoinConfirm",
+    components: {
+      default: JoinConfirm,
     },
-
-    {
-        path: '/landingTest',
-        components: {
-            default: LandingPage,
-        },
-    },
-    {
-        path: '/login',
-        name: 'Login',
-        components: {
-            default: Login,
-        },
-    },
-    {
-        path: '/join',
-        name: 'Join',
-        components: {
-            default: Join,
-        },
-    },
-    {
-        path: '/auth',
-        name: 'Auth',
-        components: {
-            default: Auth,
-        },
-    },
+  },
 ];
 
 const router = new VueRouter({
-    mode: 'history', //뒤에 # 을 없애줌
-    // base: process.env.BASE_URL,
-    routes,
+  mode: "history", //뒤에 # 을 없애줌
+  // base: process.env.BASE_URL,
+  routes,
 });
-
 
 export default router;

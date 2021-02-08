@@ -29,6 +29,8 @@ var _Login = _interopRequireDefault(require("@/views/user/Login.vue"));
 
 var _Join = _interopRequireDefault(require("@/views/user/Join.vue"));
 
+var _JoinSuccess = _interopRequireDefault(require("@/views/user/JoinSuccess.vue"));
+
 var _Auth = _interopRequireDefault(require("@/views/user/Auth.vue"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -106,11 +108,17 @@ var routes = [{
     "default": _Join["default"]
   }
 }, {
+  path: '/joinSuccess',
+  name: 'JoinSuccess',
+  components: {
+    "default": _JoinSuccess["default"]
+  }
+},{
   path: '/auth',
   name: 'Auth',
   components: {
     "default": _Auth["default"]
-  }
+}, 
 }];
 var router = new _vueRouter["default"]({
   mode: 'history',

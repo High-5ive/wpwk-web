@@ -142,13 +142,17 @@ export default {
 
                this.$store.dispatch("getUserInfo"); // 토큰을 이용한 유저정보 가져오기
                this.$router.push("/");
-            } else {
+            } else if(response.status == 204) {
+               alert("아이디 또는 비밀번호가 일치하지 않습니다.");
                this.isLoginError = true;
             }
          },
-         (error) => {
-            console.error(error);
-            alert("아이디 또는 비밀번호가 일치하지 않습니다.");
+         (err) => {
+            // UNAUTHORIZE 회원이 비활성화 된 경우
+            if(err.response.status == 401) {
+               alert("비활성화 회원입니다. 이메일을 인증해주세요");
+               return;
+            }
          });
       }
    },

@@ -54,7 +54,6 @@ export default new Vuex.Store({
 
     getUserInfo({commit}) {
       let log = localStorage.getItem("accessToken");
-      let social = localStorage.getItem("com.naver.nid.oauth.state_token");
 
       if (log != null) {
         let token = localStorage.getItem("accessToken");
@@ -64,16 +63,8 @@ export default new Vuex.Store({
           nickname: decode.nickname,
         };
         commit("loginSuccess", userInfo);
-      } else if (social != null) {
-        let sample = {
-          email: "a@a.com",
-          nickname: "위파",
-        };
-
-        this.commit("loginSuccess", sample);
       } else {
-        alert("로그인을 먼저 해주세요!");
-        router.push("/landingTest");
+        console.log("token 없음")
       }
     },
   },
