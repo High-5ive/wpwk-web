@@ -56,18 +56,20 @@ var routes = [{
   }
 }, {
   path: '/cmmu',
-  name: 'communiny',
+  name: 'community',
   components: {
     side: _SideMenu["default"],
     "default": _Community["default"]
-  }
+  },
+  props: true
 }, {
   path: '/cmmu/:articleId',
-  name: 'articledetail',
+  name: 'ArticleDetail',
   components: {
     side: _SideMenu["default"],
     "default": _ArticleDetail["default"]
-  }
+  },
+  props: true
 }, {
   path: '/mypage',
   name: 'mypage',
@@ -86,6 +88,7 @@ var routes = [{
   path: '/view',
   name: 'ContentsView',
   components: {
+    side: _SideMenu["default"],
     "default": _ContentsView["default"]
   }
 }, {

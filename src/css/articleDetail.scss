@@ -1,0 +1,88 @@
+@import "common";
+
+//ArticleDetail
+// ㄴ CommentList
+//    ㄴ CommentListItem
+// ㄴ CommentForm
+
+//ArticleDetail
+.ad-container {
+    height: 100%;
+    background-color: rgba(255, 0, 0, 0.098);
+    padding: 10px;
+
+    .article-wrapper {
+        margin-bottom: 10px;
+
+        background-color: white;
+        border-radius: 8px;
+        border : 1px solid rgb(228, 228, 228);
+
+        // height: 250px;
+        display: flex;
+        flex-direction: column;
+        
+        .content-wrapper {
+            border-bottom: 1px solid rgb(218, 218, 218);
+            height: 200px;
+            
+            .category {
+                display: inline;
+                background-color: rgb(230, 230, 230);
+                color: rgb(135, 135, 135);
+                border-radius: 3px;
+                font-size: 8pt;
+                
+                padding: 4px 8px 4px 8px;
+            }
+            
+            .nickname {
+                font-size: 10pt;
+                padding: 5px 0px 8px 5px;
+            }
+            
+        }
+        
+        .feature-wrapper {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 10px;
+
+            .likes-btn{
+                color: rgb(218, 5, 5);
+            }
+
+            // 게시글 하단 우측의 댓글, 좋아요 한 사람 수 등
+            .info-btn{
+                display: flex;
+                align-items: center;
+
+                // 댓글, 좋아요 한 사람 수 아이콘은 인라인 스타일
+                // color: rgb(171, 171, 171);
+
+                font-size: 10pt;
+                
+                .comment { 
+                    color: rgb(99, 99, 99);
+                    margin-right: 10px;
+                }
+                .v-icon {
+                    margin-right: 5px;
+                    font-size: 15pt;
+                }
+                span{
+                    color: rgb(255, 101, 101);
+                    padding-bottom: 1px;
+                }
+            }
+        }
+    }
+
+    //CommentList
+
+    //CommentForm
+
+}
