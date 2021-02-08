@@ -44,8 +44,8 @@
       </div>
       <div class="bottom">
          <chart v-if="showValue == 5"/>
-         <persons-assets v-if="showValue===1 || showValue===2" :personsAssets="personsAssets" :showValue="showValue"/>
-         <persons-assets-with-photo v-if="showValue===3 ||showValue===4" />
+         <persons-assets v-if="showValue===1 || showValue===2" :personsAssets="personsAssets"/>
+         <persons-assets-with-photo v-if="showValue===3 ||showValue===4" :personsAssetsWithPhoto="personsAssetsWithPhoto" />
          <a href="#">회원탈퇴</a>
       </div>
    </div>
@@ -68,6 +68,7 @@ export default {
          showValue: 5,
          personsAssets: [],
          personsAssetsWithPhoto: [],
+         // 임시데이터 작성한글, 댓글단글(커뮤니티), 작성 노리, 관심노리 필수 항목 >> 제목(커뮤니티는 contents), 작성일자, 조회수, likeusers, 댓글, Article_id(Content_id)
          personsArticles: [
             {
                user: '한솔맘',
@@ -162,6 +163,17 @@ export default {
    width: 100%;
    .middle {
       width: 100%;
+   }
+   .bottom {
+      width: 100%;
+      .article-wrapper {
+         width: 100%;
+         .item-wrapper {
+            span {
+               max-width: 50%;
+            }
+         }
+      }
    }
 }
 </style>

@@ -1,11 +1,14 @@
 <template>
   <div>
-    노리
+    {{ personsAssetsWithPhoto }}
   </div>
 </template>
 <script>
 export default {
-  name: 'personsAssetsWithPhoto'
+  name: 'personsAssetsWithPhoto',
+  props: {
+    personsAssetsWithPhoto: Array
+  }
 }
 </script>
 <style lang="">
