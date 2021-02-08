@@ -6,8 +6,8 @@
   </div>
 </template>
 <script>
-import axios from "axios";
 import router from "../../router/router"
+import { naverLogin } from "@/api/user.js";
 
 export default {
   data() {
@@ -24,20 +24,22 @@ export default {
 
   methods: {
     doNaverLogin() {
-      axios
-        .get("http://localhost:9004/login/process/naver/" + this.naverToken)
-        .then((response) => {
+      naverLogin(
+        this.naverToken,
+        (res) => {
           this.loading = false;
-          this.jwtToken = response.data;
+          this.jwtToken = res.data;
           localStorage.removeItem("com.naver.nid.oauth.state_token");
           localStorage.setItem("accessToken", this.jwtToken);
           this.$store.dispatch("getUserInfo"); // 토큰을 이용한 유저정보 가져오기
           alert('로그인이 완료되었습니다')
           router.push({name:'Main'});
-        })
-        .catch((error) => {        
-          console.log("error : " + error);
-        });
+        },
+        (error) => {
+          this.loading = false;
+          console.log(error);
+        }
+      );     
     },
 
     getToken() {
