@@ -36,7 +36,9 @@ export default new Vuex.Store({
   actions: {
     doLogout({ commit }) {
       commit('logout');
+      alert('정상적으로 로그아웃 되었습니다')
       localStorage.removeItem('accessToken');
+      router.push({name:'Login'})
       // axios.defaults.headers.common["auth-token"] = undefined;
     },
 

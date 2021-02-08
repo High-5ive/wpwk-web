@@ -28,6 +28,9 @@ import Login from '@/views/user/Login.vue';
 import Join from '@/views/user/Join.vue';
 import NaverLoginProcess from '@/components/user/NaverLoginProcess.vue';
 import KakaoLoginProcess from '@/views/user/KakaoLoginProcess.vue';
+import Auth from '@/views/user/Auth.vue';
+import JoinSuccess from '@/views/user/JoinSuccess';
+import JoinConfirm from '@/views/user/JoinConfirm';
 
 const onlyAuthUser = (to, from, next) => {
   if (localStorage.getItem('accessToken') !== null) {
@@ -40,7 +43,6 @@ const onlyAuthUser = (to, from, next) => {
 };
 
 // ==============================
-
 // 여러개 태울 때, routes 변수 생성
 const routes = [
   {
