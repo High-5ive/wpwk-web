@@ -1,7 +1,7 @@
-import Vue from "vue";
-import Vuex from "vuex";
-import router from "../router/router";
-import jwt_decode from "jwt-decode";
+import Vue from 'vue';
+import Vuex from 'vuex';
+import router from '../router/router';
+import jwt_decode from 'jwt-decode';
 
 Vue.use(Vuex);
 
@@ -28,52 +28,41 @@ export default new Vuex.Store({
 
     //로그아웃 시
     logout(state) {
-      localStorage.removeItem("accessToken");
+      localStorage.removeItem('accessToken');
       state.isLogin = false;
       state.userInfo = null;
     },
   },
   actions: {
     doLogout({ commit }) {
-      commit("logout");
-      localStorage.removeItem("accessToken");
+      commit('logout');
+      localStorage.removeItem('accessToken');
       // axios.defaults.headers.common["auth-token"] = undefined;
     },
 
     //비동기로 받은 데이터에 닉네임이 있는지 판별
     //있다면 메인으로, 없다면 최초 별명 설정 페이지로 이동
     checkNickName(param) {
-      if (param.nickname !== "") {
+      if (param.nickname !== '') {
         router.push({
-          name: "Main",
+          name: 'Main',
         });
       } else {
         // 별명 설정 페이지로 이동
       }
     },
 
-    getUserInfo({commit}) {
-      let log = localStorage.getItem("accessToken");
-      let social = localStorage.getItem("com.naver.nid.oauth.state_token");
+    getUserInfo({ commit }) {
+      let log = localStorage.getItem('accessToken');
 
       if (log != null) {
-        let token = localStorage.getItem("accessToken");
+        let token = localStorage.getItem('accessToken');
         let decode = jwt_decode(token);
         let userInfo = {
           userId: decode.userId,
           nickname: decode.nickname,
         };
-        commit("loginSuccess", userInfo);
-      } else if (social != null) {
-        let sample = {
-          email: "a@a.com",
-          nickname: "위파",
-        };
-
-        this.commit("loginSuccess", sample);
-      } else {
-        alert("로그인을 먼저 해주세요!");
-        router.push("/landingTest");
+        commit('loginSuccess', userInfo);
       }
     },
   },
