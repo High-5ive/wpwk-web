@@ -64,18 +64,30 @@ export default new Vuex.Store({
       let log = localStorage.getItem('accessToken');
 =======
     getUserInfo({commit}) {
+<<<<<<< HEAD
       let log = localStorage.getItem("accessToken");      
 >>>>>>> origin/feature-naverLogin
+=======
+      let log = localStorage.getItem("accessToken");
+>>>>>>> origin/feature-sendEmailPage
 
       if (log != null) {
         let token = localStorage.getItem('accessToken');
         let decode = jwt_decode(token);
         let userInfo = {
           userId: decode.userId,
+<<<<<<< HEAD
           nickname: decode.nickname,          
         };
 <<<<<<< HEAD
         commit('loginSuccess', userInfo);
+=======
+          nickname: decode.nickname,
+        };
+        commit("loginSuccess", userInfo);
+      } else {
+        console.log("token 없음")
+>>>>>>> origin/feature-sendEmailPage
       }
 =======
         commit("loginSuccess", userInfo);
