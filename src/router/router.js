@@ -26,8 +26,18 @@ import ContentsView from '../views/ContentsView.vue';
 import LandingPage from '@/views/user/LandingPage.vue';
 import Login from '@/views/user/Login.vue';
 import Join from '@/views/user/Join.vue';
-import Auth from '@/views/user/Auth.vue';
+import NaverLoginProcess from '@/components/user/NaverLoginProcess.vue';
 import KakaoLoginProcess from '@/views/user/KakaoLoginProcess.vue';
+
+const onlyAuthUser = (to, from, next) => {
+  if (localStorage.getItem('accessToken') !== null) {
+    next();
+  } else {
+    alert('로그인이 필요한 페이지입니다. ');
+    // alert(store.state.userInfo)
+    next('/login');
+  }
+};
 
 // ==============================
 
@@ -36,6 +46,7 @@ const routes = [
   {
     path: '/',
     name: 'Main',
+    beforeEnter: onlyAuthUser,
     components: {
       side: SideMenu,
       default: Main,
@@ -43,7 +54,8 @@ const routes = [
   },
   {
     path: '/cmmu',
-    name: 'communiny',
+    name: 'community',
+    beforeEnter: onlyAuthUser,
     components: {
       side: SideMenu,
       default: Community,
@@ -52,6 +64,7 @@ const routes = [
   {
     path: '/cmmu/:articleId',
     name: 'ArticleDetail',
+    beforeEnter: onlyAuthUser,
     components: {
       side: SideMenu,
       default: ArticleDetail,
@@ -61,6 +74,7 @@ const routes = [
   {
     path: '/mypage',
     name: 'mypage',
+    beforeEnter: onlyAuthUser,
     components: {
       side: SideMenu,
       default: Mypage,
@@ -69,6 +83,7 @@ const routes = [
   {
     path: '/contentscreate',
     name: 'ContentsCreate',
+    beforeEnter: onlyAuthUser,
     components: {
       side: SideMenu,
       default: ContentsCreate,
@@ -77,12 +92,12 @@ const routes = [
   {
     path: '/view',
     name: 'ContentsView',
+    beforeEnter: onlyAuthUser,
     components: {
       side: SideMenu,
       default: ContentsView,
     },
   },
-
   {
     path: '/landingTest',
     components: {
@@ -104,11 +119,9 @@ const routes = [
     },
   },
   {
-    path: '/auth',
-    name: 'Auth',
-    components: {
-      default: Auth,
-    },
+    path: '/login/oauth2/code/naver',
+    name: 'NaverLoginProcess',
+    component: NaverLoginProcess,
   },
   {
     path: '/kakao',

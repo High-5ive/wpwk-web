@@ -5,24 +5,6 @@
         <img src="@/assets/wpwk_logo.png" style="width:200px" />
       </div>
       <div class="input-wrapper">
-        <div class="input-nickname">
-          <label for="password">닉네임 </label>
-          <input
-            type="password"
-            v-bind:class="{
-              error: error.password,
-              complete: !error.password && password.length !== 0,
-            }"
-            v-model="nickname"
-            id="nickname"
-            placeholder="닉네임을 입력하세요."
-            @keyup.enter="doLogin"
-          />
-          <div class="error-text" v-if="error.nickname">
-            <v-icon> mdi-alert-decagram </v-icon> {{ error.nickname }}
-          </div>
-        </div>
-
         <div class="input-email">
           <label for="email">이메일 </label>
           <input
@@ -71,49 +53,102 @@
           <router-link to="Join">5초 회원가입</router-link>
         </p>
       </div>
-      <div class="social-wrapper" style="float:left">
+      <div class="social-wrapper">
         <p>SNS 간편 로그인</p>
-        <!-- 네이버아이디로로그인 버튼 노출 영역 -->
+        <!-- 네이버 아이디로 로그인 버튼 노출 영역 -->
         <naver-login></naver-login>
-        <kakao-login></kakao-login>
       </div>
 
-      <!-- 비밀번호 찾기 모달 -->
-      <v-dialog v-model="find_modal" persistent max-width="400">
-        <v-card>
-          <v-card-title class="headline">
-            비밀번호 리셋
-          </v-card-title>
-          <v-card-text>
-            <v-text-field
-              label="Email*"
-              required
-              v-model="email"
-              id="email"
-              placeholder="이메일을 입력하세요."
-            ></v-text-field>
-            <div class="error-text" v-if="error.email" style="margin-top:0px">
-              <v-icon>
-                mdi-alert-decagram
-              </v-icon>
-              {{ error.email }}
-            </div>
-            <br />
-            비밀번호 재설정 메일을 발송합니다.
-          </v-card-text>
-
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="green darken-1" text @click="find_modal = false">
-              Disagree
-            </v-btn>
-            <v-btn color="green darken-1" text @click="find_modal = false">
-              Agree
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
+      <div class="input-email">
+        <label for="email">이메일 </label>
+        <input
+          type="text"
+          v-bind:class="{
+            error: error.email,
+            complete: !error.email && email.length !== 0,
+          }"
+          v-model="email"
+          id="email"
+          placeholder="이메일을 입력하세요."
+          @keyup.enter="doLogin"
+        />
+        <div class="error-text" v-if="error.email">
+          <v-icon>
+            mdi-alert-decagram
+          </v-icon>
+          {{ error.email }}
+        </div>
+      </div>
+      <div class="input-password">
+        <label for="password">비밀번호 </label>
+        <input
+          type="password"
+          v-bind:class="{
+            error: error.password,
+            complete: !error.password && password.length !== 0,
+          }"
+          v-model="password"
+          id="password"
+          placeholder="비밀번호를 입력하세요."
+          @keyup.enter="doLogin"
+        />
+        <div class="error-text" v-if="error.password">
+          <v-icon> mdi-alert-decagram </v-icon> {{ error.password }}
+        </div>
+      </div>
     </div>
+
+    <div class="feature-wrapper">
+      <span class="find_pw" @click="clickModal">비밀번호를 잊었나요?</span>
+      <br />
+      <v-btn id="submit" color="success" @click="doLogin">로그인</v-btn>
+      <p style="font-size: 12px;">
+        아직 회원이 아닌가요?
+        <router-link to="Join">5초 회원가입</router-link>
+      </p>
+    </div>
+    <div class="social-wrapper" style="float:left">
+      <p>SNS 간편 로그인</p>
+      <!-- 네이버아이디로로그인 버튼 노출 영역 -->
+      <naver-login></naver-login>
+      <kakao-login></kakao-login>
+    </div>
+
+    <!-- 비밀번호 찾기 모달 -->
+    <v-dialog v-model="find_modal" persistent max-width="400">
+      <v-card>
+        <v-card-title class="headline">
+          비밀번호 리셋
+        </v-card-title>
+        <v-card-text>
+          <v-text-field
+            label="Email*"
+            required
+            v-model="email"
+            id="email"
+            placeholder="이메일을 입력하세요."
+          ></v-text-field>
+          <div class="error-text" v-if="error.email" style="margin-top:0px">
+            <v-icon>
+              mdi-alert-decagram
+            </v-icon>
+            {{ error.email }}
+          </div>
+          <br />
+          비밀번호 재설정 메일을 발송합니다.
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" text @click="find_modal = false">
+            Disagree
+          </v-btn>
+          <v-btn color="green darken-1" text @click="find_modal = false">
+            Agree
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 <script>

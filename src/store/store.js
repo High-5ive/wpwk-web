@@ -35,8 +35,15 @@ export default new Vuex.Store({
   },
   actions: {
     doLogout({ commit }) {
+<<<<<<< HEAD
       commit('logout');
       localStorage.removeItem('accessToken');
+=======
+      commit("logout");
+      localStorage.removeItem("accessToken");
+      alert("성공적으로 로그아웃되었습니다.")
+      router.push({name:"Login"})
+>>>>>>> origin/feature-naverLogin
       // axios.defaults.headers.common["auth-token"] = undefined;
     },
 
@@ -52,18 +59,28 @@ export default new Vuex.Store({
       }
     },
 
+<<<<<<< HEAD
     getUserInfo({ commit }) {
       let log = localStorage.getItem('accessToken');
+=======
+    getUserInfo({commit}) {
+      let log = localStorage.getItem("accessToken");      
+>>>>>>> origin/feature-naverLogin
 
       if (log != null) {
         let token = localStorage.getItem('accessToken');
         let decode = jwt_decode(token);
         let userInfo = {
           userId: decode.userId,
-          nickname: decode.nickname,
+          nickname: decode.nickname,          
         };
+<<<<<<< HEAD
         commit('loginSuccess', userInfo);
       }
+=======
+        commit("loginSuccess", userInfo);
+      }     
+>>>>>>> origin/feature-naverLogin
     },
   },
 });
