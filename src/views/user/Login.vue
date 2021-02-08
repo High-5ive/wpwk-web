@@ -40,7 +40,7 @@
          </div>
          <div class="social-wrapper">
             <p>SNS 간편 로그인</p>
-            <!-- 네이버아이디로로그인 버튼 노출 영역 -->
+            <!-- 네이버 아이디로 로그인 버튼 노출 영역 -->
             <naver-login></naver-login>
          </div>
 

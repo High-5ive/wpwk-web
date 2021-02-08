@@ -4,8 +4,8 @@
 <script>
 const naverService = () => {
    var naverLogin = new window.naver.LoginWithNaverId({
-      clientId: 'Jc1HW5q7cnea6Tt5tklH',
-      callbackUrl: 'http://localhost:8080/auth',
+      clientId: 'dYxRjRrd569zhsnI7b3z',
+      callbackUrl: 'http://localhost:8080/login/oauth2/code/naver',
       isPopup: false /* 팝업을 통한 연동처리 여부 */,
       loginButton: { color: 'green', type: 1, height: 40 } /* 로그인 버튼의 타입을 지정 */,
    });

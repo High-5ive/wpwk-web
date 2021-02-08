@@ -37,6 +37,8 @@ export default new Vuex.Store({
     doLogout({ commit }) {
       commit("logout");
       localStorage.removeItem("accessToken");
+      alert("성공적으로 로그아웃되었습니다.")
+      router.push({name:"Login"})
       // axios.defaults.headers.common["auth-token"] = undefined;
     },
 
@@ -53,28 +55,17 @@ export default new Vuex.Store({
     },
 
     getUserInfo({commit}) {
-      let log = localStorage.getItem("accessToken");
-      let social = localStorage.getItem("com.naver.nid.oauth.state_token");
+      let log = localStorage.getItem("accessToken");      
 
       if (log != null) {
         let token = localStorage.getItem("accessToken");
         let decode = jwt_decode(token);
         let userInfo = {
           userId: decode.userId,
-          nickname: decode.nickname,
+          nickname: decode.nickname,          
         };
         commit("loginSuccess", userInfo);
-      } else if (social != null) {
-        let sample = {
-          email: "a@a.com",
-          nickname: "위파",
-        };
-
-        this.commit("loginSuccess", sample);
-      } else {
-        alert("로그인을 먼저 해주세요!");
-        router.push("/landingTest");
-      }
+      }     
     },
   },
 });

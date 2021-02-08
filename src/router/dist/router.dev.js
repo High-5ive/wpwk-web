@@ -29,7 +29,7 @@ var _Login = _interopRequireDefault(require("@/views/user/Login.vue"));
 
 var _Join = _interopRequireDefault(require("@/views/user/Join.vue"));
 
-var _Auth = _interopRequireDefault(require("@/views/user/Auth.vue"));
+var _NaverLoginProcess = _interopRequireDefault(require("@/components/user/NaverLoginProcess.vue"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -106,10 +106,10 @@ var routes = [{
     "default": _Join["default"]
   }
 }, {
-  path: '/auth',
-  name: 'Auth',
+  path: '/login/oauth2/code/naver',
+  name: 'NaverLoginProcess',
   components: {
-    "default": _Auth["default"]
+    "default": NaverLoginProcess["default"]
   }
 }];
 var router = new _vueRouter["default"]({
