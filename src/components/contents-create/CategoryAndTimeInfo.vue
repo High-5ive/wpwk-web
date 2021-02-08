@@ -408,7 +408,7 @@ export default {
                            background-color: #f4b8407f;
                            color: black;
                         }
-                        &.sel:focus {
+                        &:focus, &.sel:focus {
                            outline: none;
                         }
                      }
