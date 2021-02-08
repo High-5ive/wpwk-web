@@ -36,7 +36,9 @@
          </div>
       </div>
 
-      <CommentList :comments="this.comments" @deleteComment="deleteComment" />
+      <div class="comment-box">
+         <CommentList :comments="this.comments" @deleteComment="deleteComment" />
+      </div>
       <CommentForm @createComment="createComment" />
    </div>
 </template>

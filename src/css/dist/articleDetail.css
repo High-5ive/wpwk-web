@@ -13,8 +13,8 @@
 
 .ad-container {
   height: 100%;
-  background-color: rgba(255, 0, 0, 0.098);
   padding: 10px;
+  padding-top: 40px;
 }
 .ad-container .article-wrapper {
   margin-bottom: 10px;
@@ -66,4 +66,7 @@
 .ad-container .article-wrapper .feature-wrapper .info-btn span {
   color: #ff6565;
   padding-bottom: 1px;
+}
+.ad-container .comment-box {
+  padding-bottom: 50px;
 }

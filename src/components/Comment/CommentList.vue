@@ -1,5 +1,5 @@
 <template>
-   <div class="mt-5">
+   <div class="comment-wrapper">
       <CommentListItem v-for="(comment, idx) in comments" :key="idx" :comment="comment" @deleteComment="deleteComment" />
    </div>
 </template>
@@ -23,4 +23,6 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss">
+@import 'src/css/comment.scss';
+</style>

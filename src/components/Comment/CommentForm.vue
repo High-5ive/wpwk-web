@@ -17,6 +17,11 @@ export default {
    },
    methods: {
       createComment: function() {
+         if (this.content == '') {
+            alert('내용을 입력해주세요');
+            return;
+         }
+
          // 임의의 사용자 이름 설정
          const username = 'abc';
          const now = moment().format('YYYY-MM-DD HH:mm:ss');
