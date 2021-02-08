@@ -27,7 +27,7 @@ import LandingPage from '@/views/user/LandingPage.vue'
 import Login from '@/views/user/Login.vue'
 import Join from '@/views/user/Join.vue'
 import Auth from '@/views/user/Auth.vue'
-
+import Admin from '@/views/user/Admin.vue'
 
 
 // ==============================
@@ -110,6 +110,14 @@ const routes = [
         name: 'Auth',
         components: {
             default: Auth,
+        },
+    },
+    {
+        path: '/admin',
+        name: 'Admin',
+        components: {
+            side: SideMenu,
+            default: Admin,
         },
     },
 ];
