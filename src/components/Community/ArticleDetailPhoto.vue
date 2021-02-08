@@ -1,7 +1,7 @@
 <template>
    <div>
       <v-img class="white--text align-end" :src="item.photo.preview" />
-      <br>
+      <br />
    </div>
 </template>
 
@@ -9,10 +9,9 @@
 export default {
    name: 'ArticlePhotoItem',
    props: {
-     item: Object,
-     idx: Number,
-  },
+      item: Object,
+      idx: Number,
+   },
 };
 </script>
-<style scoped>
-</style>
+<style scoped></style>

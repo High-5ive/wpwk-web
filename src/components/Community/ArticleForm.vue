@@ -23,6 +23,7 @@
 <script>
 import moment from 'moment';
 import ArticlePhotoItem from './ArticlePhotoItem';
+// import axios from 'axios';
 
 export default {
    name: 'ArticleForm',
@@ -84,17 +85,34 @@ export default {
          // 임의의 사용자 이름 설정
          const username = '수진맘';
          const now = moment().format('YYYY-MM-DD HH:mm:ss');
+
          const article = {
-            user: username,
-            subject: this.subject_final,
-            itemList: this.itemList,
+            category: this.subject_final,
             content: this.content,
-            created_at: now,
-            likeList: [],
-            comments: [],
+            createdAt: now,
+            createdBy: '',
+            id: 0,
+            likes: 0,
+            updatedAt: '',
+            updatedBy: '',
+            userId: 0,
+            views: 0,
+            writer: username,
+
+            // itemList: this.itemList,
+            // likeList: [],
+            // comments: [],
          };
 
          // 위로 보내지 말고 바로 axios로 서버로 전송
+         // axios
+         //    .post('http://i4a205.p.ssafy.io:9004/boards', article)
+         //    .then((response) => {
+         //       console.log(response);
+         //    })
+         //    .catch((exp) => {
+         //       console.log('err.' + exp);
+         //    });
 
          this.$emit('createArticle', article);
          this.content = '';

@@ -1,11 +1,9 @@
 <template>
    <div class="container">
       <p>{{ articleFromMain }}</p>
-      <v-select v-model="subject" :items="subjects" dense outlined hide-details class="ma-2 subject" label="subject" @change="getSubject"></v-select>
+      <v-select v-model="subject" :items="subjects" dense outlined hide-details class="ma-2 subject" label="주제" @change="getSubject"></v-select>
       <ArticleList :articles="articles" :subject_select="subject_select" />
-      <div>
-         <speed-dial @emit-create="createArticle"></speed-dial>
-      </div>
+      <speed-dial @emit-create="createArticle"></speed-dial>
    </div>
 </template>
 
@@ -67,12 +65,14 @@ export default {
          console.log(article);
          this.articles.push(article);
       },
+
       getSubject: function() {
          this.subject_select = this.subject;
       },
    },
    created: function() {
       this.articles = articleList;
+      // this.getAllArticle();
    },
    mounted() {
       // this.articleFromMain = this.$route.params.createdArticle;
@@ -80,14 +80,6 @@ export default {
 };
 </script>
 
-<style scoped>
-.write {
-   position: fixed;
-   top: 500px;
-   right: 100px;
-}
-.subject {
-   position: fixed;
-   top: 70px;
-}
+<style lang="scss">
+@import 'src/css/community.scss';
 </style>
