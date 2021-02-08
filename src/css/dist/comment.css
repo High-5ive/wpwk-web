@@ -14,6 +14,7 @@
 .comment-wrapper {
   margin: 2px;
   align-items: center;
+  height: 100%;
 }
 .comment-wrapper .comment-item {
   display: block;
@@ -63,9 +64,21 @@
   background-color: white;
   display: flex;
 }
+.comment-footer .dummy-icon {
+  border-radius: 0px;
+  position: fixed;
+  z-index: 100;
+  left: 22px;
+  bottom: 13px;
+}
+.comment-footer .dummy-icon i {
+  font-size: 20px;
+  color: #89BA17;
+}
 .comment-footer .input-box {
   width: 100%;
   padding: 20px;
+  padding-left: 60px;
   border: 1px solid #a2d646;
 }
 .comment-footer .input-box:focus {

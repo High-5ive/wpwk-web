@@ -4,6 +4,7 @@
 .comment-wrapper{
     margin: 2px;
     align-items: center;
+    height: 100%;
 
     //CommentListItem.vue
     .comment-item{
@@ -69,10 +70,24 @@
 
     display: flex;
 
+    .dummy-icon{
+        border-radius: 0px;
+        position: fixed;
+        z-index: 100;
+        left: 22px;
+        bottom: 13px;
+
+        i{
+            font-size: 20px;
+            color: $green;
+        }
+    }
+
     .input-box{
         width: 100%;
         // background-color: blue;
         padding: 20px;
+        padding-left: 60px;
         border: 1px solid $main-green;
         
         &:focus{

@@ -1,5 +1,8 @@
 <template>
    <div class="comment-footer">
+      <div class="dummy-icon">
+         <i class="fas fa-comment-medical"></i>
+      </div>
       <input @keypress.enter="createComment" class="input-box nf" type="text" v-model="content" placeholder="댓글을 작성해주세요." />
       <button @click="createComment" class="btn-send"><v-icon>mdi-send</v-icon></button>
    </div>
