@@ -1,14 +1,15 @@
 <template>
-   <div>
-      <p>{{ subject }}</p>
-      <v-card class="mx-auto" max-width="400">
-         <v-card-subtitle class="pb-0">
-            {{ user }}
-         </v-card-subtitle>
-
-         <v-card-text class="text--primary">
-            <div>{{ content }}</div>
-         </v-card-text>
+   <div class="ad-container">
+      <div class="article-wrapper">
+         <div class="content-wrapper">
+            <div class="category">
+               {{ subject }}
+            </div>
+            <div class="nickname nf nf-600">
+               {{ user }}
+            </div>
+            <div class="content nf">{{ content }}</div>
+         </div>
 
          <div v-if="this.itemList.length">
             <div v-for="(item, idx) in itemList" :key="idx">
@@ -16,16 +17,24 @@
             </div>
          </div>
 
-         <v-card-actions>
-            <v-icon v-if="this.like" color="red" @click="getLike"> mdi-heart-multiple </v-icon>
-            <v-icon v-else color="red" @click="getLike"> mdi-heart-multiple-outline </v-icon>
-            <span @click="getLike"> 좋아요 </span>
-
-            <div><v-icon color="grey"> mdi-comment-multiple-outline </v-icon> 댓글 {{ this.comments.length }}</div>
-
-            <div><v-icon color="red"> mdi-account-heart </v-icon> {{ this.likeList.length }}</div>
-         </v-card-actions>
-      </v-card>
+         <div class="feature-wrapper">
+            <div class="likes-btn">
+               <v-icon v-if="this.like" color="red" @click="getLike"> mdi-heart-multiple </v-icon>
+               <v-icon v-else color="red" @click="getLike"> mdi-heart-multiple-outline </v-icon>
+               <span @click="getLike" class="nf"> 좋아요! </span>
+            </div>
+            <div class="info-btn">
+               <v-icon style="color:rgb(171, 171, 171) "> mdi-comment-multiple-outline </v-icon>
+               <div class="comment">
+                  <div v-if="this.comments.length" class="nf">댓글 {{ this.comments.length }}</div>
+                  <div v-else class="nf">
+                     댓글쓰기
+                  </div>
+               </div>
+               <v-icon style="color:rgb(255, 101, 101)"> mdi-account-heart </v-icon> <span>{{ this.likeList.length }} </span>
+            </div>
+         </div>
+      </div>
 
       <CommentList :comments="this.comments" @deleteComment="deleteComment" />
       <CommentForm @createComment="createComment" />
@@ -107,4 +116,6 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+@import 'src/css/articleDetail.scss';
+</style>

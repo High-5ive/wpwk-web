@@ -245,7 +245,6 @@ export default {
       margin-bottom: 25px;
       //    background-color: white;
 
-      width: 100%;
       height: 100px;
       width: 100%;
       // margin-top: 20px;
