@@ -16,7 +16,7 @@
             <v-btn fab dark small color="green">
                <router-link to="/ContentsCreate"><v-icon>mdi-baby-bottle</v-icon></router-link>
             </v-btn>
-            <v-btn fab dark small color="yellow darken-1" @click="openCommuModal">
+            <v-btn fab dark small color="yellow darken-1" @click="changeCommuModal(true)">
                <v-icon>mdi-pencil</v-icon>
             </v-btn>
             <v-btn fab dark small color="red">
@@ -31,16 +31,11 @@
       <!-- 커뮤니티 글 작성 모달 -->
       <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
          <v-card>
-            <v-toolbar dark color="success">
-               <!-- 닫기 버튼 -->
-               <v-btn icon dark @click="dialog = false">
-                  <v-icon>mdi-close</v-icon>
-               </v-btn>
+            <v-btn icon dark @click="dialog = false">
+               <v-icon>mdi-close</v-icon>
+            </v-btn>
 
-               <v-toolbar-title>새 글 작성</v-toolbar-title>
-            </v-toolbar>
-
-            <article-form @createArticle="createArticle" />
+            <article-form @createArticle="createArticle" @emit-close="changeCommuModal" />
          </v-card>
       </v-dialog>
    </div>
@@ -106,8 +101,10 @@ export default {
       scrollListener: function() {
          this.visible = window.scrollY > 150;
       },
-      openCommuModal: function() {
-         this.dialog = true;
+
+      //글 작성 여부에 따른 작성 폼 모달 오픈/닫기 제어
+      changeCommuModal: function(state) {
+         this.dialog = state;
       },
 
       createArticle: function(article) {
@@ -160,5 +157,13 @@ export default {
 }
 #create .v-btn--floating {
    position: relative;
+}
+
+.v-card,
+v-sheet,
+theme--light {
+   // background-color: blue !important;
+   height: 100%;
+   overflow: hidden;
 }
 </style>

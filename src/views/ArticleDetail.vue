@@ -73,8 +73,8 @@ export default {
          this.likeList = this.$route.params.article.likeList;
          this.comments = this.$route.params.article.comments;
          // 좋아요 목록에 있는 지 체크
-         for (var i = 0; i < this.likeList.length; i++) {
-            if (this.likeList[i] === '수진맘') {
+         for (var j = 0; j < this.likeList.length; j++) {
+            if (this.likeList[j] === '수진맘') {
                this.like = 1;
             }
          }
