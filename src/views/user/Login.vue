@@ -211,7 +211,6 @@ export default {
       this.find_modal = true;
     },
 
-<<<<<<< HEAD
     doLogin() {
       // 로그인 요청처리 구현
       localStorage.setItem('accessToken', ''); // 기존 토큰 지우기
@@ -226,24 +225,6 @@ export default {
             alert('로그인에 성공했습니다.');
             let token = response.data['accessToken'];
             localStorage.setItem('accessToken', token); // 토큰 로컬스토리지에 저장
-=======
-               this.$store.dispatch("getUserInfo"); // 토큰을 이용한 유저정보 가져오기
-               this.$router.push("/");
-            } else if(response.status == 204) {
-               alert("아이디 또는 비밀번호가 일치하지 않습니다.");
-               this.isLoginError = true;
-            }
-         },
-         (err) => {
-            // UNAUTHORIZE 회원이 비활성화 된 경우
-            if(err.response.status == 401) {
-               alert("비활성화 회원입니다. 이메일을 인증해주세요");
-               return;
-            }
-         });
-      }
-   },
->>>>>>> origin/feature-sendEmailPage
 
             this.$store.dispatch('getUserInfo'); // 토큰을 이용한 유저정보 가져오기
             this.$router.push('/');

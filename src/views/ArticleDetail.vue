@@ -107,7 +107,6 @@ export default {
       this.comments.splice(deleteId, 1);
     },
     methods: {
-<<<<<<< HEAD
       getArticle: function() {
         this.user = this.$route.params.article.user;
         this.subject = this.$route.params.article.subject;
@@ -147,48 +146,6 @@ export default {
       createComment: function(comment) {
         this.comments.push(comment);
       },
-=======
-        getArticle: function () {
-            this.user = this.$route.params.article.user
-            this.subject = this.$route.params.article.subject
-            this.content = this.$route.params.article.content
-            if(this.$route.params.article.itemList.length) {
-                for(var i=0; i<this.$route.params.article.itemList.length; i++) {
-                    this.itemList.push(this.$route.params.article.itemList[i])
-                }
-            }
-            this.likeList = this.$route.params.article.likeList
-            this.comments = this.$route.params.article.comments
-            // 좋아요 목록에 있는 지 체크
-            for(i=0; i<this.likeList.length; i++) {
-                if(this.likeList[i] === "수진맘") {
-                this.like = 1
-                }
-            }
-        },
-        getLike: function () {
-            if(this.like) {
-                this.like = 0
-                // 좋아요 눌렀던 user 삭제
-                // const deleteId = this.likeList.indexOf(user)
-                const deleteId = this.likeList.indexOf("수진맘")
-                this.likeList.splice(deleteId, 1)
-            }
-            else {
-                this.like = 1
-                // 좋아요 누른 user 추가
-                // this.likeList.push(user)
-                this.likeList.push("수진맘")
-            }
-        },
-        deleteComment: function (comment) {
-            const deleteId = this.comments.indexOf(comment)
-            this.comments.splice(deleteId, 1)
-        },
-        createComment: function (comment) { 
-            this.comments.push(comment)
-        },
->>>>>>> origin/feature-sendEmailPage
     },
   },
   created: function() {

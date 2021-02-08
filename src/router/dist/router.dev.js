@@ -37,15 +37,9 @@ var _Login = _interopRequireDefault(require('@/views/user/Login.vue'));
 
 var _Join = _interopRequireDefault(require('@/views/user/Join.vue'));
 
-<<<<<<< HEAD
 var _NaverLoginProcess = _interopRequireDefault(
   require('@/components/user/NaverLoginProcess.vue')
 );
-=======
-var _JoinSuccess = _interopRequireDefault(require("@/views/user/JoinSuccess.vue"));
-
-var _Auth = _interopRequireDefault(require("@/views/user/Auth.vue"));
->>>>>>> origin/feature-sendEmailPage
 
 var _KakaoLoginProcess = _interopRequireDefault(
   require('@/views/user/KakaoLoginProcess.vue')
@@ -68,7 +62,6 @@ _vue['default'].use(_vueRouter['default']); // ==============================
 
 // ==============================
 // 여러개 태울 때, routes 변수 생성
-<<<<<<< HEAD
 var routes = [
   {
     path: '/',
@@ -80,7 +73,7 @@ var routes = [
   },
   {
     path: '/cmmu',
-    name: 'communiny',
+    name: 'community',
     components: {
       side: _SideMenu['default'],
       default: _Community['default'],
@@ -153,80 +146,6 @@ var routes = [
   },
 ];
 var router = new _vueRouter['default']({
-=======
-var routes = [{
-  path: '/',
-  name: 'Main',
-  components: {
-    side: _SideMenu["default"],
-    "default": _Main["default"]
-  }
-}, {
-  path: '/cmmu',
-  name: 'communiny',
-  components: {
-    side: _SideMenu["default"],
-    "default": _Community["default"]
-  }
-}, {
-  path: '/cmmu/:articleId',
-  name: 'articledetail',
-  components: {
-    side: _SideMenu["default"],
-    "default": _ArticleDetail["default"]
-  }
-}, {
-  path: '/mypage',
-  name: 'mypage',
-  components: {
-    side: _SideMenu["default"],
-    "default": _Mypage["default"]
-  }
-}, {
-  path: '/contentscreate',
-  name: 'ContentsCreate',
-  components: {
-    side: _SideMenu["default"],
-    "default": _ContentsCreate["default"]
-  }
-}, {
-  path: '/view',
-  name: 'ContentsView',
-  components: {
-    "default": _ContentsView["default"]
-  }
-}, {
-  path: '/landingTest',
-  components: {
-    "default": _LandingPage["default"]
-  }
-}, {
-  path: '/login',
-  name: 'Login',
-  components: {
-    "default": _Login["default"]
-  }
-}, {
-  path: '/join',
-  name: 'Join',
-  components: {
-    "default": _Join["default"]
-  }
-}, {
-  path: '/joinSuccess',
-  name: 'JoinSuccess',
-  components: {
-    "default": _JoinSuccess["default"]
-  }
-},{
-  path: '/auth',
-  name: 'Auth',
-  components: {
-    "default": _Auth["default"]
-}, 
-}];
-var router = new _vueRouter["default"]({
->>>>>>> origin/feature-sendEmailPage
   mode: 'history',
   //뒤에 # 을 없애줌
   // base: process.env.BASE_URL,
