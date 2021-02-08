@@ -39,11 +39,17 @@
             margin: 5px 0px;
         }
 
+        //삭제버튼
         .btn-wrapper{
             position: relative;
             float: right;
             top: -30px;
             right: 0px;
+
+            i {
+                font-size: 16px;
+                color: rgb(235, 92, 92);
+            }
         }
     }
     

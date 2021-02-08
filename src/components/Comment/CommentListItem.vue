@@ -10,8 +10,8 @@
       <p class="content nf">{{ comment.content }}</p>
 
       <!-- 삭제버튼이 들어감. fixed로 우측 고정 -->
-      <div class="btn-wrapper">
-         <v-icon @click="deleteComment" color="error">
+      <div class="btn-wrapper" @click="deleteComment">
+         <v-icon>
             mdi-delete-forever
          </v-icon>
       </div>
