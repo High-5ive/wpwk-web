@@ -34,8 +34,8 @@
                      <v-icon>mdi-close</v-icon>
                   </div>
 
-                  <img class="wp-face" src="@/assets/img/comment/comment_wp1.png" />
-                  <img class="wp-hand" src="@/assets/img/comment/comment_wp2.png" />
+                  <img class="wp-face" src="@/assets/img/characters/comment_wp1.png" />
+                  <img class="wp-hand" src="@/assets/img/characters/comment_wp2.png" />
 
                   <div class="cm-wrapper">
                      <CommentList :comments="this.comments" @deleteComment="deleteComment" />

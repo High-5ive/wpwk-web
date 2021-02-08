@@ -1,7 +1,7 @@
 <template lang="">
    <div class="eb-wrapper">
-      {{ evaluationCal }}
-      <div class="btn-group">
+      <!-- {{ evaluationCal }} -->
+      <div class="eval-group">
          <v-btn outlined rounded @click="eval1" :class="{ selected: ev1 }"><span>&#128277;</span>층간 소음이 없어요</v-btn>
          <v-btn outlined rounded @click="eval2" :class="{ selected: ev2 }"><span>&#128118;</span>아이가 너무 좋아해요</v-btn>
          <v-btn outlined rounded @click="eval3" :class="{ selected: ev3 }"><span>&#128558;</span>유익한 내용이에요</v-btn>
@@ -12,7 +12,28 @@
          <v-btn outlined rounded @click="eval8" :class="{ selected: ev8 }"><span>&#127891;</span>교육적이에요!</v-btn>
          <v-btn outlined rounded @click="eval9" :class="{ selected: ev9 }"><span>&#128378;</span>아이가 한참 놀아도 안질려해요</v-btn>
       </div>
-      <v-btn outlined rounded @click="evaluation">제출하기</v-btn>
+      <div class="btn-group">
+         <v-btn id="submit" :class="{ possible: evaluationCal != '', disable: evaluationCal.length == '' }" outlined rounded @click="submit">제출하기</v-btn>
+         <v-btn id="report" outlined rounded @click="dialog = true">신고하기</v-btn>
+      </div>
+
+      <!-- 신고하기 모달 -->
+      <div>
+         <v-row justify="center">
+            <v-dialog v-model="dialog" persistent max-width="330">
+               <v-card>
+                  <v-card-title> 해당 컨텐츠를 신고하시겠습니까? </v-card-title>
+                  <v-card-text>신고 내용은 운영진에게 전달됩니다.</v-card-text>
+                  <v-card-actions>
+                     <v-spacer></v-spacer>
+                     <v-btn color="green darken-1" text @click="dialog = false"> 아니요 </v-btn>
+                     <v-btn color="error" text @click="dialog = false"> 신고하기 </v-btn>
+                  </v-card-actions>
+               </v-card>
+            </v-dialog>
+         </v-row>
+      </div>
+      <!-- 신고하기 모달 -->
    </div>
 </template>
 <script>
@@ -29,10 +50,13 @@ export default {
          ev7: false,
          ev8: false,
          ev9: false,
+
          fun: 0,
-         access: 0,
-         education: 0,
-         evaluationCal: {},
+         acs: 0,
+         edu: 0,
+         evaluationCal: '',
+
+         dialog: false, //모달용 변수
       };
    },
    methods: {
@@ -63,22 +87,36 @@ export default {
       eval9: function() {
          this.ev9 = !this.ev9;
       },
-      evaluation: function() {
+
+      submit: function() {
          this.fun = this.ev2 + this.ev5 + this.ev9;
-         this.access = this.ev1 + this.ev4 + this.ev6;
-         this.education = this.ev3 + this.ev7 + this.ev8;
+         this.acs = this.ev1 + this.ev4 + this.ev6;
+         this.edu = this.ev3 + this.ev7 + this.ev8;
+
          const evaluation = {
-            fun: this.fun,
-            access: this.access,
-            education: this.education,
+            fun: this.fun * 1, //문자 -> 숫자 변환
+            acs: this.acs * 1,
+            edu: this.edu * 1,
          };
          this.evaluationCal = evaluation;
+
+         console.log(this.evaluationCal);
+         console.log(this.evaluationCal.length);
       },
    },
 };
 </script>
 <style lang="scss">
 .selected {
-   border: #a2d646 5px solid;
+   background-color: rgb(255, 246, 180);
+   border: rgb(237, 230, 177) 1px solid !important;
+}
+
+.possible {
+   background-color: rgb(255, 236, 236);
+}
+
+.disable {
+   background-color: gray;
 }
 </style>
