@@ -30,7 +30,7 @@ export default {
   methods: {
     dokakaoLogin() {
       axios
-        .get('http://localhost:9004/kakao/' + this.kakaoToken)
+        .get('http://i4a205.p.ssafy.io:9004/kakao/' + this.kakaoToken)
         .then((response) => {
           this.loading = false;
           this.jwtToken = response.data;

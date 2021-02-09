@@ -1,25 +1,31 @@
 <template>
   <div class="photo-item-wrapper d-flex align-center justify-space-around">
     <div class="image-wrapper">
-      <img :src="item.youtube.thumbnailSrc" :alt="item.youtube.title">
+      <img :src="item.youtube.thumbnailSrc" :alt="item.youtube.title" />
     </div>
     <div class="desc-wrapper d-flex align-center justify-center">
-      <div class="text" @click="onEdit" v-if="item.description&&editInput==false">{{ item.description }}</div>
-      <textarea 
-        cols="12" 
+      <div
+        class="text"
+        @click="onEdit"
+        v-if="item.description && editInput == false"
+      >
+        {{ item.description }}
+      </div>
+      <textarea
+        cols="12"
         rows="3"
-        v-if="item.description==''"
+        v-if="item.description == ''"
         @keypress.enter="onItemChange"
         @change="onItemChange"
         v-model="description"
         maxlength="200"
         placeholder="영상에 대한 설명을 적어주세요"
       ></textarea>
-      <textarea 
-        cols="12" 
+      <textarea
+        cols="12"
         rows="3"
         v-if="editInput"
-        @keypress.enter="onItemChange" 
+        @keypress.enter="onItemChange"
         @change="onItemChange"
         v-model="description"
         maxlength="200"
@@ -33,25 +39,22 @@ export default {
   props: {
     item: Object,
     idx: Number,
-    
   },
-  data: function () {
+  data: function() {
     return {
       description: '',
-      editInput: false
-    }
+      editInput: false,
+    };
   },
   methods: {
-    onItemChange: function () {
-      this.$emit('item-change', [this.description, this.idx])
-      this.editInput = false
+    onItemChange: function() {
+      this.$emit('item-change', [this.description, this.idx]);
+      this.editInput = false;
     },
-    onEdit: function () {
-      this.editInput = true
-    }
-  }
-  
-}
+    onEdit: function() {
+      this.editInput = true;
+    },
+  },
+};
 </script>
-<style>
-</style>
+<style></style>

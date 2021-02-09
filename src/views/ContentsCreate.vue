@@ -10,10 +10,7 @@
     ></v-text-field>
     <v-divider></v-divider>
     <!-- 노리의 항목들 -->
-    <draggable
-      :list="itemList"
-      :options="{ animation: 300 }"
-    >
+    <draggable :list="itemList" :options="{ animation: 300 }">
       <div
         v-for="(item, idx) in itemList"
         :key="idx"
@@ -21,9 +18,13 @@
       >
         <!-- 노리의 유튜브 항목 -->
         <div class="circle">{{ idx + 1 }}</div>
-        <div 
+        <div
           class="item-wrapper d-flex align-center justify-space-between"
-          :class="{'text-wrapper': isText(item), 'youtube-wrapper': isYoutube(item), 'photo-wrapper': isPhoto(item) }"
+          :class="{
+            'text-wrapper': isText(item),
+            'youtube-wrapper': isYoutube(item),
+            'photo-wrapper': isPhoto(item),
+          }"
         >
           <span class="left-wrapper handle">
             <v-icon>
@@ -59,7 +60,13 @@
             <button @click="deleteItem(idx)">
               <v-icon>mdi-trash-can</v-icon>
             </button>
-            <div :class="{'text-rightbottom':isText(item), 'youtube-rightbottom':isYoutube(item), 'photo-rightbottom':isPhoto(item)}"></div>
+            <div
+              :class="{
+                'text-rightbottom': isText(item),
+                'youtube-rightbottom': isYoutube(item),
+                'photo-rightbottom': isPhoto(item),
+              }"
+            ></div>
           </div>
         </div>
       </div>
@@ -103,23 +110,26 @@
       </div>
     </div>
     <div class="background-text">
-      <p>아래 버튼을 눌러 <br> 컨텐츠를 추가해주세요!</p>
+      <p>
+        아래 버튼을 눌러 <br />
+        컨텐츠를 추가해주세요!
+      </p>
       <v-icon>mdi-arrow-down</v-icon>
     </div>
   </div>
 </template>
 
 <script>
-import draggable from "vuedraggable";
-import YoutubeCreate from "../components/contents-create/YoutubeCreate.vue";
-import ContentsYoutubeItem from "@/components/contents-create/ContentsYoutubeItem.vue";
-import ContentsTextItem from "@/components/contents-create/ContentsTextItem.vue";
-import ContentsPhotoItem from "@/components/contents-create/ContentsPhotoItem.vue";
-import Guideline from "../components/contents-create/Guideline.vue";
-import CategoryAndTimeInfo from "../components/contents-create/CategoryAndTimeInfo.vue";
+import draggable from 'vuedraggable';
+import YoutubeCreate from '../components/contents-create/YoutubeCreate.vue';
+import ContentsYoutubeItem from '@/components/contents-create/ContentsYoutubeItem.vue';
+import ContentsTextItem from '@/components/contents-create/ContentsTextItem.vue';
+import ContentsPhotoItem from '@/components/contents-create/ContentsPhotoItem.vue';
+import Guideline from '../components/contents-create/Guideline.vue';
+import CategoryAndTimeInfo from '../components/contents-create/CategoryAndTimeInfo.vue';
 
 export default {
-  name: "ContentsCreate",
+  name: 'ContentsCreate',
   components: {
     draggable,
     YoutubeCreate,
@@ -131,36 +141,36 @@ export default {
   },
   data: function() {
     return {
-      title: "",
+      title: '',
       itemList: [],
       youtubeAdded: false,
       uploadPercentage: 0,
     };
   },
   methods: {
-    isText: function (item) {
-      if (item.type=="text") {
-        return true
+    isText: function(item) {
+      if (item.type == 'text') {
+        return true;
       } else {
-        return false
+        return false;
       }
     },
-    isYoutube: function (item) {
-      if (item.type=="youtube") {
-        return true
+    isYoutube: function(item) {
+      if (item.type == 'youtube') {
+        return true;
       } else {
-        return false
+        return false;
       }
     },
-    isPhoto: function (item) {
-      if (item.type=="photo") {
-        return true
+    isPhoto: function(item) {
+      if (item.type == 'photo') {
+        return true;
       } else {
-        return false
+        return false;
       }
     },
     axiosFileSelect: function() {
-      var elem = document.getElementById("fileUpload");
+      var elem = document.getElementById('fileUpload');
       elem.click();
     },
 
@@ -194,21 +204,21 @@ export default {
     createItemPhoto: function(p) {
       console.log(p);
       const newItem = {
-        type: "photo",
+        type: 'photo',
         youtube: {},
         photo: p,
-        video: "",
-        description: "",
+        video: '',
+        description: '',
       };
       if (this.itemList.length <= 9) {
         this.itemList.push(newItem);
       } else {
-        alert("항목은 최대 10개 까지 넣을 수 있습니다.");
+        alert('항목은 최대 10개 까지 넣을 수 있습니다.');
       }
     },
     // 항목 삭제
     deleteItem: function(index) {
-      if (this.itemList[index].type == "youtube") {
+      if (this.itemList[index].type == 'youtube') {
         this.youtubeAdded = false;
       }
       this.itemList.splice(index, 1);
@@ -217,32 +227,34 @@ export default {
     onSelectVideo: function(video) {
       // 새 아이템 생성
       const newItem = {
-        type: "youtube",
+        type: 'youtube',
         youtube: video,
+        youtubeThumbnail: video.thumbnailSrc,
+        youtubeId: video.videoId,
+        youtubeTitle: video.title,
         photo: {},
-        video: "",
-        description: "",
+        description: video.videoCaption,
       };
       if (this.itemList.length <= 9) {
         this.itemList.push(newItem);
         this.youtubeAdded = true;
       } else {
-        alert("항목은 최대 10개 까지 넣을 수 있습니다.");
+        alert('항목은 최대 10개 까지 넣을 수 있습니다.');
       }
     },
     // 텍스트 추가
     createTextItem: function() {
       const newItem = {
-        type: "text",
+        type: 'text',
         youtube: {},
         photo: {},
-        video: "",
-        description: "",
+        video: '',
+        description: '',
       };
       if (this.itemList.length <= 9) {
         this.itemList.push(newItem);
       } else {
-        alert("항목은 최대 10개 까지 넣을 수 있습니다.");
+        alert('항목은 최대 10개 까지 넣을 수 있습니다.');
       }
     },
     // 유튜브나 사진 설명 및 텍스트 내용 바뀌면 적용
@@ -250,7 +262,7 @@ export default {
       this.itemList[itemInfo[1]].description = itemInfo[0];
     },
     cancleCreate: function() {
-      this.$router.push("/");
+      this.$router.push('/');
     },
   },
 };
@@ -302,7 +314,7 @@ export default {
     background-color: #e1a8a6;
   }
   .photo-wrapper {
-    background-color: #98c3e7 ;
+    background-color: #98c3e7;
   }
   .item-wrapper {
     // border: 1px solid gray;
@@ -316,7 +328,7 @@ export default {
 
     // background-color: rgb(247, 247, 247);
     // box-shadow: 0 4px 4px lightgray;
-    
+
     .left-wrapper {
       width: 10%;
     }
@@ -353,8 +365,8 @@ export default {
           font-size: 11px;
         }
         textarea:focus {
-            outline: none;
-          }
+          outline: none;
+        }
 
         textarea::placeholder {
           color: rgb(171, 171, 171);
@@ -413,19 +425,19 @@ export default {
         margin-bottom: -10px;
         margin-right: -15px;
         border-left: 40px solid #eede85;
-        border-bottom : 40px solid #ffffff;
+        border-bottom: 40px solid #ffffff;
       }
       .youtube-rightbottom {
         margin-bottom: -10px;
         margin-right: -15px;
         border-left: 40px solid #956361;
-        border-bottom : 40px solid #ffffff;
+        border-bottom: 40px solid #ffffff;
       }
       .photo-rightbottom {
         margin-bottom: -10px;
         margin-right: -15px;
         border-left: 40px solid #6d869c;
-        border-bottom : 40px solid #ffffff;
+        border-bottom: 40px solid #ffffff;
       }
     }
   }
@@ -516,7 +528,7 @@ export default {
   position: fixed;
   bottom: 150px;
   text-align: center;
-    width: 80%;
+  width: 80%;
   /* left, right는 해당 요소의 위치 시작점을 결정한다. 그런데, 이때, margin의 양 값을 auto로 줌으로써 마진을 주어 해당 요소의 양 끝 위치를 각각 0으로 만들어준다. */
   margin: 0 auto;
   animation: 1s ease-out 0s 1 slideInFromTop;
@@ -530,11 +542,11 @@ export default {
       opacity: 1;
     }
   }
-  p{
+  p {
     font-size: 20pt;
     color: rgb(179, 179, 179);
   }
-  
+
   i.v-icon {
     color: rgb(179, 179, 179);
     font-size: 40pt;
