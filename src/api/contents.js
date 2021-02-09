@@ -26,11 +26,26 @@ function findAllContents(success, fail) {
     .catch(fail);
 }
 
-function findContentsBy(id, success, fail) {
+function findContentsById(id, success, fail) {
   instance
     .get(`contents/${id}`)
     .then(success)
     .catch(fail);
 }
 
-export { createContents, createTags, findAllContents, findContentsBy };
+function findContentsByPage(page, success, fail) {
+  instance
+    .get(`contents/page/${page}`)
+    .then(success)
+    .catch(fail);
+}
+
+function findContentsByTag(tag, page, success, fail) {
+  instance
+    .get(`contents/tags/${tag}/page/${page}`)
+    .then(success)
+    .catch(fail);
+}
+
+export { createContents, createTags, findAllContents, 
+  findContentsById, findContentsByPage, findContentsByTag };

@@ -42,7 +42,7 @@ var _NaverLoginProcess = _interopRequireDefault(
 );
 
 var _KakaoLoginProcess = _interopRequireDefault(
-  require('@/views/user/KakaoLoginProcess.vue')
+  require('@/components/user/KakaoLoginProcess.vue')
 );
 
 function _interopRequireDefault(obj) {
@@ -104,7 +104,7 @@ var routes = [
     },
   },
   {
-    path: '/view',
+    path: '/view/:id',
     name: 'ContentsView',
     components: {
       default: _ContentsView['default'],
@@ -134,7 +134,7 @@ var routes = [
     path: '/login/oauth2/code/naver',
     name: 'NaverLoginProcess',
     components: {
-      default: NaverLoginProcess['default'],
+      default: _NaverLoginProcess['default'],
     },
   },
   {

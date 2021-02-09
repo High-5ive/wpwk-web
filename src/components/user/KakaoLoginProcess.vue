@@ -10,8 +10,8 @@
   </div>
 </template>
 <script>
-import axios from 'axios';
-import router from '../../router/router';
+import router from "../../router/router"
+import { kakaoLogin } from "@/api/user.js";
 
 export default {
   data() {
@@ -29,18 +29,20 @@ export default {
 
   methods: {
     dokakaoLogin() {
-      axios
-        .get('http://i4a205.p.ssafy.io:9004/kakao/' + this.kakaoToken)
-        .then((response) => {
+        kakaoLogin(
+        this.kakaoToken,
+        (res) => {
           this.loading = false;
-          this.jwtToken = response.data;
+          this.jwtToken = res.data;
           localStorage.setItem('accessToken', this.jwtToken);
           this.$store.dispatch('getUserInfo');
           router.push({ name: 'Main' });
-        })
-        .catch((error) => {
-          console.log('error : ' + error);
-        });
+        },
+        (error) => {
+          this.loading = false;
+          console.log(error);
+        }
+      );
     },
 
     getToken() {
