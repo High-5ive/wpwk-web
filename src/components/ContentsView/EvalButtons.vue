@@ -132,6 +132,7 @@ export default {
    align-items: center;
 
    height: 400px;
+   padding-top: 20px;
    border-radius: 50px;
 
    .textarea-wrapper {
