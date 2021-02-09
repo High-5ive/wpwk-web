@@ -5,7 +5,7 @@
       <v-text-field id="input-title" v-model="title" label="제목" hint="ex) [11세]집에서 할 수 있는 축구게임"></v-text-field>
       <v-divider></v-divider>
       <!-- 노리의 항목들 -->
-      <draggable :list="itemList" :options="{ animation: 300 }">
+      <draggable :list="itemList" :options="{ animation: 300 }" class="contents">
          <div v-for="(item, idx) in itemList" :key="idx" class="div-wrapper d-flex align-center justify-space-between">
             <!-- 노리의 유튜브 항목 -->
             <div class="circle">{{ idx + 1 }}</div>
@@ -222,7 +222,9 @@ export default {
 #input-title {
    margin-top: 0px !important;
 }
-
+.contents {
+   margin-bottom: 100px;
+}
 .div-wrapper {
    // animation: 0.3s ease-out 0s 1 slideInFromBottom;
    // @keyframes slideInFromBottom {
