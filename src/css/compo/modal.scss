@@ -8,25 +8,26 @@
     .modal-left-hand,
     .modal-right-hand,
     .modal-foot {
-        position: absolute;
+        position: relative;
     }
 
     .modal-left-hand {
         width: 40px;
-        top: 45%;
-        left: 20px;
+        top: -300px;
+        left: -80px;
+        z-index: 1;
     }
 
     .modal-right-hand {
         width: 70px;
-        top: 41%;
-        right: 10px;
+        top: -270px;
+        right: -280px;
     }
 
     .modal-foot {
         width: 160px;
-        bottom: 130px;
-        right: 30%;
+        bottom: 120px;
+        right: 20px;
         z-index: -1;
     }
  }

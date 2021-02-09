@@ -36,6 +36,11 @@ export default {
 <style lang="scss">
 @import 'src/css/common.scss';
 
+#root {
+   background-color: rgb(55, 117, 125) im !important;
+   // width: 100px;
+}
+
 #inspire {
    /* background-color: blue; */
    font-family: 'Poor Story' sans-serif !important;
@@ -53,7 +58,7 @@ export default {
       z-index: 200;
 
       img {
-         height: 40px;
+         height: 30px;
       }
 
       .btn-search {
@@ -79,8 +84,9 @@ export default {
 
    .v-navigation-drawer__content {
       .sidemenu {
-         margin-top: 56px;
+         padding-top: 56px;
          /* background-color: red; */
+         overflow: hidden;
       }
    }
 }
