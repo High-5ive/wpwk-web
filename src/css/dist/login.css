@@ -11,7 +11,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 10;
+  z-index: 5000;
 }
 .container .wrapper {
   font-family: "Poor Srtoy", sans-serif !important;
@@ -40,6 +40,7 @@
 .container .wrapper .title span {
   display: block;
   color: #a2d646;
+  font-size: 24px;
   font-family: "Poor Story";
   font-weight: 600;
 }
@@ -60,10 +61,25 @@
   padding-left: 20px;
   /* border-bottom: 2px solid rgb(8, 89, 40); */
 }
+.container .wrapper .input-wrapper input.join {
+  height: 40px;
+  font-size: 10pt;
+  border: 1px solid #f4b740;
+  display: block;
+}
+.container .wrapper .input-wrapper input.join-retry {
+  height: 40px;
+  margin-top: 25px;
+  border: 1px solid #f4b740;
+}
 .container .wrapper .input-wrapper label {
   text-align: center;
   font-size: 12px;
   font-weight: 600;
+}
+.container .wrapper .input-wrapper .input-nick {
+  margin-top: 30px;
+  font-size: 12pt;
 }
 .container .feature-wrapper {
   margin-top: 30px;
@@ -88,6 +104,16 @@
   border: 2px #f4b740 solid !important;
   padding: 20px 70px;
   font-weight: 600;
+}
+.container .feature-wrapper #submit.join {
+  margin: 10px 0px 0px 0px;
+  color: #89BA17;
+  background-color: white !important;
+  border: 2px #89BA17 solid !important;
+}
+.container .btn-back {
+  font-size: 10pt;
+  padding-top: 0px;
 }
 .container .social-wrapper {
   margin-top: 30px;
