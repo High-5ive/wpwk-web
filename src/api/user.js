@@ -36,7 +36,7 @@ async function findById(userId, success, fail) {
 
 function naverLogin(token, success, fail) {
   instance
-    .get(`http://localhost:9004/login/process/naver/` + token)
+    .get(`login/process/naver/` + token)
     .then(success)
     .catch(fail)
 }

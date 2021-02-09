@@ -1,13 +1,23 @@
 <template>
   <div class="container">
-    <div
-      class="nori-wrapper"
-      v-for="(nori, idx) in NoriList"
-      @click="contentsClick"
-      :key="idx"
-    >
-      <nori-content :sendNori="nori"></nori-content>
-      <br />
+    <div v-if="loading">
+      <p>로딩중....</p>
+    </div>
+    <div v-if="!loading">
+      <div
+        class="nori-wrapper"
+        v-for="(nori, idx) in NoriList"
+        @click="contentsClick"
+        :key="idx"
+      >
+        <nori-content :sendNori="nori">
+        </nori-content>
+        <br />
+      </div>
+      <infinite-loading
+          spinner="spiral"
+          @infinite="infiniteHandler"
+        ></infinite-loading>
     </div>
     <speed-dial></speed-dial>
   </div>
@@ -16,12 +26,14 @@
 <script>
 import NoriContent from "@/components/main/NoriContent.vue";
 import SpeedDial from "@/components/main/SpeedDial.vue";
-import { findAllContents } from "@/api/contents.js";
+import { findContentsByPage } from "@/api/contents.js";
+import infiniteLoading from "vue-infinite-loading";
 
 export default {
   components: {
     NoriContent,
     SpeedDial,
+    infiniteLoading,
   },
   data() {
     return {
@@ -35,81 +47,127 @@ export default {
         "자연지능",
         "대인지능",
         "개인내지능",
-      ],      
+      ],
+      infLoading: false,
+      page: 1,
+      loading: true,
     };
   },
   created() {
-    this.getAllNoriList()
+    this.getNoriList();
   },
   methods: {
-    getAllNoriList() {
-      findAllContents(
+    getNoriList() {
+      findContentsByPage(
+        this.page,
         (res) => {
-          this.NoriList = res.data
-          for(var i=0; i<this.NoriList.length; i++) {            
-            if(this.NoriList[i].ability != null) {
-
-              let abilityList = []
-              for(var j=0; j<this.NoriList[i].ability.length; j++) {
-                if(this.NoriList[i].ability.charAt(j) == '1') {
+          this.NoriList = res.data;
+          for (var i = 0; i < this.NoriList.length; i++) {
+            if (this.NoriList[i].ability != null) {
+              let abilityList = [];
+              for (var j = 0; j < this.NoriList[i].ability.length; j++) {
+                if (this.NoriList[i].ability.charAt(j) == "1") {
                   abilityList.push(this.abilities[j]);
-                }                
+                }
               }
 
-              // 각 컨텐츠마다 지능 
+              // 각 컨텐츠마다 지능
               this.NoriList[i].abilities = abilityList;
             }
           }
+          this.page += 1;
+          console.log(this.page);
+          this.loading = false;
         },
         (error) => {
           console.log(error);
         }
       );
     },
-    dummyInsert: function() {
-      const nori = [
-        {
-          idx: 0,
-          img: require("@/assets/img/test2.jpg"),
-          title: "아빠와 함께하는 레고 블럭 놀이!",
-          writer: "돈암동슈퍼대디",
-          itemList: [1, 2],
-          time: {
-            hour: 2,
-            minute: 0,
-          },
-          selectedCategories: ["공간지능", "수리지능"],
-          hashtags: ["아이가참_좋아해", "간단간단"],
-        },
-        {
-          idx: 1,
-          img: require("@/assets/img/test3.jpg"),
-          title: "아이 창의력 키우는, 손바닥 물감 놀이! FUN!",
-          writer: "도곡동슈퍼맘",
-          itemList: [1, 2],
-          time: {
-            hour: 2,
-            minute: 0,
-          },
-          selectedCategories: ["개인내지능", "활동지능"],
-          hashtags: ["엄마가_더_좋아해", "영유아_추천", "간단해요"],
-        },
-        {
-          idx: 2,
-          img: require("@/assets/img/test1.jpg"),
-          title: "노는게 제일좋아! 뽀로로 추천 에피소드!",
-          writer: "알파카사랑해",
-          itemList: [1, 2],
-          time: {
-            hour: 2,
-            minute: 0,
-          },
-          selectedCategories: ["놀이지능"],
-          hashtags: ["4시간_뚝딱", "즐거운_뽀로로"],
-        },
-      ];
+    // dummyInsert: function() {
+    //   const nori = [
+    //     {
+    //       idx: 0,
+    //       img: require("@/assets/img/test2.jpg"),
+    //       title: "아빠와 함께하는 레고 블럭 놀이!",
+    //       writer: "돈암동슈퍼대디",
+    //       itemList: [1, 2],
+    //       time: {
+    //         hour: 2,
+    //         minute: 0,
+    //       },
+    //       selectedCategories: ["공간지능", "수리지능"],
+    //       hashtags: ["아이가참_좋아해", "간단간단"],
+    //     },
+    //     {
+    //       idx: 1,
+    //       img: require("@/assets/img/test3.jpg"),
+    //       title: "아이 창의력 키우는, 손바닥 물감 놀이! FUN!",
+    //       writer: "도곡동슈퍼맘",
+    //       itemList: [1, 2],
+    //       time: {
+    //         hour: 2,
+    //         minute: 0,
+    //       },
+    //       selectedCategories: ["개인내지능", "활동지능"],
+    //       hashtags: ["엄마가_더_좋아해", "영유아_추천", "간단해요"],
+    //     },
+    //     {
+    //       idx: 2,
+    //       img: require("@/assets/img/test1.jpg"),
+    //       title: "노는게 제일좋아! 뽀로로 추천 에피소드!",
+    //       writer: "알파카사랑해",
+    //       itemList: [1, 2],
+    //       time: {
+    //         hour: 2,
+    //         minute: 0,
+    //       },
+    //       selectedCategories: ["놀이지능"],
+    //       hashtags: ["4시간_뚝딱", "즐거운_뽀로로"],
+    //     },
+    //   ];
 
-      this.NoriList = nori;
+    //   this.NoriList = nori;
+    // },
+
+    // 무한 스크롤 (다음 페이지에 있는 요청결과 가져와서 원래 video list 와 합치기)
+    infiniteHandler($state) {
+      findContentsByPage(
+        this.page,
+        (res) => {
+          setTimeout(() => {
+            if (res.data.length) {
+              var noriList = res.data
+
+              for (var i = 0; i < noriList.length; i++) {
+                if (noriList[i].ability != null) {
+                  let abilityList = [];
+                  for (var j = 0; j < noriList[i].ability.length; j++) {
+                    if (noriList[i].ability.charAt(j) == "1") {
+                      abilityList.push(this.abilities[j]);
+                    }
+                  }
+
+                  // 각 컨텐츠마다 지능
+                  noriList[i].abilities = abilityList;
+                }
+              }
+
+              this.NoriList = this.NoriList.concat(noriList)
+              $state.loaded();
+              this.page += 1
+              if(this.NoriList.length / 10 == 0) {
+                $state.complete();
+              }
+            } else {
+              $state.complete();
+            }
+          }, 1000);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     },
     goCreate: function() {
       this.$router.push({ name: "ContentsCreate" });
