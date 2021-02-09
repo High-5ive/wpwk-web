@@ -1,0 +1,32 @@
+@import "../common";
+
+.v-dialog.v-dialog--persistent {
+    // $img_x: -40px;
+    // $img_y: 0px;
+
+    // 모달 창 위의 이미지
+    .modal-left-hand,
+    .modal-right-hand,
+    .modal-foot {
+        position: absolute;
+    }
+
+    .modal-left-hand {
+        width: 40px;
+        top: 45%;
+        left: 20px;
+    }
+
+    .modal-right-hand {
+        width: 70px;
+        top: 41%;
+        right: 10px;
+    }
+
+    .modal-foot {
+        width: 160px;
+        bottom: 130px;
+        right: 30%;
+        z-index: -1;
+    }
+ }

@@ -220,6 +220,9 @@
 }
 .cv-container .ev-container .eb-wrapper .btn-group #submit {
   width: 60%;
+  border: 2px solid #EF960C;
+  color: #EF960C;
+  font-weight: 600;
 }
 .cv-container .ev-container .eb-wrapper .btn-group #report {
   width: 30%;
@@ -241,20 +244,26 @@
 }
 .cv-container .ev-container .ev-footer .footer-eval .left-button {
   height: 50px;
+  background-color: #fecdb8;
+  width: 20%;
+  padding-top: 12px;
+  text-align: center;
+}
+.cv-container .ev-container .ev-footer .footer-eval .left-button i {
+  color: #292929;
+}
+.cv-container .ev-container .ev-footer .footer-eval .left-button:hover {
+  background-color: #ddac98;
+}
+.cv-container .ev-container .ev-footer .footer-eval .middle-button {
+  height: 50px;
   background-color: #f4b740;
   width: 20%;
   padding-top: 12px;
   text-align: center;
 }
-.cv-container .ev-container .ev-footer .footer-eval .left-button:hover {
-  background-color: #ca9834;
-}
-.cv-container .ev-container .ev-footer .footer-eval .middle-button {
-  height: 50px;
-  background-color: #f4b740;
-  width: 40%;
-  padding-top: 12px;
-  text-align: center;
+.cv-container .ev-container .ev-footer .footer-eval .middle-button i {
+  color: #292929;
 }
 .cv-container .ev-container .ev-footer .footer-eval .middle-button:hover {
   background-color: #ca9834;
@@ -262,8 +271,10 @@
 .cv-container .ev-container .ev-footer .footer-eval .right-button {
   background-color: #a2d646;
   padding-top: 12px;
-  width: 40%;
+  width: 60%;
   text-align: center;
+  font-size: 10pt;
+  line-height: 25px;
 }
 .cv-container .ev-container .ev-footer .footer-eval .right-button:hover {
   background-color: #8dbb3e;
@@ -304,11 +315,6 @@
 #comment-box.theme--light.v-card .wp-face,
 #comment-box.theme--light.v-card .wp-hand {
   position: relative;
-  width: 80px;
-}
-#comment-box.theme--light.v-card .wp-face::after,
-#comment-box.theme--light.v-card .wp-hand::after {
-  content: "";
   width: 80px;
 }
 #comment-box.theme--light.v-card .wp-face {

@@ -301,6 +301,10 @@
 
                 #submit{
                     width: 60%;
+                    border: 2px solid $orange;
+
+                    color: $orange;
+                    font-weight: 600;
                 }
                 #report{
                     width: 30%;
@@ -332,22 +336,28 @@
 
                 .left-button {
                     height: 50px;
-                    background-color: #f4b740;
+                    background-color: #fecdb8;
                     width: 20%;
                     padding-top: 12px;
                     text-align: center;
+                    i {
+                        color: rgb(41, 41, 41);
+                    }
 
                     &:hover {
-                        background-color: #ca9834;
+                        background-color: #ddac98;
                     }
                 }
 
                 .middle-button {
                     height: 50px;
                     background-color: #f4b740;
-                    width: 40%;
+                    width: 20%;
                     padding-top: 12px;
                     text-align: center;
+                    i {
+                        color: rgb(41, 41, 41);
+                    }
 
                     &:hover {
                         background-color: #ca9834;
@@ -357,8 +367,10 @@
                 .right-button {
                     background-color: #a2d646;
                     padding-top: 12px;
-                    width: 40%;
+                    width: 60%;
                     text-align: center;
+                    font-size: 10pt;
+                    line-height: 25px;
 
                     &:hover {
                         background-color: #8dbb3e;
@@ -430,11 +442,6 @@
     .wp-hand {
         position: relative;
         width: 80px;
-
-        &::after {
-            content: '';
-            width: 80px;
-        }
     }
 
     .wp-face {

@@ -1,0 +1,34 @@
+* {
+  font-family: "Noto Sans KR", sans-serif;
+}
+* .nf {
+  font-family: "Poor Story", sans-serif !important;
+}
+* .nf-400 {
+  font-weight: 400;
+}
+* .nf-600 {
+  font-weight: 600;
+}
+
+.v-dialog.v-dialog--persistent .modal-left-hand,
+.v-dialog.v-dialog--persistent .modal-right-hand,
+.v-dialog.v-dialog--persistent .modal-foot {
+  position: absolute;
+}
+.v-dialog.v-dialog--persistent .modal-left-hand {
+  width: 40px;
+  top: 45%;
+  left: 20px;
+}
+.v-dialog.v-dialog--persistent .modal-right-hand {
+  width: 70px;
+  top: 41%;
+  right: 10px;
+}
+.v-dialog.v-dialog--persistent .modal-foot {
+  width: 160px;
+  bottom: 130px;
+  right: 30%;
+  z-index: -1;
+}

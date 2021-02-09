@@ -11,18 +11,17 @@
 
       <div class="ev-footer">
          <div class="footer-eval">
-            <div class="left-button" @click="goReView"><v-icon>mdi-backup-restore</v-icon> 다시보기</div>
+            <div class="left-button" @click="goReView"><v-icon>mdi-backup-restore</v-icon></div>
             <div class="middle-button" @click="goHome">
-               <!-- <v-icon>
-                  mdi-chevron-right
-               </v-icon> -->
-               홈으로 가기
+               <v-icon>
+                  mdi-home
+               </v-icon>
             </div>
             <div class="right-button">
                <!-- <v-icon>
                   mdi-chevron-right
                </v-icon> -->
-               제작자의 다른 콘텐츠 보러 가기
+               제작자의 다른 콘텐츠 보러가기
             </div>
          </div>
       </div>
@@ -40,7 +39,6 @@ export default {
    data: function() {
       return {
          evaluation: false,
-         dialog: false,
       };
    },
    methods: {
