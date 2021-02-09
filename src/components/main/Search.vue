@@ -1,38 +1,28 @@
-<template lang="">
-   <div class="container"></div>
+<template>
+   <div class="search-container">
+      <div class="search">
+         <v-text-field v-model="searchValue" @keypress.enter="search" class="search" label="검색어를 입력해주세요." hint="ex) 종이접기, 놀이"></v-text-field>
+         <v-btn outlined rounded color="blue" @click="search"> 검색 </v-btn>
+      </div>
+   </div>
 </template>
 
 <script>
 export default {
    name: 'Search',
+   data: function () {
+      return {
+         searchValue: '',
+      }
+   },
+   methods: {
+      search: function () {
+         this.$router.push({name:'main', query: {search: this.searchValue}})
+      }
+   },
 };
 </script>
 
-<style lang="scss" scoped>
-.container {
-   // animation: 1s ease-in 0s 1 slideInFromTop;
-
-   // @keyframes slideInFromTop {
-   //    0% {
-   //       transform: translateY(-100px);
-   //       // opacity: 0;
-   //    }
-
-   //    100% {
-   //       transform: translateY(0);
-   //       // opacity: 1;
-   //    }
-   // }
-
-   position: fixed;
-   top: 55px;
-   left: 0;
-   background-color: rgb(245, 245, 245);
-   width: 100%;
-   height: 300px;
-   z-index: 10;
-   border-radius: 0 0 50px 50px;
-
-   box-shadow: 0px 20px 20px 0px #56565652;
-}
+<style lang="scss">
+@import 'src/css/search.scss';
 </style>
