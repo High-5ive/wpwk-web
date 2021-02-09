@@ -24,6 +24,15 @@ function login(user, success, fail) {
     .catch(fail)
 }
 
+function deleteUser(success, fail) {
+  let token = window.localStorage.getItem("accessToken");
+  const config = {headers: { Authorization: `Bearer ${token}`}};
+  instance
+    .delete('users', config)
+    .then(success)
+    .catch(fail)
+}
+
 async function findById(userId, success, fail) {
   let token = window.localStorage.getItem("accessToken");    
   
@@ -36,4 +45,4 @@ async function findById(userId, success, fail) {
 
 
 
-export { login, findById, registerUser };
+export { login, findById, deleteUser, registerUser };
