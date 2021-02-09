@@ -82,11 +82,15 @@ export default {
       margin: 14px 0 0 14px;
    }
 
-   .v-navigation-drawer__content {
-      .sidemenu {
-         padding-top: 56px;
-         /* background-color: red; */
-         overflow: hidden;
+   // 사이드 메뉴
+   .v-navigation-drawer.v-navigation-drawer--fixed {
+      width: 80% !important;
+      .v-navigation-drawer__content {
+         .sidemenu {
+            padding-top: 56px;
+            // background-color: red;
+            overflow: hidden;
+         }
       }
    }
 }
