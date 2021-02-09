@@ -1,33 +1,33 @@
 <template>
    <div class="mp-container d-flex flex-column align-center">
       <div class="top-wrapper">
-         <div class="userInfo-wrapper">
-            <span>{{ userInfo.nickname }}님</span>
-            
+         <div class="user-info-wrapper">
+            <img src="@/assets/img/characters/eval_bubble.png" alt="">
+            <span class="username">{{ userInfo.nickname }}님</span>
+            <button class="btn-pwd">비밀번호 변경</button>
+            <!-- <div class="follow-wrapper">
+               
+               <button class="follow-button">
+                  <v-icon>
+                     mdi-account-plus
+                  </v-icon>
+                  <span>
+                     구독
+                  </span>
+               </button> -->
+               <!-- <button class="unfollow-button">
+                  <v-icon>
+                     mdi-account-check
+                  </v-icon>
+                  <span>
+                     구독 취소
+                  </span>
+               </button> -->
+            <!-- </div> -->
          </div>
          <!-- 현재 로그인된 유저와 현재페이지의 유저 다르면 팔로우버튼 -->
-         <!-- <div class="follow-wrapper">
-            <button class="follow-button">
-               <v-icon>
-                  mdi-account-plus
-               </v-icon>
-               <span>
-                  구독
-               </span>
-            </button>
-            <button class="unfollow-button">
-               <v-icon>
-                  mdi-account-check
-               </v-icon>
-               <span>
-                  구독 취소
-               </span>
-            </button>
-         </div> -->
          <!-- 현재 로그인된 유저와 현재페이지의 유저 같으면 -->
-         <div class="time-info-wrapper">
-            위파위키와 함께한 지 180일
-         </div>
+         
          
       </div>
       <div class="middle d-flex justify-space-around">
@@ -53,12 +53,13 @@
          <persons-assets-with-photo v-if="showValue===3 ||showValue===4" :personsAssetsWithPhoto="personsAssetsWithPhoto" />
       </div>
       <div class="footer-wrapper">
-         <a href="#" @click="deleteUser">회원탈퇴</a>
-         <a href="#">비밀번호 변경</a>
+         <a href="#" @click="secession">회원탈퇴</a>
+         
       </div>
    </div>
 </template>
 <script>
+import { deleteUser } from '@/api/user.js'
 import { mapState } from 'vuex'
 import Chart from '@/components/mypage/Chart.vue'
 import personsAssets from '@/components/mypage/personsAssets.vue'
@@ -164,8 +165,14 @@ export default {
             this.showValue = 4
          }
       },
-      deleteUser: function () {
-         console.log('회원탈퇴')
+      secession: function () {
+         deleteUser(
+         (response) => {
+            console.log('탈퇴',response)
+         },
+         (error) => {
+            console.log(error)
+         })
       }
    },
    computed: {
@@ -176,17 +183,51 @@ export default {
 </script>
 <style lang="scss">
 .mp-container {
+   margin-top: 40px;
    width: 100%;
    .top-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 150px;
+      .user-info-wrapper {
+         img {
+            position: relative;
+            left: 80px;
+            width: 250px;
+            // height: 150px;
+         }
+         .username{
+            position: relative;
+            left: -130px;
+            top: -60px;
+            font-size: 18pt;
+            font-weight: 600;
+         }
+         .btn-pwd {
+            position: relative;
+            background-color: #a2d646;
+            border-radius: 10px;
+            padding: 5px 10px;
+            width: 120px;
+            // left: 190px;
+            top: -95px;
+         }
+      }
       .follow-wrapper {
          .follow-button {
             background-color: #a2d646;
             padding: 5px 10px;
+            width: 120px;
+            position: relative;
+            top: 80px; 
+            left: 200px;
             border-radius: 10px; 
          }
          .unfollow-button {
             background-color: rgb(184, 184, 184);
             padding: 5px 10px;
+            width: 120px;
             border-radius: 10px; 
          }
       }
