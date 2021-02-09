@@ -1,60 +1,68 @@
 <template>
-   <!-- 노리 제작 헤더 -->
-   <div class="container">
-      <guideline class="guide" style="margin-right: 10px" />
-      <v-text-field id="input-title" v-model="title" label="제목" hint="ex) [11세]집에서 할 수 있는 축구게임"></v-text-field>
-      <v-divider></v-divider>
-      <!-- 노리의 항목들 -->
-      <draggable :list="itemList" :options="{ animation: 300 }">
-         <div v-for="(item, idx) in itemList" :key="idx" class="div-wrapper d-flex align-center justify-space-between">
-            <!-- 노리의 유튜브 항목 -->
-            <div class="circle">{{ idx + 1 }}</div>
-            <div class="item-wrapper d-flex align-center justify-space-between" :class="{ 'text-wrapper': isText(item), 'youtube-wrapper': isYoutube(item), 'photo-wrapper': isPhoto(item) }">
-               <span class="left-wrapper">
-                  <img src="@/assets/img/contents-create/yt_img.png" alt="" v-if="item.type === 'youtube'" />
-                  <img src="@/assets/img/contents-create/photo_img.png" alt="" v-if="item.type === 'photo'" />
-                  <img src="@/assets/img/contents-create/text_img.png" alt="" v-if="item.type === 'text'" />
-               </span>
-               <div class="middle-wrapper">
-                  <contents-youtube-item v-if="item.type == 'youtube'" :item="item" :idx="idx" @delete-item="deleteItem" @item-change="onItemChange" />
-                  <!-- 노리의 사진항목 -->
-                  <contents-photo-item v-else-if="item.type == 'photo'" :item="item" :idx="idx" @delete-item="deleteItem" @item-change="onItemChange" />
-                  <!-- 노리의 텍스트 항목 -->
-                  <contents-text-item v-else :item="item" :idx="idx" @delete-item="deleteItem" @item-change="onItemChange" />
-               </div>
-               <div class="right-wrapper d-flex flex-column justify-space-between">
-                  <button @click="deleteItem(idx)">
-                     <v-icon>mdi-close</v-icon>
-                  </button>
-                  <div :class="{ 'text-rightbottom': isText(item), 'youtube-rightbottom': isYoutube(item), 'photo-rightbottom': isPhoto(item) }"></div>
-               </div>
-            </div>
-         </div>
-      </draggable>
-      <!-- 항목 추가 위한 버튼들 -->
-      <div class="footer d-flex flex-column">
-         <div class="footer-buttons d-flex justify-center align-center">
-            <div class="btn-wrapper">
-               <YoutubeCreate :isAdded="youtubeAdded" @select-video="onSelectVideo" class="footerButtons" />
-            </div>
-            <div class="btn-wrapper">
-               <v-icon @click="axiosFileSelect" class="footer-button-photo">
-                  mdi-image-multiple
-               </v-icon>
-            </div>
-            <div class="btn-wrapper">
-               <v-icon @click="createTextItem" class="footer-button-text">mdi-note-text-outline</v-icon>
-               <input type="file" id="fileUpload" ref="files" style="display:none" @change="axiosFileChange" multiple />
-            </div>
-         </div>
-         <div class="footer-navi d-flex justify-space-between">
-            <div @click="cancleCreate" class="left-button nf nf-600">
-               취소
-            </div>
-            <div class="right-button">
-               <category-and-time-info :title="title" :itemList="itemList" />
-            </div>
-         </div>
+  <!-- 노리 제작 헤더 -->
+  <div class="container">
+    <guideline class="guide" style="margin-right: 10px" />
+    <v-text-field
+      id="input-title"
+      v-model="title"
+      label="제목"
+      hint="ex) [11세]집에서 할 수 있는 축구게임"
+    ></v-text-field>
+    <v-divider></v-divider>
+    <!-- 노리의 항목들 -->
+    <draggable
+      :list="itemList"
+      :options="{ animation: 300 }"
+      class="contents" 
+    >
+      <div
+        v-for="(item, idx) in itemList"
+        :key="idx"
+        class="div-wrapper d-flex align-center justify-space-between"
+      >
+        <!-- 노리의 유튜브 항목 -->
+        <div class="circle">{{ idx + 1 }}</div>
+        <div 
+          class="item-wrapper d-flex align-center justify-space-between"
+          :class="{'text-wrapper': isText(item), 'youtube-wrapper': isYoutube(item), 'photo-wrapper': isPhoto(item) }"
+        >
+          <span class="left-wrapper">
+            <img src="@/assets/img/contents-create/yt_img.png" alt="" v-if="item.type === 'youtube'">
+            <img src="@/assets/img/contents-create/photo_img.png" alt="" v-if="item.type === 'photo'">
+            <img src="@/assets/img/contents-create/text_img.png" alt="" v-if="item.type==='text'">
+          </span>
+          <div class="middle-wrapper">
+            <contents-youtube-item
+              v-if="item.type == 'youtube'"
+              :item="item"
+              :idx="idx"
+              @delete-item="deleteItem"
+              @item-change="onItemChange"
+            />
+            <!-- 노리의 사진항목 -->
+            <contents-photo-item
+              v-else-if="item.type == 'photo'"
+              :item="item"
+              :idx="idx"
+              @delete-item="deleteItem"
+              @item-change="onItemChange"
+            />
+            <!-- 노리의 텍스트 항목 -->
+            <contents-text-item
+              v-else
+              :item="item"
+              :idx="idx"
+              @delete-item="deleteItem"
+              @item-change="onItemChange"
+            />
+          </div>
+          <div class="right-wrapper d-flex flex-column justify-space-between">
+            <button @click="deleteItem(idx)">
+              <v-icon>mdi-close</v-icon>
+            </button>
+            <div :class="{'text-rightbottom':isText(item), 'youtube-rightbottom':isYoutube(item), 'photo-rightbottom':isPhoto(item)}"></div>
+          </div>
+        </div>
       </div>
       <div class="background-text">
          <p class="nf nf-600">
@@ -222,7 +230,9 @@ export default {
 #input-title {
    margin-top: 0px !important;
 }
-
+.contents {
+  margin-bottom: 100px;
+}
 .div-wrapper {
    // animation: 0.3s ease-out 0s 1 slideInFromBottom;
    // @keyframes slideInFromBottom {
