@@ -10,12 +10,14 @@ const reports = [
     {
         creator: "나다",
         reporter: "너다",
+        title: "아이 창의력 키우는, 손바닥 물감 놀이! 재밌어요!",
         viewId: 1,
         reason: "재미가 없어요.",
     },
     {
-        creator: "나다",
-        reporter: "너다",
+        creator: "나",
+        reporter: "너",
+        title: "아이 창의력 키우는, 손바닥 물감 놀이! 재밌어요!",
         viewId: 1,
         reason: "노잼이예요.",
     }
