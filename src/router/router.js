@@ -92,7 +92,7 @@ const routes = [
     },
   },
   {
-    path: '/view',
+    path: '/view/:id',
     name: 'ContentsView',
     beforeEnter: onlyAuthUser,
     components: {

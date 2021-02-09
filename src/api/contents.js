@@ -40,5 +40,12 @@ function findContentsByPage(page, success, fail) {
     .catch(fail);
 }
 
+function findContentsByTag(tag, page, success, fail) {
+  instance
+    .get(`contents/tags/${tag}/page/${page}`)
+    .then(success)
+    .catch(fail);
+}
+
 export { createContents, createTags, findAllContents, 
-  findContentsById, findContentsByPage };
+  findContentsById, findContentsByPage, findContentsByTag };

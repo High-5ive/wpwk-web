@@ -19,7 +19,7 @@ export default {
     methods: {
         // 이메일 인증
         checkEmailAuth() {          
-          axios.get("http://localhost:9004/users/confirm?uid=" + this.$route.query.uid
+          axios.get("http://i4a205.p.ssafy.io:9004/users/confirm?uid=" + this.$route.query.uid
           + "&verificationKey=" + this.$route.query.verificationKey)
           .then(res => {
             this.loading = true            
@@ -31,8 +31,9 @@ export default {
             }            
             router.push({ name: "Login" })
           })
-          .catch(() => {
+          .catch((err) => {
             this.loading = true
+            console.log(err);
             alert("인증코드가 일치하지 않습니다.")
             router.push({ name: "Login" })
           })

@@ -104,7 +104,7 @@ var routes = [
     },
   },
   {
-    path: '/view',
+    path: '/view/:id',
     name: 'ContentsView',
     components: {
       default: _ContentsView['default'],
