@@ -1,33 +1,179 @@
 <template>
-   <div class="container d-flex flex-column align-center">
-      <div class="top">
-         <span>{{ userInfo.nickname }}</span>
+   <div class="mp-container d-flex flex-column align-center">
+      <div class="top-wrapper">
+         <div class="user-info-wrapper">
+            <img src="@/assets/img/characters/eval_bubble.png" alt="">
+            <span class="username">{{ userInfo.nickname }}님</span>
+            <button class="btn-pwd">비밀번호 변경</button>
+            <!-- <div class="follow-wrapper">
+               
+               <button class="follow-button">
+                  <v-icon>
+                     mdi-account-plus
+                  </v-icon>
+                  <span>
+                     구독
+                  </span>
+               </button> -->
+               <!-- <button class="unfollow-button">
+                  <v-icon>
+                     mdi-account-check
+                  </v-icon>
+                  <span>
+                     구독 취소
+                  </span>
+               </button> -->
+            <!-- </div> -->
+         </div>
+         <!-- 현재 로그인된 유저와 현재페이지의 유저 다르면 팔로우버튼 -->
+         <!-- 현재 로그인된 유저와 현재페이지의 유저 같으면 -->
+         
          
       </div>
       <div class="middle d-flex justify-space-around">
-         <div class="left">
-            작성 글
+         <div class="left" @click="switchValue(1)">
+            <span>작성 글<br>{{ personsArticles.length }}</span>
          </div>
-         <div class="center">
-            작성 노리
+         <div class="center1" @click="switchValue(2)">
+            <span>댓글단 글<br>{{ personsCommentArticles.length }}</span>
          </div>
-         <div class="right">
-            관심 노리
+         <div class="center2" @click="switchValue(3)">
+            <span>작성 노리<br>{{ personsContents.length }}</span>
+         </div>
+         <div class="right" @click="switchValue(4)">
+            <span>관심 노리<br>{{ personsLikeContents.length }}</span>
+         </div>
+         <div class="right" @click="showValue = 5">
+            <span>시청 분석</span>
          </div>
       </div>
       <div class="bottom">
-         <chart />
+         <chart v-if="showValue == 5"/>
+         <persons-assets v-if="showValue===1 || showValue===2" :personsAssets="personsAssets"/>
+         <persons-assets-with-photo v-if="showValue===3 ||showValue===4" :personsAssetsWithPhoto="personsAssetsWithPhoto" />
+      </div>
+      <div class="footer-wrapper">
+         <a href="#" @click="secession">회원탈퇴</a>
+         
       </div>
    </div>
 </template>
 <script>
+import { deleteUser } from '@/api/user.js'
 import { mapState } from 'vuex'
 import Chart from '@/components/mypage/Chart.vue'
+import personsAssets from '@/components/mypage/personsAssets.vue'
+import personsAssetsWithPhoto from '@/components/mypage/personsAssetsWithPhoto.vue'
 
 export default {
    name: "Mypage",
    components: {
       Chart,
+      personsAssets,
+      personsAssetsWithPhoto
+   },
+   data: function () {
+      return {
+         // showValue(1 작성한글, 2 댓글단 글, 3 작성 노리, 4 관심 노리, 5 시청분석)
+         showValue: 5,
+         personsAssets: [],
+         personsAssetsWithPhoto: [],
+         // 임시데이터 작성한글, 댓글단글(커뮤니티), 작성 노리, 관심노리 필수 항목 >> 제목(커뮤니티는 contents), 작성일자, 조회수, likeusers, 댓글, Article_id(Content_id)
+         personsArticles: [
+            {
+               user: '한솔맘',
+               subject: "동네맛집",
+               itemList: [],
+               views: 843,
+               content: "아이들과 가기 좋은 연남동 맛집 추천해주세요~*^^*",
+               created_at: "2021-02-01 11:15:23",
+               likeList: ['주상맘','태성맘'],
+               comments: [{user: "태성맘", content:"해피치즈스마일이라고 떡볶이 안맵고 맛있더라구요~", created_at: "2021-02-05 11:00:32"}]
+            },
+            {
+               user: '주상맘',
+               subject: "아이교육/학원",
+               itemList: [],
+               views: 200,
+               content: "아이 예절 교육은 어떻게 시키시나요? 아이가 계속 유튜브만 보려고 하네요...",
+               created_at: "2021-02-01 11:15:23",
+               likeList: [{user: "태성맘", content:"해피치즈스마일이라고 떡볶이 안맵고 맛있더라구요~", created_at: "2021-02-05 11:00:32"}],
+               comments: []
+            },
+         ],
+         personsCommentArticles: [
+            {
+               user: '한솔맘1',
+               subject: "동네맛집",
+               itemList: [],
+               views: 843,
+               content: "댓글단글1",
+               created_at: "2021-02-01 11:15:23",
+               likeList: ['주상맘','태성맘'],
+               comments: [{user: "태성맘", content:"해피치즈스마일이라고 떡볶이 안맵고 맛있더라구요~", created_at: "2021-02-05 11:00:32"}]
+            },
+            {
+               user: '주상맘1',
+               subject: "아이교육/학원",
+               views: 200,
+               itemList: [],
+               content: "댓글단글2",
+               created_at: "2021-02-01 11:15:23",
+               likeList: ['주상맘','태성맘'],
+               comments: []
+            },
+         ],
+         personsContents: [
+            {
+               title: '노리1',
+               thumbnailSrc: '@/assets/img/test1.jpg',
+               likeList: [],
+               views: 154,
+               comments: [1, 2, 3],
+               createdAt: '2021.02.08'
+            }
+         ],
+         personsLikeContents: [
+            {
+               title: '노리2',
+               thumbnailSrc: '@/assets/img/test2.jpg',
+               views: 151,
+               likeList: [],
+               comments: [1, 2, 3, 4],
+               createdAt: '2021.02.08'
+            }
+         ],
+         // abilities 데이터는 src/assets/js/chart.js에서 axios요청하기
+         personsAbilities: []
+
+      }
+   },
+   methods: {
+      // showValue값에 따라 보여주는 값 달라짐
+      switchValue: function (num) {
+      if (num == 1) {
+            this.personsAssets = this.personsArticles
+            this.showValue = 1
+         } else if (num == 2) {
+            this.personsAssets = this.personsCommentArticles
+            this.showValue = 2
+         } else if (num == 3) {
+            this.personsAssetsWithPhoto = this.personsContents
+            this.showValue = 3
+         } else {
+            this.personsAssetsWithPhoto = this.personsLikeContents
+            this.showValue = 4
+         }
+      },
+      secession: function () {
+         deleteUser(
+         (response) => {
+            console.log('탈퇴',response)
+         },
+         (error) => {
+            console.log(error)
+         })
+      }
    },
    computed: {
       ...mapState(['userInfo']),
@@ -35,11 +181,95 @@ export default {
   
 }
 </script>
-<style lang="scss" scoped>
-.container {
+<style lang="scss">
+.mp-container {
+   margin-top: 40px;
    width: 100%;
+   .top-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 150px;
+      .user-info-wrapper {
+         img {
+            position: relative;
+            left: 80px;
+            width: 250px;
+            // height: 150px;
+         }
+         .username{
+            position: relative;
+            left: -130px;
+            top: -60px;
+            font-size: 18pt;
+            font-weight: 600;
+         }
+         .btn-pwd {
+            position: relative;
+            background-color: #a2d646;
+            border-radius: 10px;
+            padding: 5px 10px;
+            width: 120px;
+            // left: 190px;
+            top: -95px;
+         }
+      }
+      .follow-wrapper {
+         .follow-button {
+            background-color: #a2d646;
+            padding: 5px 10px;
+            width: 120px;
+            position: relative;
+            top: 80px; 
+            left: 200px;
+            border-radius: 10px; 
+         }
+         .unfollow-button {
+            background-color: rgb(184, 184, 184);
+            padding: 5px 10px;
+            width: 120px;
+            border-radius: 10px; 
+         }
+      }
+   }
    .middle {
       width: 100%;
+   }
+   .bottom {
+      width: 100%;
+      .article-wrapper {
+         width: 100%;
+         .item-box {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .left {
+               display: flex;
+               flex-direction: column; 
+               width: 80%;
+            }
+            .right {
+               width: 10%;
+            }
+         }
+      }
+      .nori-wrapper {
+         width: 100%;
+         .item-box {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .left {
+               width: 40%;
+               img {
+                  width: 100%;
+               }
+            }
+         }
+
+      }
    }
 }
 </style>

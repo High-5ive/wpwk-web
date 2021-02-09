@@ -1,0 +1,72 @@
+* {
+  font-family: "Noto Sans KR", sans-serif;
+}
+* .nf {
+  font-family: "Poor Story", sans-serif !important;
+}
+* .nf-400 {
+  font-weight: 400;
+}
+* .nf-600 {
+  font-weight: 600;
+}
+
+.ad-container {
+  height: 100%;
+  padding: 10px;
+  padding-top: 40px;
+}
+.ad-container .article-wrapper {
+  margin-bottom: 10px;
+  background-color: white;
+  border-radius: 8px;
+  border: 1px solid #e4e4e4;
+  display: flex;
+  flex-direction: column;
+}
+.ad-container .article-wrapper .content-wrapper {
+  border-bottom: 1px solid #dadada;
+  height: 200px;
+}
+.ad-container .article-wrapper .content-wrapper .category {
+  display: inline;
+  background-color: #e6e6e6;
+  color: #878787;
+  border-radius: 3px;
+  font-size: 8pt;
+  padding: 4px 8px 4px 8px;
+}
+.ad-container .article-wrapper .content-wrapper .nickname {
+  font-size: 10pt;
+  padding: 5px 0px 8px 5px;
+}
+.ad-container .article-wrapper .feature-wrapper {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+}
+.ad-container .article-wrapper .feature-wrapper .likes-btn {
+  color: #da0505;
+}
+.ad-container .article-wrapper .feature-wrapper .info-btn {
+  display: flex;
+  align-items: center;
+  font-size: 10pt;
+}
+.ad-container .article-wrapper .feature-wrapper .info-btn .comment {
+  color: #636363;
+  margin-right: 10px;
+}
+.ad-container .article-wrapper .feature-wrapper .info-btn .v-icon {
+  margin-right: 5px;
+  font-size: 15pt;
+}
+.ad-container .article-wrapper .feature-wrapper .info-btn span {
+  color: #ff6565;
+  padding-bottom: 1px;
+}
+.ad-container .comment-box {
+  padding-bottom: 50px;
+}

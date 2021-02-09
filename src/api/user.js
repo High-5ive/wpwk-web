@@ -1,4 +1,6 @@
-import { createInstance } from "./index.js";
+import {
+  createInstance
+} from "./index.js";
 
 const instance = createInstance();
 // const config = {
@@ -6,10 +8,10 @@ const instance = createInstance();
 // };
 
 function registerUser(user, success, fail) {
-    instance
-        .post(`users`, JSON.stringify(user))
-        .then(success)
-        .catch(fail)
+  instance
+    .post(`users`, JSON.stringify(user))
+    .then(success)
+    .catch(fail)
 }
 
 function login(user, success, fail) {
@@ -24,10 +26,27 @@ function login(user, success, fail) {
     .catch(fail)
 }
 
+function deleteUser(success, fail) {
+  let token = window.localStorage.getItem("accessToken");
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
+  instance
+    .delete('users', config)
+    .then(success)
+    .catch(fail)
+}
+
 async function findById(userId, success, fail) {
-  let token = window.localStorage.getItem("accessToken");    
-  
-  const config = {headers: { Authorization: `Bearer ${token}` }};
+  let token = window.localStorage.getItem("accessToken");
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
   await instance
     .get(`loginUser/${userId}`, config)
     .then(success)
@@ -48,4 +67,11 @@ function kakaoLogin(code, success, fail) {
     .catch(fail)
 }
 
-export { login, findById, registerUser, naverLogin, kakaoLogin };
+export {
+  login,
+  findById,
+  registerUser,
+  naverLogin,
+  kakaoLogin,
+  deleteUser
+};

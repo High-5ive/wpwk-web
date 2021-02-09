@@ -1,6 +1,6 @@
 <template>
    <div class="text-item-wrapper d-flex justify-center align-center">
-      <span class="text" @click="onEdit" v-if="item.description && editInput == false">{{ item.description }}</span>
+      <span class="text nf nf-600" @click="onEdit" v-if="item.description && editInput == false">{{ item.description }}</span>
       <textarea
          cols="12"
          rows="3"
@@ -8,11 +8,11 @@
          @keypress.enter="onItemChange"
          @change="onItemChange"
          v-model="description"
-         class="decriptionInput"
+         class="nf nf-600"
          maxlength="200"
          placeholder="내용을 적어주세요."
       ></textarea>
-      <textarea cols="12" rows="3" v-if="editInput" @keypress.enter="onItemChange" @change="onItemChange" v-model="description" class="decriptionInput" maxlength="200"></textarea>
+      <textarea cols="12" rows="3" v-if="editInput" @keypress.enter="onItemChange" @change="onItemChange" v-model="description" class="nf nf-600" maxlength="200"></textarea>
    </div>
 </template>
 <script>

@@ -31,6 +31,7 @@ import KakaoLoginProcess from '@/components/user/KakaoLoginProcess.vue';
 import Auth from '@/views/user/Auth.vue';
 import JoinSuccess from '@/views/user/JoinSuccess';
 import JoinConfirm from '@/views/user/JoinConfirm';
+import Admin from '@/views/user/Admin.vue'
 
 const onlyAuthUser = (to, from, next) => {
   if (localStorage.getItem('accessToken') !== null) {
@@ -44,15 +45,14 @@ const onlyAuthUser = (to, from, next) => {
 
 // ==============================
 // 여러개 태울 때, routes 변수 생성
-const routes = [
-  {
+const routes = [{
     path: '/',
     name: 'Main',
     beforeEnter: onlyAuthUser,
     components: {
       side: SideMenu,
       default: Main,
-    },
+    }
   },
   {
     path: '/cmmu',
@@ -62,6 +62,7 @@ const routes = [
       side: SideMenu,
       default: Community,
     },
+    props: true,
   },
   {
     path: '/cmmu/:articleId',
@@ -151,6 +152,14 @@ const routes = [
     name: 'JoinConfirm',
     components: {
       default: JoinConfirm,
+    },
+  },
+  {
+    path: '/admin',
+    name: 'Admin',
+    components: {
+      side: SideMenu,
+      default: Admin,
     },
   },
 ];

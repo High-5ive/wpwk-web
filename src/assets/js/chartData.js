@@ -5,43 +5,34 @@ export const myChartData = {
     datasets:[
       {
         label: '내 성향',
-        data: [50, 50, 50, 50, 50, 50, 50, 50],
-        backgroundColor: [
-          "rgba(153, 102, 255, 0.2)",
-          
-        ],
-        borderColor: [
-          "rgba(153, 102, 255, 0.2)",        
-        ],
+        data: [80, 20, 60, 70, 34, 68, 41, 66],
+        backgroundColor: "rgba(128, 93, 202, 0.41)",
+        borderColor: "rgba(153, 102, 255, 0.2)",
         borderWidth: 1,
     }],
   },
   options: {
     responsive: true,
-    scales: {
-      yAxes: [
-        {
-          ticks: {
-            beginAtZero: true,
-            display: false,
-            min: 0,
-            max: 100,
-          },
-          gridLines: {
-            display: false,
-          },
-          scaleLable: {
-            display: false,
-          }
+    scale: {
+      angleLines: {
+        display: true,
+      },
+      ticks: {
+        beginAtZero: true,
+        max: 100,
+        min: 0,
+        stepSize: 20,
+      }
+    },
+    legend: {
+      display: false,
+    },
+    tooltips: {
+      callbacks: {
+        label: function (tooltipItem) {
+          return tooltipItem.yLabel;
         }
-      ],
-      xAxes: [
-        {
-          gridLines: {
-            display: false,
-          }
-        }
-      ]
+      }
     }
   }
 }

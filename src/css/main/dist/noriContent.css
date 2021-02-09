@@ -13,11 +13,11 @@
   height: 100%;
   object-fit: cover;
   border-radius: 30px;
-  object-position: 0px 0px;
+  object-position: 50% 50%;
 }
 @media (min-width: 335px) and (max-width: 757px) {
   .content-wrapper .img-wrapper img {
-    object-position: 0px 0px;
+    object-position: 50% 50%;
   }
 }
 @media (min-width: 758px) and (max-width: 1023px) {

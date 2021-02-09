@@ -3,17 +3,17 @@
       <!-- evaluation값에 따라 페이지 변환 -->
       <!-- 평가페이지 -->
       <div v-if="evaluationValue">
-         <v-icon @click="back">
+         <!-- <v-icon @click="back">
             mdi-backup-restore
-         </v-icon>
-         <Evaluations />
+         </v-icon> -->
+         <Evaluations @evaluationPage="evaluation" />
       </div>
 
       <!-- 카드페이지 -->
       <div v-else class="cv-card-wrapper">
          <div class="card-top-wrapper">
             <p class="title nf">{{ this.title }}</p>
-            <p class="writer">도곡동슈퍼맘</p>
+            <p class="writer nf">도곡동슈퍼맘</p>
          </div>
 
          <CardList :cards="cards" @evaluationPage="evaluation" />
@@ -23,21 +23,23 @@
       <div class="comment-modal">
          <v-row justify="center">
             <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+               <!-- 댓글 모달창을 여는 댓글 버튼 -->
                <template v-slot:activator="{ on, attrs }">
                   <v-icon id="btn-comment" color="success" dark v-bind="attrs" v-on="on"> mdi-comment-text-multiple-outline </v-icon>
                </template>
 
-               <v-card>
-                  <v-toolbar dark color="success">
-                     <!-- 닫기 버튼 -->
-                     <v-btn icon dark @click="dialog = false">
-                        <v-icon>mdi-close</v-icon>
-                     </v-btn>
+               <!-- 화면 전체를 뒤덮는 모달 -->
+               <v-card id="comment-box">
+                  <div class="close-btn" @click="dialog = false">
+                     <v-icon>mdi-close</v-icon>
+                  </div>
 
-                     <v-toolbar-title>댓글</v-toolbar-title>
-                  </v-toolbar>
+                  <img class="wp-face" src="@/assets/img/characters/comment_wp1.png" />
+                  <img class="wp-hand" src="@/assets/img/characters/comment_wp2.png" />
 
-                  <CommentList :comments="this.comments" @deleteComment="deleteComment" />
+                  <div class="cm-wrapper">
+                     <CommentList :comments="this.comments" @deleteComment="deleteComment" />
+                  </div>
                   <CommentForm @createComment="createComment" />
                </v-card>
             </v-dialog>

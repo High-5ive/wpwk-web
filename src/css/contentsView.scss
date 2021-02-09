@@ -17,9 +17,12 @@
         .card-top-wrapper {
             height: 50px;
 
+            //카드의 제목 '아이와 함께 노는 물감놀이~'
             .title {
-                text-align: center;
+                font-family: 'Poor Story', sans-serif !important;
                 font-size: 20px !important;
+
+                text-align: center;
                 margin-bottom: 2px;
             }
 
@@ -237,16 +240,77 @@
         height: 90vh;
         padding-bottom: 100px;
 
-        #btn-comment {
-            width: 40px;
-            height: 40px;
-            border-radius: 30px;
+        // 평가페이지 최상단 타이틀 부분
+        .top-wrapper{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
 
-            background-color: white;
-            border: 2px solid gray;
+            height: 190px;
 
-            color: gray !important;
-            font-size: 14pt;
+            .ev-title{
+                position: relative;
+                top: -160px;
+                font-size: 16px;
+                font-weight: 600;
+                color: rgb(70, 70, 70);
+            }
+
+            
+            .ev-bubble{
+                width: 240px;
+            }
+            
+            .ev-wk{
+                position: relative;
+                top: -10px;
+                width: 100px;
+            }
+        }
+        .sub{
+            display: block;
+            text-align: center;
+            margin: 0px auto;
+            color: gray;
+            font-size: 12px;
+        }
+        
+        //평가 버튼들 존재
+        .eb-wrapper {
+            // background-color: red;
+            .eval-group {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                button {
+                    // color: red;
+                    // background-color: blue !important;
+                    width: 80%;
+                    border: 1px solid rgb(227, 227, 227);
+                    margin-bottom: 2px;
+                }
+            }
+
+            .btn-group{
+                width: 80%;
+                margin: 0 auto;
+                margin-top: 20px;
+
+                display: flex;
+                justify-content: space-between;
+
+                #submit{
+                    width: 60%;
+                    border: 2px solid $orange;
+
+                    color: $orange;
+                    font-weight: 600;
+                }
+                #report{
+                    width: 30%;
+                    color: red;
+                }
+            }
         }
 
         //최하단 버튼
@@ -272,22 +336,28 @@
 
                 .left-button {
                     height: 50px;
-                    background-color: #f4b740;
+                    background-color: #fecdb8;
                     width: 20%;
                     padding-top: 12px;
                     text-align: center;
+                    i {
+                        color: rgb(41, 41, 41);
+                    }
 
                     &:hover {
-                        background-color: #ca9834;
+                        background-color: #ddac98;
                     }
                 }
 
                 .middle-button {
                     height: 50px;
                     background-color: #f4b740;
-                    width: 40%;
+                    width: 20%;
                     padding-top: 12px;
                     text-align: center;
+                    i {
+                        color: rgb(41, 41, 41);
+                    }
 
                     &:hover {
                         background-color: #ca9834;
@@ -297,8 +367,10 @@
                 .right-button {
                     background-color: #a2d646;
                     padding-top: 12px;
-                    width: 40%;
+                    width: 60%;
                     text-align: center;
+                    font-size: 10pt;
+                    line-height: 25px;
 
                     &:hover {
                         background-color: #8dbb3e;
@@ -320,6 +392,81 @@
 
         display: inline;
 
-
     }
+
+
+}
+
+// 댓글 모달창
+// 모달은 div가 최상단 컨테이너랑 같은 뎁스에 존재한다
+// 모달 닫히며 수많은 클래스가 변경됨 -> 너무 상세히 설정하면 변하는 과정에서 깨짐
+#comment-box.theme--light.v-card {
+    background-color: white !important;
+    box-shadow: 0px -9px 20px 2px #56565629;
+
+    margin-top: 300px !important;
+    border-radius: 50px 50px 0px 0px;
+    border: 1px solid $main-green;
+    // height: 50% !important;
+
+    // 닫기 버튼 댓글 입력창 위에 오버레이
+    .close-btn {
+        border-radius: 0px;
+        position: fixed;
+        z-index: 110;
+        bottom: 0px;
+
+        text-align: center;
+        line-height: 45px;
+
+        width: 50px;
+        height: 50px;
+
+        background-color: rgb(247, 179, 179);
+        border-right: 1px solid $main-green;
+
+        i {
+            color: white;
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    $img_x: -65px;
+    $img_y: -10px;
+
+    // 모달 창 위의 이미지
+    .wp-face,
+    .wp-hand {
+        position: relative;
+        width: 80px;
+    }
+
+    .wp-face {
+        top: $img_x;
+        right: $img_y;
+        z-index: -1;
+    }
+
+    .wp-hand {
+        top: calc(#{$img_x} - 10px);
+        right: calc(#{$img_y} + 15px);
+        width: 50px;
+    }
+
+    //댓글들이 들어가는 영역
+    //@err overflow를 설정했지만 드래그 잘못하면 모달이 올라감
+    .cm-wrapper {
+        position: relative;
+        // background-color: red;
+        top: -60px;
+
+        overflow-x: hidden;
+        overflow-y: auto;
+        width: 100%;
+        height: 42vh;
+    }
+
 }

@@ -4,7 +4,7 @@
          <img :src="item.photo.preview" />
       </div>
       <div class="desc-wrapper d-flex align-center justify-center">
-         <div class="text" @click="onEdit" v-if="item.description&&editInput==false">{{ item.description }}</div>
+         <div class="text nf nf-600" @click="onEdit" v-if="item.description&&editInput==false">{{ item.description }}</div>
          <textarea 
             cols="12" 
             rows="3"
@@ -13,6 +13,7 @@
             @change="onItemChange"
             v-model="description"
             maxlength="200"
+            class="text nf nf-600"
             placeholder="사진에 대한 설명을 적어주세요"
          ></textarea>
          <textarea 
@@ -22,6 +23,7 @@
             @keypress.enter="onItemChange" 
             @change="onItemChange"
             v-model="description"
+            class="text nf nf-600"
             maxlength="200"
          ></textarea>
       </div>

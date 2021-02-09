@@ -1,0 +1,96 @@
+* {
+  font-family: "Noto Sans KR", sans-serif;
+}
+* .nf {
+  font-family: "Poor Story", sans-serif !important;
+}
+* .nf-400 {
+  font-weight: 400;
+}
+* .nf-600 {
+  font-weight: 600;
+}
+
+.comment-wrapper {
+  margin: 2px;
+  align-items: center;
+  height: 100%;
+}
+.comment-wrapper .comment-item {
+  display: block;
+  width: 95%;
+  margin: 0px auto;
+  background-color: white;
+  border-radius: 8px;
+  border: 1px solid #e1e1e1;
+  margin-bottom: 10px;
+  padding: 10px 20px;
+}
+.comment-wrapper .comment-item .top-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.comment-wrapper .comment-item .top-wrapper .nickname {
+  font-size: 10pt;
+  font-weight: 600;
+}
+.comment-wrapper .comment-item .top-wrapper .created {
+  color: #a4a4a4;
+  font-size: 10pt;
+}
+.comment-wrapper .comment-item .content {
+  margin: 5px 0px;
+}
+.comment-wrapper .comment-item .btn-wrapper {
+  position: relative;
+  float: right;
+  top: -30px;
+  right: 0px;
+}
+.comment-wrapper .comment-item .btn-wrapper i {
+  font-size: 16px;
+  color: #eb5c5c;
+}
+
+.comment-footer {
+  position: fixed;
+  z-index: 100;
+  left: 50%;
+  bottom: 0px;
+  transform: translateX(-50%);
+  height: 50px;
+  width: 100%;
+  background-color: white;
+  display: flex;
+}
+.comment-footer .dummy-icon {
+  border-radius: 0px;
+  position: fixed;
+  z-index: 100;
+  left: 22px;
+  bottom: 13px;
+}
+.comment-footer .dummy-icon i {
+  font-size: 20px;
+  color: #89BA17;
+}
+.comment-footer .input-box {
+  width: 100%;
+  padding: 20px;
+  padding-left: 60px;
+  border: 1px solid #a2d646;
+}
+.comment-footer .input-box:focus {
+  outline: none;
+}
+.comment-footer .btn-send {
+  width: 60px;
+  background-color: #a2d646;
+}
+.comment-footer .btn-send i {
+  color: white;
+}
+.comment-footer .btn-send:focus {
+  outline: none;
+}
