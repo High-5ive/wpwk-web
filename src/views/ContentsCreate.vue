@@ -13,6 +13,7 @@
     <draggable
       :list="itemList"
       :options="{ animation: 300 }"
+      class="contents" 
     >
       <div
         v-for="(item, idx) in itemList"
@@ -267,7 +268,9 @@ export default {
 #input-title {
   margin-top: 0px !important;
 }
-
+.contents {
+  margin-bottom: 100px;
+}
 .div-wrapper {
   // animation: 0.3s ease-out 0s 1 slideInFromBottom;
   // @keyframes slideInFromBottom {

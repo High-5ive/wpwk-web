@@ -5,6 +5,16 @@ import store from "./store/store"
 
 import router from './router/router'
 
+var filter = function(text, length, clamp){
+  clamp = clamp || '...';
+  var node = document.createElement('div');
+  node.innerHTML = text;
+  var content = node.textContent;
+  return content.length > length ? content.slice(0, length) + clamp : content;
+};
+
+Vue.filter('truncate', filter);
+
 Vue.use(router)
 
 Vue.config.productionTip = false

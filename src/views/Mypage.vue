@@ -1,11 +1,12 @@
 <template>
-   <div class="container d-flex flex-column align-center">
-      <div class="top">
+   <div class="mp-container d-flex flex-column align-center">
+      <div class="top-wrapper">
          <div class="userInfo-wrapper">
             <span>{{ userInfo.nickname }}님</span>
-            <a href="#">비밀번호 변경</a>
+            
          </div>
-         <div class="follow-wrapper">
+         <!-- 현재 로그인된 유저와 현재페이지의 유저 다르면 팔로우버튼 -->
+         <!-- <div class="follow-wrapper">
             <button class="follow-button">
                <v-icon>
                   mdi-account-plus
@@ -22,6 +23,10 @@
                   구독 취소
                </span>
             </button>
+         </div> -->
+         <!-- 현재 로그인된 유저와 현재페이지의 유저 같으면 -->
+         <div class="time-info-wrapper">
+            위파위키와 함께한 지 180일
          </div>
          
       </div>
@@ -46,7 +51,10 @@
          <chart v-if="showValue == 5"/>
          <persons-assets v-if="showValue===1 || showValue===2" :personsAssets="personsAssets"/>
          <persons-assets-with-photo v-if="showValue===3 ||showValue===4" :personsAssetsWithPhoto="personsAssetsWithPhoto" />
-         <a href="#">회원탈퇴</a>
+      </div>
+      <div class="footer-wrapper">
+         <a href="#" @click="deleteUser">회원탈퇴</a>
+         <a href="#">비밀번호 변경</a>
       </div>
    </div>
 </template>
@@ -65,6 +73,7 @@ export default {
    },
    data: function () {
       return {
+         // showValue(1 작성한글, 2 댓글단 글, 3 작성 노리, 4 관심 노리, 5 시청분석)
          showValue: 5,
          personsAssets: [],
          personsAssetsWithPhoto: [],
@@ -116,26 +125,30 @@ export default {
          personsContents: [
             {
                title: '노리1',
-               thumbnailSrc: '@/assets/img/test1/jpg',
+               thumbnailSrc: '@/assets/img/test1.jpg',
                likeList: [],
                views: 154,
+               comments: [1, 2, 3],
                createdAt: '2021.02.08'
             }
          ],
          personsLikeContents: [
             {
                title: '노리2',
-               thumbnailSrc: '@/assets/img/test2/jpg',
+               thumbnailSrc: '@/assets/img/test2.jpg',
                views: 151,
                likeList: [],
+               comments: [1, 2, 3, 4],
                createdAt: '2021.02.08'
             }
          ],
+         // abilities 데이터는 src/assets/js/chart.js에서 axios요청하기
          personsAbilities: []
 
       }
    },
    methods: {
+      // showValue값에 따라 보여주는 값 달라짐
       switchValue: function (num) {
       if (num == 1) {
             this.personsAssets = this.personsArticles
@@ -150,6 +163,9 @@ export default {
             this.personsAssetsWithPhoto = this.personsLikeContents
             this.showValue = 4
          }
+      },
+      deleteUser: function () {
+         console.log('회원탈퇴')
       }
    },
    computed: {
@@ -158,9 +174,23 @@ export default {
   
 }
 </script>
-<style lang="scss" scoped>
-.container {
+<style lang="scss">
+.mp-container {
    width: 100%;
+   .top-wrapper {
+      .follow-wrapper {
+         .follow-button {
+            background-color: #a2d646;
+            padding: 5px 10px;
+            border-radius: 10px; 
+         }
+         .unfollow-button {
+            background-color: rgb(184, 184, 184);
+            padding: 5px 10px;
+            border-radius: 10px; 
+         }
+      }
+   }
    .middle {
       width: 100%;
    }
@@ -168,11 +198,36 @@ export default {
       width: 100%;
       .article-wrapper {
          width: 100%;
-         .item-wrapper {
-            span {
-               max-width: 50%;
+         .item-box {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .left {
+               display: flex;
+               flex-direction: column; 
+               width: 80%;
+            }
+            .right {
+               width: 10%;
             }
          }
+      }
+      .nori-wrapper {
+         width: 100%;
+         .item-box {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .left {
+               width: 40%;
+               img {
+                  width: 100%;
+               }
+            }
+         }
+
       }
    }
 }

@@ -1,7 +1,11 @@
 <template>
   <div class="article-wrapper">
-    <div v-for="(article, idx) in personsAssets" :key="idx" class="item-wrapper">
-      <span class="d-inline-block text-truncate">{{ article.content }}</span>
+    <div class="item-box" v-for="(article, idx) in personsAssets" :key="idx" >
+      <div class="left">
+        <div>{{ article.content | truncate(15, '...') }}</div>  
+        <div>{{ article.created_at }} 조회수{{ article.views }}</div>
+      </div>
+      <div class="right">{{ article.comments.length }}</div>
     </div>
   </div>
 </template>
@@ -14,5 +18,5 @@ export default {
 }
 </script>
 <style lang="">
-  
+
 </style>
