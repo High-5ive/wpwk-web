@@ -68,12 +68,12 @@
 
 <script>
 import draggable from 'vuedraggable';
-import YoutubeCreate from '../components/contents-create/YoutubeCreate.vue';
+import YoutubeCreate from '@/components/contents-create/YoutubeCreate.vue';
 import ContentsYoutubeItem from '@/components/contents-create/ContentsYoutubeItem.vue';
 import ContentsTextItem from '@/components/contents-create/ContentsTextItem.vue';
 import ContentsPhotoItem from '@/components/contents-create/ContentsPhotoItem.vue';
-import Guideline from '../components/contents-create/Guideline.vue';
-import CategoryAndTimeInfo from '../components/contents-create/CategoryAndTimeInfo.vue';
+import Guideline from '@/components/contents-create/Guideline.vue';
+import CategoryAndTimeInfo from '@/components/contents-create/CategoryAndTimeInfo.vue';
 
 export default {
    name: 'ContentsCreate',
