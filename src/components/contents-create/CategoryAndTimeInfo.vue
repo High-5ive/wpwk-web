@@ -64,7 +64,7 @@
                       class="hashtagInput"
                       color="#f4b740"
                       maxlength="10"
-                      v-on:input="filterList"
+                      @input="filterList"
                       v-model.trim="hashtag"
                       @keypress.enter="addHashtag"
                       style="padding: 0; margin: 0;"
@@ -169,7 +169,7 @@ export default {
     // 해시태그 특수문자에는 반응하지 않도록 필터링후 서버에 요청
     filterList: function() {
       const isValid = /[^가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9|\s]/.test(this.hashtag);
-      if (isValid === false && this.hashtag) {
+      if (isValid === false) {
         this.isActive = true;
         this.searchTag(this.hashtag);
         // return this.hashtagResult
@@ -228,7 +228,7 @@ export default {
             prevEl.classList.add("sel");
             prevEl.focus();
           } else {
-            document.querySelector(".v-input__control").focus();
+            document.querySelector("#hashtagInput").focus();
           }
         }
         if (keycode === "enter" && hasClass) {
@@ -257,6 +257,9 @@ export default {
      * 해시태그 검색 요청 구현
      */
     searchTag(tag) {
+       if (tag.length === 0) {
+          this.hashtagResult = []
+       }
       recommendTags(
         tag,
         (res) => {
@@ -408,18 +411,6 @@ export default {
         justify-content: center;
         margin-top: 10px;
         .bottom-top {
-          width: 100%;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          .upper {
-            width: 70%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            justify-content: center;
-            margin-top: 10px;
-            .bottom-top {
               width: 100%;
               display: flex;
               flex-direction: column;
@@ -474,16 +465,6 @@ export default {
                 }
               }
             }
-            .hashtag-list {
-              // display: none;
-              margin-top: -30px;
-              position: absolute;
-              // margin-left: 10px;
-              background-color: #a2d646;
-              width: 240px; // 반응형 수정 필요
-            }
-          }
-        }
         .bottom-bt {
           border-radius: 10px;
           width: 100%;
