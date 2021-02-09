@@ -1,39 +1,44 @@
 <template>
-    <div>
-        <v-card>
-            <div> 신고자: {{ this.reporter }} </div>
-            <div> 노리 제작자: {{ this.creator }} </div>
-            <v-card-subtitle>
-                {{ this.title }}
-            </v-card-subtitle>
-            <v-text>
-                신고 사유: {{ this.reason }}
-            </v-text>
-            <v-card-actions>
-                <!-- modal로 신고 받은 페이지 띄우기 -->
-                <v-dialog v-model="dialog" persistent width="400px">
-                <template v-slot:activator="{ on, attrs }">
-                    <v-btn color="primary" text v-bind="attrs" v-on="on"> 컨텐츠 확인 </v-btn>
-                </template>
-                <v-card>
-                    <v-toolbar dark>
-                     <!-- 닫기 버튼 -->
-                    <v-btn icon dark @click="dialog = false"> <v-icon>mdi-close</v-icon> </v-btn>
-                    <v-toolbar-title>신고한 컨텐츠 확인</v-toolbar-title>
-                    </v-toolbar>
+    <div class="report-wrapper">
+        <div class="report-content-wrapper">
+            <div class="reporter-creator">
+                <div class="reporter"> {{ this.reporter }} </div>
+                <i class="fas fa-hand-point-right"></i>
+                <div class="creator"> {{ this.creator }} </div>
 
-                    <iframe width="400px" height="600px" :src="url"> </iframe>
-                </v-card>
-                </v-dialog>
-                <div v-if="done"> {{ this.choose }} 처리가 완료됐습니다. </div>
-                <div v-else>
-                    <v-btn outlined @click="waitContents"> 문제없음 </v-btn>
-                    <v-btn outlined @click="warnContents"> 경고 </v-btn>
-                    <v-btn outlined @click="deleteContents"> 삭제 </v-btn>
+                <!-- modal로 신고 받은 페이지 띄우기 -->
+                <div class="page">
+                    <!-- modal로 신고 받은 페이지 띄우기 -->
+                    <v-dialog v-model="dialog" persistent width="400px">
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-btn outlined rounded small color="primary" v-bind="attrs" v-on="on"> 컨텐츠 확인 </v-btn>
+                        </template>
+                        <div>
+                            <!-- 닫기 버튼 -->
+                            <v-btn color="red" dark rounded @click="dialog = false"> <v-icon>mdi-close</v-icon> </v-btn>
+                        </div>
+                        <iframe width="350px" height="620px" :src="url"> </iframe>
+                    </v-dialog>
                 </div>
-            </v-card-actions>
-        </v-card>
-        <hr>
+            </div>
+
+            <div class="contents-title nf nf-600">
+                {{ this.title }}
+            </div>
+
+            <div class="reason nf">
+                신고 사유: {{ this.comment }}
+            </div>
+   
+            <!-- 신고 처리 버튼 -->
+            <div v-if="done" class="done nf nf-600"> {{ this.choose }} 처리가 완료됐습니다. </div>
+            <div v-else class="buttons">
+                <v-btn outlined rounded small @click="waitContents"> 문제없음 </v-btn>
+                <v-btn outlined rounded small @click="warnContents"> 경고 </v-btn>
+                <v-btn outlined rounded small @click="deleteContents"> 삭제 </v-btn>
+            </div>
+            
+        </div>
     </div>
 </template>
 
@@ -48,8 +53,8 @@ export default {
             creator: "",
             reporter: "",
             title: "",
-            viewId: 0,
-            reason: "",
+            contentsId: 0,
+            comment: "",
             dialog: false,
             url: "",
             choose : "",
@@ -61,8 +66,8 @@ export default {
             this.creator = this.report.creator
             this.reporter = this.report.reporter
             this.title = this.report.title
-            this.viewId = this.report.viewId
-            this.reason = this.report.reason
+            this.contentsId = this.report.contentsId
+            this.comment = this.report.comment
             this.done = this.choose
         },
         waitContents: function () {
@@ -76,12 +81,14 @@ export default {
             if (warn) {
                 this.choose = "경고"
             }
+            // 게시글 작성자에게 경고 알림 전송
         },
         deleteContents: function () {
             var deleteC = confirm('삭제 처리 하시겠습니까?')
             if (deleteC) {
                 this.choose = "삭제"
             }
+            // 게시글 작성자에게 경고 알림 전송
         }
     },
     created: function () {
@@ -96,8 +103,8 @@ export default {
     },
     // computed: {
     //     getUrl: function () {
-    //         // viewId 받아서 해당 페이지 로드
-    //         this.url = `http://localhost:8080/view/${this.viewId}`
+    //         // contentsId 받아서 해당 페이지 로드
+    //         this.url = `http://localhost:8080/view/${this.contentsId}`
     //     }
     // }
 }
