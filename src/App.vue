@@ -11,7 +11,7 @@
             ><router-link to="/"><img src="@/assets/wpwk_logo.png"/></router-link
          ></v-toolbar-title>
          <div class="btn-search" @click="showSearch = !showSearch"><i class="fas fa-search"></i></div>
-         <search v-if="showSearch"></search>
+         <search v-if="showSearch" @searchShow="searchShow"></search>
       </v-app-bar>
 
       <v-main>
@@ -30,6 +30,11 @@ export default {
       drawer: false,
       showSearch: false,
    }),
+   methods: {
+      searchShow(search) {
+         this.showSearch = search;
+      }
+   }
 };
 </script>
 
