@@ -1,5 +1,5 @@
 <template>
-   <div>
+   <div class="loading-wrapper">
       <div class="loading-outer-outer">
          <div class="loading-inner">
             <div>
@@ -17,6 +17,15 @@ export default {};
 </script>
 
 <style>
+.loading-wrapper {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+
+   margin-top: 30%;
+}
+
 .loading-inner > div {
    transform: scale(0.22);
    transform-origin: 188.5px 188.5px;

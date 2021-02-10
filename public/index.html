@@ -44,7 +44,15 @@
    </style>
 
    <script>
-      // window.resizeTo(200, 200);
+      var iheight = window.innerHeight;
+      console.log('windowHeight : ' + iheight);
+      var iwidth = window.innerWidth;
+      console.log('windowWidth : ' + iwidth);
+      var dheight = document.documentElement.clientHeight;
+      console.log('documentHeight : ' + dheight);
+
+      var dwidth = document.documentElement.clientWidth;
+      console.log('documentWidth : ' + dwidth);
    </script>
 
    <body>

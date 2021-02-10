@@ -84,10 +84,10 @@ export default {
 
    // 사이드 메뉴
    .v-navigation-drawer.v-navigation-drawer--fixed {
-      width: 80% !important;
+      width: 70% !important;
       .v-navigation-drawer__content {
          .sidemenu {
-            padding-top: 56px;
+            // padding-top: 56px;
             // background-color: red;
             overflow: hidden;
          }

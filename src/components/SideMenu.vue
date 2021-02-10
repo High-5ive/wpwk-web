@@ -1,5 +1,5 @@
 <template>
-   <div class="container">
+   <div class="sm-container">
       <div class="user-wrapper">
          <p>
             <span>{{ userInfo.nickname }}</span
@@ -9,10 +9,17 @@
          <span class="logout" @click="$store.dispatch('doLogout')">로그아웃</span>
       </div>
       <div class="link-wrapper">
-         <router-link to="/">Nori</router-link>
-         <router-link to="/cmmu">Community</router-link>
-         <router-link to="/landingTest">[임시] 랜딩페이지</router-link>
-         <router-link to="/view">[임시] 콘텐츠 뷰</router-link>
+         <div class="img-btn" @click="$router.push('/')">
+            Nori
+         </div>
+         <div class="img-btn" @click="$router.push('cmmu')">
+            Community
+         </div>
+      </div>
+      <div class="ad-wrapper">
+         <div class="ad1">AD Banner</div>
+         <div class="ad2">AD Banner</div>
+         <div class="ad3">AD Banner</div>
       </div>
    </div>
 </template>
@@ -28,12 +35,17 @@ export default {
 <style lang="scss" scoped>
 @import 'src/css/vars';
 
-.container {
+.sm-container {
+   position: relative;
+   height: 100%;
+   background-color: transparent !important;
+
    .user-wrapper {
       // display: flex;
       // flex-direction: column;
       text-align: center;
       margin-bottom: 50px;
+      padding-top: 56px;
 
       p {
          font-size: 20px;
@@ -63,15 +75,30 @@ export default {
       display: flex;
       flex-direction: column;
       text-align: center;
-      height: 100%;
 
-      a {
-         color: black;
-         text-decoration: none;
-         font-size: 1.2em;
-         font-weight: 400;
+      .img-btn {
+         width: 70%;
+         height: 120px;
+         border: 1px solid rgb(208, 208, 208);
+         text-align: center;
+         margin: 10px auto;
+      }
+   }
 
-         margin-top: 20px;
+   .ad-wrapper {
+      position: absolute;
+      bottom: 0;
+      height: 300px;
+      width: 100%;
+
+      div {
+         width: 70%;
+         height: 70px;
+         border: 1px solid rgb(208, 208, 208);
+         margin: 10px auto;
+
+         text-align: center;
+         color: rgb(208, 208, 208);
       }
    }
 }

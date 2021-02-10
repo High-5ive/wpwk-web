@@ -102,7 +102,7 @@ const routes = [{
     },
   },
   {
-    path: '/landingTest',
+    path: '/landing',
     components: {
       default: LandingPage,
     },
