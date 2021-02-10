@@ -15,9 +15,12 @@ function findAllBoards(success, fail) {
 } // 좋아요 올리기
 
 
-function updateLikes(id, val, success, fail) {
-  var body = {
-    likes: val
+function updateLikes(id, params, success, fail) {
+  var token = window.localStorage.getItem("accessToken");
+  var config = {
+    headers: {
+      Authorization: "Bearer ".concat(token)
+    }
   };
-  instance.put("boards/".concat(id, "/likes"), body).then(success)["catch"](fail);
+  instance.put("boards/".concat(id, "/likes"), JSON.stringify(params), config).then(success)["catch"](fail);
 }

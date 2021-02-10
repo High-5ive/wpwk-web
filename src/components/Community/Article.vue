@@ -90,10 +90,14 @@ export default {
          console.log('좋아요 클릭', this.likes);
          console.log('게시글 좋아요', this.id);
 
+         const params = {
+            likes: 1,
+         };
+
          //좋아요 누른 게시글 검증 필요
          updateLikes(
             this.id,
-            1,
+            params,
             (res) => {
                console.log(res);
             },

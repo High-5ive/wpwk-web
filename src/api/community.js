@@ -13,13 +13,16 @@ function findAllBoards(success, fail) {
 }
 
 // 좋아요 올리기
-function updateLikes(id, val, success, fail) {
-  const body = {
-    likes: val,
-  }
+function updateLikes(id, params, success, fail) {
+  let token = window.localStorage.getItem("accessToken");
+  let config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
 
   instance
-    .put(`boards/${id}/likes`, body)
+    .put(`boards/${id}/likes`, JSON.stringify(params), config)
     .then(success)
     .catch(fail);
 }
