@@ -20,7 +20,7 @@
     left: 0;
     background-color: rgb(245, 245, 245);
     width: 100%;
-    height: 300px;
+    height: 350px;
     z-index: 10;
     border-radius: 0 0 50px 50px;
  
@@ -33,18 +33,43 @@
     }
     .category-wrapper {
         padding-top: 10px;
-        white-space: nowrap; 
-        overflow-x: scroll; 
+        width: 90%;
+        margin-left: 15px;
+        // white-space: nowrap; 
+        // overflow-x: scroll; 
 
-        .category-button {
-            display: inline;
-            background-color: rgb(230, 230, 230);
-            color: rgb(135, 135, 135);
-            border-radius: 3px;
-            font-size: 9pt;
+        .category {
+            margin-bottom: 10px;
 
-            padding: 4px 8px 4px 8px;
-            margin-right: 10px;
+            .select-button {
+                display: inline;
+                background-color: rgb(230, 230, 230);
+                color: rgb(135, 135, 135);
+                border-radius: 3px;
+                font-size: 10pt;
+    
+                padding: 4px 8px 4px 8px;
+                margin-right: 5px;
+            }
+        }
+    }
+    .popularity-wrapper {
+        width: 90%;
+        padding: 10px;
+        margin-left: 15px;
+
+        .popularity {
+
+            .select-button {
+                background-color: rgb(230, 225, 225);
+                color: rgb(135, 135, 135);
+                border-radius: 3px;
+                font-size: 10pt;
+                text-align: center;
+
+                padding: 4px 8px 4px 8px;
+                margin-bottom: 8px;
+            }
         }
     }
 }
