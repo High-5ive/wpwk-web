@@ -52,7 +52,8 @@ const routes = [{
     components: {
       side: SideMenu,
       default: Main,
-    }
+    },
+    props: true,
   },
   {
     path: '/cmmu',
