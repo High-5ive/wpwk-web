@@ -78,7 +78,7 @@
                       <li
                         v-for="tag in hashtagResult"
                         :key="tag.id"
-                        @click="changeValue(tag.name)"
+                        @click="changeValue(tag)"
                         @keyup.enter="selectValue('enter', tag.name)"
                         tabindex="-1"
                       >
@@ -140,8 +140,10 @@ export default {
       selectedCategories: [0, 0, 0, 0, 0, 0, 0, 0],
       hashtagResult: [],
       hashtag: "",
+      hashtagId: "",
       isActive: false,
       hashtags: [],
+      sendHashtags: [],
       // 임시 데이터(나중에는 vuex사용하기..?)
       hours: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       minutes: [0, 10, 20, 30, 40, 50],
@@ -183,7 +185,8 @@ export default {
     // 목록에서 해시태그를 선택했을 때
     changeValue: function(tag) {
       this.isActive = false;
-      this.hashtag = tag;
+      this.hashtagId = tag.id;
+      this.hashtag = tag.name;
       this.addHashtag();
       this.hashtagResult = [];
       document.querySelector("#hashtagInput").focus();
@@ -236,22 +239,32 @@ export default {
         }
       }
     },
-    addHashtag: function() {
+    addHashtag: function() {      
       const newTag = this.hashtag.replaceAll(" ", "_");
+      var newTagId = "";
+      if(this.hashtagId != "") {
+        newTagId = ":".concat(this.hashtagId);
+      }
+
       if (this.hashtags.indexOf(newTag) >= 0) {
-        alert("이미 추가된 해시태그입니다");
-        this.hashtag = "";
+        alert("이미 추가된 해시태그입니다");        
       } else if (this.hashtag.length == 0) {
         alert("내용을 적어주세요");
       } else {
         if (this.hashtags.length < 12) {
           this.hashtags.push(newTag);
-          this.hashtag = "";
+          if(newTagId != "") { // 기존의 태그를 사용하는 경우
+            this.sendHashtags.push(newTagId);
+          } else { // 새로운 태그를 만들어 사용하는 경우
+            this.sendHashtags.push(newTag);
+          }
         } else {
           alert("해시태그는 최대 10개까지 적을 수 있습니다.");
-          this.hashtag = "";
         }
       }
+      this.hashtag = "";
+      this.hashtagId = "";
+      console.log(this.sendHashtags);
     },
     /**
      * 해시태그 검색 요청 구현
@@ -259,11 +272,13 @@ export default {
     searchTag(tag) {
        if (tag.length === 0) {
           this.hashtagResult = []
+          return
        }
       recommendTags(
         tag,
         (res) => {
           this.hashtagResult = res.data;
+          console.log(this.hashtagResult);
         },
         (error) => {
           console.log(error);
@@ -281,6 +296,7 @@ export default {
     },
     deleteTag: function(index) {
       this.hashtags.splice(index, 1);
+      this.sendHashtags.splice(index, 1);
     },
     createContent: function() {
       let len = this.itemList.length;
@@ -304,7 +320,7 @@ export default {
 
       //contents.js 안의 정의 되어있는 axios 호출
       const tags = {
-        tagList: this.hashtags,
+        tagList: this.sendHashtags,
       };
 
       createContents(
