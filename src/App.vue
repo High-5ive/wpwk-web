@@ -1,11 +1,11 @@
 <template>
    <v-app id="inspire">
       <!-- side menu -->
-      <v-navigation-drawer v-model="drawer" app style="z-index: 1000">
+      <v-navigation-drawer v-model="drawer" app disable-resize-watcher style="z-index: 1000">
          <router-view name="side" class="sidemenu" />
       </v-navigation-drawer>
 
-      <v-app-bar app class="root-header">
+      <v-app-bar app class="root-header" absolute :class="{ openSide: drawer }">
          <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
          <v-toolbar-title
             ><router-link to="/"><img src="@/assets/wpwk_logo.png"/></router-link
@@ -14,7 +14,7 @@
          <search v-if="showSearch"></search>
       </v-app-bar>
 
-      <v-main>
+      <v-main :class="{ openSide: drawer }">
          <router-view />
       </v-main>
    </v-app>
@@ -42,7 +42,7 @@ export default {
 }
 
 #inspire {
-   /* background-color: blue; */
+   // background-color: blue;
    font-family: 'Poor Story' sans-serif !important;
 
    padding-right: 0px !important;
@@ -85,13 +85,34 @@ export default {
    // 사이드 메뉴
    .v-navigation-drawer.v-navigation-drawer--fixed {
       width: 70% !important;
+
+      //각 디바이스 크기별 동작
+      @include mobile {
+         width: 70% !important;
+      }
+
+      @include tablet {
+         width: 50% !important;
+      }
+
+      @include desktop {
+         width: 400px !important;
+      }
+
       .v-navigation-drawer__content {
          .sidemenu {
-            // padding-top: 56px;
-            // background-color: red;
             overflow: hidden;
          }
       }
+   }
+}
+
+// 사이드 메뉴가 켜졌을 때, v-main, root-header를 우측으로 밀어줌
+.openSide {
+   // border: 2px solid red !important;
+
+   @include desktop {
+      margin-left: 140px !important;
    }
 }
 </style>
