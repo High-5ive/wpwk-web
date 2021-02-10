@@ -1,11 +1,17 @@
-import { createInstance } from './index.js';
+import {
+  createInstance
+} from './index.js';
 
 const instance = createInstance();
 
 function createContents(param, success, fail) {
   //body값 다시 만들고 JSON 파싱하기
-  let token = window.localStorage.getItem("accessToken");      
-  let config = {headers: { Authorization: `Bearer ${token}` }};
+  let token = window.localStorage.getItem("accessToken");
+  let config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
   instance
     .post('contents', JSON.stringify(param), config)
     .then(success)
@@ -47,5 +53,11 @@ function findContentsByTag(tag, page, success, fail) {
     .catch(fail);
 }
 
-export { createContents, createTags, findAllContents, 
-  findContentsById, findContentsByPage, findContentsByTag };
+export {
+  createContents,
+  createTags,
+  findAllContents,
+  findContentsById,
+  findContentsByPage,
+  findContentsByTag
+};
