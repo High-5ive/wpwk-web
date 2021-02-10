@@ -9,12 +9,8 @@
          <span class="logout" @click="$store.dispatch('doLogout')">로그아웃</span>
       </div>
       <div class="link-wrapper">
-         <div class="img-btn" @click="$router.push('/')">
-            Nori
-         </div>
-         <div class="img-btn" @click="$router.push('cmmu')">
-            Community
-         </div>
+         <div class="img-btn" @click="$router.push('/')"><img src="@/assets/img/characters/banner-cmmu.png" alt="" /> <span class="nf">노리</span></div>
+         <div class="img-btn" @click="$router.push('cmmu')"><img src="@/assets/img/characters/banner-nori.png" alt="" /> <span class="nf">커뮤니티</span></div>
       </div>
       <div class="ad-wrapper">
          <div class="ad1">AD Banner</div>
@@ -77,11 +73,30 @@ export default {
       text-align: center;
 
       .img-btn {
-         width: 70%;
-         height: 120px;
-         border: 1px solid rgb(208, 208, 208);
+         width: 280px;
+         height: 180px;
+         // border: 1px solid rgb(208, 208, 208);
          text-align: center;
          margin: 10px auto;
+         border-radius: 20px;
+
+         span {
+            display: block;
+            position: relative;
+            top: -120px;
+
+            color: rgb(53, 53, 53);
+            font-size: 30pt !important;
+            font-weight: 600;
+         }
+
+         img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: 0px 0px;
+            // transform: scale(1.1);
+         }
       }
    }
 
