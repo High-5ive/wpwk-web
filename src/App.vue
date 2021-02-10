@@ -1,11 +1,11 @@
 <template>
    <v-app id="inspire">
       <!-- side menu -->
-      <v-navigation-drawer v-model="drawer" app style="z-index: 1000">
+      <v-navigation-drawer v-model="drawer" app style="z-index: 1000" absolute>
          <router-view name="side" class="sidemenu" />
       </v-navigation-drawer>
 
-      <v-app-bar app class="root-header">
+      <v-app-bar app class="root-header" absolute>
          <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
          <v-toolbar-title
             ><router-link to="/"><img src="@/assets/wpwk_logo.png"/></router-link
@@ -37,59 +37,72 @@ export default {
 @import 'src/css/common.scss';
 
 #root {
-   background-color: rgb(55, 117, 125) im !important;
+   background-color: rgb(55, 117, 125) !important;
    // width: 100px;
 }
 
 #inspire {
-   /* background-color: blue; */
    font-family: 'Poor Story' sans-serif !important;
+
+   max-height: 800px;
+   border: 2px solid orange;
 
    padding-right: 0px !important;
 
-   .v-toolbar__title {
-      margin: 0 auto;
-      padding-left: 0px !important;
-      padding-right: 30px !important;
-   }
+   .v-application--wrap {
+      max-height: inherit;
 
-   .root-header {
-      background-color: rgb(250, 250, 250) !important;
-      z-index: 200;
-
-      img {
-         height: 30px;
+      .v-main {
+         max-height: inherit !important;
+         border: 2px solid green;
+         overflow: scroll;
+         padding-bottom: 100px;
       }
 
-      .btn-search {
-         height: 48px;
-         width: 48px;
-         /* margin-right: -12px; */
-         /* background-color: red; */
-
-         position: absolute;
-         /* top: -10px; */
-         right: 12px;
+      .v-toolbar__title {
+         margin: 0 auto;
+         padding-left: 0px !important;
+         padding-right: 30px !important;
       }
-   }
 
-   .btn-search i {
-      height: 24px;
-      width: 24px;
-      color: rgba(255, 180, 0);
-      font-size: 18px;
+      .root-header {
+         background-color: rgb(250, 250, 250) !important;
+         z-index: 200;
 
-      margin: 14px 0 0 14px;
-   }
+         img {
+            height: 30px;
+         }
 
-   // 사이드 메뉴
-   .v-navigation-drawer.v-navigation-drawer--fixed {
-      width: 70% !important;
-      .v-navigation-drawer__content {
-         .sidemenu {
-            // padding-top: 56px;
-            // background-color: red;
-            overflow: hidden;
+         .btn-search {
+            height: 48px;
+            width: 48px;
+            /* margin-right: -12px; */
+            /* background-color: red; */
+
+            position: absolute;
+            /* top: -10px; */
+            right: 12px;
+         }
+      }
+
+      .btn-search i {
+         height: 24px;
+         width: 24px;
+         color: rgba(255, 180, 0);
+         font-size: 18px;
+
+         margin: 14px 0 0 14px;
+      }
+
+      // 사이드 메뉴
+      .v-navigation-drawer.v-navigation-drawer--fixed {
+         width: 70% !important;
+         .v-navigation-drawer__content {
+            .sidemenu {
+               // padding-top: 56px;
+               // background-color: red;
+               overflow: hidden;
+            }
          }
       }
    }
