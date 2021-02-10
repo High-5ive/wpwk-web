@@ -1,14 +1,15 @@
 <template>
   <div class="nori-wrapper">
-    <div class="item-box" v-for="(nori, idx) in personsAssetsWithPhoto" :key="idx">
-      <div class="left">
+    <div :class="{'for-stripe': !isEven(idx)}" class="item-box" v-for="(nori, idx) in personsAssetsWithPhoto" :key="idx">
+      <div class="asp-left">
         <img src="@/assets/img/test1.jpg" alt="">
       </div>
-      <div class="middle">
-        <div>{{ nori.title | truncate(15, '...') }}</div>
-        <div>{{ nori.createdAt }} 조회수{{ nori.views }}</div>
+      <div class="asp-middle">
+        <div>{{ nori.title | truncate( 12, '...') }}</div>
+        <span v-if="showValue===4" class="asp-info">{{ nori.user }}</span>
+        <div class="asp-info">{{ nori.createdAt }} 조회 {{ nori.views }}</div>
       </div>
-      <div class="right">
+      <div class="asp-right">
         {{ nori.comments.length}}
       </div>
     </div>
@@ -18,7 +19,18 @@
 export default {
   name: 'personsAssetsWithPhoto',
   props: {
-    personsAssetsWithPhoto: Array
+    personsAssetsWithPhoto: Array,
+    showValue: Number
+  },
+  methods: {
+    // 짝수인지(스트라이프 스타일링)
+    isEven: function (idx) {
+      if (idx % 2) {
+        return false
+      } else {
+        return true
+      }
+    },
   }
 }
 </script>
