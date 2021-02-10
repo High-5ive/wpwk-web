@@ -119,6 +119,7 @@ import CategoryItem from "./CategoryItem.vue";
 import { createContents } from "@/api/contents.js";
 import { createTags } from "@/api/contents.js";
 import { recommendTags } from "@/api/tags.js";
+import firebase from "firebase";
 
 export default {
   name: "CategoryAndTimeInfo",
@@ -132,7 +133,7 @@ export default {
   data: function() {
     return {
       contentsId: "",
-      dialog: false,
+      dialog: false,      
       time: {
         hour: 0,
         minute: 0,
@@ -155,6 +156,10 @@ export default {
         "대인지능",
         "개인내지능",
       ],
+      sendItemList: [],
+      uploadValue: 0,
+      imageAddressList: [],
+      imageCnt: 0,
     };
   },
   methods: {
@@ -257,9 +262,9 @@ export default {
      * 해시태그 검색 요청 구현
      */
     searchTag(tag) {
-       if (tag.length === 0) {
-          this.hashtagResult = []
-       }
+      if (tag.length === 0) {
+        this.hashtagResult = [];
+      }
       recommendTags(
         tag,
         (res) => {
@@ -282,60 +287,112 @@ export default {
     deleteTag: function(index) {
       this.hashtags.splice(index, 1);
     },
-    createContent: function() {
-      let len = this.itemList.length;
-      let cnt = 1;
-      for (let i = 0; i < len; i++) {
-        this.itemList[i].pageNo = cnt++;
-      }
-
-      var abilitiesStr = "";
-      for (let i = 0; i < this.selectedCategories.length; i++) {
-        abilitiesStr = abilitiesStr.concat(this.selectedCategories[i]);
-      }
-      console.log("item list", this.itemList);
-
-      const content = {
-        title: this.title,
-        contentsItemList: this.itemList,
-        spendTime: this.time.hour + ":" + this.time.minute + ":00",
-        ability: abilitiesStr,
-      };
-
-      //contents.js 안의 정의 되어있는 axios 호출
-      const tags = {
-        tagList: this.hashtags,
-      };
-
-      createContents(
-        content,
-        (success) => {
-          this.contentsId = success.data;
-          // console.log(contentsId);
-          alert("컨텐츠 제작에 성공 했습니다.");
-          //컨텐츠 제작후 태그 제작 요청
-
-          createTags(
-            this.contentsId,
-            tags,
-            (suc) => {
-              this.dialog = false;
-              console.log("suc tag msg ", suc);
-              this.$router.push("/");
+    uploadFiles: function() {
+      for (var i = 0; i < this.sendItemList.length; i++) {
+        if (this.sendItemList[i].type === "photo") {
+          const storageRef = firebase
+            .storage()
+            .ref(`${this.sendItemList[i].photo.file.name}`)
+            .put(this.sendItemList[i].photo.file);
+          storageRef.on(
+            `state_changed`,
+            (snapshot) => {
+              this.uploadValue =
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             },
             (error) => {
-              console.log("error tag msg ", error);
-              this.dialog = false;
+              console.log(error.message);
+            },
+            () => {
+              storageRef.snapshot.ref.getDownloadURL().then((url) => {
+                this.imageAddressList.push(url);
+              });
             }
           );
-        },
-        (error) => {
-          console.log("create contents err msg", error);
-          alert("컨텐츠 제작에 실패 했습니다.");
-          this.dialog = false;
-          // contentsCreate에서 itemList가 새롭게 추가되는 버그 있음
         }
-      );
+      }
+    },
+    createContent: function() {
+      this.sendItemList = this.itemList;
+      this.getImageCnt();
+
+      // 파이어베이스 파일업로드
+      this.uploadFiles();
+
+      setTimeout(() => {
+
+        this.setImageAddressList()
+
+        let cnt = 1;
+        for (let i = 0; i < this.sendItemList.length; i++) {
+          this.sendItemList[i].pageNo = cnt++;
+        }
+
+        var abilitiesStr = "";
+        for (let i = 0; i < this.selectedCategories.length; i++) {
+          abilitiesStr = abilitiesStr.concat(this.selectedCategories[i]);
+        }
+
+        const content = {
+          title: this.title,
+          contentsItemList: this.sendItemList,
+          spendTime: this.time.hour + ":" + this.time.minute + ":00",
+          ability: abilitiesStr,
+        };
+
+        //contents.js 안의 정의 되어있는 axios 호출
+        const tags = {
+          tagList: this.hashtags,
+        };
+
+        createContents(
+          content,
+          (success) => {
+            this.contentsId = success.data;
+            // console.log(contentsId);
+            //컨텐츠 제작후 태그 제작 요청
+            createTags(
+              this.contentsId,
+              tags,
+              () => {
+                this.dialog = false;
+                alert("컨텐츠 제작에 성공 했습니다.");
+                this.$router.push("/");
+              },
+              (error) => {
+                console.log("error tag msg ", error);
+                this.dialog = false;
+              }
+            );
+          },
+          (error) => {
+            console.log("create contents err msg", error);
+            alert("컨텐츠 제작에 실패 했습니다.");
+            this.dialog = false;
+            // contentsCreate에서 itemList가 새롭게 추가되는 버그 있음
+          }
+        );
+      }, 2000);
+    },
+    // item type중 photo인것 갯수
+    getImageCnt: function() {
+      for (var i = 0; i < this.sendItemList.length; i++) {
+        if (this.sendItemList[i].type === "photo") {
+          this.imageCnt++;
+        }
+      }
+    },
+    setImageAddressList() {
+      // 개수 확인
+      if (this.imageAddressList.length === this.imageCnt) {
+        this.uploadValue = 100;
+        var idx = 0;
+        for (var i = 0; i < this.sendItemList.length; i++) {
+          if (this.sendItemList[i].type === "photo") {
+            this.sendItemList[i].imageAddress = this.imageAddressList[idx++];
+          }
+        }
+      }
     },
   },
 };
@@ -411,60 +468,60 @@ export default {
         justify-content: center;
         margin-top: 10px;
         .bottom-top {
-              width: 100%;
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              .upper {
-                width: 70%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                .v-icon {
-                  margin: 0 5px;
-                }
-              }
-              .hashtag-search {
-                width: 200px; // 반응형 수정 필요
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          .upper {
+            width: 70%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .v-icon {
+              margin: 0 5px;
+            }
+          }
+          .hashtag-search {
+            width: 200px; // 반응형 수정 필요
 
-                .v-input__control {
-                  position: relative;
-                  padding-top: 25px;
-                  // margin-left: 10px;
-                  // margin-right: 10px;
-                }
-                .hashtag-list {
-                  // display: none;
-                  list-style: none;
-                  padding-left: 0px;
-                  z-index: 10;
-                  // margin-left: -1px;
-                  margin-top: -40px;
-                  position: absolute;
-                  // margin-left: 10px;
-                  border-left: #f4b740 solid 2px;
-                  border-bottom: #f4b740 solid 2px;
-                  border-right: #f4b740 solid 2px;
-                  border-radius: 0 0 8px 8px;
-                  background-color: #ffffff;
-                  width: 200px; // 반응형 수정 필요
-                  li {
-                    font-size: 12pt;
-                    padding: 8px 12px;
+            .v-input__control {
+              position: relative;
+              padding-top: 25px;
+              // margin-left: 10px;
+              // margin-right: 10px;
+            }
+            .hashtag-list {
+              // display: none;
+              list-style: none;
+              padding-left: 0px;
+              z-index: 10;
+              // margin-left: -1px;
+              margin-top: -40px;
+              position: absolute;
+              // margin-left: 10px;
+              border-left: #f4b740 solid 2px;
+              border-bottom: #f4b740 solid 2px;
+              border-right: #f4b740 solid 2px;
+              border-radius: 0 0 8px 8px;
+              background-color: #ffffff;
+              width: 200px; // 반응형 수정 필요
+              li {
+                font-size: 12pt;
+                padding: 8px 12px;
 
-                    &:hover,
-                    &.sel {
-                      background-color: #f4b8407f;
-                      color: black;
-                    }
-                    &:focus,
-                    &.sel:focus {
-                      outline: none;
-                    }
-                  }
+                &:hover,
+                &.sel {
+                  background-color: #f4b8407f;
+                  color: black;
+                }
+                &:focus,
+                &.sel:focus {
+                  outline: none;
                 }
               }
             }
+          }
+        }
         .bottom-bt {
           border-radius: 10px;
           width: 100%;

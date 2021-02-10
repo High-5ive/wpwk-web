@@ -4,10 +4,10 @@ const instance = createInstance();
 
 function createContents(param, success, fail) {
   //body값 다시 만들고 JSON 파싱하기
-  let token = window.localStorage.getItem("accessToken");      
+  let token = window.localStorage.getItem("accessToken");
   let config = {headers: { Authorization: `Bearer ${token}` }};
   instance
-    .post('contents', JSON.stringify(param), config)
+    .post(`contents`, param, config)
     .then(success)
     .catch(fail);
 }
