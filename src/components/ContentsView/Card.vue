@@ -1,10 +1,10 @@
 <template>
   <div class="card-wrapper">
-    <div v-show="this.card.type !== 'text'" class="card-content">
-      <div v-if="this.card.imageAddress != ''">
+    <div v-show="this.notOnlyText" class="card-content">
+      <div v-if="this.imageAddress">
         <img :src="imageAddress" />
       </div>
-      <div v-else-if="this.card.youtubeId != ''">
+      <div v-else-if="this.youtubeId">
         <iframe :src="videoUrl"> </iframe>
       </div>
     </div>
@@ -43,26 +43,33 @@ export default {
       youtubeThumbnail: '',
       youtubeTitle: '',
       youtubeUrl: '',
+      notOnlyText: false
     };
   },
   methods: {
     getCard: function() {
+      this.description = ''
+      this.youtubeId = ''
+      this.imageAddress = ''
+
       this.description = this.card.description;
 
-      if (this.card.youtubeId != '') {
+      if (this.card.youtubeId) {
         this.youtubeId = this.card.youtubeId;
-      } else if (this.card.imageAddress != '') {
+        this.notOnlyText = true;
+      } else if (this.card.imageAddress) {
         this.imageAddress = this.card.imageAddress;
+        this.notOnlyText = true;
       }
     },
-  },
-  created: function() {
-    this.getCard();
   },
   watch: {
     pageNum: function() {
       this.getCard();
     },
+    card: function () {
+      this.getCard()
+    }
   },
   computed: {
     videoUrl: function() {

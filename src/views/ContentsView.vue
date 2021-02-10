@@ -106,24 +106,7 @@ export default {
   },
   created() {
     //컨텐츠 ID 에 맞는 ItemList axios 호출
-    //this.getContentsItems();
-    var contents = this.$route.params.nori;
-    //console.log(contents);
-    this.writer = contents.nickname;
-    this.title = contents.title;
-
-    var contentsId = contents.id;
-
-    findContentsItemById(
-      contentsId,
-      (success) => {
-        console.log('get ContentsItem suc ', success.data);
-        this.cards = success.data;
-      },
-      (fail) => {
-        console.log('get ContentsItem fail ', fail);
-      }
-    );
+    this.getContentsItems();
   },
   methods: {
     evaluation(value) {
@@ -160,6 +143,12 @@ export default {
       );
     },
   },
+  watch: {
+    evaluationValue: function() {
+      this.cards = []
+      this.getContentsItems()
+    }
+  }
 };
 </script>
 

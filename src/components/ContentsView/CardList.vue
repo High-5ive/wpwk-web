@@ -1,7 +1,6 @@
 <template>
   <div class="cl-container">
     <Card :card="card" :pageNum="pageNum" />
-
     <div class="cl-footer">
       <div class="footer-pagination">
         <!-- <span class="page-count">{{ pageNum }} / {{ this.cards.length }} 페이지</span> -->
@@ -45,16 +44,17 @@ export default {
     return {
       pageNum: 1,
       evaluation: false,
-      card: {
-        description: '',
-        contentsId: '',
-        imageAddress: '',
-        videoAddress: '',
-        youtubeId: '',
-        youtubeThumbnail: '',
-        youtubeTitle: '',
-        youtubeUrl: '',
-      },
+      card: {}
+      // card: {
+      //   description: '',
+      //   contentsId: '',
+      //   imageAddress: '',
+      //   videoAddress: '',
+      //   youtubeId: '',
+      //   youtubeThumbnail: '',
+      //   youtubeTitle: '',
+      //   youtubeUrl: '',
+      // },
     };
   },
   methods: {
@@ -79,15 +79,13 @@ export default {
   components: {
     Card,
   },
-  props: {
-    cards: Array,
-  },
-  created: function() {
-    //this.getCard();
-  },
+  props: ['cards',],
   watch: {
     pageNum: function() {
       this.getCard();
+    },
+    cards: function() {
+       this.getCard()
     },
   },
 };
