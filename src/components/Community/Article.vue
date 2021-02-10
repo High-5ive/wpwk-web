@@ -1,9 +1,10 @@
 <template>
    <div class="article-wrapper">
       <div class="content-wrapper" @click="articleDetail">
-         <div v-if="this.article.itemList.length">
+         <!-- 사진 표시 임시 제외 -->
+         <!-- <div v-if="this.article.itemList.length">
             <img @click="articleDetail" :src="img" />
-         </div>
+         </div> -->
          <div class="category">
             {{ category }}
          </div>
@@ -14,26 +15,30 @@
       </div>
 
       <div class="feature-wrapper">
-         <div class="likes-btn">
-            <v-icon v-if="this.like" color="red" @click="getLike"> mdi-heart-multiple </v-icon>
-            <v-icon v-else color="red" @click="getLike"> mdi-heart-multiple-outline </v-icon>
-            <span @click="getLike" class="nf"> 좋아요! </span>
+         <!-- 좋아요 버튼 -->
+         <div class="likes-btn" @click="setLike">
+            <v-icon v-if="this.likes != 0" color="red"> mdi-heart-multiple </v-icon>
+            <v-icon v-else color="red"> mdi-heart-multiple-outline </v-icon>
+            <span class="nf"> 좋아요! </span>
          </div>
+         <!-- 좋아요 버튼 -->
          <div class="info-btn">
             <v-icon @click="articleDetail" style="color:rgb(171, 171, 171) "> mdi-comment-multiple-outline </v-icon>
             <div class="comment">
-               <div v-if="this.comments.length" @click="articleDetail" class="nf">댓글 {{ this.comments.length }}</div>
+               <div v-if="this.comments != 0" @click="articleDetail" class="nf">댓글 {{ this.comments }}</div>
                <div v-else @click="articleDetail" class="nf">
                   댓글쓰기
                </div>
             </div>
-            <v-icon style="color:rgb(255, 101, 101)"> mdi-account-heart </v-icon> <span>{{ this.likeList.length }} </span>
+            <v-icon style="color:rgb(255, 101, 101)"> mdi-account-heart </v-icon> <span>{{ this.likes }} </span>
          </div>
       </div>
    </div>
 </template>
 
 <script>
+import { updateLikes } from '@/api/community.js';
+
 export default {
    name: 'Article',
    props: {
@@ -42,33 +47,35 @@ export default {
    },
    data: function() {
       return {
+         id: '',
          category: '',
          img: '',
          content: '',
          // 임의의 articleId값 부여
          articleId: 0,
-         like: 0,
-         likeList: [],
-         comments: [],
+         likes: 0,
+         comments: '',
       };
    },
    methods: {
       getCard: function() {
-         // 변수 수정 필요
+         this.id = this.article.id;
          this.category = this.article.subject;
-         this.nickname = '테스트명';
-         if (this.article.itemList.length) {
-            this.img = this.article.itemList[0].photo.preview;
-         }
+         this.nickname = this.article.user;
          this.content = this.article.content;
-         this.likeList = this.article.likeList;
+         this.likes = this.article.likes;
          this.comments = this.article.comments;
+         // if (this.article.itemList.length) {
+         //    this.img = this.article.itemList[0].photo.preview;
+         // }
+
          // 좋아요 목록에 있는 지 체크
-         for (var i = 0; i < this.likeList.length; i++) {
-            if (this.likeList[i] === '수진맘') {
-               this.like = 1;
-            }
-         }
+         // [err] 좋아요 목록 데이터 수정
+         // for (var i = 0; i < this.likeList.length; i++) {
+         //    if (this.likeList[i] === '수진맘') {
+         //       this.like = 1;
+         //    }
+         // }
       },
       articleDetail: function() {
          // 실제로는 id값만 보내서 article정보를 받지만 일단 모두 전달
@@ -76,20 +83,27 @@ export default {
          this.articleId = 1;
          this.$router.push({ name: 'ArticleDetail', params: { articleId: this.articleId, article: this.article } });
       },
-      getLike: function() {
-         if (this.like) {
-            this.like = 0;
-            // 좋아요 눌렀던 user 삭제
-            // const deleteId = this.likeList.indexOf(user)
-            const deleteId = this.likeList.indexOf('수진맘');
-            this.likeList.splice(deleteId, 1);
-         } else {
-            this.like = 1;
-            // 좋아요 누른 user 추가
-            // this.likeList.push(user)
-            this.likeList.push('수진맘');
-         }
+
+      //============= axios =============
+      // 좋아요 수 수정
+      setLike: function() {
+         console.log('좋아요 클릭', this.likes);
+         console.log('게시글 좋아요', this.id);
+
+         //좋아요 누른 게시글 검증 필요
+         updateLikes(
+            this.id,
+            1,
+            (res) => {
+               console.log(res);
+            },
+            (error) => {
+               console.log(error);
+            }
+         );
       },
+
+      //====================================
    },
    created: function() {
       this.getCard();

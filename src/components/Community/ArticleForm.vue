@@ -113,24 +113,8 @@ export default {
             itemList: this.itemList,
             content: this.content,
             created_at: now,
-            likeList: [],
-            comments: [],
-
-            // category: this.subject_final,
-            // content: this.content,
-            // createdAt: now,
-            // createdBy: '',
-            // id: 0,
-            // likes: 0,
-            // updatedAt: '',
-            // updatedBy: '',
-            // userId: 0,
-            // views: 0,
-            // writer: username,
-
-            // itemList: this.itemList,
-            // likeList: [],
-            // comments: [],
+            likes: 0,
+            comments: 0,
          };
 
          this.$emit('createArticle', article);
