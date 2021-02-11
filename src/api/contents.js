@@ -22,15 +22,23 @@ function createTags(id, param, success, fail) {
 }
 
 function findAllContents(success, fail) {
+
+  let token = window.localStorage.getItem("accessToken");
+  let config = {headers: { Authorization: `Bearer ${token}` }};
+
   instance
-    .get('contents')
+    .get(`contents`, config)
     .then(success)
     .catch(fail);
 }
 
 function findContentsById(id, success, fail) {
+
+  let token = window.localStorage.getItem("accessToken");
+  let config = {headers: { Authorization: `Bearer ${token}` }};
+
   instance
-    .get(`contents/${id}`)
+    .get(`contents/${id}`, config)
     .then(success)
     .catch(fail);
 }
@@ -43,15 +51,23 @@ function findContentsItemById(id, success, fail) {
 }
 
 function findContentsByPage(page, success, fail) {
+  
+  let token = window.localStorage.getItem("accessToken");
+  let config = {headers: { Authorization: `Bearer ${token}` }};
+
   instance
-    .get(`contents/page/${page}`)
+    .get(`contents/page/${page}`, config)
     .then(success)
     .catch(fail);
 }
 
 function findContentsByTag(tag, page, success, fail) {
+
+  let token = window.localStorage.getItem("accessToken");
+  let config = {headers: { Authorization: `Bearer ${token}` }};
+
   instance
-    .get(`contents/tags/${tag}/page/${page}`)
+    .get(`contents/tags/${tag}/page/${page}`, config)
     .then(success)
     .catch(fail);
 }
