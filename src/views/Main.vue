@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    {{ this.reload }}
     <div v-if="loading">
       <loading></loading>
     </div>
@@ -50,6 +51,12 @@ export default {
       loading: true,
       tagSearch: "",
     };
+  },
+  props: {
+    reload: {
+      type: Boolean,
+      default: false
+    }
   },
   created() {
     if (this.$route.query.tag != null) {
@@ -201,6 +208,16 @@ export default {
       this.$router.push({ name: "ContentsCreate" });
     },
   },
+  watch: {
+    reload: function () {
+      if(this.reload) {
+        this.getNoriList();
+      }
+      else {
+        this.getNoriListByTag();
+      }
+    }
+  }
 };
 </script>
 

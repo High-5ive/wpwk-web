@@ -7,11 +7,11 @@
 
       <v-app-bar app class="root-header" absolute :class="{ openSide: drawer }">
          <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-         <v-toolbar-title
-            ><router-link to="/"><img src="@/assets/wpwk_logo.png"/></router-link
-         ></v-toolbar-title>
+         <v-toolbar-title>
+            <img @click="goMain" src="@/assets/wpwk_logo.png"/>
+         </v-toolbar-title>
          <div class="btn-search" @click="showSearch = !showSearch"><i class="fas fa-search"></i></div>
-         <search v-if="showSearch"></search>
+         <search v-if="showSearch" @searchShow="searchShow"></search>
       </v-app-bar>
 
       <v-main :class="{ openSide: drawer }">
@@ -30,6 +30,14 @@ export default {
       drawer: false,
       showSearch: false,
    }),
+   methods: {
+      searchShow(search) {
+         this.showSearch = search;
+      },
+      goMain: function () {
+         this.$router.push({name:'Main', params: {reload: true}})
+      }
+   }
 };
 </script>
 
