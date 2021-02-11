@@ -8,7 +8,11 @@
             <nori-content :sendNori="nori" v-on:tagEvent="getNoriListByTag"> </nori-content>
             <br />
          </div>
-         <infinite-loading spinner="spiral" @infinite="infiniteHandler"></infinite-loading>
+         <div class="nori-wrapper spinner">
+            <infinite-loading spinner="spiral" @infinite="infiniteHandler">
+               <div slot="no-more" class="nf">더 이상 컨텐츠가 없어요 :)</div>
+            </infinite-loading>
+         </div>
       </div>
       <speed-dial></speed-dial>
    </div>
@@ -210,6 +214,10 @@ export default {
          min-width: 400px;
          max-width: 500px;
          height: 300px;
+
+         &.spinner {
+            padding-top: 130px;
+         }
       }
    }
 }

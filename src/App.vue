@@ -6,7 +6,8 @@
       </v-navigation-drawer>
 
       <v-app-bar app class="root-header" :class="{ openSide: drawer }">
-         <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+         <div class="btn-menu" @click="drawer = !drawer">버튼</div>
+         <!-- <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon> -->
          <v-toolbar-title
             ><router-link to="/"><img src="@/assets/wpwk_logo.png"/></router-link
          ></v-toolbar-title>
@@ -36,6 +37,7 @@ export default {
    }),
    mounted() {
       // console.log("ready...");
+      window.addEventListener('load', this.handleResize);
       window.addEventListener('resize', this.handleResize);
    },
    beforeDestroy() {
@@ -44,7 +46,17 @@ export default {
    },
    methods: {
       handleResize() {
+         // $breakpoint-mobile: 335px;
+         // $breakpoint-tablet: 758px;
+         // $breakpoint-desktop: 1024px;
+
          this.width = window.innerWidth;
+
+         if (this.width >= 1024) {
+            console.log(this.width);
+            // alert('모바일 화면에 최적화되어 있습니다.');
+            // this.drawer = true;
+         }
          this.height = window.innerHeight;
       },
    },
