@@ -6,8 +6,16 @@ const instance = createInstance();
 
 // 커뮤니티 내 모든 게시글(Board)를 조회
 function findAllBoards(success, fail) {
+
+  let token = window.localStorage.getItem("accessToken");
+  let config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
+
   instance
-    .get('boards')
+    .get(`boards`, config)
     .then(success)
     .catch(fail);
 }

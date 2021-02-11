@@ -7,13 +7,9 @@ const instance = createInstance();
 function createContents(param, success, fail) {
   //body값 다시 만들고 JSON 파싱하기
   let token = window.localStorage.getItem("accessToken");
-  let config = {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  };
+  let config = {headers: { Authorization: `Bearer ${token}` }};
   instance
-    .post('contents', JSON.stringify(param), config)
+    .post(`contents`, param, config)
     .then(success)
     .catch(fail);
 }
@@ -26,29 +22,52 @@ function createTags(id, param, success, fail) {
 }
 
 function findAllContents(success, fail) {
+
+  let token = window.localStorage.getItem("accessToken");
+  let config = {headers: { Authorization: `Bearer ${token}` }};
+
   instance
-    .get('contents')
+    .get(`contents`, config)
     .then(success)
     .catch(fail);
 }
 
 function findContentsById(id, success, fail) {
+
+  let token = window.localStorage.getItem("accessToken");
+  let config = {headers: { Authorization: `Bearer ${token}` }};
+
   instance
-    .get(`contents/${id}`)
+    .get(`contents/${id}`, config)
+    .then(success)
+    .catch(fail);
+}
+
+function findContentsItemById(id, success, fail) {
+  instance
+    .get(`/contentsItem/${id}`)
     .then(success)
     .catch(fail);
 }
 
 function findContentsByPage(page, success, fail) {
+  
+  let token = window.localStorage.getItem("accessToken");
+  let config = {headers: { Authorization: `Bearer ${token}` }};
+
   instance
-    .get(`contents/page/${page}`)
+    .get(`contents/page/${page}`, config)
     .then(success)
     .catch(fail);
 }
 
 function findContentsByTag(tag, page, success, fail) {
+
+  let token = window.localStorage.getItem("accessToken");
+  let config = {headers: { Authorization: `Bearer ${token}` }};
+
   instance
-    .get(`contents/tags/${tag}/page/${page}`)
+    .get(`contents/tags/${tag}/page/${page}`, config)
     .then(success)
     .catch(fail);
 }
@@ -59,5 +78,6 @@ export {
   findAllContents,
   findContentsById,
   findContentsByPage,
-  findContentsByTag
+  findContentsByTag,
+  findContentsItemById,
 };

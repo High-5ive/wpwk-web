@@ -44,7 +44,7 @@
             </div>
             <div class="btn-wrapper">
                <v-icon @click="createTextItem" class="footer-button-text">mdi-note-text-outline</v-icon>
-               <input type="file" id="fileUpload" ref="files" style="display:none" @change="axiosFileChange" multiple />
+               <input type="file" id="fileUpload" ref="files" accept="image/*" style="display:none" @change="axiosFileChange" multiple />
             </div>
          </div>
          <div class="footer-navi d-flex justify-space-between">
@@ -154,6 +154,7 @@ export default {
             photo: p,
             video: '',
             description: '',
+            imageAddress: '',
          };
          if (this.itemList.length <= 9) {
             this.itemList.push(newItem);

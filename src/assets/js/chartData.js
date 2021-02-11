@@ -1,3 +1,4 @@
+
 export const myChartData = {
   type: 'radar',
   data: {
@@ -6,24 +7,35 @@ export const myChartData = {
       {
         label: '내 성향',
         data: [80, 20, 60, 70, 34, 68, 41, 66],
-        backgroundColor: "rgba(128, 93, 202, 0.41)",
-        borderColor: "rgba(153, 102, 255, 0.2)",
+        backgroundColor: "#f4b8407b",
+        borderColor: "#f4b740",
         borderWidth: 1,
     }],
   },
   options: {
+    elements: {
+      point: {
+        radius: 0
+      }
+    },
     responsive: true,
+    maintainAspectRatio:true,
     scale: {
       angleLines: {
         display: true,
       },
       ticks: {
+        display: false,
         beginAtZero: true,
         max: 100,
         min: 0,
         stepSize: 20,
+      },
+      pointLabels: {
+        fontSize: 15,
       }
     },
+    
     legend: {
       display: false,
     },
