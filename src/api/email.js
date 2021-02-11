@@ -1,6 +1,4 @@
-import { createInstance } from './index.js';
-
-const instance = createInstance();
+import { instance } from './index.js';
 
 function checkEmailAuthReq(uid, verificationKey, success, fail) {
   instance

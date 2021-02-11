@@ -1,6 +1,4 @@
-import { createInstance } from './index.js';
-
-const instance = createInstance();
+import { instance } from './index.js';
 
 function recommendTags(tag, success, fail) {
   instance

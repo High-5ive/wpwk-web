@@ -1,8 +1,5 @@
-import {
-  createInstance
-} from './index.js';
+import { instance } from './index.js';
 
-const instance = createInstance();
 
 function createContents(param, success, fail) {
   //body값 다시 만들고 JSON 파싱하기
@@ -11,7 +8,7 @@ function createContents(param, success, fail) {
   instance
     .post(`contents`, param, config)
     .then(success)
-    .catch(fail);
+    .catch(fail)
 }
 
 function createTags(id, param, success, fail) {

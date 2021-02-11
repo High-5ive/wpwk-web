@@ -1,8 +1,4 @@
-import {
-  createInstance
-} from "./index.js";
-
-const instance = createInstance();
+import { instance } from './index.js';
 // const config = {
 //   headers: { "access-token": localStorage.getItem("access-token") }
 // };
