@@ -26,6 +26,19 @@ function login(user, success, fail) {
     .catch(fail)
 }
 
+function changePwd(param, success, fail) {
+  let token = window.localStorage.getItem("accessToken");
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
+  instance
+    .put(`users/changePassword`, param, config)
+    .then(success)
+    .catch(fail)
+}
+
 function deleteUser(success, fail) {
   let token = window.localStorage.getItem("accessToken");
   const config = {
@@ -34,7 +47,7 @@ function deleteUser(success, fail) {
     }
   };
   instance
-    .delete('users', config)
+    .delete(`users`, config)
     .then(success)
     .catch(fail)
 }
@@ -73,5 +86,6 @@ export {
   registerUser,
   naverLogin,
   kakaoLogin,
-  deleteUser
+  deleteUser,
+  changePwd
 };
