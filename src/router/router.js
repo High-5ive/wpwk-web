@@ -32,6 +32,7 @@ import Auth from '@/views/user/Auth.vue';
 import JoinSuccess from '@/views/user/JoinSuccess';
 import JoinConfirm from '@/views/user/JoinConfirm';
 import Admin from '@/views/user/Admin.vue';
+import NotFound from '@/views/NotFound.vue';
 
 const onlyAuthUser = (to, from, next) => {
   if (localStorage.getItem('accessToken') !== null) {
@@ -43,9 +44,26 @@ const onlyAuthUser = (to, from, next) => {
   }
 };
 
+const onlyNoneAuthUser = (to, from, next) => {
+  if (localStorage.getItem('accessToken') === null) {
+    next();
+  } else {
+    alert('로그인이 되어 있습니다');
+    // alert(store.state.userInfo)
+    next('/');
+  }
+};
+
 // ==============================
 // 여러개 태울 때, routes 변수 생성
 const routes = [
+  {
+    path: '*',
+    name: 'NotFound',
+    components: {
+      default: NotFound,
+    },
+  },
   {
     path: '/',
     name: 'Main',
@@ -105,6 +123,7 @@ const routes = [
   },
   {
     path: '/landing',
+    beforeEnter: onlyNoneAuthUser,
     components: {
       default: LandingPage,
     },
@@ -112,6 +131,7 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
+    beforeEnter: onlyNoneAuthUser,
     components: {
       default: Login,
     },
@@ -119,6 +139,7 @@ const routes = [
   {
     path: '/join',
     name: 'Join',
+    beforeEnter: onlyNoneAuthUser,
     components: {
       default: Join,
     },
@@ -145,13 +166,14 @@ const routes = [
   {
     path: '/joinSuccess',
     name: 'JoinSuccess',
+    beforeEnter: onlyNoneAuthUser,
     components: {
       default: JoinSuccess,
     },
   },
   {
     path: '/users/confirm',
-    name: 'JoinConfirm',
+    name: 'JoinConfirm',    
     components: {
       default: JoinConfirm,
     },
