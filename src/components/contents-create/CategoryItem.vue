@@ -1,7 +1,7 @@
 <template>
   <div 
     class="item-wrapper" 
-    :class="{ 'selected': isSelected}"
+    :class="{ 'selected-cate': isSelected }"
     @click="onCategorySelect"
   >
     {{ category }}
@@ -17,9 +17,13 @@ export default {
   },
   props: {
     category: String,
+    selectedCategories: Array,
   },
+
   methods: {
     onCategorySelect: function () {
+      const selectedCategoriesCount = this.selectedCategories.reduce((a, b) => (a + b))
+      console.log(selectedCategoriesCount)
       this.$emit('on-cate-select', this.category)
       this.isSelected = !this.isSelected
     }

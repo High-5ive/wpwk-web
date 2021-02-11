@@ -40,12 +40,12 @@
               <div
                 v-for="(category, idx) in categories"
                 :key="idx"
-                class="categories"
+                class="category-wrapper"
+                :class="{'selected-cate': selectedCateInfo.category}"
               >
-                <category-item
-                  @on-cate-select="onCategorySelect"
-                  :category="category"
-                />
+                <div 
+                  @click="onCategorySelect(category)"
+                >{{ category }}</div>
               </div>
             </div>
             <div class="dialog-bottom-wrapper">
@@ -115,7 +115,7 @@
   </div>
 </template>
 <script>
-import CategoryItem from "./CategoryItem.vue";
+// import CategoryItem from "./CategoryItem.vue";
 import { createContents } from "@/api/contents.js";
 import { createTags } from "@/api/contents.js";
 import { recommendTags } from "@/api/tags.js";
@@ -124,7 +124,7 @@ import firebase from "firebase";
 export default {
   name: "CategoryAndTimeInfo",
   components: {
-    CategoryItem,
+    // CategoryItem,
   },
   props: {
     title: String,
@@ -139,6 +139,17 @@ export default {
         minute: 0,
       },
       selectedCategories: [0, 0, 0, 0, 0, 0, 0, 0],
+      selectedCateInfo: {
+        "언어지능": false,
+        "논리수학지능": true,
+        "음악지능": false,
+        "신체운동지능": false,
+        "공간지능": false,
+        "자연지능": false,
+        "대인지능": false,
+        "개인내지능": false,
+
+      },
       hashtagResult: [],
       hashtag: "",
       hashtagId: "",
@@ -179,10 +190,6 @@ export default {
       if (isValid === false) {
         this.isActive = true;
         this.searchTag(this.hashtag);
-        // return this.hashtagResult
-        // this.hashtagResult = this.allHashtags.filter((tag) => {
-        //    return tag.name.match(this.hashtag);
-        // });
       } else {
         this.isActive = false;
       }
@@ -291,13 +298,14 @@ export default {
     },
     onCategorySelect: function(category) {
       const targetIndex = this.categories.indexOf(category);
-
       if (this.selectedCategories[targetIndex] == 0) {
         this.selectedCategories[targetIndex] = 1;
       } else {
         this.selectedCategories[targetIndex] = 0;
       }
+      
     },
+    
     deleteTag: function(index) {
       this.hashtags.splice(index, 1);
       this.sendHashtags.splice(index, 1);
@@ -456,24 +464,24 @@ export default {
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
-        .categories {
-          .item-wrapper {
-            width: 110px;
-            margin: 10px;
-            padding: 5px;
-            border: lightgray 5px solid;
-            border-radius: 20px;
-            text-align: center;
-            font-size: 12pt;
-            font-weight: 900;
-            color: rgb(159, 158, 158);
-            // box-shadow: 0 4px 4px lightgray;
-          }
-          .selected {
-            color: #a2d646;
-            border: #a2d646 5px solid;
-          }
+        
+        .category-wrapper {
+          width: 110px;
+          margin: 10px;
+          padding: 5px;
+          border: lightgray 5px solid;
+          border-radius: 20px;
+          text-align: center;
+          font-size: 12pt;
+          font-weight: 900;
+          color: rgb(159, 158, 158);
+          // box-shadow: 0 4px 4px lightgray;
         }
+        .selected-cate {
+          color: #a2d646;
+          border: #a2d646 5px solid;
+        }
+        
       }
       .dialog-bottom-wrapper {
         width: 100%;

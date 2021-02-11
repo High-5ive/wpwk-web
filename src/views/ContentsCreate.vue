@@ -56,7 +56,7 @@
             </div>
          </div>
       </div>
-      <div class="background-text">
+      <div v-if="itemList.length===0" class="background-text">
          <p class="nf nf-600">
             아래 버튼을 눌러 <br />
             컨텐츠를 추가해주세요!
@@ -405,9 +405,9 @@ export default {
 }
 // 잡힌거
 .sortable-chosen {
-   transform: rotate(-4deg);
+   // transform: rotate(-4deg);
    // z-index: 500;
-   // opacity: 0.7;
+   opacity: 1.0;
    // background-color: red;
 }
 // 뒤에거
