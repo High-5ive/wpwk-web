@@ -34,7 +34,7 @@ function changePwd(param, success, fail) {
     }
   };
   instance
-    .put('users/changePassword', param, config)
+    .put(`users/changePassword`, param, config)
     .then(success)
     .catch(fail)
 }
@@ -47,7 +47,7 @@ function deleteUser(success, fail) {
     }
   };
   instance
-    .delete('users', config)
+    .delete(`users`, config)
     .then(success)
     .catch(fail)
 }

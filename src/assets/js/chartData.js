@@ -30,17 +30,12 @@ export const myChartData = {
         max: 100,
         min: 0,
         stepSize: 20,
+      },
+      pointLabels: {
+        fontSize: 15,
       }
     },
-    plugins: {
-      legend: {
-        labels: {
-          font: {
-            size: 20
-          }
-        }
-      }
-    },
+    
     legend: {
       display: false,
     },
