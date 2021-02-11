@@ -57,55 +57,55 @@
 }
 
 
-.comment-footer{
-    position: fixed;
-    z-index: 100;
-    left: 50%;
-    bottom: 0px;
-    transform: translateX(-50%);
+// .comment-footer{
+//     position: absolute;
+//     z-index: 100;
+//     left: 50%;
+//     bottom: 0px;
+//     transform: translateX(-50%);
 
-    height: 50px;
-    width: 100%;
-    background-color: white;
+//     height: 50px;
+//     width: 100%;
+//     background-color: white;
 
-    display: flex;
+//     display: flex;
 
-    .dummy-icon{
-        border-radius: 0px;
-        position: fixed;
-        z-index: 100;
-        left: 22px;
-        bottom: 13px;
+//     .dummy-icon{
+//         border-radius: 0px;
+//         position: fixed;
+//         z-index: 100;
+//         left: 22px;
+//         bottom: 13px;
 
-        i{
-            font-size: 20px;
-            color: $green;
-        }
-    }
+//         i{
+//             font-size: 20px;
+//             color: $green;
+//         }
+//     }
 
-    .input-box{
-        width: 100%;
-        // background-color: blue;
-        padding: 20px;
-        padding-left: 60px;
-        border: 1px solid $main-green;
+//     .input-box{
+//         width: 100%;
+//         // background-color: blue;
+//         padding: 20px;
+//         padding-left: 60px;
+//         border: 1px solid $main-green;
         
-        &:focus{
-            outline: none;
-        }
-    }
+//         &:focus{
+//             outline: none;
+//         }
+//     }
 
-    .btn-send{
-        width: 60px;
-        background-color: $main-green;
+//     .btn-send{
+//         width: 60px;
+//         background-color: $main-green;
 
-        i{
-            color: white;
-        }
+//         i{
+//             color: white;
+//         }
 
-        &:focus{
-            outline: none;
-        }
-    }
+//         &:focus{
+//             outline: none;
+//         }
+//     }
     
-}
+// }

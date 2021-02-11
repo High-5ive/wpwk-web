@@ -39,14 +39,14 @@
       <div class="comment-box">
          <CommentList :comments="this.comments" @deleteComment="deleteComment" />
       </div>
-      <CommentForm @createComment="createComment" />
+      <comment-form-cmmu @createComment="createComment" />
    </div>
 </template>
 
 <script>
 import ArticleDetailPhoto from '@/components/Community/ArticleDetailPhoto';
 import CommentList from '@/components/Comment/CommentList';
-import CommentForm from '@/components/Comment/CommentForm';
+import CommentFormCmmu from '../components/Comment/CommentForm_cmmu.vue';
 
 export default {
    name: 'ArticleDetail',
@@ -58,7 +58,7 @@ export default {
    components: {
       ArticleDetailPhoto,
       CommentList,
-      CommentForm,
+      CommentFormCmmu,
    },
    data: function() {
       return {

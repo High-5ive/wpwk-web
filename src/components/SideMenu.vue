@@ -9,8 +9,8 @@
          <span class="logout" @click="$store.dispatch('doLogout')">로그아웃</span>
       </div>
       <div class="link-wrapper">
-         <div class="img-btn" @click="$router.push('/')"><img src="@/assets/img/characters/banner-cmmu.png" alt="" /> <span class="nf">노리</span></div>
-         <div class="img-btn" @click="$router.push('cmmu')"><img src="@/assets/img/characters/banner-nori.png" alt="" /> <span class="nf">커뮤니티</span></div>
+         <div class="img-btn" @click="$router.push('/').catch(() => {})"><img src="@/assets/img/characters/banner-cmmu.png" alt="" /> <span class="nf">노리</span></div>
+         <div class="img-btn" @click="$router.push('cmmu').catch(() => {})"><img src="@/assets/img/characters/banner-nori.png" alt="" /> <span class="nf">커뮤니티</span></div>
       </div>
       <div class="ad-wrapper">
          <!-- <div class="ad">AD Banner</div> -->
@@ -138,7 +138,7 @@ export default {
 
       .copyright {
          width: 70%;
-         margin: 10px auto;
+         margin: 0px auto;
          font-size: 8pt !important;
          color: gray;
       }
