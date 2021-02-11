@@ -5,7 +5,7 @@
          <router-view name="side" class="sidemenu" />
       </v-navigation-drawer>
 
-      <v-app-bar app class="root-header" absolute :class="{ openSide: drawer }">
+      <v-app-bar app class="root-header" :class="{ openSide: drawer }">
          <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
          <v-toolbar-title
             ><router-link to="/"><img src="@/assets/wpwk_logo.png"/></router-link
@@ -15,6 +15,7 @@
       </v-app-bar>
 
       <v-main :class="{ openSide: drawer }">
+         <!-- {{ width }}, {{ height }} -->
          <router-view />
       </v-main>
    </v-app>
@@ -29,17 +30,29 @@ export default {
    data: () => ({
       drawer: false,
       showSearch: false,
+
+      width: 0,
+      height: 0,
    }),
+   mounted() {
+      // console.log("ready...");
+      window.addEventListener('resize', this.handleResize);
+   },
+   beforeDestroy() {
+      // console.log("beforeDestroy...");
+      window.removeEventListener('resize', this.handleResize);
+   },
+   methods: {
+      handleResize() {
+         this.width = window.innerWidth;
+         this.height = window.innerHeight;
+      },
+   },
 };
 </script>
 
 <style lang="scss">
 @import 'src/css/common.scss';
-
-#root {
-   background-color: rgb(55, 117, 125) im !important;
-   // width: 100px;
-}
 
 #inspire {
    // background-color: blue;
