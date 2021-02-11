@@ -269,7 +269,6 @@ export default {
       }
       this.hashtag = "";
       this.hashtagId = "";
-      console.log(this.sendHashtags);
     },
     /**
      * 해시태그 검색 요청 구현
@@ -358,7 +357,7 @@ export default {
 
         //contents.js 안의 정의 되어있는 axios 호출
         const tags = {
-          tagList: this.hashtags,
+          tagList: this.sendHashtags,
         };
 
         createContents(
