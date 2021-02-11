@@ -18,12 +18,12 @@ export default {
     buttonSelect: function () {
 			for(var i;i<this.categories.length;i++) {
 				if(this.selectValue === this.categories[i]) {
-					this.$router.push({name:'main', query: {category: this.selectValue}})
+					this.$router.push({name:'SearchResult', params: { searchValue: this.selectValue, type: "category" }})
 					this.wait = false
 				}
 			}
 			if(this.wait) {
-				this.$router.push({name:'main', query: {search: this.selectValue}})
+				this.$router.push({name:'SearchResult', params: { searchValue: this.selectValue, type: "keyword" }})
 			}
       this.$emit('categorySearchShow', this.searchShow)
 		},
