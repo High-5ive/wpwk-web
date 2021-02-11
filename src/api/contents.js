@@ -33,6 +33,13 @@ function findContentsById(id, success, fail) {
     .catch(fail);
 }
 
+function findContentsItemById(id, success, fail) {
+  instance
+    .get(`/contentsItem/${id}`)
+    .then(success)
+    .catch(fail);
+}
+
 function findContentsByPage(page, success, fail) {
   instance
     .get(`contents/page/${page}`)
@@ -47,5 +54,12 @@ function findContentsByTag(tag, page, success, fail) {
     .catch(fail);
 }
 
-export { createContents, createTags, findAllContents, 
-  findContentsById, findContentsByPage, findContentsByTag };
+export {
+  createContents,
+  createTags,
+  findAllContents,
+  findContentsById,
+  findContentsByPage,
+  findContentsByTag,
+  findContentsItemById,
+};
