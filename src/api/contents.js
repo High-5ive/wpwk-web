@@ -72,6 +72,27 @@ function findContentsByTag(tag, page, success, fail) {
     .catch(fail);
 }
 
+function favoriteContents(id, success, fail) {
+
+  let token = window.localStorage.getItem("accessToken");
+  let config = {headers: { Authorization: `Bearer ${token}` }};
+
+  instance
+    .post(`contents/favorite`, id, config)
+    .then(success)
+    .catch(fail);
+}
+
+function unFavoriteContents(id, success, fail) {
+
+  let token = window.localStorage.getItem("accessToken");
+  let config = {headers: { Authorization: `Bearer ${token}` }};
+
+  instance
+    .delete(`contents/favorite/${id}`, config)
+    .then(success)
+    .catch(fail);
+}
 export {
   createContents,
   createTags,
@@ -80,4 +101,6 @@ export {
   findContentsByPage,
   findContentsByTag,
   findContentsItemById,
+  favoriteContents,
+  unFavoriteContents,
 };

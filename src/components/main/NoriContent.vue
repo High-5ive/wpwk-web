@@ -24,7 +24,12 @@
         #{{ tag.name }}
       </span>
       <h6>{{ sendNori.nickname }}</h6>
-      <div class="btn-like">
+      <div v-if="sendNori.favorite" class="btn-like" @click="doUnLike">
+        <v-icon>
+          mdi-heart
+        </v-icon>
+      </div>
+      <div v-if="!sendNori.favorite" class="btn-unlike" @click="doLike">
         <v-icon>
           mdi-heart
         </v-icon>
@@ -35,6 +40,7 @@
 
 <script>
 import router from '../../router/router';
+import { favoriteContents, unFavoriteContents } from "@/api/contents.js";
 
 export default {
   name: 'NoriContent',
@@ -46,6 +52,33 @@ export default {
     tagSearch: function(tagName) {
       router.push({ name: 'Main', query: { tag: tagName } });
       this.$emit('tagEvent');
+    },
+    doLike: function() {
+
+      var id = {
+          id: this.sendNori.id          
+      };
+
+      favoriteContents(
+        id,
+        () => {          
+          this.sendNori.favorite = true;          
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    },
+    doUnLike: function() {
+      unFavoriteContents(
+        this.sendNori.id,
+        () => {          
+          this.sendNori.favorite = false;
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
     },
   },
 };

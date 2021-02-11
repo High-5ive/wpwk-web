@@ -1,12 +1,11 @@
 <template>
-  <div class="container">
-    {{ this.reload }}
+  <div class="container">    
     <div v-if="loading">
       <loading></loading>
     </div>
     <div v-if="!loading">
       <div class="nori-wrapper" v-for="(nori, idx) in NoriList" :key="idx">
-        <nori-content :sendNori="nori" v-on:tagEvent="getNoriListByTag">
+        <nori-content :sendNori="nori" v-on:tagEvent="getNoriListByTag" v-on:likeEvent="reloadList">
         </nori-content>
         <br />
       </div>
@@ -58,16 +57,19 @@ export default {
       default: false
     }
   },
-  created() {
-    if (this.$route.query.tag != null) {
-      this.getNoriListByTag();
-    } else {
-      this.getNoriList();
-    }
+  created() {    
+    this.getList()
   },
   methods: {
+    getList() {
+      this.page = 1
+      if (this.$route.query.tag != null) {
+        this.getNoriListByTag();
+      } else {
+        this.getNoriList();
+      }
+    },
     getNoriList() {
-      console.log("일반 검색");
       findContentsByPage(
         this.page,
         (res) => {
@@ -96,7 +98,6 @@ export default {
 
     getNoriListByTag() {
       this.page = 1;
-      console.log("태그 검색");
       findContentsByTag(
         this.$route.query.tag,
         this.page,
