@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div v-if="loading">
-      <p>로딩중....</p>
+      <loading></loading>
     </div>
     <div v-if="!loading">
       <div class="nori-wrapper" v-for="(nori, idx) in NoriList" :key="idx">
@@ -19,34 +19,36 @@
 </template>
 
 <script>
-import NoriContent from '@/components/main/NoriContent.vue';
-import SpeedDial from '@/components/main/SpeedDial.vue';
-import { findContentsByPage, findContentsByTag } from '@/api/contents.js';
-import infiniteLoading from 'vue-infinite-loading';
+import NoriContent from "@/components/main/NoriContent.vue";
+import SpeedDial from "@/components/main/SpeedDial.vue";
+import Loading from "@/components/main/Loading.vue";
+import { findContentsByPage, findContentsByTag } from "@/api/contents.js";
+import infiniteLoading from "vue-infinite-loading";
 
 export default {
   components: {
     NoriContent,
     SpeedDial,
     infiniteLoading,
+    Loading,
   },
   data() {
     return {
       NoriList: [],
       abilities: [
-        '언어지능',
-        '논리수학지능',
-        '음악지능',
-        '신체운동지능',
-        '공간지능',
-        '자연지능',
-        '대인지능',
-        '개인내지능',
+        "언어지능",
+        "논리수학지능",
+        "음악지능",
+        "신체운동지능",
+        "공간지능",
+        "자연지능",
+        "대인지능",
+        "개인내지능",
       ],
       infLoading: false,
       page: 1,
       loading: true,
-      tagSearch: '',
+      tagSearch: "",
     };
   },
   created() {
@@ -58,7 +60,7 @@ export default {
   },
   methods: {
     getNoriList() {
-      console.log('일반 검색');
+      console.log("일반 검색");
       findContentsByPage(
         this.page,
         (res) => {
@@ -67,7 +69,7 @@ export default {
             if (this.NoriList[i].ability != null) {
               let abilityList = [];
               for (var j = 0; j < this.NoriList[i].ability.length; j++) {
-                if (this.NoriList[i].ability.charAt(j) == '1') {
+                if (this.NoriList[i].ability.charAt(j) == "1") {
                   abilityList.push(this.abilities[j]);
                 }
               }
@@ -87,7 +89,7 @@ export default {
 
     getNoriListByTag() {
       this.page = 1;
-      console.log('태그 검색');
+      console.log("태그 검색");
       findContentsByTag(
         this.$route.query.tag,
         this.page,
@@ -97,7 +99,7 @@ export default {
             if (this.NoriList[i].ability != null) {
               let abilityList = [];
               for (var j = 0; j < this.NoriList[i].ability.length; j++) {
-                if (this.NoriList[i].ability.charAt(j) == '1') {
+                if (this.NoriList[i].ability.charAt(j) == "1") {
                   abilityList.push(this.abilities[j]);
                 }
               }
@@ -130,7 +132,7 @@ export default {
                   if (noriList[i].ability != null) {
                     let abilityList = [];
                     for (var j = 0; j < noriList[i].ability.length; j++) {
-                      if (noriList[i].ability.charAt(j) == '1') {
+                      if (noriList[i].ability.charAt(j) == "1") {
                         abilityList.push(this.abilities[j]);
                       }
                     }
@@ -168,7 +170,7 @@ export default {
                   if (noriList[i].ability != null) {
                     let abilityList = [];
                     for (var j = 0; j < noriList[i].ability.length; j++) {
-                      if (noriList[i].ability.charAt(j) == '1') {
+                      if (noriList[i].ability.charAt(j) == "1") {
                         abilityList.push(this.abilities[j]);
                       }
                     }
@@ -196,7 +198,7 @@ export default {
       }
     },
     goCreate: function() {
-      this.$router.push({ name: 'ContentsCreate' });
+      this.$router.push({ name: "ContentsCreate" });
     },
   },
 };

@@ -118,7 +118,7 @@ var routes = [{
     "default": _ContentsView["default"]
   }
 }, {
-  path: '/landingTest',
+  path: '/landing',
   components: {
     "default": _LandingPage["default"]
   }

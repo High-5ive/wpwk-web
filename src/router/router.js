@@ -104,7 +104,7 @@ const routes = [
     props: true,
   },
   {
-    path: '/landingTest',
+    path: '/landing',
     components: {
       default: LandingPage,
     },

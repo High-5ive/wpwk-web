@@ -1,5 +1,5 @@
 <template>
-   <div class="container">
+   <div class="sm-container">
       <div class="user-wrapper">
          <p>
             <span>{{ userInfo.nickname }}</span
@@ -9,10 +9,13 @@
          <span class="logout" @click="$store.dispatch('doLogout')">로그아웃</span>
       </div>
       <div class="link-wrapper">
-         <router-link to="/">Nori</router-link>
-         <router-link to="/cmmu">Community</router-link>
-         <router-link to="/landingTest">[임시] 랜딩페이지</router-link>
-         <router-link to="/view">[임시] 콘텐츠 뷰</router-link>
+         <div class="img-btn" @click="$router.push('/')"><img src="@/assets/img/characters/banner-cmmu.png" alt="" /> <span class="nf">노리</span></div>
+         <div class="img-btn" @click="$router.push('cmmu')"><img src="@/assets/img/characters/banner-nori.png" alt="" /> <span class="nf">커뮤니티</span></div>
+      </div>
+      <div class="ad-wrapper">
+         <div class="ad1">AD Banner</div>
+         <div class="ad2">AD Banner</div>
+         <div class="ad3">AD Banner</div>
       </div>
    </div>
 </template>
@@ -28,12 +31,17 @@ export default {
 <style lang="scss" scoped>
 @import 'src/css/vars';
 
-.container {
+.sm-container {
+   position: relative;
+   height: 100%;
+   background-color: transparent !important;
+
    .user-wrapper {
       // display: flex;
       // flex-direction: column;
       text-align: center;
       margin-bottom: 50px;
+      padding-top: 56px;
 
       p {
          font-size: 20px;
@@ -63,15 +71,49 @@ export default {
       display: flex;
       flex-direction: column;
       text-align: center;
-      height: 100%;
 
-      a {
-         color: black;
-         text-decoration: none;
-         font-size: 1.2em;
-         font-weight: 400;
+      .img-btn {
+         width: 280px;
+         height: 180px;
+         // border: 1px solid rgb(208, 208, 208);
+         text-align: center;
+         margin: 10px auto;
+         border-radius: 20px;
 
-         margin-top: 20px;
+         span {
+            display: block;
+            position: relative;
+            top: -120px;
+
+            color: rgb(53, 53, 53);
+            font-size: 30pt !important;
+            font-weight: 600;
+         }
+
+         img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: 0px 0px;
+            // transform: scale(1.1);
+         }
+      }
+   }
+
+   .ad-wrapper {
+      position: absolute;
+      bottom: 0;
+      height: 300px;
+      width: 100%;
+
+      div {
+         width: 70%;
+         height: 70px;
+         border: 1px solid rgb(208, 208, 208);
+         margin: 10px auto;
+
+         text-align: center;
+         color: rgb(208, 208, 208);
       }
    }
 }

@@ -96,7 +96,7 @@ export default {
                clearInterval(this.intervalId);
             }
             window.scroll(0, window.pageYOffset - 50);
-         }, 20);
+         }, 0.001);
       },
       scrollListener: function() {
          this.visible = window.scrollY > 150;

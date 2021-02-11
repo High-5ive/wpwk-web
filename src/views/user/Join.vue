@@ -23,6 +23,10 @@
                   {{ error.email }}
                </div>
             </div>
+            <div class="input-nick">
+               <label for="nick">별명을 입력해주세요! </label>
+               <input class="join nf" type="text" v-model="join_nick" id="nick" placeholder="별명을 입력하세요." />
+            </div>
             <div class="input-password">
                <label for="password">비밀번호 </label>
                <input
@@ -50,7 +54,9 @@
             <v-btn id="submit" class="join" color="success" @click="doJoin">회원가입</v-btn>
          </div>
          <br />
-         <router-link to="Login">뒤로가기</router-link>
+         <div class="btn-back">
+            <router-link to="Login">뒤로가기</router-link>
+         </div>
       </div>
    </div>
 </template>
@@ -59,7 +65,7 @@
 import * as EmailValidator from 'email-validator';
 import { mapActions } from 'vuex';
 import { registerUser } from '@/api/user.js';
-import router from '../../router/router'
+import router from '../../router/router';
 
 export default {
    data() {
@@ -67,6 +73,7 @@ export default {
          join_email: '',
          join_pw: '',
          join_pw2: '',
+         join_nick: '',
          error: {
             email: false,
             password: false,
@@ -105,24 +112,25 @@ export default {
       doJoin() {
          if (this.join_email !== '' && this.join_pw !== '' && this.join_pw2 !== '') {
             if (!this.error.email && !this.error.password && !this.error.password2) {
-
                // 서버에 회원가입 요청하기
                registerUser(
                   {
                      email: this.join_email,
-                     password: this.join_pw
+                     password: this.join_pw,
+                     nickname: this.join_nick,
                   },
-                  () => { // 회원가입에 성공한 경우
+                  () => {
+                     // 회원가입에 성공한 경우
                      alert('회원가입이 되었습니다!');
-                     router.push({name:"JoinSuccess"});
+                     router.push({ name: 'JoinSuccess' });
                   },
                   (error) => {
                      // 이미 가입되어 있는 경우
-                     if(error.response.status == 409) { alert("이미 가입되어 있는 이메일입니다"); }
-                     
+                     if (error.response.status == 409) {
+                        alert('이미 가입되어 있는 이메일입니다');
+                     }
                   }
                );
-               
             } else {
                alert('입력 정보를 다시 확인해주세요.');
             }
