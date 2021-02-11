@@ -4,27 +4,27 @@
          <div class="user-info-wrapper">
             <img src="@/assets/img/characters/eval_bubble.png" alt="">
             <div class="in-bubble">
+               <!-- 나중에는 페이지 들어오기전에 유저정보(id, 별명, 작성글 목록 등) 요청 후 응담 내용으로 보여주기-->
                <span class="username">{{ userInfo.nickname }}님</span>
-               <!-- 비밀번호 변경(마이페이지일때) -->
-               <button class="infos-button btn-pwd" @click="dialog=true">비밀번호 변경</button>
-               <!-- 팔로우 버튼 (타유저프로필일때) -->
-               <!-- <button class="infos-button follow-button">
-                  <v-icon>
-                     mdi-account-plus
-                  </v-icon>
-                  구독
-               </button> -->
-               <!-- 언팔로우 버튼 (타유저 구독한 상태일때) -->
-               <!-- <button class="infos-button unfollow-button">
-                  <v-icon>
-                     mdi-account-check
-                  </v-icon>
-                  <span>
-                     구독 취소
-                  </span>
-               </button> -->
                
+               <!-- 팔로우 버튼 (타유저프로필일때) -->
+               <!-- 언팔로우 버튼 (타유저 구독한 상태일때) -->
             </div>
+            <button class="infos-button unfollow-button">
+               <v-icon>
+                  mdi-account-check
+               </v-icon>
+               <span>
+                  구독 취소
+               </span>
+            </button>
+               
+            <!-- <button class="infos-button follow-button">
+               <v-icon>
+                  mdi-account-plus
+               </v-icon>
+               구독
+            </button> -->
             
          </div>
          
@@ -61,9 +61,9 @@
          <persons-assets-with-photo v-if="showValue===3 ||showValue===4" :showValue="showValue" :personsAssetsWithPhoto="personsAssetsWithPhoto" />
          <chart v-if="showValue == 5"/>
       </div>
-      <div class="footer-wrapper">
-         <a href="#" @click="secession">회원탈퇴</a>
-         
+      <div v-if="$route.params.userId === userInfo.userId" class="footer-wrapper">
+         <a class="user-action" href="#" @click="dialog = true">비밀번호 변경</a>
+         <a class="user-action" href="#" @click="dialog2 = true">회원탈퇴</a>
       </div>
       <!-- 비밀번호 변경 모달 -->
       <div>
@@ -116,6 +116,21 @@
             </v-dialog>
          </v-row>
       </div>
+      <!-- 회원탈퇴 모달 -->
+      <div>
+         <v-row justify="center">
+            <v-dialog v-model="dialog2" persistent max-width="330px">
+               <v-card id="seccesion-modal" class="seccesion-modal">
+                  <v-card-title class="nf"> 정말로 탈퇴하시겠습니까? 😭 </v-card-title>
+                  <v-card-actions>
+                     <v-spacer></v-spacer>
+                     <v-btn color="error" text @click="dialog2 = false"> 취소 </v-btn>
+                     <v-btn color="green darken-1" text @click="secession"> 변경하기 </v-btn>
+                  </v-card-actions>
+               </v-card>
+            </v-dialog>
+         </v-row>
+      </div>
    </div>
 </template>
 <script>
@@ -138,6 +153,7 @@ export default {
       return {
          //modal control(비밀번호 변경)
          dialog: false,
+         dialog2: false,
          show1: false,
          show2: false,
          show3: false,
@@ -172,6 +188,36 @@ export default {
             },
             {
                user: '주상맘',
+               subject: "아이교육/학원",
+               itemList: [],
+               views: 200,
+               content: "아이 예절 교육은 어떻게 시키시나요? 아이가 계속 유튜브만 보려고 하네요...",
+               created_at: "2021-02-01 11:15:23",
+               likeList: [{user: "태성맘", content:"해피치즈스마일이라고 떡볶이 안맵고 맛있더라구요~", created_at: "2021-02-05 11:00:32"}],
+               comments: []
+            },
+            {
+               user: '태성맘',
+               subject: "아이교육/학원",
+               itemList: [],
+               views: 200,
+               content: "아이 예절 교육은 어떻게 시키시나요? 아이가 계속 유튜브만 보려고 하네요...",
+               created_at: "2021-02-01 11:15:23",
+               likeList: [{user: "태성맘", content:"해피치즈스마일이라고 떡볶이 안맵고 맛있더라구요~", created_at: "2021-02-05 11:00:32"}],
+               comments: []
+            },
+            {
+               user: '태성맘',
+               subject: "아이교육/학원",
+               itemList: [],
+               views: 200,
+               content: "아이 예절 교육은 어떻게 시키시나요? 아이가 계속 유튜브만 보려고 하네요...",
+               created_at: "2021-02-01 11:15:23",
+               likeList: [{user: "태성맘", content:"해피치즈스마일이라고 떡볶이 안맵고 맛있더라구요~", created_at: "2021-02-05 11:00:32"}],
+               comments: []
+            },
+            {
+               user: '태성맘',
                subject: "아이교육/학원",
                itemList: [],
                views: 200,
@@ -343,7 +389,12 @@ export default {
 @import '@/css/compo/modal.scss';
 
 .mp-container {
-   margin-top: 40px;
+   // max-width: 500px;
+   // overflow: hidden;
+   position: relative;
+   height: 100%;
+   // border: red dashed 1px;
+   padding-top: 40px;
    width: 100%;
    .top-wrapper {
       position: relative;
@@ -351,46 +402,48 @@ export default {
       .user-info-wrapper {
          img {
             position: absolute;
-            left: -130px;
-            top: 0px;
-            width: 250px;
+            left: -100px;
+            top: -15px;
+            width: 200px;
             // height: 150px;
          }
          .in-bubble {
             white-space: nowrap;
             position: absolute;
-            left: -100px;
-            top: 25px;
+            left: -30px;
+            // top: 0px;
             .username{
                display: inlnine;
                font-size: 18pt;
                font-weight: 600;
             }
-            .infos-button {
-               margin-left: 10px;
-               border-radius: 10px;
-               padding: 5px 10px;
-               width: 120px;
-               &:focus {
-                  outline: none;
-               } 
-            }
-            .btn-pwd {
-               background-color: #a2d646;    
-            }
-            .follow-button {
-               background-color: #a2d646; 
-            }
-            .unfollow-button {
-               background-color: rgb(184, 184, 184);
-               
-            }
 
+         }
+         .follow-button {
+            background-color: #a2d646; 
+         }
+         .unfollow-button {
+            background-color: rgb(184, 184, 184);
+            
+         }
+         .infos-button {
+            font-size: 10pt;
+            position: absolute;
+            top: 90px;
+            left: -57px;
+            // margin-left: 10px;
+            border-radius: 10px;
+            padding: 5px 10px;
+            width: 120px; 
+            &:focus {
+               outline: none;
+            } 
          }
       }
    }
    .middle {
       // background-color: lightgray;
+      margin-top: -15px;
       width: 90%;
       display: flex;
       align-items: center;
@@ -430,10 +483,16 @@ export default {
       
    }
    .bottom {
+      position: relative;
+      max-height: 55%;
+      overflow: scroll;
       border-radius: 10px;
       border: lightgray 1px solid;
       margin-top: 30px;
       width: 90%;
+      &::-webkit-scrollbar {
+         display: none;
+      }
       .article-wrapper {
          width: 100%;
          .for-stripe {
@@ -500,14 +559,20 @@ export default {
 
       }
       .as-chart {
-         padding: 20px 10px;
+         padding: 0 10px;
          
       }
    }
    .footer-wrapper {
+      // background-color: red;
       position: absolute;
+      // top: 700px;
       bottom: 10px;
       right: 10px;
+      .user-action {
+         color: gray;
+         margin: 0 5px;
+      }
    }
 }
 </style>

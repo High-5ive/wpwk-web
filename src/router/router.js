@@ -76,13 +76,14 @@ const routes = [
     props: true,
   },
   {
-    path: '/mypage',
+    path: '/mypage/:userId',
     name: 'mypage',
     beforeEnter: onlyAuthUser,
     components: {
       side: SideMenu,
       default: Mypage,
     },
+    props: true,
   },
   {
     path: '/contentscreate',
