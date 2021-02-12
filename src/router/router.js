@@ -43,6 +43,16 @@ const onlyAuthUser = (to, from, next) => {
   }
 };
 
+const onlyNoneAuthUser = (to, from, next) => {
+  if (localStorage.getItem('accessToken') === null) {
+    next();
+  } else {
+    alert('이미 로그인 되어 있습니다');
+    // alert(store.state.userInfo)
+    next('/');
+  }
+};
+
 // ==============================
 // 여러개 태울 때, routes 변수 생성
 const routes = [
@@ -106,6 +116,7 @@ const routes = [
   },
   {
     path: '/landing',
+    beforeEnter: onlyNoneAuthUser,
     components: {
       default: LandingPage,
     },
@@ -113,6 +124,7 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
+    beforeEnter: onlyNoneAuthUser,
     components: {
       default: Login,
     },
@@ -120,6 +132,7 @@ const routes = [
   {
     path: '/join',
     name: 'Join',
+    beforeEnter: onlyNoneAuthUser,
     components: {
       default: Join,
     },
