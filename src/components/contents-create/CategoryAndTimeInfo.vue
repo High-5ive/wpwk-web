@@ -12,7 +12,10 @@
         scrollable
       >
         <v-card tile class="card">
-          <v-card-text>
+          <div v-if="isLoading">
+            <loading />
+          </div>
+          <v-card-text v-if="!isLoading">
             <div class="dialog-top-wrapper">
               <div class="top-left">
                 <v-icon>
@@ -79,7 +82,7 @@
                         v-for="tag in hashtagResult"
                         :key="tag.id"
                         @click="changeValue(tag)"
-                        @keyup.enter="selectValue('enter', tag.name)"
+                        @keyup.enter="selectValue('enter', tag)"
                         tabindex="-1"
                       >
                         <span>{{ tag.name }}</span>
@@ -112,6 +115,7 @@
         </v-card>
       </v-dialog>
     </v-row>
+    
   </div>
 </template>
 <script>
@@ -120,11 +124,12 @@ import { createContents } from "@/api/contents.js";
 import { createTags } from "@/api/contents.js";
 import { recommendTags } from "@/api/tags.js";
 import firebase from "firebase";
+import Loading from "@/components/main/Loading.vue"
 
 export default {
   name: "CategoryAndTimeInfo",
   components: {
-    // CategoryItem,
+    Loading
   },
   props: {
     title: String,
@@ -173,11 +178,11 @@ export default {
       uploadValue: 0,
       imageAddressList: [],
       imageCnt: 0,
+      isLoading: false,
     };
   },
   methods: {
     onNextClicked: function() {
-      console.log(this.itemList, this.title);
       if (this.itemList.length > 0 && this.title.length > 0) {
         this.dialog = true;
       } else {
@@ -289,7 +294,6 @@ export default {
         tag,
         (res) => {
           this.hashtagResult = res.data;
-          console.log(this.hashtagResult);
         },
         (error) => {
           console.log(error);
@@ -297,13 +301,19 @@ export default {
       );
     },
     onCategorySelect: function(category) {
+      const selectedCateLen = this.selectedCategories.reduce((a, b) => (a + b))
       const targetIndex = this.categories.indexOf(category);
-      if (this.selectedCategories[targetIndex] == 0) {
+      const targetDiv = document.querySelectorAll(".category-wrapper")[targetIndex]
+      if (selectedCateLen < 2 && this.selectedCategories[targetIndex] == 0) {
+        targetDiv.classList.add("selected-cate")
         this.selectedCategories[targetIndex] = 1;
-      } else {
+      } else if (this.selectedCategories[targetIndex] == 1) {
         this.selectedCategories[targetIndex] = 0;
+        targetDiv.classList.remove("selected-cate")
+      } else {
+        alert("카테고리는 총 2개까지 선택 가능합니다.")
       }
-      
+  
     },
     
     deleteTag: function(index) {
@@ -336,66 +346,73 @@ export default {
       }
     },
     createContent: function() {
-      this.sendItemList = this.itemList;
-      this.getImageCnt();
-
-      // 파이어베이스 파일업로드
-      this.uploadFiles();
-
-      setTimeout(() => {
-
-        this.setImageAddressList()
-
-        let cnt = 1;
-        for (let i = 0; i < this.sendItemList.length; i++) {
-          this.sendItemList[i].pageNo = cnt++;
-        }
-
-        var abilitiesStr = "";
-        for (let i = 0; i < this.selectedCategories.length; i++) {
-          abilitiesStr = abilitiesStr.concat(this.selectedCategories[i]);
-        }
-
-        const content = {
-          title: this.title,
-          contentsItemList: this.sendItemList,
-          spendTime: this.time.hour + ":" + this.time.minute + ":00",
-          ability: abilitiesStr,
-        };
-
-        //contents.js 안의 정의 되어있는 axios 호출
-        const tags = {
-          tagList: this.sendHashtags,
-        };
-
-        createContents(
-          content,
-          (success) => {
-            this.contentsId = success.data;
-            // console.log(contentsId);
-            //컨텐츠 제작후 태그 제작 요청
-            createTags(
-              this.contentsId,
-              tags,
-              () => {
-                this.dialog = false;
-                alert("컨텐츠 제작에 성공 했습니다.");
-                this.$router.push("/");
-              },
-              (error) => {
-                console.log("error tag msg ", error);
-                this.dialog = false;
-              }
-            );
-          },
-          (error) => {
-            console.log("create contents err msg", error);
-            alert("컨텐츠 제작에 실패 했습니다.");
-            this.dialog = false;
-            // contentsCreate에서 itemList가 새롭게 추가되는 버그 있음
+      if (this.time.minute !== 0 && this.selectedCategories.reduce((a, b) => (a + b)) >= 1) {
+        this.isLoading = true
+        this.sendItemList = this.itemList;
+        this.getImageCnt();
+  
+        // 파이어베이스 파일업로드
+        this.uploadFiles();
+  
+        setTimeout(() => {
+  
+          this.setImageAddressList()
+  
+          let cnt = 1;
+          for (let i = 0; i < this.sendItemList.length; i++) {
+            this.sendItemList[i].pageNo = cnt++;
           }
-        );
-      }, 2000);
+  
+          var abilitiesStr = "";
+          for (let i = 0; i < this.selectedCategories.length; i++) {
+            abilitiesStr = abilitiesStr.concat(this.selectedCategories[i]);
+          }
+  
+          const content = {
+            title: this.title,
+            contentsItemList: this.sendItemList,
+            spendTime: this.time.hour + ":" + this.time.minute + ":00",
+            ability: abilitiesStr,
+          };
+  
+          //contents.js 안의 정의 되어있는 axios 호출
+          const tags = {
+            tagList: this.sendHashtags,
+          };
+  
+          createContents(
+            content,
+            (success) => {
+              this.contentsId = success.data;
+              // console.log(contentsId);
+              //컨텐츠 제작후 태그 제작 요청
+              createTags(
+                this.contentsId,
+                tags,
+                () => {
+                  this.isLoading = false
+                  this.dialog = false;
+                  alert("컨텐츠 제작에 성공 했습니다.");
+                  this.$router.push("/");
+                },
+                (error) => {
+                  console.log("error tag msg ", error);
+                  this.dialog = false;
+                }
+              );
+            },
+            (error) => {
+              console.log("create contents err msg", error);
+              alert("컨텐츠 제작에 실패 했습니다.");
+              this.dialog = false;
+              // contentsCreate에서 itemList가 새롭게 추가되는 버그 있음
+            }
+          );
+        }, 2000);
+        
+      } else {
+        alert("필수정보(시간, 카테고리)를 입력해 주십시오.")
+      }
     },
     // item type중 photo인것 갯수
     getImageCnt: function() {

@@ -5,7 +5,7 @@
         <img :src="imageAddress" />
       </div>
       <div v-else-if="this.youtubeId">
-        <iframe :src="videoUrl"> </iframe>
+        <iframe :src="videoUrl" allowfullscreen> </iframe>
       </div>
     </div>
     <div class="card-desc">
