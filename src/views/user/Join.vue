@@ -1,5 +1,5 @@
 <template>
-   <div class="container">
+   <div class="lj-container">
       <div class="wrapper">
          <div class="title">
             <img class="join-img" src="@/assets/c_wp.png" />

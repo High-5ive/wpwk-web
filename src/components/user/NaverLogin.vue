@@ -22,6 +22,6 @@ export default {
 </script>
 <style scoped>
 #naverIdLogin {
-   float: left;
+   display: inline;
 }
 </style>

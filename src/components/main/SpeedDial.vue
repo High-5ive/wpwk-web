@@ -223,9 +223,10 @@ theme--light {
 }
 
 //=========== 툴팁 ============
+
 .my-tooltip {
    position: absolute;
-   right: 60px;
+   right: 68px; //좌측 툴팁
 
    text-overflow: ellipsis;
    padding: 1ch 1.5ch;

@@ -1,8 +1,8 @@
 <template>
-   <div class="container">
+   <div class="lj-container">
       <div class="wrapper">
          <div class="title">
-            <img src="@/assets/wpwk_logo.png" style="width:200px" />
+            <img src="@/assets/wpwk_logo.png" />
          </div>
          <div class="input-wrapper">
             <div class="input-email">
@@ -46,16 +46,18 @@
             <span class="find_pw" @click="clickModal">비밀번호를 잊었나요?</span>
             <br />
             <v-btn id="submit" color="success" @click="doLogin">로그인</v-btn>
-            <p style="font-size: 12px;">
-               아직 회원이 아닌가요?
+            <p style="font-size: 8px;">
+               회원이 아니라면,
                <router-link to="Join">5초 회원가입</router-link>
             </p>
          </div>
          <div class="social-wrapper">
             <p>SNS 간편 로그인</p>
             <!-- 네이버 아이디로 로그인 버튼 노출 영역 -->
-            <naver-login></naver-login>
-            <kakao-login></kakao-login>
+            <div class="btn-social-group">
+               <naver-login class="btn-social"></naver-login>
+               <kakao-login class="btn-social"></kakao-login>
+            </div>
          </div>
 
          <!-- 비밀번호 찾기 모달 -->

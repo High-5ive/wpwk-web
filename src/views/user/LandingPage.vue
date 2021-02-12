@@ -1,22 +1,38 @@
 <template>
-   <div class="container">
+   <div class="ld-container">
       <div class="wrapper">
+         <div class="images">
+            <img id="charc" src="@/assets/img/landing/ld_main.png" alt="" />
+            <!-- <img id="ball" src="@/assets/img/landing/ld_ball.png" alt="" />
+             <img id="cube" src="@/assets/img/landing/ld_cube.png" alt="" />
+             <img id="stick" src="@/assets/img/landing/ld_stick.png" alt="" /> -->
+         </div>
+         <!-- <span>가정 보육, 여기서 해결하세요!</span> -->
+
          <div class="title">
-            <p>저희 서비스를 <br />이용 해본 적 있으신가요?</p>
+            <div class="box">
+               <div class="text animated wobble nf nf-600">위파위키</div>
+               <span class="nf">with parents with kids</span>
+            </div>
+            <!-- <p>보육 콘텐츠 큐레이션 플랫폼</p> -->
          </div>
-         <div class="link">
-            <p><router-link to="Login">물론이죠!</router-link></p>
-            <p><router-link to="#">아뇨 처음입니다</router-link></p>
-         </div>
+         <span class="copy">© High5ive</span>
       </div>
    </div>
 </template>
 <script>
-export default {};
+export default {
+   mounted() {
+      setTimeout(() => {
+         console.log('mounted');
+         this.$router.push('/login');
+      }, 4000);
+   },
+};
 </script>
-<style scoped>
-.container {
-   background-color: white;
+<style lang="scss" scoped>
+.ld-container {
+   background-color: #fffedd;
 
    /* 전체화면 가리기 */
    width: 100%;
@@ -30,34 +46,117 @@ export default {};
    top: 0;
    left: 0;
    z-index: 5000;
-}
 
-.container > .wrapper {
-   margin: 0 auto;
-   margin-top: 50px;
-   width: 80%;
-   /* background-color: blue; */
-}
+   .wrapper {
+      position: relative;
+      margin: 0 auto;
+      width: 400px;
+      height: 100%;
 
-.wrapper .title > p {
-   font-size: 2em;
-   line-height: 1.4em;
-}
+      .images {
+         img {
+            position: absolute;
+            top: 0;
+            left: 0;
+         }
 
-.link {
-   width: 200px;
-   position: absolute;
-   bottom: 0;
+         #charc {
+            width: 250px;
+            top: 20vh;
+            // 가로축 가운데 정렬
+            left: 50%;
+            transform: translate(-50%, 0);
+         }
+      }
 
-   left: 50%;
-   transform: translateX(-50%);
-   text-align: center;
-   margin-bottom: 20%;
-}
+      .copy {
+         position: absolute;
+         // 가로축 가운데 정렬
+         left: 50%;
+         transform: translate(-50%, 0);
 
-.link a {
-   font-size: 1.2em;
-   /* text-decoration: none; */
-   color: black;
+         bottom: 10px;
+         font-size: 6pt;
+      }
+
+      .title {
+         position: absolute;
+         top: 45vh;
+
+         // 가로축 가운데 정렬
+         left: 50%;
+         transform: translate(-50%, 0);
+
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+
+         p {
+            background-color: #374857;
+            border-radius: 4px;
+            color: white;
+            padding: 0px 6px;
+
+            font-size: 9pt;
+            // font-weight: 600;
+         }
+
+         span {
+            font-size: 0.9em;
+            color: #374857;
+         }
+
+         .box {
+            width: 160px;
+            height: 100px;
+            float: left;
+            // background: #347fc3;
+            overflow: hidden;
+            padding-bottom: 120px;
+         }
+
+         .text {
+            text-align: center;
+            margin-top: 56px;
+            color: #374857;
+            font-size: 2em;
+            font-family: sans-serif;
+            text-transform: uppercase;
+         }
+
+         .animated {
+            animation-duration: 2.5s;
+            animation-fill-mode: both;
+            animation-iteration-count: infinite;
+         }
+
+         @keyframes wobble {
+            0% {
+               transform: translateX(0%);
+            }
+            15% {
+               transform: translateX(-5%) rotate(-5deg);
+            }
+            30% {
+               transform: translateX(5%) rotate(3deg);
+            }
+            45% {
+               transform: translateX(-3%) rotate(-3deg);
+            }
+            60% {
+               transform: translateX(3%) rotate(2deg);
+            }
+            75% {
+               transform: translateX(-1%) rotate(-1deg);
+            }
+            100% {
+               transform: translateX(0%);
+            }
+         }
+         .wobble {
+            animation-name: wobble;
+         }
+      }
+   }
 }
 </style>
