@@ -47,16 +47,8 @@ export default {
       Loading,
    },
    methods: {
-    //   태그 검색 noriList 요청
-      getNoriListByTag() {
-        this.page = 1;
-        console.log("태그 검색");
-        findContentsByTag(
-            this.$route.params.searchValue,
-            this.page,
-            (res) => {
-            this.NoriList = res.data;
-            for (var i = 0; i < this.NoriList.length; i++) {
+       getAbility: function() {
+           for (var i = 0; i < this.NoriList.length; i++) {
                 if (this.NoriList[i].ability != null) {
                 let abilityList = [];
                 for (var j = 0; j < this.NoriList[i].ability.length; j++) {
@@ -69,38 +61,41 @@ export default {
                 this.NoriList[i].abilities = abilityList;
                 }
             }
+       },
+       success: function() {
+           (res) => {
+            this.NoriList = res.data;
+            this.getAbility()
             this.page += 1;
             this.loading = false;
-            },
-            (error) => {
+            }
+       },
+       error: function() {
+           (error) => {
             console.log(error);
             }
+       },
+    //   태그 검색 noriList 요청
+      getNoriListByTag() {
+        this.page = 1;
+        console.log("태그 검색");
+        findContentsByTag(
+            this.$route.params.searchValue,
+            this.page,
+            this.success(),
+            this.error()
         );
       },
       // 무한 스크롤 (다음 페이지에 있는 요청결과 가져와서 원래 video list 와 합치기)
     infiniteHandler($state) {
         findContentsByTag(
-          this.$route.query.tag,
+          this.$route.params.searchValue,
           this.page,
           (res) => {
             setTimeout(() => {
               if (res.data.length) {
                 var noriList = res.data;
-
-                for (var i = 0; i < noriList.length; i++) {
-                  if (noriList[i].ability != null) {
-                    let abilityList = [];
-                    for (var j = 0; j < noriList[i].ability.length; j++) {
-                      if (noriList[i].ability.charAt(j) == "1") {
-                        abilityList.push(this.abilities[j]);
-                      }
-                    }
-
-                    // 각 컨텐츠마다 지능
-                    noriList[i].abilities = abilityList;
-                  }
-                }
-
+                this.getAbility()
                 this.NoriList = this.NoriList.concat(noriList);
                 $state.loaded();
                 this.page += 1;
@@ -112,9 +107,7 @@ export default {
               }
             }, 1000);
           },
-          (error) => {
-            console.log(error);
-          }
+        this.error()
         );
       }
    },
