@@ -41,6 +41,8 @@
 }
 .comment-wrapper .comment-item .content {
   margin: 5px 0px;
+  justify-content: flex-start;
+  font-size: 14pt;
 }
 .comment-wrapper .comment-item .btn-wrapper {
   position: relative;

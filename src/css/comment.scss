@@ -36,8 +36,11 @@
             }
         }
 
+        // admin.scss의 p태그 속성에 영향받음
         .content{
             margin: 5px 0px;
+            justify-content: flex-start;
+            font-size: 14pt;
         }
 
         //삭제버튼

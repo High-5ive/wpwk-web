@@ -219,20 +219,19 @@ export default {
 
    // 최하단 좌우 이동 버튼
    .af-footer {
-      // display: flex;
+      display: flex;
       // flex-direction: column;
-      position: fixed;
+      position: absolute;
       z-index: 100;
-      left: 50%;
-      bottom: -75px;
-      transform: translateX(-50%);
+      // left: 50%;
+      bottom: 30px;
+      // transform: translateX(-50%);
       margin-bottom: 25px;
       //    background-color: white;
 
-      height: 100px;
+      height: 50px;
       width: 100%;
       // margin-top: 20px;
-      display: flex;
 
       .left-button {
          height: 50px;
