@@ -173,11 +173,7 @@ export default {
                }
             },
             (error) => {
-               if (error.response.status == 401) {
-                  alert('이메일을 인증해주세요');
-               } else {
-                  console.error(error);
-               }
+               console.error(error);
             }
          );
       },

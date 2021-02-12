@@ -5,7 +5,7 @@
     </div>
     <div v-if="!loading">
       <div class="nori-wrapper" v-for="(nori, idx) in NoriList" :key="idx">
-        <nori-content :sendNori="nori" v-on:tagEvent="getNoriListByTag" v-on:likeEvent="reloadList">
+        <nori-content :sendNori="nori" v-on:tagEvent="getNoriListByTag">
         </nori-content>
         <br />
       </div>
