@@ -45,8 +45,7 @@ const onlyAuthUser = (to, from, next) => {
 
 // ==============================
 // 여러개 태울 때, routes 변수 생성
-const routes = [
-  {
+const routes = [{
     path: '/',
     name: 'Main',
     beforeEnter: onlyAuthUser,

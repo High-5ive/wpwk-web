@@ -110,13 +110,14 @@ var routes = [{
     "default": _ContentsCreate["default"]
   }
 }, {
-  path: '/view/:id',
+  path: '/view/:nori',
   name: 'ContentsView',
   beforeEnter: onlyAuthUser,
   components: {
     side: _SideMenu["default"],
     "default": _ContentsView["default"]
-  }
+  },
+  props: true
 }, {
   path: '/landing',
   components: {

@@ -10,23 +10,37 @@
          <!-- <span>가정 보육, 여기서 해결하세요!</span> -->
 
          <div class="title">
+            <!-- <text-anima></text-anima> -->
+            <p>보육 콘텐츠 큐레이션 플랫폼</p>
             <div class="box">
                <div class="text animated wobble nf nf-600">위파위키</div>
-               <span class="nf">with parents with kids</span>
+               <span class="nf nf-600">with parents with kids</span>
             </div>
-            <!-- <p>보육 콘텐츠 큐레이션 플랫폼</p> -->
          </div>
          <span class="copy">© High5ive</span>
       </div>
    </div>
 </template>
 <script>
+import { mapState } from 'vuex';
+// import TextAnima from '@ /views/user/TextAnima.vue';
+
 export default {
+   components: {
+      // TextAnima ,
+   },
    mounted() {
       setTimeout(() => {
-         console.log('mounted');
-         this.$router.push('/login');
-      }, 4000);
+         if (this.isLogin) {
+            this.$router.push('/');
+         } else {
+            this.$router.push('/login');
+         }
+      }, 3000);
+   },
+
+   computed: {
+      ...mapState(['isLogin']),
    },
 };
 </script>
@@ -75,7 +89,7 @@ export default {
          left: 50%;
          transform: translate(-50%, 0);
 
-         bottom: 10px;
+         bottom: 20px;
          font-size: 6pt;
       }
 
@@ -92,13 +106,13 @@ export default {
          align-items: center;
 
          p {
-            background-color: #374857;
-            border-radius: 4px;
-            color: white;
-            padding: 0px 6px;
+            // background-color: #374857;
+            // border-radius: 4px;
+            color: #374857;
+            // padding: 0px 6px;
 
             font-size: 9pt;
-            // font-weight: 600;
+            font-weight: 600;
          }
 
          span {
