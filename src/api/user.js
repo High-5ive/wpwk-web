@@ -1,6 +1,4 @@
-import {
-  createInstance
-} from "./index.js";
+import { createInstance } from './index.js';
 
 const instance = createInstance();
 // const config = {
@@ -11,54 +9,54 @@ function registerUser(user, success, fail) {
   instance
     .post(`users`, JSON.stringify(user))
     .then(success)
-    .catch(fail)
+    .catch(fail);
 }
 
 function login(user, success, fail) {
   const body = {
     email: user.email,
-    password: user.password
+    password: user.password,
   };
 
   instance
     .post(`login`, JSON.stringify(body))
     .then(success)
-    .catch(fail)
+    .catch(fail);
 }
 
 function changePwd(param, success, fail) {
-  let token = window.localStorage.getItem("accessToken");
+  let token = window.localStorage.getItem('accessToken');
   const config = {
     headers: {
-      Authorization: `Bearer ${token}`
-    }
+      Authorization: `Bearer ${token}`,
+    },
   };
   instance
     .put(`users/changePassword`, param, config)
     .then(success)
-    .catch(fail)
+    .catch(fail);
 }
 
 function deleteUser(success, fail) {
-  let token = window.localStorage.getItem("accessToken");
+  let token = window.localStorage.getItem('accessToken');
   const config = {
     headers: {
-      Authorization: `Bearer ${token}`
-    }
+      Authorization: `Bearer ${token}`,
+    },
   };
   instance
     .delete(`users`, config)
     .then(success)
-    .catch(fail)
+    .catch(fail);
 }
 
 async function findById(userId, success, fail) {
-  let token = window.localStorage.getItem("accessToken");
+  let token = window.localStorage.getItem('accessToken');
 
   const config = {
     headers: {
-      Authorization: `Bearer ${token}`
-    }
+      Authorization: `Bearer ${token}`,
+    },
   };
   await instance
     .get(`loginUser/${userId}`, config)
@@ -70,14 +68,24 @@ function naverLogin(token, success, fail) {
   instance
     .get(`login/process/naver/` + token)
     .then(success)
-    .catch(fail)
+    .catch(fail);
 }
 
 function kakaoLogin(code, success, fail) {
   instance
     .get(`kakao/` + code)
     .then(success)
-    .catch(fail)
+    .catch(fail);
+}
+
+function contentsEvaluations(data, success, fail) {
+  let token = window.localStorage.getItem('accessToken');
+  let config = { headers: { Authorization: `Bearer ${token}` } };
+
+  instance
+    .put(`users/contentsEnd`, data, config)
+    .then(success)
+    .catch(fail);
 }
 
 export {
@@ -87,5 +95,6 @@ export {
   naverLogin,
   kakaoLogin,
   deleteUser,
-  changePwd
+  changePwd,
+  contentsEvaluations,
 };

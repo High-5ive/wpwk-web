@@ -6,7 +6,7 @@
       <!-- <v-icon @click="back">
             mdi-backup-restore
          </v-icon> -->
-      <Evaluations @evaluationPage="evaluation" />
+      <Evaluations @evaluationPage="evaluation" :contentsInfo="contents" />
     </div>
 
     <!-- 카드페이지 -->
@@ -102,6 +102,7 @@ export default {
       },
       selectedCategories: [],
       hashtags: [],
+      contents: Object,
     };
   },
   created() {
@@ -125,6 +126,7 @@ export default {
     },
     getContentsItems: function() {
       var contents = this.$route.params.nori;
+      this.contents = contents;
       //console.log(contents);
       this.writer = contents.nickname;
       this.title = contents.title;
@@ -145,10 +147,10 @@ export default {
   },
   watch: {
     evaluationValue: function() {
-      this.cards = []
-      this.getContentsItems()
-    }
-  }
+      this.cards = [];
+      this.getContentsItems();
+    },
+  },
 };
 </script>
 
