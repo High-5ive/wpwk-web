@@ -10,27 +10,41 @@
                <!-- 팔로우 버튼 (타유저프로필일때) -->
                <!-- 언팔로우 버튼 (타유저 구독한 상태일때) -->
             </div>
-            <button class="infos-button unfollow-button">
-               <v-icon>
-                  mdi-account-check
-               </v-icon>
-               <span>
-                  구독 취소
-               </span>
-            </button>
+            <div class="mp-top-right">
+               <div class="user-info">
+                  <div class="user-info-item">
+                     <span class="f-number">{{ followers }}</span>
+                     <span class="f-text">팔로워</span>
+                  </div>
+                  <div class="user-info-item">
+                     <span class="f-number">{{ followings }}</span>
+                     <span class="f-text">팔로잉</span>
+                  </div>
+               </div>
+               <button v-if="$route.params.userId !== userInfo.userId" class="infos-button unfollow-button">
+                  <v-icon>
+                     mdi-account-check
+                  </v-icon>
+                  <span>
+                     구독 취소
+                  </span>
+               </button>
+               <!-- <button class="infos-button follow-button">
+                  <v-icon>
+                     mdi-account-plus
+                  </v-icon>
+                  구독
+               </button> -->   
                
-            <!-- <button class="infos-button follow-button">
-               <v-icon>
-                  mdi-account-plus
-               </v-icon>
-               구독
-            </button> -->
+            </div>
             
          </div>
          
          
       </div>
-      <div class="middle d-flex justify-space-around">
+      <div 
+         class="middle d-flex justify-space-around"
+      >
          <div class="asset-navi" :class="{ 'selected-navi' : showValue===1}" @click="switchValue(1)">
             <span class="as-top">작성 글</span>
             <span class="as-bottom">{{ personsArticles.length }}</span>
@@ -174,6 +188,9 @@ export default {
          showValue: 5,
          personsAssets: [], // 글(사진 없는)
          personsAssetsWithPhoto: [], //노리(사진 있는)
+         //팔로잉 팔로워 수
+         followers: 52,
+         followings: 21,
          // 임시데이터 작성한글, 댓글단글(커뮤니티), 작성 노리, 관심노리 필수 항목 >> 제목(커뮤니티는 contents), 작성일자, 조회수, likeusers, 댓글, Article_id(Content_id)
          personsArticles: [
             {
@@ -387,31 +404,44 @@ export default {
 </script>
 <style lang="scss">
 @import '@/css/compo/modal.scss';
+@import 'src/css/common.scss';
 
 .mp-container {
    // max-width: 500px;
    // overflow: hidden;
+   @include desktop {
+      height: 100%;
+      max-width: 400px;
+      margin-left: -200px;
+      left: 50%;
+   }
+   @include tablet {
+      max-width: 400px;
+      left: 50%;
+      margin-left: -200px;
+   }
    position: relative;
    height: 100%;
    // border: red dashed 1px;
    padding-top: 40px;
    width: 100%;
    .top-wrapper {
+      height: 20%;
       position: relative;
       height: 150px;
       .user-info-wrapper {
          img {
             position: absolute;
-            left: -100px;
-            top: -15px;
-            width: 200px;
+            left: -180px;
+            top: -10px;
+            width: 180px;
             // height: 150px;
          }
          .in-bubble {
             white-space: nowrap;
             position: absolute;
-            left: -30px;
-            // top: 0px;
+            left: -120px;
+            top: 5px;
             .username{
                display: inlnine;
                font-size: 18pt;
@@ -419,33 +449,62 @@ export default {
             }
 
          }
-         .follow-button {
-            background-color: #a2d646; 
-         }
-         .unfollow-button {
-            background-color: rgb(184, 184, 184);
-            
-         }
-         .infos-button {
-            font-size: 10pt;
+         .mp-top-right {
+            background-color: #F2F1F2;
+            border-radius: 20px;
+            padding: 10px;
             position: absolute;
-            top: 90px;
-            left: -57px;
-            // margin-left: 10px;
-            border-radius: 10px;
-            padding: 5px 10px;
-            width: 120px; 
-            &:focus {
-               outline: none;
-            } 
+            left: 10px;
+            width: 170px;
+            top: -25px;
+            display: flex;
+            flex-direction: column;
+            height: 120px;
+            align-items: center;
+            justify-content: space-around;
+            .user-info {
+               width: 100%;
+               display: flex;
+               justify-content: space-around;
+               .user-info-item {
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  .f-number {
+                     font-size: 18pt;
+                  }
+                  .f-text {
+                     font-size: 10pt;
+                  }
+               }
+            }
+            .follow-button {
+               background-color: #a2d646; 
+            }
+            .unfollow-button {
+               background-color: rgb(184, 184, 184);
+               
+            }
+            .infos-button {
+               font-size: 10pt;
+               // margin-left: 10px;
+               border-radius: 10px;
+               padding: 5px 10px;
+               width: 100px; 
+               &:focus {
+                  outline: none;
+               } 
+            }
+
          }
       }
    }
    .middle {
       // background-color: lightgray;
-      margin-top: -15px;
+      height: 10%;
       width: 90%;
       display: flex;
+      margin-top: -50px;
       align-items: center;
       padding: 10px 5px;
       box-shadow: 0 4px 4px lightgray;
@@ -483,8 +542,9 @@ export default {
       
    }
    .bottom {
+      
       position: relative;
-      max-height: 55%;
+      max-height: 65%;
       overflow: scroll;
       border-radius: 10px;
       border: lightgray 1px solid;
