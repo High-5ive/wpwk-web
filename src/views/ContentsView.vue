@@ -59,10 +59,11 @@
             <div class="cm-wrapper">
               <CommentList
                 :comments="this.comments"
+                @updateComment="updateComment"
                 @deleteComment="deleteComment"
               />
             </div>
-            <CommentForm @createComment="createComment" />
+            <CommentForm :contents="contents" @createComment="createComment" />
           </v-card>
         </v-dialog>
       </v-row>
@@ -77,8 +78,10 @@ import Evaluations from '@/components/ContentsView/Evaluations';
 import CommentList from '@/components/Comment/CommentList';
 import CommentForm from '@/components/Comment/CommentForm';
 import { findContentsItemById } from '@/api/contents.js';
-
-// img, photo, description은 제공받는 데이터에서 가져옴(임의의 값 설정)
+import { findContentsComment } from '@/api/contents.js';
+import { deleteContentsComment } from '@/api/contents.js';
+import { updateContentsComment } from '@/api/contents.js';
+import { createContentsComment } from '@/api/contents.js';
 
 export default {
   name: 'ContentsView',
@@ -120,9 +123,49 @@ export default {
     deleteComment: function(comment) {
       const deleteId = this.comments.indexOf(comment);
       this.comments.splice(deleteId, 1);
+
+      deleteContentsComment(
+        comment.id,
+        (success) => {
+          alert('댓글을 삭제 했습니다.');
+          console.log('댓글을 삭제 succ.', success);
+        },
+        (fail) => {
+          console.log('댓글을 삭제 fail.', fail);
+        }
+      );
     },
+    updateComment: function(comment) {
+      var data = {
+        commentId: data.id,
+        comment: comment.comment,
+      };
+      alert(comment);
+      alert(data);
+      updateContentsComment(
+        data,
+        (success) => {
+          console.log(success);
+          alert('댓글 수정을 완료 했습니다.');
+        },
+        (fail) => {
+          console.log(fail);
+          alert('댓글을 수정하는데 실패 했습니다.');
+        }
+      );
+    },
+
     createComment: function(comment) {
       this.comments.push(comment);
+      createContentsComment(
+        comment,
+        (success) => {
+          console.log(success);
+        },
+        (fail) => {
+          console.log(fail);
+        }
+      );
     },
     getContentsItems: function() {
       var contents = this.$route.params.nori;
@@ -141,6 +184,17 @@ export default {
         },
         (fail) => {
           console.log('get ContentsItem fail ', fail);
+        }
+      );
+
+      findContentsComment(
+        contentsId,
+        (success) => {
+          console.log('get Contents Comments success', success.data);
+          this.comments = success.data;
+        },
+        (fail) => {
+          console.log('get Contents Comment fail', fail);
         }
       );
     },
