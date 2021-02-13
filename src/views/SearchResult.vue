@@ -1,14 +1,16 @@
 <template>
-   <div class="container">
+   <div class="main-container">
       <div v-if="loading">
          <loading></loading>
       </div>
-      <div v-if="!loading">
-         <div class="nori-wrapper">
-            <NoriContent v-for="(nori, idx) in NoriList" :key="idx" :sendNori="nori" />
-            <br>
+      <div v-if="!loading" class="noriList-wrapper">
+         <NoriContent class="nori-wrapper" v-for="(nori, idx) in NoriList" :key="idx" :sendNori="nori" />
+         <br />
+         <div class="nori-wrapper spinner">
+            <infinite-loading spinner="spiral" @infinite="infiniteHandler">
+               <div slot="no-more" class="nf">더 이상 컨텐츠가 없어요 :)</div>
+            </infinite-loading>
          </div>
-         <infinite-loading spinner="spiral" @infinite="infiniteHandler"></infinite-loading>
       </div>
       <speed-dial></speed-dial>
    </div>
@@ -120,6 +122,13 @@ export default {
             this.error()
          );
       },
+      getSearchList() {
+         if (this.$route.params.type === 'tag') {
+            this.getNoriListByTag();
+         } else {
+            this.getNoriListByKeyword();
+         }
+      },
       // 무한 스크롤 (다음 페이지에 있는 요청결과 가져와서 원래 video list 와 합치기)
       infiniteHandler($state) {
          if (this.$route.params.type === 'tag') {
@@ -170,13 +179,35 @@ export default {
       },
    },
    created: function() {
-      if (this.$route.params.type === 'tag') {
-         this.getNoriListByTag();
-      } else {
-         this.getNoriListByKeyword();
-      }
+      this.getSearchList()
    },
 };
 </script>
 
-<style></style>
+<style lang="scss">
+.main-container {
+   padding: 10px 30px 0px 30px;
+
+   .noriList-wrapper {
+      // background-color: rgb(254, 227, 227);
+      width: 100%;
+
+      // 반응형, 메인 페이지 콘텐츠 다중 노출
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+
+      .nori-wrapper {
+         // 반응형 풀려면, min-, max- 풀면 됨
+         width: 100%;
+         min-width: 400px;
+         max-width: 500px;
+         height: 300px;
+
+         &.spinner {
+            padding-top: 130px;
+         }
+      }
+   }
+}
+</style>

@@ -22,7 +22,7 @@
 import NoriContent from '@/components/main/NoriContent.vue';
 import SpeedDial from '@/components/main/SpeedDial.vue';
 import Loading from '@/components/main/Loading.vue';
-import { findContentsByPage,  } from '@/api/contents.js';
+import { findContentsByPage } from '@/api/contents.js';
 import infiniteLoading from 'vue-infinite-loading';
 
 export default {
