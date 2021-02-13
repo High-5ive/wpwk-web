@@ -28,11 +28,11 @@ export default {
    data: function() {
       return {
          noriList: [],
+         NoriList: [],
          abilities: ['언어지능', '논리수학지능', '음악지능', '신체운동지능', '공간지능', '자연지능', '대인지능', '개인내지능'],
          infLoading: false,
          page: 1,
          loading: true,
-         tagSearch: '',
       };
    },
    components: {
@@ -181,6 +181,12 @@ export default {
    created: function() {
       this.getSearchList()
    },
+   watch: {
+      $route() {
+         console.log('change')
+         this.getSearchList()
+      }
+   }
 };
 </script>
 
