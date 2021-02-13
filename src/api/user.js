@@ -26,6 +26,19 @@ function login(user, success, fail) {
     .catch(fail)
 }
 
+function follow(userId, success, fail) {
+  let token = window.localStorage.getItem("accessToken");
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
+  instance
+    .post(`users/following/${userId}`, config)
+    .then(success)
+    .catch(fail)
+}
+
 function changePwd(param, success, fail) {
   let token = window.localStorage.getItem("accessToken");
   const config = {
@@ -87,5 +100,6 @@ export {
   naverLogin,
   kakaoLogin,
   deleteUser,
-  changePwd
+  changePwd,
+  follow,
 };

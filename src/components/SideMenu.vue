@@ -5,7 +5,7 @@
             <span>{{ userInfo.nickname }}</span
             >님 환영합니다
          </p>
-         <span class="mypage" @click="$router.push('mypage').catch(() => {})">내 정보 보기</span>
+         <span class="mypage" @click="$router.push({name: 'mypage', params: {userId: userInfo.userId}}).catch(() => {})">내 정보 보기</span>
          <span class="logout" @click="$store.dispatch('doLogout')">로그아웃</span>
       </div>
       <div class="link-wrapper">
