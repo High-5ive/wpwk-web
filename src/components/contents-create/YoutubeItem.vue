@@ -23,7 +23,13 @@ export default {
   },
   computed: {
     thumbnailSrc: function () {
-      return `https://img.youtube.com/vi/${this.video.id.videoId}/hqdefault.jpg`
+      // 썸네일 없을시
+      if (this.video.snippet.thumbnails.default.url.length == 0) {
+        return '@/assets/img/contents-create/yt-img.png'
+        //있을시
+      } else {
+        return `https://img.youtube.com/vi/${this.video.id.videoId}/hqdefault.jpg`
+      }
     }
   },
   filters: {
@@ -33,14 +39,26 @@ export default {
   },
   methods: {
     onSelectVideo: function () {
-      const video = {
-        thumbnailSrc: `https://img.youtube.com/vi/${this.video.id.videoId}/hqdefault.jpg`,
-        title: _.unescape(this.video.snippet.title),
-        videoId: this.video.id.videoId,
-        videoCaption: this.video.snippet.description
+      // 썸네일 없을시
+      if (this.video.snippet.thumbnails.default.url.length == 0) {
+        const video = {
+          thumbnailSrc: '@/assets/img/contents-create/yt-img.png',
+          title: _.unescape(this.video.snippet.title),
+          videoId: this.video.id.videoId,
+          videoCaption: this.video.snippet.description
+        }
+        this.$emit('select-video', video)
+        //있을시
+      } else {
+        const video = {
+          thumbnailSrc: `https://img.youtube.com/vi/${this.video.id.videoId}/hqdefault.jpg`,
+          title: _.unescape(this.video.snippet.title),
+          videoId: this.video.id.videoId,
+          videoCaption: this.video.snippet.description
+        }
+        this.$emit('select-video', video)
+
       }
-      this.$emit('select-video', video)
-      console.log(video)
     }
   }
 
