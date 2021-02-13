@@ -1,8 +1,8 @@
 <template>
    <!-- 노리 제작 헤더 -->
-   <div class="container">
-      <guideline class="guide" style="margin-right: 10px" />
+   <div class="cc-container">
       <v-text-field id="input-title" v-model="title" label="제목" hint="ex) [11세]집에서 할 수 있는 축구게임"></v-text-field>
+      <guideline class="guide" style="margin-right: 10px" />
       <v-divider></v-divider>
       <!-- 노리의 항목들 -->
       <draggable :list="itemList" :options="{ animation: 300 }" class="contents">
@@ -215,133 +215,112 @@ export default {
 </script>
 
 <style lang="scss">
+@import 'src/css/common.scss';
 // 트렐로 배경색 : rgb(235,236,240)
-.guide {
-   position: fixed;
-   top: 70px;
-   right: 10px;
-}
-
-#input-title {
-   margin-top: 0px !important;
-}
-.contents {
-   margin-bottom: 100px;
-}
-.div-wrapper {
-   // animation: 0.3s ease-out 0s 1 slideInFromBottom;
-   // @keyframes slideInFromBottom {
-   //   0% {
-   //     transform: translateY(30px);
-   //     opacity: 0;
-   //   }
-   //   100% {
-   //     transform: translateY(0);
-   //     opacity: 1;
-   //   }
-   // }
-   .circle {
-      width: 30px;
-
-      // line-height와 height를 일치시키면, 텍스트 한줄 중앙 정렬
-      height: 30px;
-      line-height: 30px;
-
-      background-color: lightgray;
-      border-radius: 25px;
-      text-align: center;
-      color: white;
-      margin-right: 10px;
-
-      padding-right: 0px !important;
+.cc-container {
+   @include desktop {
+      max-width: 500px;
+      left: 50%;
+      margin-left: -250px;
    }
-   .text-wrapper {
-      background-color: #fff8d7;
+   @include tablet {
+      max-width: 500px;
+      left: 50%;
+      margin-left: -250px;
    }
-   .youtube-wrapper {
-      background-color: #ffe6e6;
+   padding: 0 10px;
+   position: relative;
+   .guide {
+      position: absolute;
+      top: 10px;
+      right: 10px;
    }
-   .photo-wrapper {
-      background-color: #dae6fc;
-   }
-   .item-wrapper {
-      // border: 1px solid gray;
-      z-index: 50;
-      width: 95%;
-      height: 150px;
-      padding: 10px;
-      margin-top: 10px;
-      margin-bottom: 10px;
-      // border-radius: 5px;
 
-      // background-color: rgb(247, 247, 247);
-      // box-shadow: 0 4px 4px lightgray;
+   #input-title {
+      margin-top: 0px !important;
+   }
+   .contents {
+      margin-bottom: 100px;
+   }
+   .div-wrapper {
+      // animation: 0.3s ease-out 0s 1 slideInFromBottom;
+      // @keyframes slideInFromBottom {
+      //   0% {
+      //     transform: translateY(30px);
+      //     opacity: 0;
+      //   }
+      //   100% {
+      //     transform: translateY(0);
+      //     opacity: 1;
+      //   }
+      // }
+      .circle {
+         width: 30px;
 
-      .left-wrapper {
-         width: 10%;
-         img {
-            width: 35px;
-            height: 100%;
-         }
+         // line-height와 height를 일치시키면, 텍스트 한줄 중앙 정렬
+         height: 30px;
+         line-height: 30px;
+
+         background-color: lightgray;
+         border-radius: 25px;
+         text-align: center;
+         color: white;
+         margin-right: 10px;
+
+         padding-right: 0px !important;
       }
+      .text-wrapper {
+         background-color: #fff8d7;
+      }
+      .youtube-wrapper {
+         background-color: #ffe6e6;
+      }
+      .photo-wrapper {
+         background-color: #dae6fc;
+      }
+      .item-wrapper {
+         // border: 1px solid gray;
+         z-index: 50;
+         width: 95%;
+         height: 150px;
+         padding: 10px;
+         margin-top: 10px;
+         margin-bottom: 10px;
+         // border-radius: 5px;
 
-      .middle-wrapper {
-         // background-color: red;
-         display: flex;
-         justify-content: center;
-         align-items: center;
-         width: 80%;
-         height: 100%;
+         // background-color: rgb(247, 247, 247);
+         // box-shadow: 0 4px 4px lightgray;
 
-         .text-item-wrapper {
-            width: 80%;
-            height: 80%;
-            // background-color: yellow;
-            .text {
-               max-height: 100%;
-               width: 100%;
-               text-align: center;
-               overflow: scroll;
-               font-size: 11pt;
-            }
-            .text::-webkit-scrollbar {
-               display: none;
-            }
-            textarea {
-               width: 100%;
+         .left-wrapper {
+            width: 10%;
+            img {
+               width: 35px;
                height: 100%;
-               padding: 8px;
-               background-color: #ffffff4e;
-               // box-shadow: 0 4px 4px lightgray;
-               resize: none;
-               font-size: 11pt;
-            }
-            textarea:focus {
-               outline: none;
-            }
-
-            textarea::placeholder {
-               color: rgb(171, 171, 171);
-               font-style: italic;
-               font-size: 11pt;
-               text-align: center;
             }
          }
-         .photo-item-wrapper {
-            height: 100%;
+
+         .middle-wrapper {
             // background-color: red;
-            .image-wrapper {
-               width: 50%;
-               height: 90%;
-               img {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 80%;
+            height: 100%;
+
+            .text-item-wrapper {
+               width: 80%;
+               height: 80%;
+               // background-color: yellow;
+               .text {
+                  max-height: 100%;
                   width: 100%;
-                  height: 100%;
-                  object-fit: cover;
+                  text-align: center;
+                  overflow: scroll;
+                  font-size: 11pt;
                }
-            }
-            .desc-wrapper {
-               width: 40%;
-               height: 70%;
+               .text::-webkit-scrollbar {
+                  display: none;
+               }
                textarea {
                   width: 100%;
                   height: 100%;
@@ -354,180 +333,218 @@ export default {
                textarea:focus {
                   outline: none;
                }
-               .text {
-                  text-align: center;
-                  width: 100%;
-                  max-height: 100%;
-                  overflow: scroll;
+
+               textarea::placeholder {
+                  color: rgb(171, 171, 171);
+                  font-style: italic;
                   font-size: 11pt;
+                  text-align: center;
                }
-               .text::-webkit-scrollbar {
-                  display: none;
+            }
+            .photo-item-wrapper {
+               height: 100%;
+               // background-color: red;
+               .image-wrapper {
+                  width: 50%;
+                  height: 90%;
+                  img {
+                     width: 100%;
+                     height: 100%;
+                     object-fit: cover;
+                  }
+               }
+               .desc-wrapper {
+                  width: 40%;
+                  height: 70%;
+                  textarea {
+                     width: 100%;
+                     height: 100%;
+                     padding: 8px;
+                     background-color: #ffffff4e;
+                     // box-shadow: 0 4px 4px lightgray;
+                     resize: none;
+                     font-size: 11pt;
+                  }
+                  textarea:focus {
+                     outline: none;
+                  }
+                  .text {
+                     text-align: center;
+                     width: 100%;
+                     max-height: 100%;
+                     overflow: scroll;
+                     font-size: 11pt;
+                  }
+                  .text::-webkit-scrollbar {
+                     display: none;
+                  }
                }
             }
          }
-      }
 
-      .right-wrapper {
-         height: 100%;
-         width: 15px;
-         text-align: center;
-         // background-color: yellow;
-         button:focus {
-            outline: none;
-         }
-         .v-icon {
-            position: relative;
-            top: -5px;
-            right: 5px;
-            color: gray;
-         }
-         .text-rightbottom {
-            margin-bottom: -10.2px;
-            margin-right: -15px;
-            border-left: 25px solid #fcf592;
-            border-bottom: 25px solid #ffffff;
-         }
-         .youtube-rightbottom {
-            margin-bottom: -10.2px;
-            margin-right: -15px;
-            border-left: 25px solid #f1afad;
-            border-bottom: 25px solid #ffffff;
-         }
-         .photo-rightbottom {
-            margin-bottom: -10.2px;
-            margin-right: -15px;
-            border-left: 25px solid #a8c7f1;
-            border-bottom: 25px solid #ffffff;
+         .right-wrapper {
+            height: 100%;
+            width: 15px;
+            text-align: center;
+            // background-color: yellow;
+            button:focus {
+               outline: none;
+            }
+            .v-icon {
+               position: relative;
+               top: -5px;
+               right: 5px;
+               color: gray;
+            }
+            .text-rightbottom {
+               margin-bottom: -10.2px;
+               margin-right: -15px;
+               border-left: 25px solid #fcf592;
+               border-bottom: 25px solid #ffffff;
+            }
+            .youtube-rightbottom {
+               margin-bottom: -10.2px;
+               margin-right: -15px;
+               border-left: 25px solid #f1afad;
+               border-bottom: 25px solid #ffffff;
+            }
+            .photo-rightbottom {
+               margin-bottom: -10.2px;
+               margin-right: -15px;
+               border-left: 25px solid #a8c7f1;
+               border-bottom: 25px solid #ffffff;
+            }
          }
       }
    }
-}
-// 잡힌거
-.sortable-chosen {
-   // transform: rotate(-4deg);
-   // z-index: 500;
-   opacity: 1;
-   // background-color: red;
-}
-// 뒤에거
-.sortable-ghost {
-   // transform: rotate(0deg);
-   opacity: 0;
-   // z-index: 500;
-}
+   // 잡힌거
+   .sortable-chosen {
+      // transform: rotate(-4deg);
+      // z-index: 500;
+      opacity: 1;
+      // background-color: red;
+   }
+   // 뒤에거
+   .sortable-ghost {
+      // transform: rotate(0deg);
+      opacity: 0;
+      // z-index: 500;
+   }
 
-.footer {
-   width: 100%;
-   position: fixed;
-   z-index: 100;
-   left: 50%;
-   bottom: -10px;
-   transform: translateX(-50%);
-   margin-bottom: 10px;
+   .footer {
+      @include desktop {
+         width: 500px;
+      }
+      @include tablet {
+         width: 500px;
+      }
+      width: 100%;
+      position: fixed;
+      z-index: 100;
+      bottom: 0px;
+      display: flex;
+      direction: column;
+      justify-content: center;
 
-   display: flex;
-   direction: column;
-   justify-content: center;
+      align-items: center;
+      .footer-buttons {
+         height: 50px;
+         margin: 0 auto;
+         width: 200px;
+         padding-left: 20px;
+         background-color: #ffffff;
+         border-radius: 30px;
+         border: rgb(179, 179, 179) 4px solid;
 
-   align-items: center;
-   .footer-buttons {
-      height: 50px;
-      margin: 0 auto;
-      width: 200px;
-      padding-left: 20px;
-      background-color: #ffffff;
-      border-radius: 30px;
-      border: rgb(179, 179, 179) 4px solid;
+         // border: 1px solid gray;
+         // box-shadow: 0 4px 4px lightgray;
 
-      // border: 1px solid gray;
-      // box-shadow: 0 4px 4px lightgray;
+         .row.footerButtons {
+            // background-color: red !important;
+            width: 30px;
+            height: 30px;
+            margin-right: 22px !important;
+            margin-left: 4px !important;
 
-      .row.footerButtons {
-         // background-color: red !important;
-         width: 30px;
-         height: 30px;
-         margin-right: 22px !important;
-         margin-left: 4px !important;
-
-         .mdi-youtube {
+            .mdi-youtube {
+               font-size: 25pt;
+               color: rgb(179, 179, 179);
+               &:hover {
+                  color: #f1afad;
+               }
+            }
+         }
+         .footer-button-photo {
             font-size: 25pt;
+            // margin-left: 20px;
+            margin-right: 18px;
             color: rgb(179, 179, 179);
             &:hover {
-               color: #f1afad;
+               color: #a8c7f1;
+            }
+         }
+         .footer-button-text {
+            font-size: 25pt;
+            // margin-left: 20px;
+            margin-right: 18px;
+            color: rgb(179, 179, 179);
+            &:hover {
+               color: #fcf592;
             }
          }
       }
-      .footer-button-photo {
-         font-size: 25pt;
-         // margin-left: 20px;
-         margin-right: 18px;
-         color: rgb(179, 179, 179);
-         &:hover {
-            color: #a8c7f1;
+      .footer-navi {
+         width: 100%;
+         margin-top: 20px;
+         height: 50px;
+         .left-button {
+            background-color: #f4b740;
+            width: 50%;
+            padding-top: 12px;
+            text-align: center;
+            font-size: 13pt;
+         }
+         .right-button {
+            background-color: #a2d646;
+            padding-top: 12px;
+            width: 50%;
+            text-align: center;
+            font-size: 13pt;
          }
       }
-      .footer-button-text {
-         font-size: 25pt;
-         // margin-left: 20px;
-         margin-right: 18px;
-         color: rgb(179, 179, 179);
-         &:hover {
-            color: #fcf592;
+   }
+   .background-text {
+      // background-color: red;
+      pointer-events: none;
+      width: 100% !important;
+      margin-left: -10px !important;
+      position: absolute;
+      bottom: -400px;
+      text-align: center;
+      width: 80%;
+      /* left, right는 해당 요소의 위치 시작점을 결정한다. 그런데, 이때, margin의 양 값을 auto로 줌으로써 마진을 주어 해당 요소의 양 끝 위치를 각각 0으로 만들어준다. */
+      margin: 0 auto;
+      animation: 1s ease-out 0s 1 slideInFromTop;
+      @keyframes slideInFromTop {
+         0% {
+            transform: translateY(-30px);
+            opacity: 0;
+         }
+         100% {
+            transform: translateY(0);
+            opacity: 1;
          }
       }
-   }
-   .footer-navi {
-      width: 100%;
-      margin-top: 20px;
-      height: 50px;
-      .left-button {
-         background-color: #f4b740;
-         width: 50%;
-         padding-top: 12px;
-         text-align: center;
-         font-size: 13pt;
+      p {
+         font-size: 16pt;
+         color: rgb(179, 179, 179);
       }
-      .right-button {
-         background-color: #a2d646;
-         padding-top: 12px;
-         width: 50%;
-         text-align: center;
-         font-size: 13pt;
-      }
-   }
-}
-.background-text {
-   // background-color: red;
-   pointer-events: none;
-   width: 100% !important;
-   margin-left: -10px !important;
-   position: fixed;
-   bottom: 150px;
-   text-align: center;
-   width: 80%;
-   /* left, right는 해당 요소의 위치 시작점을 결정한다. 그런데, 이때, margin의 양 값을 auto로 줌으로써 마진을 주어 해당 요소의 양 끝 위치를 각각 0으로 만들어준다. */
-   margin: 0 auto;
-   animation: 1s ease-out 0s 1 slideInFromTop;
-   @keyframes slideInFromTop {
-      0% {
-         transform: translateY(-30px);
-         opacity: 0;
-      }
-      100% {
-         transform: translateY(0);
-         opacity: 1;
-      }
-   }
-   p {
-      font-size: 16pt;
-      color: rgb(179, 179, 179);
-   }
 
-   i.v-icon {
-      color: rgb(179, 179, 179);
-      font-size: 30pt;
+      i.v-icon {
+         color: rgb(179, 179, 179);
+         font-size: 30pt;
+      }
+      // z-index: -1;
    }
-   // z-index: -1;
 }
 </style>
