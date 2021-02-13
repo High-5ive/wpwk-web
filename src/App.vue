@@ -165,13 +165,17 @@ export default {
 
       .v-main__wrap .cv-container {
          @include desktop {
-            padding: 0 100px !important;
+            padding: 0 20% !important;
          }
       }
 
-      .cl-footer {
+      // 반응형에 해당하는 푸터들도 적용
+      .cl-footer,
+      .ev-footer,
+      .cc-footer,
+      .af-footer {
          @include desktop {
-            padding: 0 100px !important;
+            padding: 0 20% !important;
          }
       }
    }

@@ -11,17 +11,21 @@
 
       <div class="ev-footer">
          <div class="footer-eval">
-            <div class="left-button" @click="goReView"><v-icon>mdi-backup-restore</v-icon></div>
-            <div class="middle-button" @click="goHome">
+            <div class="left-button material-ripple" @click="goReView()">
+               <v-icon>mdi-backup-restore</v-icon>
+               <span class="cap">다시보기</span>
+            </div>
+            <div class="middle-button material-ripple" @click="goHome()">
                <v-icon>
                   mdi-home
                </v-icon>
+               <span class="cap">홈으로</span>
             </div>
-            <div class="right-button">
-               <!-- <v-icon>
-                  mdi-chevron-right
-               </v-icon> -->
-               제작자의 다른 콘텐츠 보러가기
+            <div class="right-button material-ripple">
+               <v-icon>
+                  mdi-dots-horizontal-circle-outline
+               </v-icon>
+               <span class="cap">제작자의 다른 컨텐츠 보러가기</span>
             </div>
          </div>
       </div>
@@ -47,7 +51,6 @@ export default {
          this.$router.go(this.$router.currentRoute);
       },
       goReView: function() {
-         alert('초기화면으로 돌아갑니다');
          this.evaluation = false;
          console.log(this.evaluation);
          this.$emit('evaluationPage', this.evaluation);

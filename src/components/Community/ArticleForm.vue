@@ -22,9 +22,9 @@
       </div>
 
       <div class="af-footer">
-         <div class="left-button" @click="closeModal"><v-icon>mdi-close</v-icon></div>
-         <div class="middle-button" @click="reset"><v-icon>mdi-eraser</v-icon></div>
-         <div class="right-button" @click="createArticle">글 작성</div>
+         <div class="left-button" @click="closeModal"><v-icon>mdi-close</v-icon> <span class="cap">종료</span></div>
+         <div class="middle-button" @click="reset"><v-icon>mdi-eraser</v-icon> <span class="cap">지우기</span></div>
+         <div class="right-button" @click="createArticle"><v-icon>mdi-pencil</v-icon> <span class="cap">글작성</span></div>
       </div>
    </div>
 </template>
@@ -126,6 +126,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import 'src/css/common.scss';
+
 //v-select 했을 때, 세부 선택 박스 하단으로 붙이기
 .v-list.v-select-list.v-sheet.theme--light {
    margin-top: 40px;
@@ -220,51 +222,73 @@ export default {
    // 최하단 좌우 이동 버튼
    .af-footer {
       display: flex;
-      // flex-direction: column;
       position: absolute;
       z-index: 100;
-      // left: 50%;
       bottom: 30px;
-      // transform: translateX(-50%);
       margin-bottom: 25px;
-      //    background-color: white;
+      padding: 0 10%;
 
       height: 50px;
       width: 100%;
-      // margin-top: 20px;
+
+      .cap {
+         padding: 0;
+         display: block;
+         font-size: 8pt;
+         font-weight: 600;
+         color: $navi-cap;
+      }
+
+      i {
+         color: $navi-main;
+      }
 
       .left-button {
          height: 50px;
-         background-color: #f4b840fa;
-         width: 20%;
-         padding-top: 12px;
+         width: 30%;
          text-align: center;
+         position: relative;
 
-         &:hover {
-            background-color: #ca9834;
+         i,
+         .cap {
+            color: $navi-danger;
+         }
+
+         &::after {
+            content: '';
+            width: 1px;
+            height: 20px;
+            position: absolute;
+            top: 4px;
+            right: -1px;
+            background-color: rgb(223, 223, 223);
          }
       }
 
       .middle-button {
          height: 50px;
-         background-color: #f4b740;
-         width: 20%;
-         padding-top: 12px;
+         width: 30%;
          text-align: center;
+         position: relative;
 
-         &:hover {
-            background-color: #ca9834;
+         &::after {
+            content: '';
+            width: 1px;
+            height: 20px;
+            position: absolute;
+            top: 4px;
+            right: -1px;
+            background-color: rgb(223, 223, 223);
          }
       }
 
       .right-button {
-         background-color: #a2d646;
-         padding-top: 12px;
-         width: 60%;
+         width: 40%;
          text-align: center;
 
-         &:hover {
-            background-color: #8dbb3e;
+         i,
+         .cap {
+            color: $navi-success;
          }
       }
    }

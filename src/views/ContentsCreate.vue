@@ -32,7 +32,7 @@
          </div>
       </draggable>
       <!-- 항목 추가 위한 버튼들 -->
-      <div class="footer d-flex flex-column">
+      <div class="cc-footer d-flex flex-column">
          <div class="footer-buttons d-flex justify-center align-center">
             <div class="btn-wrapper">
                <YoutubeCreate :isAdded="youtubeAdded" @select-video="onSelectVideo" class="footerButtons" />
@@ -417,9 +417,9 @@ export default {
    // z-index: 500;
 }
 
-.footer {
+.cc-footer {
    width: 100%;
-   position: fixed;
+   position: absolute;
    z-index: 100;
    left: 50%;
    bottom: -10px;
