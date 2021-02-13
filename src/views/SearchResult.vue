@@ -1,17 +1,12 @@
 <template>
    <div class="container">
-      {{ this.NoriList }}
       <div v-if="loading">
          <loading></loading>
       </div>
       <div v-if="!loading">
-         <!-- <div class="nori-wrapper" v-for="(nori, idx) in NoriList" :key="idx">
-        <nori-content :sendNori="nori" v-on:tagEvent="getNoriListByTag">
-        </nori-content>
-        <br />
-      </div> -->
          <div class="nori-wrapper">
             <NoriContent v-for="(nori, idx) in NoriList" :key="idx" :sendNori="nori" />
+            <br>
          </div>
          <infinite-loading spinner="spiral" @infinite="infiniteHandler"></infinite-loading>
       </div>
