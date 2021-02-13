@@ -1,6 +1,6 @@
 @charset "UTF-8";
-.container {
-  background-color: white;
+.lj-container {
+  background-color: #fffedd;
   /* 전체화면 가리기 */
   width: 100%;
   max-width: 100%;
@@ -13,46 +13,46 @@
   left: 0;
   z-index: 5000;
 }
-.container .wrapper {
+.lj-container .wrapper {
   font-family: "Poor Srtoy", sans-serif !important;
-  background-color: rgba(241, 249, 255, 0.555);
-  border-radius: 45px;
-  min-width: 360px;
+  min-width: 411px;
   min-height: 500px;
-  width: 50%;
-  height: 80%;
+  width: 100%;
+  height: 100%;
   margin: 0 auto;
-  margin-top: 50px;
-  padding: 60px 0px;
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* box-shadow: 0px 9px 20px 0px #56565629; */
+  justify-content: center;
 }
-.container .wrapper .title {
+.lj-container .wrapper .title {
   display: block;
   height: 100px;
   text-align: center;
 }
-.container .wrapper .title .join-img {
+.lj-container .wrapper .title img {
+  width: 250px;
+}
+.lj-container .wrapper .title .join-img {
   width: 30px;
 }
-.container .wrapper .title span {
+.lj-container .wrapper .title span {
   display: block;
   color: #a2d646;
   font-size: 24px;
   font-family: "Poor Story";
   font-weight: 600;
 }
-.container .wrapper .input-wrapper label {
+.lj-container .wrapper .input-wrapper label {
   display: block;
   margin-bottom: 10px;
 }
-.container .wrapper .input-wrapper .error {
+.lj-container .wrapper .input-wrapper .error {
   background-color: white !important;
   border: 1px solid #e32315 !important;
 }
-.container .wrapper .input-wrapper input {
+.lj-container .wrapper .input-wrapper input {
   width: 250px;
   height: 50px;
   border-radius: 25px;
@@ -61,41 +61,41 @@
   padding-left: 20px;
   /* border-bottom: 2px solid rgb(8, 89, 40); */
 }
-.container .wrapper .input-wrapper input.join {
+.lj-container .wrapper .input-wrapper input.join {
   height: 40px;
   font-size: 10pt;
   border: 1px solid #f4b740;
   display: block;
 }
-.container .wrapper .input-wrapper input.join-retry {
+.lj-container .wrapper .input-wrapper input.join-retry {
   height: 40px;
   margin-top: 25px;
   border: 1px solid #f4b740;
 }
-.container .wrapper .input-wrapper label {
+.lj-container .wrapper .input-wrapper label {
   text-align: center;
   font-size: 12px;
   font-weight: 600;
 }
-.container .wrapper .input-wrapper .input-nick {
-  margin-top: 30px;
+.lj-container .wrapper .input-wrapper .input-nick {
+  margin-top: 10px;
   font-size: 12pt;
 }
-.container .feature-wrapper {
-  margin-top: 30px;
+.lj-container .wrapper .feature-wrapper {
+  margin-top: 10px;
   text-align: center;
 }
-.container .feature-wrapper .find_pw {
-  color: grey;
-  font-size: 10pt;
+.lj-container .wrapper .feature-wrapper .find_pw {
+  color: #989898;
+  font-size: 8pt;
   text-decoration: underline;
 }
-.container .feature-wrapper .find_pw:hover {
+.lj-container .wrapper .feature-wrapper .find_pw:hover {
   color: #010101;
   font-size: 10pt;
 }
-.container .feature-wrapper #submit {
-  margin-top: 40px;
+.lj-container .wrapper .feature-wrapper #submit {
+  margin-top: 1.2em;
   margin-bottom: 10px;
   color: #f4b740;
   font-size: 10pt;
@@ -105,18 +105,39 @@
   padding: 20px 70px;
   font-weight: 600;
 }
-.container .feature-wrapper #submit.join {
+.lj-container .wrapper .feature-wrapper #submit.join {
   margin: 10px 0px 0px 0px;
   color: #89BA17;
   background-color: white !important;
   border: 2px #89BA17 solid !important;
 }
-.container .btn-back {
-  font-size: 10pt;
+.lj-container .wrapper .btn-back {
+  font-size: 9pt;
   padding-top: 0px;
 }
-.container .social-wrapper {
-  margin-top: 30px;
+.lj-container .wrapper .btn-back a {
+  color: gray;
+}
+.lj-container .wrapper .social-wrapper {
+  background-color: white;
+  width: 200px;
+  height: 100px;
+  padding: 10px;
+  border-radius: 20px;
+  margin-top: 20px;
+}
+.lj-container .wrapper .social-wrapper P {
+  text-align: center;
+  font-family: "Poor Story";
+  font-size: 10pt;
+  color: gray;
+}
+.lj-container .wrapper .social-wrapper .btn-social-group {
+  display: flex;
+  justify-content: center;
+}
+.lj-container .wrapper .social-wrapper .btn-social-group .btn-social:nth-child(1) {
+  margin-right: 20px;
 }
 
 .input-wrapper .input-wrapper input:nth-child(2n+1) {
@@ -136,7 +157,7 @@ input::placeholder {
 
 .input-password,
 .input-email {
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 .error-text {

@@ -13,6 +13,8 @@ var _SideMenu = _interopRequireDefault(require("@/components/SideMenu.vue"));
 
 var _Main = _interopRequireDefault(require("../views/Main.vue"));
 
+var _SearchResult = _interopRequireDefault(require("../views/SearchResult.vue"));
+
 var _Community = _interopRequireDefault(require("../views/Community.vue"));
 
 var _ArticleDetail = _interopRequireDefault(require("../views/ArticleDetail.vue"));
@@ -59,22 +61,43 @@ var onlyAuthUser = function onlyAuthUser(to, from, next) {
   if (localStorage.getItem('accessToken') !== null) {
     next();
   } else {
-    alert('로그인이 필요한 페이지입니다. '); // alert(store.state.userInfo)
-
+    // console.log(this.$store.state.userInfo);
+    console.log('onlyAuthUser : ', window.location.href);
+    alert('로그인이 필요한 페이지입니다. ');
     next('/login');
+  }
+};
+
+var onlyNoneAuthUser = function onlyNoneAuthUser(to, from, next) {
+  if (localStorage.getItem('accessToken') === null) {
+    next();
+  } else {
+    // console.log(this.$store.state.userInfo);
+    alert('이미 로그인 되어 있습니다'); // alert(store.state.userInfo)
+
+    next('/main');
   }
 }; // ==============================
 // 여러개 태울 때, routes 변수 생성
 
 
 var routes = [{
-  path: '/',
+  path: '/main',
   name: 'Main',
   beforeEnter: onlyAuthUser,
   components: {
     side: _SideMenu["default"],
     "default": _Main["default"]
   }
+}, {
+  path: '/search/:searchValue',
+  name: 'SearchResult',
+  beforeEnter: onlyAuthUser,
+  components: {
+    side: _SideMenu["default"],
+    "default": _SearchResult["default"]
+  },
+  props: true
 }, {
   path: '/cmmu',
   name: 'community',
@@ -94,13 +117,14 @@ var routes = [{
   },
   props: true
 }, {
-  path: '/mypage',
+  path: '/mypage/:userId',
   name: 'mypage',
   beforeEnter: onlyAuthUser,
   components: {
     side: _SideMenu["default"],
     "default": _Mypage["default"]
-  }
+  },
+  props: true
 }, {
   path: '/contentscreate',
   name: 'ContentsCreate',
@@ -110,21 +134,23 @@ var routes = [{
     "default": _ContentsCreate["default"]
   }
 }, {
-  path: '/view/:id',
+  path: '/view/:nori',
   name: 'ContentsView',
   beforeEnter: onlyAuthUser,
   components: {
     side: _SideMenu["default"],
     "default": _ContentsView["default"]
-  }
+  },
+  props: true
 }, {
-  path: '/landing',
+  path: '/',
   components: {
     "default": _LandingPage["default"]
   }
 }, {
   path: '/login',
   name: 'Login',
+  beforeEnter: onlyNoneAuthUser,
   components: {
     "default": _Login["default"]
   }

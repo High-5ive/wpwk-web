@@ -38,17 +38,28 @@ const onlyAuthUser = (to, from, next) => {
   if (localStorage.getItem('accessToken') !== null) {
     next();
   } else {
+    // console.log(this.$store.state.userInfo);
+    console.log('onlyAuthUser : ', window.location.href);
     alert('로그인이 필요한 페이지입니다. ');
-    // alert(store.state.userInfo)
     next('/login');
+  }
+};
+
+const onlyNoneAuthUser = (to, from, next) => {
+  if (localStorage.getItem('accessToken') === null) {
+    next();
+  } else {
+    // console.log(this.$store.state.userInfo);
+    alert('이미 로그인 되어 있습니다');
+    // alert(store.state.userInfo)
+    next('/main');
   }
 };
 
 // ==============================
 // 여러개 태울 때, routes 변수 생성
-const routes = [
-  {
-    path: '/',
+const routes = [{
+    path: '/main',
     name: 'Main',
     beforeEnter: onlyAuthUser,
     components: {
@@ -57,7 +68,7 @@ const routes = [
     },
   },
   {
-    path: '/:searchValue',
+    path: '/search/:searchValue',
     name: 'SearchResult',
     beforeEnter: onlyAuthUser,
     components: {
@@ -116,7 +127,7 @@ const routes = [
     props: true,
   },
   {
-    path: '/landing',
+    path: '/',
     components: {
       default: LandingPage,
     },
@@ -124,6 +135,7 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
+    beforeEnter: onlyNoneAuthUser,
     components: {
       default: Login,
     },

@@ -5,16 +5,19 @@
          <router-view name="side" class="sidemenu" />
       </v-navigation-drawer>
 
-      <v-app-bar app class="root-header" absolute :class="{ openSide: drawer }">
-         <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-         <v-toolbar-title>
-            <img @click="goMain" src="@/assets/wpwk_logo.png"/>
-         </v-toolbar-title>
+      <v-app-bar app class="root-header" :class="{ openSide: drawer }">
+         <div class="btn-menu" v-if="!isDesk" @click="drawer = !drawer">
+            <v-icon>mdi-hamburger</v-icon>
+         </div>
+         <v-toolbar-title
+            ><router-link to="/main"><img src="@/assets/wpwk_logo.png"/></router-link
+         ></v-toolbar-title>
          <div class="btn-search" @click="showSearch = !showSearch"><i class="fas fa-search"></i></div>
          <search v-if="showSearch" @searchShow="searchShow"></search>
       </v-app-bar>
 
-      <v-main :class="{ openSide: drawer }">
+      <v-main id="main-wrapper" :class="{ openSide: drawer }">
+         <!-- {{ width }}, {{ height }} -->
          <router-view />
       </v-main>
    </v-app>
@@ -29,27 +32,57 @@ export default {
    data: () => ({
       drawer: false,
       showSearch: false,
+      isDesk: false,
+
+      width: 0,
+      height: 0,
    }),
+   mounted() {
+      window.addEventListener('load', this.handleResize);
+      window.addEventListener('resize', this.handleResize);
+   },
+   beforeDestroy() {
+      window.addEventListener('load', this.handleResize);
+      window.removeEventListener('resize', this.handleResize);
+   },
+   updated() {
+      window.addEventListener('load', this.handleResize);
+   },
    methods: {
-      searchShow(search) {
-         this.showSearch = search;
+      handleResize() {
+         // $breakpoint-mobile: 411px;
+         // $breakpoint-tablet: 600px;
+         // $breakpoint-desktop: 1264px;
+
+         this.width = window.innerWidth;
+
+         // var elem = '';
+         // const cond = 'opacity: 0.46; background-color: rgb(33, 33, 33); border-color: rgb(33, 33, 33);';
+
+         // 1264px 이상일 경우, 햄버거 버튼 삭제 및 사이드 메뉴 고정
+         if (this.width >= 1264) {
+            // console.log('데스크탑 : 사이드메뉴 고정, 버튼 사라지게');
+            this.isDesk = true;
+            this.drawer = true;
+
+            // elem = document.querySelector('.v-overlay__scrim');
+            // elem.style = 'display:none';
+            // test.classList.add('openSide');
+         } else {
+            this.isDesk = false; //햄버거 버튼 보일지 말지
+            // this.drawer = false;
+            // elem.style = 'display:static';
+         }
       },
-      goMain: function () {
-         this.$router.push('/')
-      }
-   }
+   },
 };
 </script>
 
 <style lang="scss">
 @import 'src/css/common.scss';
 
-#root {
-   background-color: rgb(55, 117, 125) im !important;
-   // width: 100px;
-}
-
 #inspire {
+   // position: relative !important;
    // background-color: blue;
    font-family: 'Poor Story' sans-serif !important;
 
@@ -81,6 +114,10 @@ export default {
       }
    }
 
+   .btn-menu i {
+      color: #89ba17;
+   }
+
    .btn-search i {
       height: 24px;
       width: 24px;
@@ -92,15 +129,17 @@ export default {
 
    // 사이드 메뉴
    .v-navigation-drawer.v-navigation-drawer--fixed {
-      width: 70% !important;
+      width: 400px !important;
 
       //각 디바이스 크기별 동작
       @include mobile {
          width: 70% !important;
+         min-width: 300px !important;
       }
 
       @include tablet {
-         width: 50% !important;
+         // width: 50% !important;
+         max-width: 420px;
       }
 
       @include desktop {
@@ -113,9 +152,40 @@ export default {
          }
       }
    }
+
+   // @responsive 데스크탑일 때, 본문 좌우 여백으로 사이즈 조절
+   #main-wrapper {
+      position: relative;
+
+      .v-main__wrap .cv-container {
+         @include desktop {
+            padding: 0 100px !important;
+         }
+      }
+
+      .cl-footer {
+         @include desktop {
+            padding: 0 100px !important;
+         }
+      }
+   }
+
+   // @responsive 댓글창 모달 부분 absolute로 변경
+   .v-dialog__content--active,
+   .v-dialog__content {
+      @include desktop {
+         margin-left: 400px;
+         width: calc(100% - 400px);
+      }
+
+      .v-dialog--fullscreen {
+         overflow: hidden;
+         position: absolute !important;
+      }
+   }
 }
 
-// 사이드 메뉴가 켜졌을 때, v-main, root-header를 우측으로 밀어줌
+// @responsive 사이드 메뉴가 켜졌을 때, v-main, root-header를 우측으로 밀어줌
 .openSide {
    // border: 2px solid red !important;
 

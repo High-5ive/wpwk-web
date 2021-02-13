@@ -56,7 +56,7 @@
             </div>
          </div>
       </div>
-      <div v-if="itemList.length===0" class="background-text">
+      <div v-if="itemList.length === 0" class="background-text">
          <p class="nf nf-600">
             아래 버튼을 눌러 <br />
             컨텐츠를 추가해주세요!
@@ -208,7 +208,7 @@ export default {
          this.itemList[itemInfo[1]].description = itemInfo[0];
       },
       cancleCreate: function() {
-         this.$router.push('/');
+         this.$router.push('/main');
       },
    },
 };
@@ -407,7 +407,7 @@ export default {
 .sortable-chosen {
    // transform: rotate(-4deg);
    // z-index: 500;
-   opacity: 1.0;
+   opacity: 1;
    // background-color: red;
 }
 // 뒤에거

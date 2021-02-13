@@ -112,7 +112,7 @@
 .cv-container .cv-card-wrapper .cl-container .cl-footer {
   display: flex;
   flex-direction: column;
-  position: fixed;
+  position: absolute;
   z-index: 100;
   left: 50%;
   bottom: -26px;
@@ -288,29 +288,10 @@
 }
 
 #comment-box.theme--light.v-card {
-  background-color: white !important;
   box-shadow: 0px -9px 20px 2px #56565629;
   margin-top: 300px !important;
   border-radius: 50px 50px 0px 0px;
   border: 1px solid #a2d646;
-}
-#comment-box.theme--light.v-card .close-btn {
-  border-radius: 0px;
-  position: fixed;
-  z-index: 110;
-  bottom: 0px;
-  text-align: center;
-  line-height: 45px;
-  width: 50px;
-  height: 50px;
-  background-color: #f7b3b3;
-  border-right: 1px solid #a2d646;
-}
-#comment-box.theme--light.v-card .close-btn i {
-  color: white;
-}
-#comment-box.theme--light.v-card .close-btn:focus {
-  outline: none;
 }
 #comment-box.theme--light.v-card .wp-face,
 #comment-box.theme--light.v-card .wp-hand {

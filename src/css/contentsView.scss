@@ -152,7 +152,7 @@
             .cl-footer {
                 display: flex;
                 flex-direction: column;
-                position: fixed;
+                position: absolute;
                 z-index: 100;
                 left: 50%;
                 bottom: -26px;
@@ -401,38 +401,14 @@
 // 모달은 div가 최상단 컨테이너랑 같은 뎁스에 존재한다
 // 모달 닫히며 수많은 클래스가 변경됨 -> 너무 상세히 설정하면 변하는 과정에서 깨짐
 #comment-box.theme--light.v-card {
-    background-color: white !important;
+
+    // background-color: blue !important;
     box-shadow: 0px -9px 20px 2px #56565629;
 
     margin-top: 300px !important;
     border-radius: 50px 50px 0px 0px;
     border: 1px solid $main-green;
     // height: 50% !important;
-
-    // 닫기 버튼 댓글 입력창 위에 오버레이
-    .close-btn {
-        border-radius: 0px;
-        position: fixed;
-        z-index: 110;
-        bottom: 0px;
-
-        text-align: center;
-        line-height: 45px;
-
-        width: 50px;
-        height: 50px;
-
-        background-color: rgb(247, 179, 179);
-        border-right: 1px solid $main-green;
-
-        i {
-            color: white;
-        }
-
-        &:focus {
-            outline: none;
-        }
-    }
 
     $img_x: -65px;
     $img_y: -10px;

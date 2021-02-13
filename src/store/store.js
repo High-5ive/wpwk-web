@@ -28,17 +28,22 @@ export default new Vuex.Store({
 
     //로그아웃 시
     logout(state) {
-      localStorage.removeItem('accessToken');
+      // localStorage.removeItem('accessToken');
+      localStorage.clear;
       state.isLogin = false;
       state.userInfo = null;
     },
   },
   actions: {
-    doLogout({ commit }) {
+    doLogout({
+      commit
+    }) {
       commit('logout');
       alert('정상적으로 로그아웃 되었습니다')
       localStorage.removeItem('accessToken');
-      router.push({name:'Login'})
+      router.push({
+        name: 'Login'
+      })
       // axios.defaults.headers.common["auth-token"] = undefined;
     },
 
@@ -54,7 +59,9 @@ export default new Vuex.Store({
       }
     },
 
-    getUserInfo({ commit }) {
+    getUserInfo({
+      commit
+    }) {
       let log = localStorage.getItem('accessToken');
 
       if (log != null) {

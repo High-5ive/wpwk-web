@@ -42,7 +42,7 @@ export default {
    mounted() {
       naverServiceAuth();
 
-      this.$router.push('/');
+      this.$router.push('/main');
    },
 };
 </script>

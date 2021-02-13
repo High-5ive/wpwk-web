@@ -8,7 +8,11 @@ const instance = createInstance();
 function findAllBoards(success, fail) {
 
   let token = window.localStorage.getItem("accessToken");
-  let config = {headers: { Authorization: `Bearer ${token}` }};
+  let config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
 
   instance
     .get(`boards`, config)
@@ -19,7 +23,11 @@ function findAllBoards(success, fail) {
 // 좋아요 올리기
 function updateLikes(id, params, success, fail) {
   let token = window.localStorage.getItem("accessToken");
-  let config = {headers: { Authorization: `Bearer ${token}` }};
+  let config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
 
   instance
     .put(`boards/${id}/likes`, JSON.stringify(params), config)

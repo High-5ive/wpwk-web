@@ -1,8 +1,8 @@
 @import "vars";
 @import "mixins";
 
-.container {
-   background-color: white;
+.lj-container {
+   background-color: #fffedd;
 
    /* 전체화면 가리기 */
    width: 100%;
@@ -17,33 +17,36 @@
    left: 0;
    z-index: 5000;
 
-   .wrapper {
+   // *{
+   //    border: 1px dashed red;
+   // }
 
+   .wrapper {
       font-family: 'Poor Srtoy', sans-serif !important;
 
-      background-color: rgba(241, 249, 255, 0.555);
-      border-radius: 45px;
-
-      min-width: 360px;
+      min-width: 411px;
       min-height: 500px;
-      width: 50%;
-      height: 80%;
+      width: 100%;
+      height: 100%;
       margin: 0 auto;
-      margin-top: 50px;
-      padding: 60px 0px;
+      
+      position: relative;
 
       display: flex;
       flex-direction: column;
       align-items: center;
-
-      /* box-shadow: 0px 9px 20px 0px #56565629; */
-
+      justify-content: center;
+      
       .title {
          display: block;
          height: 100px;
          // background-color: red;
 
          text-align: center;
+
+         img{
+            width: 250px;
+         }
 
 
          //  회원가입
@@ -105,59 +108,85 @@
 
          // 별명 입력
          .input-nick {
-            margin-top: 30px;
+            margin-top: 10px;
             font-size: 12pt;
          }
       }
-   }
 
-   .feature-wrapper {
-      margin-top: 30px;
-      text-align: center;
-
-      .find_pw {
-         color: grey;
-         font-size: 10pt;
-         text-decoration: underline;
-      }
-
-      .find_pw:hover {
-         color: rgb(1, 1, 1);
-         font-size: 10pt;
-      }
-
-      #submit {
-         margin-top: 40px;
-         margin-bottom: 10px;
-
-         color: #f4b740;
-         font-size: 10pt;
-         border-radius: 20px;
-         background-color: white !important;
-         border: 2px #f4b740 solid !important;
-         padding: 20px 70px;
-
-         font-weight: 600;
-
-         //  회원가입
-         &.join {
-            margin: 10px 0px 0px 0px;
-            color: $green;
+      .feature-wrapper {
+         margin-top: 10px;
+         text-align: center;
+   
+         .find_pw {
+            color: rgb(152, 152, 152);
+            font-size: 8pt;
+            text-decoration: underline;
+         }
+   
+         .find_pw:hover {
+            color: rgb(1, 1, 1);
+            font-size: 10pt;
+         }
+   
+         #submit {
+            margin-top: 1.2em;
+            margin-bottom: 10px;
+   
+            color: #f4b740;
+            font-size: 10pt;
+            border-radius: 20px;
             background-color: white !important;
-            border: 2px $green solid !important;
+            border: 2px #f4b740 solid !important;
+            padding: 20px 70px;
+   
+            font-weight: 600;
+   
+            //  회원가입
+            &.join {
+               margin: 10px 0px 0px 0px;
+               color: $green;
+               background-color: white !important;
+               border: 2px $green solid !important;
+            }
+         }
+      }
+   
+      .btn-back{
+         font-size: 9pt;
+         padding-top: 0px;
+         a{
+            color: gray;
+            // text-decoration: none;
+         }
+      }
+      
+   
+      .social-wrapper {
+         background-color: white;
+         width: 200px;
+         height: 100px;
+         padding: 10px;
+         border-radius: 20px;
+         margin-top: 20px;
+
+         P{
+            text-align: center;
+            font-family: "Poor Story";
+            font-size: 10pt;
+            color: gray;
+         }
+
+         .btn-social-group{
+            display: flex;
+            justify-content: center;
+            
+            .btn-social:nth-child(1){
+               margin-right: 20px;
+            }
          }
       }
    }
 
-   .btn-back{
-      font-size: 10pt;
-      padding-top: 0px;
-   }
-   
-
-   .social-wrapper {
-      margin-top: 30px;
-   }
 
 
 }
@@ -179,7 +208,7 @@ input::placeholder {
 
 .input-password,
 .input-email {
-   margin-top: 30px;
+   margin-top: 20px;
 }
 
 .error-text {
