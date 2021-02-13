@@ -49,6 +49,12 @@ export default {
       window.addEventListener('load', this.handleResize);
    },
    methods: {
+      searchShow(search) {
+         this.showSearch = search;
+      },
+      goMain: function() {
+         this.$router.push('/main');
+      },
       handleResize() {
          // $breakpoint-mobile: 411px;
          // $breakpoint-tablet: 600px;
