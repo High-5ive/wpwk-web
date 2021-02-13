@@ -1,5 +1,5 @@
 <template>
-   <div class="mp-container d-flex flex-column align-center">
+   <div style="overflow: hidden;" class="mp-container d-flex flex-column align-center">
       <div class="top-wrapper">
          <div class="user-info-wrapper">
             <img src="@/assets/img/characters/eval_bubble.png" alt="">
@@ -21,20 +21,20 @@
                      <span class="f-text">팔로잉</span>
                   </div>
                </div>
-               <button v-if="$route.params.userId !== userInfo.userId" class="infos-button unfollow-button">
+               <!-- <button v-if="$route.params.userId !== userInfo.userId" class="infos-button unfollow-button">
                   <v-icon>
                      mdi-account-check
                   </v-icon>
                   <span>
                      구독 취소
                   </span>
-               </button>
-               <!-- <button class="infos-button follow-button">
+               </button> -->
+               <button class="infos-button follow-button">
                   <v-icon>
                      mdi-account-plus
                   </v-icon>
                   구독
-               </button> -->   
+               </button>   
                
             </div>
             
@@ -75,7 +75,7 @@
          <persons-assets-with-photo v-if="showValue===3 ||showValue===4" :showValue="showValue" :personsAssetsWithPhoto="personsAssetsWithPhoto" />
          <chart v-if="showValue == 5"/>
       </div>
-      <div v-if="$route.params.userId === userInfo.userId" class="footer-wrapper">
+      <div  class="footer-wrapper">
          <a class="user-action" href="#" @click="dialog = true">비밀번호 변경</a>
          <a class="user-action" href="#" @click="dialog2 = true">회원탈퇴</a>
       </div>
@@ -193,6 +193,16 @@ export default {
          followings: 21,
          // 임시데이터 작성한글, 댓글단글(커뮤니티), 작성 노리, 관심노리 필수 항목 >> 제목(커뮤니티는 contents), 작성일자, 조회수, likeusers, 댓글, Article_id(Content_id)
          personsArticles: [
+            {
+               user: '한솔맘',
+               subject: "동네맛집",
+               itemList: [],
+               views: 843,
+               content: "아이들과 가기 좋은 연남동 맛집 추천해주세요~*^^*",
+               created_at: "2021-02-01 11:15:23",
+               likeList: ['주상맘','태성맘'],
+               comments: [{user: "태성맘", content:"해피치즈스마일이라고 떡볶이 안맵고 맛있더라구요~", created_at: "2021-02-05 11:00:32"}]
+            },
             {
                user: '한솔맘',
                subject: "동네맛집",
@@ -408,7 +418,6 @@ export default {
 
 .mp-container {
    // max-width: 500px;
-   // overflow: hidden;
    @include desktop {
       height: 100%;
       max-width: 400px;
@@ -423,7 +432,6 @@ export default {
    position: relative;
    height: 100%;
    // border: red dashed 1px;
-   padding-top: 40px;
    width: 100%;
    .top-wrapper {
       height: 20%;
@@ -433,15 +441,16 @@ export default {
          img {
             position: absolute;
             left: -180px;
-            top: -10px;
+            top: 20px;
             width: 180px;
+            transform: rotateY(180deg);
             // height: 150px;
          }
          .in-bubble {
             white-space: nowrap;
             position: absolute;
-            left: -120px;
-            top: 5px;
+            left: -130px;
+            top: 32px;
             .username{
                display: inlnine;
                font-size: 18pt;
@@ -456,7 +465,7 @@ export default {
             position: absolute;
             left: 10px;
             width: 170px;
-            top: -25px;
+            top: 10px;
             display: flex;
             flex-direction: column;
             height: 120px;
@@ -501,10 +510,10 @@ export default {
    }
    .middle {
       // background-color: lightgray;
+      margin-top: -10px;
       height: 10%;
       width: 90%;
       display: flex;
-      margin-top: -50px;
       align-items: center;
       padding: 10px 5px;
       box-shadow: 0 4px 4px lightgray;
@@ -542,13 +551,12 @@ export default {
       
    }
    .bottom {
-      
       position: relative;
-      max-height: 65%;
+      max-height: 55%;
       overflow: scroll;
       border-radius: 10px;
       border: lightgray 1px solid;
-      margin-top: 30px;
+      margin-top: 20px;
       width: 90%;
       &::-webkit-scrollbar {
          display: none;
@@ -626,8 +634,7 @@ export default {
    .footer-wrapper {
       // background-color: red;
       position: absolute;
-      // top: 700px;
-      bottom: 10px;
+      bottom: 30px;
       right: 10px;
       .user-action {
          color: gray;
