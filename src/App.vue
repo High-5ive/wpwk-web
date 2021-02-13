@@ -35,7 +35,7 @@ export default {
          this.showSearch = search;
       },
       goMain: function () {
-         this.$router.push({name:'Main', params: {reload: true}})
+         this.$router.push('/')
       }
    }
 };

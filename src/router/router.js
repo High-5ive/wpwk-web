@@ -18,6 +18,7 @@ import SideMenu from '@/components/SideMenu.vue';
 
 //아래 바뀌는 모든 화면단을 import
 import Main from '../views/Main.vue';
+import SearchResult from '../views/SearchResult.vue';
 import Community from '../views/Community.vue';
 import ArticleDetail from '../views/ArticleDetail.vue';
 import Mypage from '../views/Mypage.vue';
@@ -53,6 +54,15 @@ const routes = [
     components: {
       side: SideMenu,
       default: Main,
+    },
+  },
+  {
+    path: '/:searchValue',
+    name: 'SearchResult',
+    beforeEnter: onlyAuthUser,
+    components: {
+      side: SideMenu,
+      default: SearchResult,
     },
     props: true,
   },

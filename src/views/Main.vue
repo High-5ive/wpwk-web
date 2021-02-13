@@ -1,12 +1,12 @@
 <template>
   <div class="container">
-    {{ this.reload }}
     <div v-if="loading">
       <loading></loading>
     </div>
     <div v-if="!loading">
       <div class="nori-wrapper" v-for="(nori, idx) in NoriList" :key="idx">
-        <nori-content :sendNori="nori" v-on:tagEvent="getNoriListByTag">
+        <!-- <nori-content :sendNori="nori" v-on:tagEvent="getNoriListByTag"> -->
+        <nori-content :sendNori="nori">
         </nori-content>
         <br />
       </div>
@@ -52,13 +52,8 @@ export default {
       tagSearch: "",
     };
   },
-  props: {
-    reload: {
-      type: Boolean,
-      default: false
-    }
-  },
   created() {
+    console.log("hi")
     if (this.$route.query.tag != null) {
       this.getNoriListByTag();
     } else {
@@ -208,16 +203,6 @@ export default {
       this.$router.push({ name: "ContentsCreate" });
     },
   },
-  watch: {
-    reload: function () {
-      if(this.reload) {
-        this.getNoriList();
-      }
-      else {
-        this.getNoriListByTag();
-      }
-    }
-  }
 };
 </script>
 

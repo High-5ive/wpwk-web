@@ -44,8 +44,8 @@ export default {
       router.push({ name: 'ContentsView', params: { nori: target } });
     },
     tagSearch: function(tagName) {
-      router.push({ name: 'Main', query: { tag: tagName } });
-      this.$emit('tagEvent');
+      router.push({ name: 'SearchResult', params: { searchValue: tagName, type: "tag" } });
+      // this.$emit('tagEvent');
     },
   },
 };

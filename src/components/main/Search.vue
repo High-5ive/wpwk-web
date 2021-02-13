@@ -41,7 +41,7 @@ export default {
    },
    methods: {
       search: function () {
-         this.$router.push({name:'main', query: {search: this.searchValue}})
+         this.$router.push({name: 'SearchResult', params: { searchValue: this.searchValue , type: "keyword"}})
          this.$emit('searchShow', this.searchShow)
       },
       categorySearchShow(search) {
