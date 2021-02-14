@@ -20,7 +20,7 @@
 import NoriContent from '@/components/main/NoriContent.vue';
 import SpeedDial from '@/components/main/SpeedDial.vue';
 import Loading from '@/components/main/Loading.vue';
-import { findContentsByTag, findContentsByKeyword } from '@/api/contents.js';
+import { findContentsByTag, findContentsByKeyword, findContentsByCategory } from '@/api/contents.js';
 import infiniteLoading from 'vue-infinite-loading';
 
 export default {
@@ -122,11 +122,39 @@ export default {
             this.error()
          );
       },
+      getNoriListByCategory() {
+         this.page = 1;
+         console.log('카테고리 검색');
+         findContentsByCategory(
+            this.$route.params.searchValue,
+            this.page,
+            (res) => {
+               this.NoriList = res.data;
+               for (var i = 0; i < this.NoriList.length; i++) {
+                  if (this.NoriList[i].ability != null) {
+                     let abilityList = [];
+                     for (var j = 0; j < this.NoriList[i].ability.length; j++) {
+                        if (this.NoriList[i].ability.charAt(j) == '1') {
+                           abilityList.push(this.abilities[j]);
+                        }
+                     }
+                     // 각 컨텐츠마다 지능
+                     this.NoriList[i].abilities = abilityList;
+                  }
+               }
+               this.page += 1;
+               this.loading = false;
+            },
+            this.error()
+         );
+      },
       getSearchList() {
          if (this.$route.params.type === 'tag') {
             this.getNoriListByTag();
-         } else {
+         } else if (this.$route.params.type === 'keyword') {
             this.getNoriListByKeyword();
+         } else {
+            this.getNoriListByCategory();
          }
       },
       // 무한 스크롤 (다음 페이지에 있는 요청결과 가져와서 원래 video list 와 합치기)
@@ -153,7 +181,7 @@ export default {
                },
                this.error()
             );
-         } else {
+         } else if (this.$route.params.type === 'keyword'){
             findContentsByKeyword(
                this.$route.params.searchValue,
                this.page,
@@ -172,6 +200,30 @@ export default {
                         $state.complete();
                      }
                   }, 1000);
+               },
+               this.error()
+            );
+         }
+         else {
+            findContentsByCategory(
+               this.$route.params.searchValue,
+               this.page,
+               (res) => {
+                  this.NoriList = res.data;
+                  for (var i = 0; i < this.NoriList.length; i++) {
+                     if (this.NoriList[i].ability != null) {
+                        let abilityList = [];
+                        for (var j = 0; j < this.NoriList[i].ability.length; j++) {
+                           if (this.NoriList[i].ability.charAt(j) == '1') {
+                              abilityList.push(this.abilities[j]);
+                           }
+                        }
+                        // 각 컨텐츠마다 지능
+                        this.NoriList[i].abilities = abilityList;
+                     }
+                  }
+                  this.page += 1;
+                  this.loading = false;
                },
                this.error()
             );
