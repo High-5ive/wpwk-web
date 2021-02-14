@@ -5,7 +5,7 @@
             <img src="@/assets/img/characters/eval_bubble.png" alt="">
             <div class="in-bubble">
                <!-- 나중에는 페이지 들어오기전에 유저정보(id, 별명, 작성글 목록 등) 요청 후 응담 내용으로 보여주기-->
-               <span class="username">{{ userInfo.nickname }}님</span>
+               <span class="username">{{ userNickname }}님</span>
                
                <!-- 팔로우 버튼 (타유저프로필일때) -->
                <!-- 언팔로우 버튼 (타유저 구독한 상태일때) -->
@@ -22,7 +22,7 @@
                   </div>
                </div>
                <div v-if="$route.params.userId !== userInfo.userId" class="follow-buttons">
-                  <button v-if="isfollowed" class="infos-button unfollow-button">
+                  <button @click="followSomeone" v-if="isfollowed" class="infos-button unfollow-button">
                      <v-icon>
                         mdi-account-check
                      </v-icon>
@@ -49,27 +49,27 @@
       >
          <div class="asset-navi" :class="{ 'selected-navi' : showValue===1}" @click="switchValue(1)">
             <span class="as-top">작성 글</span>
-            <span class="as-bottom">{{ personsArticles.length }}</span>
+            <!-- <span class="as-bottom">{{ personsArticles.length }}</span> -->
          </div>
          <div class="divider"></div>
          <div class="asset-navi" :class="{ 'selected-navi' : showValue===2}" @click="switchValue(2)">
             <span class="as-top">댓글단 글</span>
-            <span class="as-bottom">{{ personsCommentArticles.length }}</span>
+            <!-- <span class="as-bottom">{{ personsCommentArticles.length }}</span> -->
          </div>
          <div class="divider"></div>
          <div class="asset-navi" :class="{ 'selected-navi' : showValue===3}" @click="switchValue(3)">
             <span class="as-top">작성 노리</span>
-            <span class="as-bottom">{{ personsContents.length }}</span>
+            <!-- <span class="as-bottom">{{ personsContents.length }}</span> -->
          </div>
          <div class="divider"></div>
          <div class="asset-navi" :class="{ 'selected-navi' : showValue===4}" @click="switchValue(4)">
             <span class="as-top">관심 노리</span>
-            <span class="as-bottom">{{ personsLikeContents.length }}</span>
+            <!-- <span class="as-bottom">{{ personsLikeContents.length }}</span> -->
          </div>
          <div v-if="$route.params.userId === userInfo.userId" class="divider"></div>
          <div v-if="$route.params.userId === userInfo.userId" class="asset-navi" :class="{ 'selected-navi' : showValue===5}" @click="showValue = 5">
             <span class="as-top">시청 분석</span>
-            <v-icon class="as-bottom">mdi-television-classic</v-icon>
+            <!-- <v-icon class="as-bottom">mdi-television-classic</v-icon> -->
          </div>
       </div>
       <div :class="{'bottom':showValue}">
@@ -152,6 +152,7 @@
 <script>
 import { deleteUser } from '@/api/user.js'
 import { changePwd } from '@/api/user.js'
+import { getUserInfo } from '@/api/user.js'
 import { follow } from '@/api/user.js'
 import { mapState } from 'vuex'
 import Chart from '@/components/mypage/Chart.vue'
@@ -171,6 +172,7 @@ export default {
    },
    data: function () {
       return {
+         userNickname: '',
          //modal control(비밀번호 변경)
          dialog: false,
          dialog2: false,
@@ -195,9 +197,9 @@ export default {
          personsAssets: [], // 글(사진 없는)
          personsAssetsWithPhoto: [], //노리(사진 있는)
          //팔로잉 팔로워 수
-         followers: 52,
-         followings: 21,
-         isfollowed: false,
+         followers: 0,
+         followings: 0,
+         isfollowed: '',
          // 임시데이터 작성한글, 댓글단글(커뮤니티), 작성 노리, 관심노리 필수 항목 >> 제목(커뮤니티는 contents), 작성일자, 조회수, likeusers, 댓글, Article_id(Content_id)
          personsArticles: [
             {
@@ -349,15 +351,40 @@ export default {
       }
    },
    methods: {
+      // 유저정보
+      getUserInfo: function () {
+         const targetUser = {
+            targetId: this.$route.params.userId
+         }
+         getUserInfo(
+            targetUser,
+            (success) => {
+               console.log(success)
+               this.isfollowed = success.data.isFollowed
+               this.userNickname = success.data.findUser.nickname
+               this.followers = success.data.findUser.followed
+               this.followings = success.data.findUser.following
+            },
+            (error) => {
+               console.log(error)
+            }
+         )
+      },
       //팔로우 요청
       followSomeone: function () {
-         const targetUserId = this.$route.params.userId
-         console.log(targetUserId)
+         const targetUser = {
+            targetId: this.$route.params.userId
+         }
          follow(
-            targetUserId,
+            targetUser,
             (success) => {
                console.log(success,'팔로우 완료')
                this.isfollowed = !this.isfollowed
+               if (this.isfollowed == false) {
+                  this.followers --
+               } else {
+                  this.followers ++
+               }
             },
             (error) => {
                console.log(error)
@@ -435,9 +462,7 @@ export default {
       ...mapState(['userInfo']),
    },
    created: function () {
-     if (this.showValue == 5) {
-        console.log('에헴')
-     }
+     this.getUserInfo()
    }
   
 }
@@ -567,6 +592,7 @@ export default {
             font-size: 23pt;
          }
          width: 20%;
+         height: 60px;
          padding: 5px;
          display: flex;
          flex-direction: column;

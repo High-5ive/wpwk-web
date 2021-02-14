@@ -25,6 +25,19 @@ function login(user, success, fail) {
     .catch(fail);
 }
 
+function getUserInfo(targetUser, success, fail) {
+  let token = window.localStorage.getItem("accessToken");
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  };
+  instance
+    .get(`users/${targetUser.targetId}`, config)
+    .then(success)
+    .catch(fail)
+}
+
 function follow(userId, success, fail) {
   let token = window.localStorage.getItem("accessToken");
   const config = {
@@ -32,9 +45,8 @@ function follow(userId, success, fail) {
       Authorization: `Bearer ${token}`,
     }
   };
-  console.log(userId)
   instance
-    .post(`users/following/${userId}`, config)
+    .post(`users/following`, userId, config)
     .then(success)
     .catch(fail)
 }
@@ -115,6 +127,7 @@ export {
   kakaoLogin,
   deleteUser,
   changePwd,
+  getUserInfo,
   follow,
   contentsEvaluations,
 };
