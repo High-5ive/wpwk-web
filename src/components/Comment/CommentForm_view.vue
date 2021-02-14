@@ -4,43 +4,52 @@
       <div class="close-btn" @click="closeModal">
          <v-icon>mdi-close</v-icon>
       </div>
-      <input @keypress.enter="createComment" class="input-box nf" type="text" v-model="content" placeholder="댓글을 작성해주세요." />
+      <input @keypress.enter="createComment" class="input-box nf" type="text" v-model="comment" placeholder="댓글을 작성해주세요." />
       <button @click="createComment" class="btn-send"><v-icon>mdi-send</v-icon></button>
    </div>
 </template>
 
 <script>
 import moment from 'moment';
+import { mapState } from 'vuex';
 
 export default {
    name: 'CommentFormView',
    data: function() {
       return {
-         content: '',
+         comment: '',
       };
+   },
+   props: {
+      contents: Object,
    },
    methods: {
       createComment: function() {
-         if (this.content == '') {
+         if (this.comment == '') {
             alert('내용을 입력해주세요');
             return;
          }
 
-         // 임의의 사용자 이름 설정
-         const username = 'abc';
          const now = moment().format('YYYY-MM-DD HH:mm:ss');
+         console.log(now);
          const comment = {
-            content: this.content,
-            user: username,
-            created_at: now,
+            comment: this.comment,
+            nickname: this.userInfo.nickname,
+            contentsId: this.contents.id,
+            userId: this.userInfo.userId,
+            createdAt: now,
          };
          this.$emit('createComment', comment);
-         this.content = '';
+         this.comment = '';
       },
+
       // 현재 댓글 창을 닫기
       closeModal() {
          this.$emit('emit-close');
       },
+   },
+   computed: {
+      ...mapState(['userInfo']),
    },
 };
 </script>

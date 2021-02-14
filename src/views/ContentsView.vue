@@ -95,6 +95,7 @@ export default {
       deleteComment: function(comment) {
          const deleteId = this.comments.indexOf(comment);
          this.comments.splice(deleteId, 1);
+         console.log('deleteComment', deleteId);
 
          deleteContentsComment(
             comment.id,
@@ -108,6 +109,8 @@ export default {
          );
       },
       updateComment: function(comment) {
+         // console.log(comment);
+
          var data = {
             commentId: comment.id,
             comment: comment.comment,
@@ -127,6 +130,8 @@ export default {
       },
 
       createComment: function(comment) {
+         console.log(comment);
+
          this.comments.push(comment);
          createContentsComment(
             comment,
