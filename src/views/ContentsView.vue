@@ -137,11 +137,10 @@ export default {
     },
     updateComment: function(comment) {
       var data = {
-        commentId: data.id,
+        commentId: comment.id,
         comment: comment.comment,
       };
-      alert(comment);
-      alert(data);
+
       updateContentsComment(
         data,
         (success) => {

@@ -43,10 +43,11 @@ export default {
         comment: this.comment,
         nickname: this.userInfo.nickname,
         contentsId: this.contents.id,
+        userId: this.userInfo.userId,
         createdAt: now,
       };
       this.$emit('createComment', comment);
-      this.content = '';
+      this.comment = '';
     },
   },
   computed: {
