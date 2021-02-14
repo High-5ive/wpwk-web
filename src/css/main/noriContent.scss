@@ -111,8 +111,7 @@
 
             // 아이콘 중중앙 정렬
             text-align: center;
-            line-height: 40px;
-            transition: 0.4s;            
+            line-height: 40px;            
 
             i{
                 color: white;
@@ -120,7 +119,6 @@
         }
 
         .btn-unlike:hover {
-            background-color: $main-orange;
             cursor: pointer;
         }
     };
