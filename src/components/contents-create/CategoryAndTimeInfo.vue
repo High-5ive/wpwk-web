@@ -1,16 +1,16 @@
 <template>
    <div>
-      <v-row justify="center" class="last-dialog">
+      <v-row justify="center">
          <span class="right-button nf nf-600" @click="onNextClicked">
             다음
          </span>
-         <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition" scrollable>
+         <v-dialog id="cc-dialog" v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition" scrollable>
             <v-card tile class="card">
                <div v-if="isLoading">
                   <loading />
                </div>
-               <v-card-text v-if="!isLoading">
-                  <div class="dialog-top-wrapper">
+               <v-card-text id="cc-card-text" v-if="!isLoading">
+                  <div class="cc-dialog-top-wrapper">
                      <div class="top-left">
                         <v-icon>
                            mdi-alarm
@@ -21,12 +21,12 @@
                         <v-select class="select-input" :items="minutes" label="분" color="#f4b740" v-model="time.minute"></v-select>
                      </div>
                   </div>
-                  <div class="dialog-middle-wrapper">
+                  <div class="cc-dialog-middle-wrapper">
                      <div v-for="(category, idx) in categories" :key="idx" class="category-wrapper" :class="{ 'selected-cate': selectedCateInfo.category }">
                         <div @click="onCategorySelect(category)">{{ category }}</div>
                      </div>
                   </div>
-                  <div class="dialog-bottom-wrapper">
+                  <div class="cc-dialog-bottom-wrapper">
                      <div class="bottom-top">
                         <div class="upper">
                            <v-icon>mdi-pound</v-icon>
@@ -61,7 +61,7 @@
                      </div>
                   </div>
 
-                  <div class="dialog-footer d-flex justify-space-between">
+                  <div class="cc-dialog-footer d-flex justify-space-between">
                      <div class="dialog-footer-button d-flex justify-center">
                         <div class="dialog-footer-left" @click="dialog = false">
                            뒤로
@@ -381,6 +381,20 @@ export default {
 };
 </script>
 <style lang="scss">
+@import 'src/css/common.scss';
+#cc-card-text {
+   position: relative;
+   @include desktop {
+      max-width: 500px;
+      left: 50%;
+      margin-left: -250px;
+   }
+   @include tablet {
+      max-width: 500px;
+      left: 50%;
+      margin-left: -250px;
+   }
+}
 .v-dialog {
    margin-top: 55px;
    border: 0;
@@ -389,7 +403,7 @@ export default {
       .v-card__text {
          width: 100%;
          padding: 0;
-         .dialog-top-wrapper {
+         .cc-dialog-top-wrapper {
             padding-left: 10px;
             padding-right: 10px;
             margin-top: 30px;
@@ -417,7 +431,7 @@ export default {
                }
             }
          }
-         .dialog-middle-wrapper {
+         .cc-dialog-middle-wrapper {
             width: 100%;
             padding: 10px;
             margin-top: 10px;
@@ -442,7 +456,7 @@ export default {
                border: #a2d646 5px solid;
             }
          }
-         .dialog-bottom-wrapper {
+         .cc-dialog-bottom-wrapper {
             width: 100%;
             display: flex;
             flex-direction: column;
@@ -525,7 +539,13 @@ export default {
                }
             }
          }
-         .dialog-footer {
+         .cc-dialog-footer {
+            @include desktop {
+               width: 500px;
+            }
+            @include tablet {
+               width: 500px;
+            }
             width: 100%;
             z-index: 100;
             position: fixed;
