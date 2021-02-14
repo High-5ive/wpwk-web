@@ -61,7 +61,7 @@ export default {
       getCard: function() {
          this.id = this.article.id;
          this.category = this.article.subject;
-         this.nickname = this.article.user;
+         this.nickname = this.article.writer;
          this.content = this.article.content;
          this.likes = this.article.likes;
          this.comments = this.article.comments;

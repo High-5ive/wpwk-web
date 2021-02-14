@@ -46,7 +46,6 @@ export default {
    },
    methods: {
       getNoriList() {
-         console.log('메인페이지');
          findContentsByPage(
             this.page,
             (res) => {
