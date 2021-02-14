@@ -3,9 +3,6 @@
       <!-- evaluation값에 따라 페이지 변환 -->
       <!-- 평가페이지 -->
       <div v-if="evaluationValue">
-         <!-- <v-icon @click="back">
-            mdi-backup-restore
-         </v-icon> -->
          <Evaluations @evaluationPage="evaluation" />
       </div>
 
@@ -25,7 +22,7 @@
             <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition" style="position: absolute;">
                <!-- 댓글 모달창을 여는 댓글 버튼 -->
                <template v-slot:activator="{ on, attrs }">
-                  <v-icon id="btn-comment" color="success" dark v-bind="attrs" v-on="on">
+                  <v-icon id="btn-comment" v-bind="attrs" v-on="on">
                      mdi-comment-text-multiple-outline
                   </v-icon>
                </template>

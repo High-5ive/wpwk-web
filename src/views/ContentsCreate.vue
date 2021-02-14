@@ -55,13 +55,13 @@
                <category-and-time-info :title="title" :itemList="itemList" />
             </div>
          </div>
-      </div>
-      <div v-if="itemList.length === 0" class="background-text">
-         <p class="nf nf-600">
-            아래 버튼을 눌러 <br />
-            컨텐츠를 추가해주세요!
-         </p>
-         <v-icon>mdi-hand-pointing-down</v-icon>
+         <div v-if="itemList.length === 0" class="background-text">
+            <p class="nf nf-600">
+               아래 버튼을 눌러 <br />
+               컨텐츠를 추가해주세요!
+            </p>
+            <v-icon>mdi-hand-pointing-down</v-icon>
+         </div>
       </div>
    </div>
 </template>
@@ -512,39 +512,40 @@ export default {
             font-size: 13pt;
          }
       }
-   }
-   .background-text {
-      // background-color: red;
-      pointer-events: none;
-      width: 100% !important;
-      margin-left: -10px !important;
-      position: absolute;
-      bottom: -400px;
-      text-align: center;
-      width: 80%;
-      /* left, right는 해당 요소의 위치 시작점을 결정한다. 그런데, 이때, margin의 양 값을 auto로 줌으로써 마진을 주어 해당 요소의 양 끝 위치를 각각 0으로 만들어준다. */
-      margin: 0 auto;
-      animation: 1s ease-out 0s 1 slideInFromTop;
-      @keyframes slideInFromTop {
-         0% {
-            transform: translateY(-30px);
-            opacity: 0;
-         }
-         100% {
-            transform: translateY(0);
-            opacity: 1;
-         }
-      }
-      p {
-         font-size: 16pt;
-         color: rgb(179, 179, 179);
-      }
 
-      i.v-icon {
-         color: rgb(179, 179, 179);
-         font-size: 30pt;
+      .background-text {
+         // background-color: red;
+         pointer-events: none;
+         width: 100% !important;
+         margin-left: -10px !important;
+         position: absolute;
+         bottom: 180px;
+         text-align: center;
+         width: 80%;
+         /* left, right는 해당 요소의 위치 시작점을 결정한다. 그런데, 이때, margin의 양 값을 auto로 줌으로써 마진을 주어 해당 요소의 양 끝 위치를 각각 0으로 만들어준다. */
+         margin: 0 auto;
+         animation: 1s ease-out 0s 1 slideInFromTop;
+         @keyframes slideInFromTop {
+            0% {
+               transform: translateY(-30px);
+               opacity: 0;
+            }
+            100% {
+               transform: translateY(0);
+               opacity: 1;
+            }
+         }
+         p {
+            font-size: 16pt;
+            color: rgb(179, 179, 179);
+         }
+
+         i.v-icon {
+            color: rgb(179, 179, 179);
+            font-size: 30pt;
+         }
+         // z-index: -1;
       }
-      // z-index: -1;
    }
 }
 </style>
