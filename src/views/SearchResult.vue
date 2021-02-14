@@ -1,19 +1,16 @@
 <template>
-   <div class="container">
-      {{ this.NoriList }}
+   <div class="main-container">
       <div v-if="loading">
          <loading></loading>
       </div>
-      <div v-if="!loading">
-         <!-- <div class="nori-wrapper" v-for="(nori, idx) in NoriList" :key="idx">
-        <nori-content :sendNori="nori" v-on:tagEvent="getNoriListByTag">
-        </nori-content>
-        <br />
-      </div> -->
-         <div class="nori-wrapper">
-            <NoriContent v-for="(nori, idx) in NoriList" :key="idx" :sendNori="nori" />
+      <div v-if="!loading" class="noriList-wrapper">
+         <NoriContent class="nori-wrapper" v-for="(nori, idx) in NoriList" :key="idx" :sendNori="nori" />
+         <br />
+         <div class="nori-wrapper spinner">
+            <infinite-loading spinner="spiral" @infinite="infiniteHandler">
+               <div slot="no-more" class="nf">더 이상 컨텐츠가 없어요 :)</div>
+            </infinite-loading>
          </div>
-         <infinite-loading spinner="spiral" @infinite="infiniteHandler"></infinite-loading>
       </div>
       <speed-dial></speed-dial>
    </div>
@@ -23,7 +20,7 @@
 import NoriContent from '@/components/main/NoriContent.vue';
 import SpeedDial from '@/components/main/SpeedDial.vue';
 import Loading from '@/components/main/Loading.vue';
-import { findContentsByTag, findContentsByKeyword } from '@/api/contents.js';
+import { findContentsByTag, findContentsByKeyword, findContentsByCategory } from '@/api/contents.js';
 import infiniteLoading from 'vue-infinite-loading';
 
 export default {
@@ -31,11 +28,11 @@ export default {
    data: function() {
       return {
          noriList: [],
+         NoriList: [],
          abilities: ['언어지능', '논리수학지능', '음악지능', '신체운동지능', '공간지능', '자연지능', '대인지능', '개인내지능'],
          infLoading: false,
          page: 1,
          loading: true,
-         tagSearch: '',
       };
    },
    components: {
@@ -125,6 +122,41 @@ export default {
             this.error()
          );
       },
+      getNoriListByCategory() {
+         this.page = 1;
+         console.log('카테고리 검색');
+         findContentsByCategory(
+            this.$route.params.searchValue,
+            this.page,
+            (res) => {
+               this.NoriList = res.data;
+               for (var i = 0; i < this.NoriList.length; i++) {
+                  if (this.NoriList[i].ability != null) {
+                     let abilityList = [];
+                     for (var j = 0; j < this.NoriList[i].ability.length; j++) {
+                        if (this.NoriList[i].ability.charAt(j) == '1') {
+                           abilityList.push(this.abilities[j]);
+                        }
+                     }
+                     // 각 컨텐츠마다 지능
+                     this.NoriList[i].abilities = abilityList;
+                  }
+               }
+               this.page += 1;
+               this.loading = false;
+            },
+            this.error()
+         );
+      },
+      getSearchList() {
+         if (this.$route.params.type === 'tag') {
+            this.getNoriListByTag();
+         } else if (this.$route.params.type === 'keyword') {
+            this.getNoriListByKeyword();
+         } else {
+            this.getNoriListByCategory();
+         }
+      },
       // 무한 스크롤 (다음 페이지에 있는 요청결과 가져와서 원래 video list 와 합치기)
       infiniteHandler($state) {
          if (this.$route.params.type === 'tag') {
@@ -149,7 +181,7 @@ export default {
                },
                this.error()
             );
-         } else {
+         } else if (this.$route.params.type === 'keyword'){
             findContentsByKeyword(
                this.$route.params.searchValue,
                this.page,
@@ -172,16 +204,68 @@ export default {
                this.error()
             );
          }
+         else {
+            findContentsByCategory(
+               this.$route.params.searchValue,
+               this.page,
+               (res) => {
+                  this.NoriList = res.data;
+                  for (var i = 0; i < this.NoriList.length; i++) {
+                     if (this.NoriList[i].ability != null) {
+                        let abilityList = [];
+                        for (var j = 0; j < this.NoriList[i].ability.length; j++) {
+                           if (this.NoriList[i].ability.charAt(j) == '1') {
+                              abilityList.push(this.abilities[j]);
+                           }
+                        }
+                        // 각 컨텐츠마다 지능
+                        this.NoriList[i].abilities = abilityList;
+                     }
+                  }
+                  this.page += 1;
+                  this.loading = false;
+               },
+               this.error()
+            );
+         }
       },
    },
    created: function() {
-      if (this.$route.params.type === 'tag') {
-         this.getNoriListByTag();
-      } else {
-         this.getNoriListByKeyword();
-      }
+      this.getSearchList()
    },
+   watch: {
+      $route() {
+         console.log('change')
+         this.getSearchList()
+      }
+   }
 };
 </script>
 
-<style></style>
+<style lang="scss">
+.main-container {
+   padding: 10px 30px 0px 30px;
+
+   .noriList-wrapper {
+      // background-color: rgb(254, 227, 227);
+      width: 100%;
+
+      // 반응형, 메인 페이지 콘텐츠 다중 노출
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+
+      .nori-wrapper {
+         // 반응형 풀려면, min-, max- 풀면 됨
+         width: 100%;
+         min-width: 400px;
+         max-width: 500px;
+         height: 300px;
+
+         &.spinner {
+            padding-top: 130px;
+         }
+      }
+   }
+}
+</style>

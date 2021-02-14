@@ -7,7 +7,7 @@ export default {
   data: function () {
     return {
 			searchShow: false,
-			categories: ['언어지능', '논리수학지능', '공간지능', '개인내지능', '음악지능', '신체운동지능', '자연지능', '대인지능'],
+			categories: ['언어지능', '논리수학지능', '음악지능', '신체운동지능', '공간지능', '자연지능', '대인지능', '개인내지능'],
 			wait: true
     }
 	},
@@ -16,9 +16,9 @@ export default {
 	},
   methods: {
     buttonSelect: function () {
-			for(var i;i<this.categories.length;i++) {
+			for(var i=0;i<this.categories.length;i++) {
 				if(this.selectValue === this.categories[i]) {
-					this.$router.push({name:'SearchResult', params: { searchValue: this.selectValue, type: "category" }})
+					this.$router.push({name:'SearchResult', params: { searchValue: i + 1, type: "category" }})
 					this.wait = false
 				}
 			}

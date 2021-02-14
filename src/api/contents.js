@@ -83,6 +83,17 @@ function findContentsByKeyword(keyword, page, success, fail) {
     .catch(fail);
 }
 
+function findContentsByCategory(category, page, success, fail) {
+
+  let token = window.localStorage.getItem("accessToken");
+  let config = {headers: { Authorization: `Bearer ${token}` }};
+
+  instance
+    .get(`contents/category/${category}/page/${page}`, config)
+    .then(success)
+    .catch(fail);
+}
+
 export {
   createContents,
   createTags,
@@ -91,5 +102,6 @@ export {
   findContentsByPage,
   findContentsByTag,
   findContentsItemById,
-  findContentsByKeyword
+  findContentsByKeyword,
+  findContentsByCategory
 };

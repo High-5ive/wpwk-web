@@ -7,7 +7,7 @@
          <!-- 이미지 위에 표시되는 뱃지들이 위치합니다 -->
          <!-- <div class="itemLength">{{ sendNori.itemList.length }}</div> -->
          <div class="badge-cate">
-            <span v-for="(ability, idx) in sendNori.abilities" :key="idx">
+            <span v-for="(ability, idx) in sendNori.abilities" :key="idx" @click="categorySearch(ability)">
                {{ ability }}
             </span>
          </div>
@@ -36,6 +36,7 @@ export default {
    data() {
       return {
          thumbnail: '',
+         categories: ['언어지능', '논리수학지능', '음악지능', '신체운동지능', '공간지능', '자연지능', '대인지능', '개인내지능'],
       };
    },
    methods: {
@@ -43,9 +44,16 @@ export default {
          router.push({ name: 'ContentsView', params: { nori: target } });
       },
       tagSearch: function(tagName) {
-         router.push({ name: 'Main', query: { tag: tagName } });
-         this.$emit('tagEvent');
+         router.push({ name: 'SearchResult', params: { searchValue: tagName, type: 'tag' } });
+         // this.$emit('tagEvent');
       },
+      categorySearch: function (category) {
+			for(var i=0;i<this.categories.length;i++) {
+				if(category === this.categories[i]) {
+					this.$router.push({name:'SearchResult', params: { searchValue: i + 1, type: "category" }})
+				}
+			}
+		},
    },
    mounted() {
       //이미지 없을 경우, 기본 이미지
@@ -55,6 +63,15 @@ export default {
          this.thumbnail = this.sendNori.thumb;
       }
    },
+   watch: {
+      sendNori: function () {
+         if (this.sendNori.thumb == null) {
+            this.thumbnail = require('@/assets/cv-bg.png');
+         } else {
+            this.thumbnail = this.sendNori.thumb;
+         }
+      }
+   }
 };
 </script>
 
