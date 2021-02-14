@@ -5,7 +5,7 @@
          <div class="footer-pagination">
             <!-- <span class="page-count">{{ pageNum }} / {{ this.cards.length }} 페이지</span> -->
             <div class="text-center">
-               <v-pagination v-model="pageNum" :length="this.cards.length" :total-visible="5" circle> </v-pagination>
+               <v-pagination v-model="pageNum" :length="this.cards.length" circle> </v-pagination>
             </div>
          </div>
          <div class="footer-navi">

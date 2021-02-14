@@ -62,22 +62,12 @@ export default {
 
          this.width = window.innerWidth;
 
-         // var elem = '';
-         // const cond = 'opacity: 0.46; background-color: rgb(33, 33, 33); border-color: rgb(33, 33, 33);';
-
          // 1264px 이상일 경우, 햄버거 버튼 삭제 및 사이드 메뉴 고정
          if (this.width >= 1264) {
-            // console.log('데스크탑 : 사이드메뉴 고정, 버튼 사라지게');
             this.isDesk = true;
             this.drawer = true;
-
-            // elem = document.querySelector('.v-overlay__scrim');
-            // elem.style = 'display:none';
-            // test.classList.add('openSide');
          } else {
             this.isDesk = false; //햄버거 버튼 보일지 말지
-            // this.drawer = false;
-            // elem.style = 'display:static';
          }
       },
    },
@@ -173,7 +163,8 @@ export default {
       .cl-footer,
       .ev-footer,
       .cc-footer,
-      .af-footer {
+      .af-footer,
+      .comment-modal {
          @include desktop {
             padding: 0 20% !important;
          }
@@ -186,6 +177,7 @@ export default {
       @include desktop {
          margin-left: 400px;
          width: calc(100% - 400px);
+         // padding: 0 20% !important;
       }
 
       .v-dialog--fullscreen {

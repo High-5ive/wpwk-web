@@ -215,6 +215,8 @@ export default {
          max-width: 500px;
          height: 300px;
 
+         margin: 10px 5px;
+
          &.spinner {
             padding-top: 130px;
          }
