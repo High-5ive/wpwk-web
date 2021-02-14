@@ -23,7 +23,7 @@
       </div>
       <!-- 게시글 상세보기 -->
       <div class="info-btn">
-        <v-icon @click="articleDetail" style="color:rgb(171, 171, 171) ">
+        <v-icon @click="articleDetail" color="#a2d646">
           mdi-comment-multiple-outline
         </v-icon>
         <div class="comment">

@@ -5,6 +5,19 @@
         <div class="category">
           {{ article.category }}
         </div>
+        <div v-if="userInfo.userId == article.userId" class="dots" @click="menuToggle">
+          <v-icon>mdi-dots-horizontal</v-icon>
+        </div>
+        <div v-if="menu" aria-expanded="false" class="dropdown-menu">
+          <div class="menu-detail" @click="editBoard">
+            <v-icon>mdi-delete-forever</v-icon>
+            <span>게시글 수정하기</span>
+          </div>
+          <div class="menu-detail" @click="removeBoard">
+            <v-icon>mdi-tooltip-edit-outline</v-icon>
+            <span>게시글 삭제하기</span>
+          </div>
+        </div>
         <div class="nickname nf nf-600">
           {{ article.writer }}
         </div>
@@ -28,7 +41,7 @@
           <span @click="getLike" class="nf"> 좋아요! </span>
         </div>
         <div class="info-btn">
-          <v-icon style="color:rgb(171, 171, 171) ">
+          <v-icon color="#a2d646">
             mdi-comment-multiple-outline
           </v-icon>
           <div class="comment">
@@ -51,10 +64,11 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import ArticleDetailPhoto from "@/components/Community/ArticleDetailPhoto";
 import CommentFormCmmu from "@/components/Comment/CommentForm_cmmu.vue";
 import CommentList from "@/components/Comment/CommentList.vue";
-import { findBoardsById } from "@/api/community.js";
+import { findBoardsById, deleteById } from "@/api/community.js";
 import {
   findBoardCommentsByBoardId,
   createBoardComment,
@@ -75,10 +89,15 @@ export default {
       likeList: [],
       article: "",
       page: 1,
+      menu: false,
     };
+  },
+  computed: {
+    ...mapState(["userInfo"]),
   },
   methods: {
     getArticle: function() {
+       console.log(this.userInfo.id);
       findBoardsById(
         this.$route.params.articleId,
         (res) => {
@@ -122,7 +141,7 @@ export default {
       console.log(comment);
       removeBoardComment(
         comment.id,
-        this.$route.params.articleId,        
+        this.$route.params.articleId,
         () => {
           alert("댓글이 삭제되었습니다.");
           this.getArticleComments();
@@ -144,6 +163,25 @@ export default {
           console.log(error);
         }
       );
+    },
+    removeBoard() {
+      if (confirm("정말로 삭제하시겠습니까") === false) {
+        return;
+      }
+
+      deleteById(
+        this.$route.params.articleId,
+        () => {
+          alert("게시글이 삭제되었습니다.");
+          this.$router.push('/cmmu');
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    },
+    menuToggle: function() {
+      this.menu = this.menu == false ? true : false;
     },
   },
   created: function() {

@@ -89,6 +89,21 @@ function updateLikes(id, params, success, fail) {
     .catch(fail);
 }
 
+// 아이디를 이용한 게시글 조회
+function deleteById(id, success, fail) {
+  let token = window.localStorage.getItem("accessToken");
+  let config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  instance
+    .delete(`boards/${id}`, config)
+    .then(success)
+    .catch(fail);
+}
+
 export {
   findAllBoards,
   updateLikes,
@@ -96,4 +111,5 @@ export {
   findBoardsByCategory,
   createBoard,
   findBoardsById,
+  deleteById
 };

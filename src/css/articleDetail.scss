@@ -41,6 +41,47 @@
                 font-size: 10pt;
                 padding: 5px 0px 8px 5px;
             }
+
+            .dots {
+                float: right;
+                margin-right: 1%;
+                cursor: pointer;
+            }
+
+            .dots:hover{
+                background-color: #e3e3e3;
+                border-radius: 50%;                
+            }
+
+            .dropdown-menu {
+                float: right;
+                display: block;
+                width: 20%;
+                height: 50%;
+                box-shadow: 10px 10px 30px #d3d3d3;
+                border-radius: 15px;
+                padding: 10px;
+                margin:1%;                                
+                //transform: translate(-10px, 7px) rotate(-45deg);
+            }
+
+            @media screen and (max-width: 768px){
+                .dropdown-menu {
+                    width: 50%;
+                }
+            }
+
+            .menu-detail {
+                padding: 3%;
+                cursor: pointer;
+                span {
+                    padding-left: 10%;
+                }
+            }
+
+            .menu-detail:hover {
+                background-color: #e3e3e3;
+            }
             
         }
         
