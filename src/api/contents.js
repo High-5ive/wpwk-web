@@ -1,8 +1,7 @@
 import {
-  createInstance
+  instance
 } from './index.js';
 
-const instance = createInstance();
 
 function createContents(param, success, fail) {
   //body값 다시 만들고 JSON 파싱하기
@@ -15,7 +14,7 @@ function createContents(param, success, fail) {
   instance
     .post(`contents`, param, config)
     .then(success)
-    .catch(fail);
+    .catch(fail)
 }
 
 function createTags(id, param, success, fail) {
@@ -153,6 +152,21 @@ function updateContentsComment(data, success, fail) {
     .catch(fail);
 }
 
+function favoriteContents(id, success, fail) {
+
+  let token = window.localStorage.getItem("accessToken");
+  let config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
+
+  instance
+    .post(`contents/favorite`, id, config)
+    .then(success)
+    .catch(fail);
+}
+
 function createContentsComment(data, success, fail) {
   let token = window.localStorage.getItem('accessToken');
   let config = {
@@ -167,7 +181,21 @@ function createContentsComment(data, success, fail) {
     .catch(fail);
 }
 
+function unFavoriteContents(id, success, fail) {
 
+  let token = window.localStorage.getItem("accessToken");
+  let config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
+
+  instance
+    .delete(`contents/favorite/${id}`, config)
+    .then(success)
+    .catch(fail);
+
+}
 export {
   createContents,
   createTags,
@@ -182,4 +210,6 @@ export {
   deleteContentsComment,
   updateContentsComment,
   createContentsComment,
+  favoriteContents,
+  unFavoriteContents
 };

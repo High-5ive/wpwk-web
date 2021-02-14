@@ -68,10 +68,9 @@ var _default = new _vuex["default"].Store({
     },
     getUserInfo: function getUserInfo(_ref2) {
       var commit = _ref2.commit;
-      var log = localStorage.getItem('accessToken');
+      var token = localStorage.getItem('accessToken');
 
-      if (log != null) {
-        var token = localStorage.getItem('accessToken');
+      if (token != null) {
         var decode = (0, _jwtDecode["default"])(token);
         var userInfo = {
           userId: decode.userId,
@@ -79,6 +78,15 @@ var _default = new _vuex["default"].Store({
         };
         commit('loginSuccess', userInfo);
       }
+    },
+    expired: function expired(_ref3) {
+      var commit = _ref3.commit;
+      alert('세션이 만료되었습니다.');
+      commit('logout');
+
+      _router["default"].push({
+        name: 'Login'
+      });
     }
   }
 });

@@ -62,17 +62,27 @@ export default new Vuex.Store({
     getUserInfo({
       commit
     }) {
-      let log = localStorage.getItem('accessToken');
+      let token = localStorage.getItem('accessToken');
 
-      if (log != null) {
-        let token = localStorage.getItem('accessToken');
+      if (token != null) {
         let decode = jwt_decode(token);
         let userInfo = {
           userId: decode.userId,
           nickname: decode.nickname,
         };
+
         commit('loginSuccess', userInfo);
       }
     },
+
+    expired({
+      commit
+    }) {
+      alert('세션이 만료되었습니다.')
+      commit('logout');
+      router.push({
+        name: 'Login'
+      })
+    }
   },
 });

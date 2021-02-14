@@ -15,12 +15,11 @@ exports.contentsEvaluations = contentsEvaluations;
 
 var _index = require("./index.js");
 
-var instance = (0, _index.createInstance)(); // const config = {
+// const config = {
 //   headers: { "access-token": localStorage.getItem("access-token") }
 // };
-
 function registerUser(user, success, fail) {
-  instance.post("users", JSON.stringify(user)).then(success)["catch"](fail);
+  _index.instance.post("users", JSON.stringify(user)).then(success)["catch"](fail);
 }
 
 function login(user, success, fail) {
@@ -28,7 +27,8 @@ function login(user, success, fail) {
     email: user.email,
     password: user.password
   };
-  instance.post("login", JSON.stringify(body)).then(success)["catch"](fail);
+
+  _index.instance.post("login", JSON.stringify(body)).then(success)["catch"](fail);
 }
 
 function follow(userId, success, fail) {
@@ -38,7 +38,8 @@ function follow(userId, success, fail) {
       Authorization: "Bearer ".concat(token)
     }
   };
-  instance.post("users/following/".concat(userId), config).then(success)["catch"](fail);
+
+  _index.instance.post("users/following/".concat(userId), config).then(success)["catch"](fail);
 }
 
 function changePwd(param, success, fail) {
@@ -48,7 +49,8 @@ function changePwd(param, success, fail) {
       Authorization: "Bearer ".concat(token)
     }
   };
-  instance.put("users/changePassword", param, config).then(success)["catch"](fail);
+
+  _index.instance.put("users/changePassword", param, config).then(success)["catch"](fail);
 }
 
 function deleteUser(success, fail) {
@@ -58,7 +60,8 @@ function deleteUser(success, fail) {
       Authorization: "Bearer ".concat(token)
     }
   };
-  instance["delete"]("users", config).then(success)["catch"](fail);
+
+  _index.instance["delete"]("users", config).then(success)["catch"](fail);
 }
 
 function findById(userId, success, fail) {
@@ -74,7 +77,7 @@ function findById(userId, success, fail) {
             }
           };
           _context.next = 4;
-          return regeneratorRuntime.awrap(instance.get("loginUser/".concat(userId), config).then(success)["catch"](fail));
+          return regeneratorRuntime.awrap(_index.instance.get("loginUser/".concat(userId), config).then(success)["catch"](fail));
 
         case 4:
         case "end":
@@ -85,11 +88,11 @@ function findById(userId, success, fail) {
 }
 
 function naverLogin(token, success, fail) {
-  instance.get("login/process/naver/" + token).then(success)["catch"](fail);
+  _index.instance.get("login/process/naver/" + token).then(success)["catch"](fail);
 }
 
 function kakaoLogin(code, success, fail) {
-  instance.get("kakao/" + code).then(success)["catch"](fail);
+  _index.instance.get("kakao/" + code).then(success)["catch"](fail);
 }
 
 function contentsEvaluations(data, success, fail) {
@@ -99,5 +102,6 @@ function contentsEvaluations(data, success, fail) {
       Authorization: "Bearer ".concat(token)
     }
   };
-  instance.put("users/contentsEnd", data, config).then(success)["catch"](fail);
+
+  _index.instance.put("users/contentsEnd", data, config).then(success)["catch"](fail);
 }

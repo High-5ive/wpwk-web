@@ -42,11 +42,11 @@ export default {
       };
    },
    created() {
-      this.getNoriList()
+      this.getNoriList();
    },
    methods: {
       getNoriList() {
-         console.log('메인페이지')
+         console.log('메인페이지');
          findContentsByPage(
             this.page,
             (res) => {
@@ -106,41 +106,41 @@ export default {
       // 무한 스크롤 (다음 페이지에 있는 요청결과 가져와서 원래 video list 와 합치기)
       infiniteHandler($state) {
          findContentsByPage(
-               this.page,
-               (res) => {
-                  setTimeout(() => {
-                     if (res.data.length) {
-                        var noriList = res.data;
+            this.page,
+            (res) => {
+               setTimeout(() => {
+                  if (res.data.length) {
+                     var noriList = res.data;
 
-                        for (var i = 0; i < noriList.length; i++) {
-                           if (noriList[i].ability != null) {
-                              let abilityList = [];
-                              for (var j = 0; j < noriList[i].ability.length; j++) {
-                                 if (noriList[i].ability.charAt(j) == '1') {
-                                    abilityList.push(this.abilities[j]);
-                                 }
+                     for (var i = 0; i < noriList.length; i++) {
+                        if (noriList[i].ability != null) {
+                           let abilityList = [];
+                           for (var j = 0; j < noriList[i].ability.length; j++) {
+                              if (noriList[i].ability.charAt(j) == '1') {
+                                 abilityList.push(this.abilities[j]);
                               }
-
-                              // 각 컨텐츠마다 지능
-                              noriList[i].abilities = abilityList;
                            }
-                        }
 
-                        this.NoriList = this.NoriList.concat(noriList);
-                        $state.loaded();
-                        this.page += 1;
-                        if (this.NoriList.length / 10 == 0) {
-                           $state.complete();
+                           // 각 컨텐츠마다 지능
+                           noriList[i].abilities = abilityList;
                         }
-                     } else {
+                     }
+
+                     this.NoriList = this.NoriList.concat(noriList);
+                     $state.loaded();
+                     this.page += 1;
+                     if (this.NoriList.length / 10 == 0) {
                         $state.complete();
                      }
-                  }, 1000);
-               },
-               (error) => {
-                  console.log(error);
-               }
-            );
+                  } else {
+                     $state.complete();
+                  }
+               }, 1000);
+            },
+            (error) => {
+               console.log(error);
+            }
+         );
       },
       goCreate: function() {
          this.$router.push({ name: 'ContentsCreate' });

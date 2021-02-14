@@ -41,7 +41,7 @@ const onlyAuthUser = (to, from, next) => {
     // console.log(this.$store.state.userInfo);
     console.log('onlyAuthUser : ', window.location.href);
     alert('로그인이 필요한 페이지입니다. ');
-    next('/login');
+    next('/');
   }
 };
 
@@ -49,9 +49,7 @@ const onlyNoneAuthUser = (to, from, next) => {
   if (localStorage.getItem('accessToken') === null) {
     next();
   } else {
-    // console.log(this.$store.state.userInfo);
     alert('이미 로그인 되어 있습니다');
-    // alert(store.state.userInfo)
     next('/main');
   }
 };
@@ -128,6 +126,7 @@ const routes = [{
   },
   {
     path: '/',
+    beforeEnter: onlyNoneAuthUser,
     components: {
       default: LandingPage,
     },
@@ -143,6 +142,7 @@ const routes = [{
   {
     path: '/join',
     name: 'Join',
+    beforeEnter: onlyNoneAuthUser,
     components: {
       default: Join,
     },

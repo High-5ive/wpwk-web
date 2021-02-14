@@ -1,8 +1,4 @@
-import {
-  createInstance
-} from './index.js';
-
-const instance = createInstance();
+import { instance } from './index.js';
 
 // 커뮤니티 내 모든 게시글(Board)를 조회
 function findAllBoards(success, fail) {
