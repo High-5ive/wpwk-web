@@ -10,7 +10,7 @@
       </div>
       <div class="link-wrapper">
          <div class="img-btn" @click="$router.push('/main').catch(() => {})"><img src="@/assets/img/characters/banner-cmmu.png" alt="" /> <span class="nf">노리</span></div>
-         <div class="img-btn" @click="$router.push('cmmu').catch(() => {})"><img src="@/assets/img/characters/banner-nori.png" alt="" /> <span class="nf">커뮤니티</span></div>
+         <div class="img-btn" @click="$router.push('/cmmu').catch(() => {})"><img src="@/assets/img/characters/banner-nori.png" alt="" /> <span class="nf">커뮤니티</span></div>
       </div>
       <div class="ad-wrapper">
          <!-- <div class="ad">AD Banner</div> -->

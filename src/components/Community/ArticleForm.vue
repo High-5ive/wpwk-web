@@ -1,7 +1,7 @@
 <template>
    <div class="af-container">
       <div class="category-wrapper">
-         <v-select model="subject" :items="subjects" dense outlined label="주제" @change="getSubject"></v-select>
+         <v-select :items="subjects" dense outlined label="주제" v-model="subject"></v-select>
       </div>
 
       <div class="input-wrapper">
@@ -30,7 +30,6 @@
 </template>
 
 <script>
-import moment from 'moment';
 import ArticlePhotoItem from './ArticlePhotoItem';
 
 export default {
@@ -103,18 +102,11 @@ export default {
       },
 
       createArticle: function() {
-         // 임의의 사용자 이름 설정
-         const username = '수진맘';
-         const now = moment().format('YYYY-MM-DD HH:mm:ss');
 
          const article = {
-            user: username,
-            subject: this.subject_final,
+            category: this.subject,
             itemList: this.itemList,
             content: this.content,
-            created_at: now,
-            likes: 0,
-            comments: 0,
          };
 
          this.$emit('createArticle', article);

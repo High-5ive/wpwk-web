@@ -2,16 +2,16 @@
   <div class="comment-item">
     <!-- 작성자, 생성일 등 맨 위 -->
     <div class="top-wrapper">
-      <span class="nickname nf">{{ commentItem.nickname }}</span>
-      <span class="created nf">{{ commentItem.createdAt }}</span>
+      <span class="nickname nf">{{ comment.writer }}</span>
+      <span class="created nf">{{ comment.createdAt }}</span>
     </div>
 
     <!-- 댓글 내용 -->
-    <p class="content nf">{{ commentItem.comment }}</p>
+    <p class="content nf">{{ comment.comment }}</p>
 
     <!-- 삭제버튼이 들어감. fixed로 우측 고정 -->
 
-    <div v-if="userInfo.userId == this.commentItem.userId" class="btn-wrapper">
+    <div v-if="userInfo.userId == comment.userId" class="btn-wrapper">
       <v-icon @click="deleteComment">
         mdi-delete-forever
       </v-icon>
@@ -28,7 +28,7 @@ import { mapState } from 'vuex';
 export default {
   data: function() {
     return {
-      commentItem: this.comment,
+      // commentItem: this.comment,
     };
   },
   name: 'CommentListItem',
@@ -40,7 +40,7 @@ export default {
       if (confirm('댓글을 삭제 하시겠습니까?') == true) {
         this.$emit('deleteComment', this.comment);
       } else {
-        return false;
+        return;
       }
     },
     updateComment: function() {

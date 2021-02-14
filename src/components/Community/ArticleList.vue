@@ -32,7 +32,7 @@ export default {
             this.selected_articles = this.articles;
          } else {
             for (var i = 0; i < this.articles.length; i++) {
-               if (this.articles[i].subject === this.subject_select) {
+               if (this.articles[i].category === this.subject_select) {
                   this.selected_articles.push(this.articles[i]);
                }
             }

@@ -1,13 +1,26 @@
-import { instance } from './index.js';
+import { instance } from "./index.js";
 
-// 커뮤니티 내 모든 게시글(Board)를 조회
-function findAllBoards(success, fail) {
-
+function createBoard(data, success, fail) {
   let token = window.localStorage.getItem("accessToken");
   let config = {
     headers: {
-      Authorization: `Bearer ${token}`
-    }
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  instance
+    .post(`boards`, data, config)
+    .then(success)
+    .catch(fail);
+}
+
+// 커뮤니티 내 모든 게시글(Board)를 조회
+function findAllBoards(success, fail) {
+  let token = window.localStorage.getItem("accessToken");
+  let config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   };
 
   instance
@@ -16,14 +29,28 @@ function findAllBoards(success, fail) {
     .catch(fail);
 }
 
-// 게시글 조회
-function findBoardsByPage(page, success, fail) {
-
+// 아이디를 이용한 게시글 조회
+function findBoardsById(id, success, fail) {
   let token = window.localStorage.getItem("accessToken");
   let config = {
     headers: {
-      Authorization: `Bearer ${token}`
-    }
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  instance
+    .get(`boards/${id}`, config)
+    .then(success)
+    .catch(fail);
+}
+
+// 게시글 조회
+function findBoardsByPage(page, success, fail) {
+  let token = window.localStorage.getItem("accessToken");
+  let config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   };
 
   instance
@@ -34,12 +61,11 @@ function findBoardsByPage(page, success, fail) {
 
 // 주제별 게시글 조회
 function findBoardsByCategory(category, page, success, fail) {
-
   let token = window.localStorage.getItem("accessToken");
   let config = {
     headers: {
-      Authorization: `Bearer ${token}`
-    }
+      Authorization: `Bearer ${token}`,
+    },
   };
 
   instance
@@ -53,8 +79,8 @@ function updateLikes(id, params, success, fail) {
   let token = window.localStorage.getItem("accessToken");
   let config = {
     headers: {
-      Authorization: `Bearer ${token}`
-    }
+      Authorization: `Bearer ${token}`,
+    },
   };
 
   instance
@@ -67,5 +93,7 @@ export {
   findAllBoards,
   updateLikes,
   findBoardsByPage,
-  findBoardsByCategory
+  findBoardsByCategory,
+  createBoard,
+  findBoardsById,
 };

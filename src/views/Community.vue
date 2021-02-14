@@ -11,9 +11,8 @@
       hide-details
       class="ma-2 subject"
       label="주제"
-      @change="getSubject"
     ></v-select>
-    <article-list :articles="articles" :subject_select="subject_select" />
+    <article-list :articles="articles" :subject_select="subject" />
     <div class="nori-wrapper spinner">
       <infinite-loading spinner="spiral" @infinite="infiniteHandler">
         <div slot="no-more" class="nf">더 이상 컨텐츠가 없어요 :)</div>
@@ -26,7 +25,8 @@
 <script>
 import ArticleList from "@/components/Community/ArticleList";
 import SpeedDial from "@/components/main/SpeedDial.vue";
-import { findBoardsByPage } from "@/api/community.js";
+import Loading from "@/components/main/Loading.vue";
+import { findBoardsByPage, createBoard } from "@/api/community.js";
 import infiniteLoading from "vue-infinite-loading";
 
 export default {
@@ -35,6 +35,7 @@ export default {
     ArticleList,
     SpeedDial,
     infiniteLoading,
+    Loading,
   },
   props: {
     createdArticle: Object,
@@ -59,31 +60,17 @@ export default {
     // },
   },
   methods: {
-    //============= axios =============
+    //============= axios =============    
     getBoards() {
-      console.log("커뮤니티 게시글 전체 조회");
-
+      this.page = 1;
+      this.articles = [];
       findBoardsByPage(
         this.page,
         (res) => {
-          // console.log(res);
-          for (let i = 0; i < res.data.length; i++) {
-            const data = res.data[i];
-
-            const article = {
-              id: data.id,
-              content: data.content,
-              writer: data.writer,
-              likes: data.likes,
-              subject: data.category, // 변수명 변경
-              comments: data.comments,
-              createdAt: data.createdAt,
-            };
-
-            // console.log('생성된 데이터 : ', article);
-            this.articles.push(article);
-          }
-          // console.log(this.article);
+          console.log(res.data);
+          this.articles = res.data;
+          this.page += 1;
+          this.loading = false;
         },
         (error) => {
           console.log(error);
@@ -91,7 +78,7 @@ export default {
       );
     },
 
-    // 무한 스크롤 (다음 페이지에 있는 요청결과 가져와서 원래 video list 와 합치기)
+    // 무한 스크롤
     infiniteHandler($state) {
       findBoardsByPage(
         this.page,
@@ -119,19 +106,22 @@ export default {
     //====================================
 
     createArticle: function(article) {
-      console.log(article);
-      this.articles.push(article);
-    },
-
-    getSubject: function() {
-      this.subject_select = this.subject;
+      console.log("article : " + article.category);
+      createBoard(
+        article,
+        () => {
+          alert("게시 글 등록이 완료되었습니다.");
+          this.getBoards()
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+      //
     },
   },
   created: function() {
     this.getBoards(); //생성되자마자 게시글 조회
-  },
-  mounted() {
-    // this.articleFromMain = this.$route.params.createdArticle;
   },
 };
 </script>
