@@ -1,9 +1,12 @@
 <template>
-   <div>
+   <div class="cgt-wrapper">
+      <div @click="onNextClicked">
+         <v-icon>
+            mdi-chevron-right
+         </v-icon>
+         <span class="cap">다음</span>
+      </div>
       <v-row justify="center">
-         <span class="right-button nf nf-600" @click="onNextClicked">
-            다음
-         </span>
          <v-dialog id="cc-dialog" v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition" scrollable>
             <v-card tile class="card">
                <div v-if="isLoading">
@@ -64,11 +67,12 @@
                   <div class="cc-dialog-footer d-flex justify-space-between">
                      <div class="dialog-footer-button d-flex justify-center">
                         <div class="dialog-footer-left" @click="dialog = false">
-                           뒤로
+                           <v-icon>
+                              mdi-chevron-left
+                           </v-icon>
+                           <span class="cap">이전</span>
                         </div>
-                        <div class="dialog-footer-right" @click="createContent">
-                           완료
-                        </div>
+                        <div class="dialog-footer-right fin" @click="createContent"><v-icon>mdi-pencil</v-icon> <span class="cap">글작성</span></div>
                      </div>
                   </div>
                </v-card-text>
@@ -540,32 +544,69 @@ export default {
             }
          }
          .cc-dialog-footer {
+            //@responsive 콘텐츠 제작 마지막 페이지 푸터 10%로 줄이기
             @include desktop {
-               width: 500px;
+               padding: 0 10% !important;
             }
-            @include tablet {
-               width: 500px;
-            }
+            // @include tablet {
+            //    width: 500px;
+            // }
+
             width: 100%;
             z-index: 100;
             position: fixed;
             bottom: 0;
+            left: 0px;
             height: 50px;
+
             .dialog-footer-button {
                width: 100%;
+
+               i {
+                  color: $navi-main;
+               }
+
+               .cap {
+                  padding: 0;
+                  display: block;
+                  font-size: 8pt;
+                  font-weight: 600;
+                  color: $navi-cap;
+               }
+
                .dialog-footer-left {
-                  background-color: #f4b740;
-                  padding-top: 12px;
+                  position: relative;
+                  height: 50px;
                   width: 50%;
-                  font-size: 13pt;
                   text-align: center;
+
+                  &::after {
+                     content: '';
+                     width: 1px;
+                     height: 20px;
+                     position: absolute;
+                     top: 12px;
+                     right: -1px;
+                     background-color: rgb(223, 223, 223);
+                  }
+
+                  &.out {
+                     i,
+                     .cap {
+                        color: rgb(75, 23, 22);
+                     }
+                  }
                }
                .dialog-footer-right {
-                  background-color: #a2d646;
-                  padding-top: 12px;
                   width: 50%;
-                  font-size: 13pt;
                   text-align: center;
+
+                  &.fin {
+                     i,
+                     .cap {
+                        color: $navi-success;
+                     }
+                  }
                }
             }
          }

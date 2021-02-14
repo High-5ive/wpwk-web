@@ -259,7 +259,7 @@ export default {
             width: 1px;
             height: 20px;
             position: absolute;
-            top: 4px;
+            top: 12px;
             right: -1px;
             background-color: rgb(223, 223, 223);
          }
@@ -276,7 +276,7 @@ export default {
             width: 1px;
             height: 20px;
             position: absolute;
-            top: 4px;
+            top: 12px;
             right: -1px;
             background-color: rgb(223, 223, 223);
          }

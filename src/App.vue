@@ -153,7 +153,8 @@ export default {
    #main-wrapper {
       position: relative;
 
-      .v-main__wrap .cv-container {
+      .v-main__wrap .cv-container,
+      .v-main__wrap .cc-container {
          @include desktop {
             padding: 0 20% !important;
          }
@@ -162,7 +163,6 @@ export default {
       // 반응형에 해당하는 푸터들도 적용
       .cl-footer,
       .ev-footer,
-      .cc-footer,
       .af-footer,
       .comment-modal {
          @include desktop {
@@ -173,7 +173,9 @@ export default {
 
    // @responsive 댓글창 모달 부분 absolute로 변경
    .v-dialog__content--active,
-   .v-dialog__content {
+   .v-dialog__content,
+   .cc-footer,
+   .cc-dialog-footer {
       @include desktop {
          margin-left: 400px;
          width: calc(100% - 400px);
