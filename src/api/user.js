@@ -88,6 +88,16 @@ function contentsEvaluations(data, success, fail) {
     .catch(fail);
 }
 
+function findUserAbility(success, fail) {
+  let token = window.localStorage.getItem('accessToken');
+  let config = { headers: { Authorization: `Bearer ${token}` } };
+
+  instance
+    .get(`users/abilities`, config)
+    .then(success)
+    .catch(fail);
+}
+
 export {
   login,
   findById,
@@ -97,4 +107,5 @@ export {
   deleteUser,
   changePwd,
   contentsEvaluations,
+  findUserAbility,
 };

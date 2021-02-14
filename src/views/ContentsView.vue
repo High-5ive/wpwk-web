@@ -169,10 +169,9 @@ export default {
     getContentsItems: function() {
       var contents = this.$route.params.nori;
       this.contents = contents;
-      //console.log(contents);
+      console.log(contents);
       this.writer = contents.nickname;
       this.title = contents.title;
-
       var contentsId = contents.id;
 
       findContentsItemById(
