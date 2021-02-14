@@ -10,7 +10,7 @@
       <div v-else class="cv-card-wrapper">
          <div class="card-top-wrapper">
             <p class="title nf">{{ this.title }}</p>
-            <p class="writer nf">{{ this.writer }}</p>
+            <p class="writer nf" @click="$router.push({ name: 'mypage', params: { userId: writerId } })">{{ this.writer }}</p>
          </div>
 
          <CardList :cards="cards" @evaluationPage="evaluation" />
@@ -68,6 +68,7 @@ export default {
          cards: Array,
          title: '',
          writer: '',
+         writerId: 0,
          evaluationValue: false,
          dialog: false,
          comments: [],
@@ -147,10 +148,9 @@ export default {
       getContentsItems: function() {
          var contents = this.$route.params.nori;
          this.contents = contents;
-         //console.log(contents);
+         this.writerId = contents.userId;
          this.writer = contents.nickname;
          this.title = contents.title;
-
          var contentsId = contents.id;
 
          findContentsItemById(

@@ -68,12 +68,13 @@ export default {
 
          findAllBoards(
             (res) => {
-               // console.log(res);
+               console.log(res);
                for (let i = 0; i < res.data.length; i++) {
                   const data = res.data[i];
 
                   const article = {
                      id: data.id,
+                     userid: data.userId,
                      content: data.content,
                      user: data.writer,
                      likes: data.likes,

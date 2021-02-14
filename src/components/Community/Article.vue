@@ -8,7 +8,7 @@
          <div class="category">
             {{ category }}
          </div>
-         <div class="nickname nf nf-600">
+         <div class="nickname nf nf-600" @click="$router.push({ name: 'mypage', params: { userId: userId } })">
             {{ nickname }}
          </div>
          <div class="content nf">{{ content }}</div>
@@ -55,6 +55,7 @@ export default {
          articleId: 0,
          likes: 0,
          comments: '',
+         userId: 0
       };
    },
    methods: {
@@ -65,6 +66,7 @@ export default {
          this.content = this.article.content;
          this.likes = this.article.likes;
          this.comments = this.article.comments;
+         this.userId = this.article.userId
          // if (this.article.itemList.length) {
          //    this.img = this.article.itemList[0].photo.preview;
          // }

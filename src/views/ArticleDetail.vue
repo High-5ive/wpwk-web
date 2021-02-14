@@ -5,7 +5,7 @@
             <div class="category">
                {{ subject }}
             </div>
-            <div class="nickname nf nf-600">
+            <div class="nickname nf nf-600" @click="$router.push({ name: 'mypage', params: { userId: userId}})">
                {{ user }}
             </div>
             <div class="content nf">{{ content }}</div>
@@ -69,11 +69,13 @@ export default {
          comments: [],
          like: 0,
          likeList: [],
+         articleUserId: 0
       };
    },
    methods: {
       getArticle: function() {
          this.user = this.$route.params.article.user;
+         this.articleUserId = this.$route.params.article.userId;
          this.subject = this.$route.params.article.subject;
          this.content = this.$route.params.article.content;
          if (this.$route.params.article.itemList.length) {
