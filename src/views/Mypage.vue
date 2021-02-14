@@ -21,20 +21,22 @@
                      <span class="f-text">팔로잉</span>
                   </div>
                </div>
-               <!-- <button v-if="$route.params.userId !== userInfo.userId" class="infos-button unfollow-button">
-                  <v-icon>
-                     mdi-account-check
-                  </v-icon>
-                  <span>
-                     구독 취소
-                  </span>
-               </button> -->
-               <button class="infos-button follow-button">
-                  <v-icon>
-                     mdi-account-plus
-                  </v-icon>
-                  구독
-               </button>   
+               <div v-if="$route.params.userId !== userInfo.userId" class="follow-buttons">
+                  <button v-if="isfollowed" class="infos-button unfollow-button">
+                     <v-icon>
+                        mdi-account-check
+                     </v-icon>
+                     <span>
+                        구독 취소
+                     </span>
+                  </button>
+                  <button @click="followSomeone" v-if="!isfollowed" class="infos-button follow-button">
+                     <v-icon>
+                        mdi-account-plus
+                     </v-icon>
+                     구독
+                  </button>   
+               </div>
                
             </div>
             
@@ -64,18 +66,18 @@
             <span class="as-top">관심 노리</span>
             <span class="as-bottom">{{ personsLikeContents.length }}</span>
          </div>
-         <div class="divider"></div>
-         <div class="asset-navi" :class="{ 'selected-navi' : showValue===5}" @click="showValue = 5">
+         <div v-if="$route.params.userId === userInfo.userId" class="divider"></div>
+         <div v-if="$route.params.userId === userInfo.userId" class="asset-navi" :class="{ 'selected-navi' : showValue===5}" @click="showValue = 5">
             <span class="as-top">시청 분석</span>
             <v-icon class="as-bottom">mdi-television-classic</v-icon>
          </div>
       </div>
-      <div class="bottom">
+      <div :class="{'bottom':showValue}">
          <persons-assets v-if="showValue===1 || showValue===2" :showValue="showValue" :personsAssets="personsAssets"/>
          <persons-assets-with-photo v-if="showValue===3 ||showValue===4" :showValue="showValue" :personsAssetsWithPhoto="personsAssetsWithPhoto" />
          <chart v-if="showValue == 5"/>
       </div>
-      <div  class="footer-wrapper">
+      <div v-if="$route.params.userId === userInfo.userId" class="footer-wrapper">
          <a class="user-action" href="#" @click="dialog = true">비밀번호 변경</a>
          <a class="user-action" href="#" @click="dialog2 = true">회원탈퇴</a>
       </div>
@@ -138,8 +140,8 @@
                   <v-card-title class="nf"> 정말로 탈퇴하시겠습니까? 😭 </v-card-title>
                   <v-card-actions>
                      <v-spacer></v-spacer>
-                     <v-btn color="error" text @click="dialog2 = false"> 취소 </v-btn>
-                     <v-btn color="green darken-1" text @click="secession"> 변경하기 </v-btn>
+                     <v-btn color="green darken-1" text @click="dialog2 = false"> 취소 </v-btn>
+                     <v-btn color="error" text @click="secession"> 탈퇴하기 </v-btn>
                   </v-card-actions>
                </v-card>
             </v-dialog>
@@ -150,6 +152,7 @@
 <script>
 import { deleteUser } from '@/api/user.js'
 import { changePwd } from '@/api/user.js'
+import { follow } from '@/api/user.js'
 import { mapState } from 'vuex'
 import Chart from '@/components/mypage/Chart.vue'
 import personsAssets from '@/components/mypage/personsAssets.vue'
@@ -162,6 +165,9 @@ export default {
       Chart,
       personsAssets,
       personsAssetsWithPhoto
+   },
+   props: {
+      userId: Number
    },
    data: function () {
       return {
@@ -185,12 +191,13 @@ export default {
             correspond: v => v === this.newPwd1 || '비밀번호가 일치하지 않습니다.'
          },
          // showValue(1 작성한글, 2 댓글단 글, 3 작성 노리, 4 관심 노리, 5 시청분석)
-         showValue: 5,
+         showValue: 0,
          personsAssets: [], // 글(사진 없는)
          personsAssetsWithPhoto: [], //노리(사진 있는)
          //팔로잉 팔로워 수
          followers: 52,
          followings: 21,
+         isfollowed: false,
          // 임시데이터 작성한글, 댓글단글(커뮤니티), 작성 노리, 관심노리 필수 항목 >> 제목(커뮤니티는 contents), 작성일자, 조회수, likeusers, 댓글, Article_id(Content_id)
          personsArticles: [
             {
@@ -342,6 +349,22 @@ export default {
       }
    },
    methods: {
+      //팔로우 요청
+      followSomeone: function () {
+         const targetUserId = this.$route.params.userId
+         console.log(targetUserId)
+         follow(
+            targetUserId,
+            (success) => {
+               console.log(success,'팔로우 완료')
+               this.isfollowed = !this.isfollowed
+            },
+            (error) => {
+               console.log(error)
+            }
+         )
+
+      },
       //비밀번호 변경 validation
       checkPW(str) {
          // 영문, 숫자 혼합 6글자 이내
@@ -399,6 +422,8 @@ export default {
          deleteUser(
          (response) => {
             console.log('탈퇴',response)
+            this.dialog2 = false
+            this.router.push('/')
          },
          (error) => {
             console.log(error)
@@ -409,6 +434,11 @@ export default {
    computed: {
       ...mapState(['userInfo']),
    },
+   created: function () {
+     if (this.showValue == 5) {
+        console.log('에헴')
+     }
+   }
   
 }
 </script>
@@ -441,7 +471,7 @@ export default {
          img {
             position: absolute;
             left: -180px;
-            top: 20px;
+            top: 25px;
             width: 180px;
             transform: rotateY(180deg);
             // height: 150px;
@@ -449,8 +479,8 @@ export default {
          .in-bubble {
             white-space: nowrap;
             position: absolute;
-            left: -130px;
-            top: 32px;
+            left: -135px;
+            top: 38px;
             .username{
                display: inlnine;
                font-size: 18pt;
@@ -465,7 +495,7 @@ export default {
             position: absolute;
             left: 10px;
             width: 170px;
-            top: 10px;
+            top: 15px;
             display: flex;
             flex-direction: column;
             height: 120px;
@@ -487,22 +517,25 @@ export default {
                   }
                }
             }
-            .follow-button {
-               background-color: #a2d646; 
-            }
-            .unfollow-button {
-               background-color: rgb(184, 184, 184);
-               
-            }
-            .infos-button {
-               font-size: 10pt;
-               // margin-left: 10px;
-               border-radius: 10px;
-               padding: 5px 10px;
-               width: 100px; 
-               &:focus {
-                  outline: none;
-               } 
+            .follow-buttons {
+
+               .follow-button {
+                  background-color: #a2d646; 
+               }
+               .unfollow-button {
+                  background-color: rgb(184, 184, 184);
+                  
+               }
+               .infos-button {
+                  font-size: 10pt;
+                  // margin-left: 10px;
+                  border-radius: 10px;
+                  padding: 5px 10px;
+                  width: 100px; 
+                  &:focus {
+                     outline: none;
+                  } 
+               }
             }
 
          }
@@ -510,7 +543,7 @@ export default {
    }
    .middle {
       // background-color: lightgray;
-      margin-top: -10px;
+      margin-top: -5px;
       height: 10%;
       width: 90%;
       display: flex;

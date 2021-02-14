@@ -28,8 +28,8 @@ export default new Vuex.Store({
 
     //로그아웃 시
     logout(state) {
-      // localStorage.removeItem('accessToken');
-      localStorage.clear;
+      localStorage.removeItem('accessToken');
+      // localStorage.clear;
       state.isLogin = false;
       state.userInfo = null;
     },

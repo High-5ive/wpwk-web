@@ -17,7 +17,7 @@
       <div class="desc-wrapper">
          <h1>{{ sendNori.title }}</h1>
          <span v-for="(tag, idx) in sendNori.tagList" :key="'tag' + idx" @click="tagSearch(tag.name)"> #{{ tag.name }} </span>
-         <h6>{{ sendNori.nickname }}</h6>
+         <h6 @click="toPersonsProfile">{{ sendNori.nickname }}</h6>
          <div v-if="sendNori.favorite" class="btn-like" @click="doUnLike">
             <v-icon>
                mdi-heart
@@ -70,6 +70,7 @@ export default {
             id,
             () => {
                this.sendNori.favorite = true;
+               console.log(this.sendNori)
             },
             (err) => {
                console.log(err);
@@ -87,6 +88,9 @@ export default {
             }
          );
       },
+      toPersonsProfile: function () {
+         this.$router.push({ name: 'mypage', params: { userId: this.sendNori.userId } })
+      }
    },
 
    mounted() {

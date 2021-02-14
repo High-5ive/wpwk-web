@@ -29,9 +29,10 @@ function follow(userId, success, fail) {
   let token = window.localStorage.getItem("accessToken");
   const config = {
     headers: {
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     }
   };
+  console.log(userId)
   instance
     .post(`users/following/${userId}`, config)
     .then(success)
