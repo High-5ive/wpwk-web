@@ -7,7 +7,7 @@
       </div>
 
       <span class="sub nf">*어떠셨는지 마음껏 선택해주세요</span>
-      <eval-buttons></eval-buttons>
+      <eval-buttons :contentsInfo="contentsInfo"></eval-buttons>
 
       <div class="ev-footer">
          <div class="footer-eval">
@@ -45,12 +45,16 @@ export default {
          evaluation: false,
       };
    },
+   props: {
+      contentsInfo: Object,
+   },
    methods: {
       goHome: function() {
          this.$router.push({ name: 'Main' });
          this.$router.go(this.$router.currentRoute);
       },
       goReView: function() {
+         alert('초기화면으로 돌아갑니다');
          this.evaluation = false;
          console.log(this.evaluation);
          this.$emit('evaluationPage', this.evaluation);

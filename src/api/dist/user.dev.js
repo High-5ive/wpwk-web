@@ -9,6 +9,9 @@ exports.registerUser = registerUser;
 exports.naverLogin = naverLogin;
 exports.kakaoLogin = kakaoLogin;
 exports.deleteUser = deleteUser;
+exports.changePwd = changePwd;
+exports.follow = follow;
+exports.contentsEvaluations = contentsEvaluations;
 
 var _index = require("./index.js");
 
@@ -28,14 +31,34 @@ function login(user, success, fail) {
   instance.post("login", JSON.stringify(body)).then(success)["catch"](fail);
 }
 
-function deleteUser(success, fail) {
+function follow(userId, success, fail) {
   var token = window.localStorage.getItem("accessToken");
   var config = {
     headers: {
       Authorization: "Bearer ".concat(token)
     }
   };
-  instance["delete"]('users', config).then(success)["catch"](fail);
+  instance.post("users/following/".concat(userId), config).then(success)["catch"](fail);
+}
+
+function changePwd(param, success, fail) {
+  var token = window.localStorage.getItem('accessToken');
+  var config = {
+    headers: {
+      Authorization: "Bearer ".concat(token)
+    }
+  };
+  instance.put("users/changePassword", param, config).then(success)["catch"](fail);
+}
+
+function deleteUser(success, fail) {
+  var token = window.localStorage.getItem('accessToken');
+  var config = {
+    headers: {
+      Authorization: "Bearer ".concat(token)
+    }
+  };
+  instance["delete"]("users", config).then(success)["catch"](fail);
 }
 
 function findById(userId, success, fail) {
@@ -44,7 +67,7 @@ function findById(userId, success, fail) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
-          token = window.localStorage.getItem("accessToken");
+          token = window.localStorage.getItem('accessToken');
           config = {
             headers: {
               Authorization: "Bearer ".concat(token)
@@ -67,4 +90,14 @@ function naverLogin(token, success, fail) {
 
 function kakaoLogin(code, success, fail) {
   instance.get("kakao/" + code).then(success)["catch"](fail);
+}
+
+function contentsEvaluations(data, success, fail) {
+  var token = window.localStorage.getItem('accessToken');
+  var config = {
+    headers: {
+      Authorization: "Bearer ".concat(token)
+    }
+  };
+  instance.put("users/contentsEnd", data, config).then(success)["catch"](fail);
 }

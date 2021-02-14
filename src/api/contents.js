@@ -6,8 +6,12 @@ const instance = createInstance();
 
 function createContents(param, success, fail) {
   //body값 다시 만들고 JSON 파싱하기
-  let token = window.localStorage.getItem("accessToken");
-  let config = {headers: { Authorization: `Bearer ${token}` }};
+  let token = window.localStorage.getItem('accessToken');
+  let config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
   instance
     .post(`contents`, param, config)
     .then(success)
@@ -22,9 +26,12 @@ function createTags(id, param, success, fail) {
 }
 
 function findAllContents(success, fail) {
-
-  let token = window.localStorage.getItem("accessToken");
-  let config = {headers: { Authorization: `Bearer ${token}` }};
+  let token = window.localStorage.getItem('accessToken');
+  let config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
 
   instance
     .get(`contents`, config)
@@ -33,9 +40,12 @@ function findAllContents(success, fail) {
 }
 
 function findContentsById(id, success, fail) {
-
-  let token = window.localStorage.getItem("accessToken");
-  let config = {headers: { Authorization: `Bearer ${token}` }};
+  let token = window.localStorage.getItem('accessToken');
+  let config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
 
   instance
     .get(`contents/${id}`, config)
@@ -51,9 +61,12 @@ function findContentsItemById(id, success, fail) {
 }
 
 function findContentsByPage(page, success, fail) {
-  
-  let token = window.localStorage.getItem("accessToken");
-  let config = {headers: { Authorization: `Bearer ${token}` }};
+  let token = window.localStorage.getItem('accessToken');
+  let config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
 
   instance
     .get(`contents/page/${page}`, config)
@@ -62,9 +75,12 @@ function findContentsByPage(page, success, fail) {
 }
 
 function findContentsByTag(tag, page, success, fail) {
-
-  let token = window.localStorage.getItem("accessToken");
-  let config = {headers: { Authorization: `Bearer ${token}` }};
+  let token = window.localStorage.getItem('accessToken');
+  let config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
 
   instance
     .get(`contents/tags/${tag}/page/${page}`, config)
@@ -75,7 +91,11 @@ function findContentsByTag(tag, page, success, fail) {
 function findContentsByKeyword(keyword, page, success, fail) {
 
   let token = window.localStorage.getItem("accessToken");
-  let config = {headers: { Authorization: `Bearer ${token}` }};
+  let config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
 
   instance
     .get(`contents/keyword/${keyword}/page/${page}`, config)
@@ -83,16 +103,70 @@ function findContentsByKeyword(keyword, page, success, fail) {
     .catch(fail);
 }
 
+function findContentsComment(id, success, fail) {
+  instance
+    .get(`contentsComments/${id}`)
+    .then(success)
+    .catch(fail);
+}
+
+function deleteContentsComment(id, success, fail) {
+  let token = window.localStorage.getItem('accessToken');
+  let config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
+
+  instance
+    .delete(`contentsComments/${id}`, config)
+    .then(success)
+    .catch(fail);
+}
+
 function findContentsByCategory(category, page, success, fail) {
 
   let token = window.localStorage.getItem("accessToken");
-  let config = {headers: { Authorization: `Bearer ${token}` }};
+  let config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
 
   instance
     .get(`contents/category/${category}/page/${page}`, config)
     .then(success)
     .catch(fail);
 }
+
+function updateContentsComment(data, success, fail) {
+  let token = window.localStorage.getItem('accessToken');
+  let config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
+
+  instance
+    .put(`contentsComments`, data, config)
+    .then(success)
+    .catch(fail);
+}
+
+function createContentsComment(data, success, fail) {
+  let token = window.localStorage.getItem('accessToken');
+  let config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
+
+  instance
+    .post(`contentsComments`, data, config)
+    .then(success)
+    .catch(fail);
+}
+
 
 export {
   createContents,
@@ -103,5 +177,9 @@ export {
   findContentsByTag,
   findContentsItemById,
   findContentsByKeyword,
-  findContentsByCategory
+  findContentsByCategory,
+  findContentsComment,
+  deleteContentsComment,
+  updateContentsComment,
+  createContentsComment,
 };

@@ -3,7 +3,7 @@
       <!-- evaluation값에 따라 페이지 변환 -->
       <!-- 평가페이지 -->
       <div v-if="evaluationValue">
-         <Evaluations @evaluationPage="evaluation" />
+         <Evaluations @evaluationPage="evaluation" :contentsInfo="contents" />
       </div>
 
       <!-- 카드페이지 -->
@@ -33,9 +33,9 @@
                   <img class="wp-hand" src="@/assets/img/characters/comment_wp2.png" />
 
                   <div class="cm-wrapper">
-                     <CommentList :comments="this.comments" @deleteComment="deleteComment" />
+                     <CommentList :comments="this.comments" @deleteComment="deleteComment" @updateComment="updateComment" />
                   </div>
-                  <comment-form-view @createComment="createComment" @emit-close="closeModal" />
+                  <comment-form-view :contents="contents" @createComment="createComment" @emit-close="closeModal" />
                </v-card>
             </v-dialog>
          </v-row>
@@ -50,8 +50,10 @@ import Evaluations from '@/components/ContentsView/Evaluations';
 import CommentList from '@/components/Comment/CommentList';
 import CommentFormView from '../components/Comment/CommentForm_view.vue';
 import { findContentsItemById } from '@/api/contents.js';
-
-// img, photo, description은 제공받는 데이터에서 가져옴(임의의 값 설정)
+import { findContentsComment } from '@/api/contents.js';
+import { deleteContentsComment } from '@/api/contents.js';
+import { updateContentsComment } from '@/api/contents.js';
+import { createContentsComment } from '@/api/contents.js';
 
 export default {
    name: 'ContentsView',
@@ -75,6 +77,7 @@ export default {
          },
          selectedCategories: [],
          hashtags: [],
+         contents: Object,
       };
    },
    created() {
@@ -92,12 +95,53 @@ export default {
       deleteComment: function(comment) {
          const deleteId = this.comments.indexOf(comment);
          this.comments.splice(deleteId, 1);
+
+         deleteContentsComment(
+            comment.id,
+            (success) => {
+               alert('댓글을 삭제 했습니다.');
+               console.log('댓글을 삭제 succ.', success);
+            },
+            (fail) => {
+               console.log('댓글을 삭제 fail.', fail);
+            }
+         );
       },
+      updateComment: function(comment) {
+         var data = {
+            commentId: comment.id,
+            comment: comment.comment,
+         };
+
+         updateContentsComment(
+            data,
+            (success) => {
+               console.log(success);
+               alert('댓글 수정을 완료 했습니다.');
+            },
+            (fail) => {
+               console.log(fail);
+               alert('댓글을 수정하는데 실패 했습니다.');
+            }
+         );
+      },
+
       createComment: function(comment) {
          this.comments.push(comment);
+         createContentsComment(
+            comment,
+            (success) => {
+               console.log(success);
+            },
+            (fail) => {
+               console.log(fail);
+            }
+         );
       },
+
       getContentsItems: function() {
          var contents = this.$route.params.nori;
+         this.contents = contents;
          //console.log(contents);
          this.writer = contents.nickname;
          this.title = contents.title;
@@ -114,6 +158,17 @@ export default {
                console.log('get ContentsItem fail ', fail);
             }
          );
+
+         findContentsComment(
+            contentsId,
+            (success) => {
+               console.log('get Contents Comments success', success.data);
+               this.comments = success.data;
+            },
+            (fail) => {
+               console.log('get Contents Comment fail', fail);
+            }
+         );
       },
 
       // 현재 떠있는 댓글창을 닫기
@@ -121,6 +176,7 @@ export default {
          this.dialog = false;
       },
    },
+
    watch: {
       evaluationValue: function() {
          this.cards = [];
