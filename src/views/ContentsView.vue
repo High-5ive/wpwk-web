@@ -45,7 +45,7 @@
             />
 
             <div class="cm-wrapper">
-              <CommentList
+              <ContentsCommentList
                 :comments="this.comments"
                 @deleteComment="deleteComment"
                 @updateComment="updateComment"
@@ -67,7 +67,7 @@
 <script>
 import CardList from '@/components/ContentsView/CardList';
 import Evaluations from '@/components/ContentsView/Evaluations';
-import CommentList from '@/components/Comment/CommentList';
+import ContentsCommentList from '@/components/Comment/ContentsCommentList';
 import CommentFormView from '../components/Comment/CommentForm_view.vue';
 import { findContentsItemById } from '@/api/contents.js';
 import { findContentsComment } from '@/api/contents.js';
@@ -81,7 +81,7 @@ export default {
   components: {
     CardList,
     Evaluations,
-    CommentList,
+    ContentsCommentList,
     CommentFormView,
   },
   data: function() {

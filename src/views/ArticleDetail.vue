@@ -121,25 +121,25 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import ArticleDetailPhoto from "@/components/Community/ArticleDetailPhoto";
-import CommentFormCmmu from "@/components/Comment/CommentForm_cmmu.vue";
-import CommentList from "@/components/Comment/CommentList.vue";
+import { mapState } from 'vuex';
+import ArticleDetailPhoto from '@/components/Community/ArticleDetailPhoto';
+import CommentFormCmmu from '@/components/Comment/CommentForm_cmmu.vue';
+import CommentList from '@/components/Comment/CommentList.vue';
 import {
   findBoardsById,
   deleteById,
   updateLikes,
   cancelLikes,
   modifyBoard,
-} from "@/api/community.js";
+} from '@/api/community.js';
 import {
   findBoardCommentsByBoardId,
   createBoardComment,
   removeBoardComment,
-} from "@/api/communityComment.js";
+} from '@/api/communityComment.js';
 
 export default {
-  name: "ArticleDetail",
+  name: 'ArticleDetail',
   components: {
     ArticleDetailPhoto,
     CommentList,
@@ -150,17 +150,17 @@ export default {
       itemList: [],
       comments: [],
       likeList: [],
-      article: "",
+      article: '',
       page: 1,
       menu: false,
       editDialog: false,
-      editContent: "",
-      editCategory: "",
-      subjects: ["동네맛집", "동네카페", "아이교육/학원", "살림/청소/정리"],
+      editContent: '',
+      editCategory: '',
+      subjects: ['동네맛집', '동네카페', '아이교육/학원', '살림/청소/정리'],
     };
   },
   computed: {
-    ...mapState(["userInfo"]),
+    ...mapState(['userInfo']),
   },
   methods: {
     getArticle: function() {
@@ -224,7 +224,7 @@ export default {
         comment.id,
         this.$route.params.articleId,
         () => {
-          alert("댓글이 삭제되었습니다.");
+          alert('댓글이 삭제되었습니다.');
           this.getArticleComments();
         },
         (error) => {
@@ -237,7 +237,7 @@ export default {
         this.$route.params.articleId,
         comment,
         () => {
-          alert("댓글이 등록되었습니다.");
+          alert('댓글이 등록되었습니다.');
           this.getArticleComments();
         },
         (error) => {
@@ -246,15 +246,15 @@ export default {
       );
     },
     removeBoard: function() {
-      if (confirm("정말로 삭제하시겠습니까") === false) {
+      if (confirm('정말로 삭제하시겠습니까') === false) {
         return;
       }
 
       deleteById(
         this.$route.params.articleId,
         () => {
-          alert("게시물이 삭제되었습니다.");
-          this.$router.push("/cmmu");
+          alert('게시물이 삭제되었습니다.');
+          this.$router.push('/cmmu');
         },
         (err) => {
           console.log(err);
@@ -268,9 +268,9 @@ export default {
       modifyBoard(
         this.article,
         () => {
-          alert("게시물이 수정되었습니다.");
+          alert('게시물이 수정되었습니다.');
           this.editDialog = false;
-          this.$router.push("/cmmu");
+          this.$router.push('/cmmu');
         },
         (err) => {
           console.log(err);
@@ -289,5 +289,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "src/css/articleDetail.scss";
+@import 'src/css/articleDetail.scss';
 </style>

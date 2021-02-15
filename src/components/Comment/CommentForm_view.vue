@@ -1,12 +1,22 @@
 <template>
-   <!-- 콘텐츠 뷰 안에 들어가는 댓글창 -->
-   <div class="comment-view-footer">
+  <!-- 콘텐츠 뷰 안에 들어가는 댓글창 -->
+  <div>
+    <div class="comment-view-footer">
       <div class="close-btn" @click="closeModal">
-         <v-icon>mdi-close</v-icon>
+        <v-icon>mdi-close</v-icon>
       </div>
-      <input @keypress.enter="createComment" class="input-box nf" type="text" v-model="comment" placeholder="댓글을 작성해주세요." />
-      <button @click="createComment" class="btn-send"><v-icon>mdi-send</v-icon></button>
-   </div>
+      <input
+        @keypress.enter="createComment"
+        class="input-box nf"
+        type="text"
+        v-model="comment"
+        placeholder="댓글을 작성해주세요."
+      />
+      <button @click="createComment" class="btn-send">
+        <v-icon>mdi-send</v-icon>
+      </button>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -14,43 +24,44 @@ import moment from 'moment';
 import { mapState } from 'vuex';
 
 export default {
-   name: 'CommentFormView',
-   data: function() {
-      return {
-         comment: '',
+  name: 'CommentFormView',
+  data: function() {
+    return {
+      comment: '',
+      editDialog: false,
+    };
+  },
+  props: {
+    contents: Object,
+  },
+  methods: {
+    createComment: function() {
+      if (this.comment == '') {
+        alert('내용을 입력해주세요');
+        return;
+      }
+
+      const now = moment().format('YYYY-MM-DD HH:mm:ss');
+      console.log(now);
+      const comment = {
+        comment: this.comment,
+        nickname: this.userInfo.nickname,
+        contentsId: this.contents.id,
+        userId: this.userInfo.userId,
+        createdAt: now,
       };
-   },
-   props: {
-      contents: Object,
-   },
-   methods: {
-      createComment: function() {
-         if (this.comment == '') {
-            alert('내용을 입력해주세요');
-            return;
-         }
+      this.$emit('createComment', comment);
+      this.comment = '';
+    },
 
-         const now = moment().format('YYYY-MM-DD HH:mm:ss');
-         console.log(now);
-         const comment = {
-            comment: this.comment,
-            nickname: this.userInfo.nickname,
-            contentsId: this.contents.id,
-            userId: this.userInfo.userId,
-            createdAt: now,
-         };
-         this.$emit('createComment', comment);
-         this.comment = '';
-      },
-
-      // 현재 댓글 창을 닫기
-      closeModal() {
-         this.$emit('emit-close');
-      },
-   },
-   computed: {
-      ...mapState(['userInfo']),
-   },
+    // 현재 댓글 창을 닫기
+    closeModal() {
+      this.$emit('emit-close');
+    },
+  },
+  computed: {
+    ...mapState(['userInfo']),
+  },
 };
 </script>
 
@@ -58,71 +69,71 @@ export default {
 @import 'src/css/common.scss';
 
 .comment-view-footer {
-   position: fixed;
-   z-index: 100;
-   // left: 0;
-   bottom: 0;
-   // transform: translateX(-50%);
+  position: fixed;
+  z-index: 100;
+  // left: 0;
+  bottom: 0;
+  // transform: translateX(-50%);
 
-   height: 50px;
-   width: 100%;
+  height: 50px;
+  width: 100%;
 
-   @include desktop {
-      // margin-left: 400px;
-      width: calc(100% - 400px);
-   }
+  @include desktop {
+    // margin-left: 400px;
+    width: calc(100% - 400px);
+  }
 
-   background-color: white;
+  background-color: white;
 
-   display: flex;
+  display: flex;
 
-   .close-btn {
-      border-radius: 0px;
-      // position: fixed;
-      // z-index: 110;
-      // bottom: 0px;
+  .close-btn {
+    border-radius: 0px;
+    // position: fixed;
+    // z-index: 110;
+    // bottom: 0px;
 
-      text-align: center;
-      line-height: 45px;
+    text-align: center;
+    line-height: 45px;
 
-      width: 60px;
-      height: 50px;
+    width: 60px;
+    height: 50px;
 
-      background-color: rgb(247, 179, 179);
-      cursor:pointer;
-      // border-right: 1px solid $main-green;
+    background-color: rgb(247, 179, 179);
+    cursor: pointer;
+    // border-right: 1px solid $main-green;
 
-      i {
-         color: white;
-      }
+    i {
+      color: white;
+    }
 
-      &:focus {
-         outline: none;
-      }
-   }
+    &:focus {
+      outline: none;
+    }
+  }
 
-   .input-box {
-      width: 100%;
-      // background-color: blue;
-      padding: 20px;
-      border: 1px solid $main-green;
+  .input-box {
+    width: 100%;
+    // background-color: blue;
+    padding: 20px;
+    border: 1px solid $main-green;
 
-      &:focus {
-         outline: none;
-      }
-   }
+    &:focus {
+      outline: none;
+    }
+  }
 
-   .btn-send {
-      width: 60px;
-      background-color: $main-green;
+  .btn-send {
+    width: 60px;
+    background-color: $main-green;
 
-      i {
-         color: white;
-      }
+    i {
+      color: white;
+    }
 
-      &:focus {
-         outline: none;
-      }
-   }
+    &:focus {
+      outline: none;
+    }
+  }
 }
 </style>
