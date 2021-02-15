@@ -182,6 +182,7 @@ const routes = [{
   {
     path: '/admin',
     name: 'Admin',
+    beforeEnter: onlyAuthUser,
     components: {
       side: SideMenu,
       default: Admin,
