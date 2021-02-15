@@ -113,7 +113,7 @@ function getNotification(success, fail) {
   };
 
   instance
-    .get('notifications', config)
+    .get('notifications/main', config)
     .then(success)
     .catch(fail);
 }

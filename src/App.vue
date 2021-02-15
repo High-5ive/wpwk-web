@@ -19,8 +19,10 @@
           ><img src="@/assets/wpwk_logo.png"/></router-link
       ></v-toolbar-title>
       <div class="btn-notification" @click="notificationShow">
-        <v-icon>mdi-bell-ring</v-icon>
+        <v-icon>mdi-bell</v-icon>
       </div>
+      <!-- <div class="notificationNum"></div> -->
+      <div v-if="this.notifications.length" class="notificationNum"> {{ this.notifications.length }} </div>
       <notification v-if="showNotification"></notification>
 
       <div class="btn-search" @click="showSearch = !showSearch">
@@ -39,7 +41,7 @@
 <script>
 import Search from '@/components/main/Search.vue';
 import Notification from '@/components/main/Notification.vue';
-import { confirmNotification } from '@/api/user.js';
+import { confirmNotification, getNotification } from '@/api/user.js';
 import { mapState } from 'vuex';
 export default {
   name: 'App',
@@ -48,6 +50,7 @@ export default {
     drawer: false,
     showSearch: false,
     showNotification: false,
+    notifications: [],
     isDesk: false,
 
     width: 0,
@@ -65,17 +68,29 @@ export default {
     window.addEventListener('load', this.handleResize);
   },
   methods: {
+     getNotifications() {
+          getNotification(
+              (res) => {
+                  this.notifications = res.data
+              },
+              (err) => {
+                  console.log(err)
+              }
+          )
+      },
     notificationShow: function() {
       if (this.showNotification) {
-        confirmNotification(
-          this.userInfo.userId,
-          (success) => {
-            console.log(success);
-          },
-          (fail) => {
-            console.log(fail);
-          }
-        );
+         if(this.notifications) {
+            confirmNotification(
+               this.userInfo.userId,
+               (success) => {
+                  console.log(success);
+               },
+               (fail) => {
+                  console.log(fail);
+               }
+            );
+         }
       }
       this.showNotification = !this.showNotification;
     },
@@ -104,6 +119,14 @@ export default {
   computed: {
     ...mapState(['userInfo']),
   },
+  created: function() {
+     this.getNotifications()
+  },
+  watch: {
+     showNotification: function () {
+        this.getNotifications()
+     }
+  }
 };
 </script>
 
@@ -138,6 +161,18 @@ export default {
       right: 50px;
     }
 
+    .notificationNum {
+         width: 10px;
+         background-color: red;
+         height: 10px;
+         line-height: 10px;
+         border-radius: 15px;
+
+         position: absolute;
+         right: 60px;
+         margin: 15px 0 0 30px;
+      }
+
     .btn-search {
       height: 48px;
       width: 48px;
@@ -160,7 +195,7 @@ export default {
     color: rgba(255, 180, 0);
     font-size: 23px;
 
-    margin: 13px 0 0 13px;
+    margin: 10px 0 0 10px;
   }
 
   .btn-search i {

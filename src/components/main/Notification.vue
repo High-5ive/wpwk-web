@@ -1,7 +1,10 @@
 <template>
    <div class="notification-container">
-       <div class="notification-wrapper">
+       <div v-if="this.notifications.length" class="notification-wrapper">
            <div class="notification" :class="{'for-stripe':!isEven(idx)}" v-for="(notification, idx) in notifications" :key="idx"> {{ notification.message }} </div>
+       </div>
+       <div else class="notification-wrapper">
+           <div class="notificationEmpty nf"> 알림이 없습니다. </div>
        </div>
    </div>
 </template>
