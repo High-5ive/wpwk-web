@@ -7,6 +7,7 @@
          <!-- 이미지 위에 표시되는 뱃지들이 위치합니다 -->
          <!-- <div class="itemLength">{{ sendNori.itemList.length }}</div> -->
          <div class="badge-cate">
+            <span class="badge-eval">{{ sendNori.evalAcs }}</span>
             <span v-for="(ability, idx) in sendNori.abilities" :key="idx" @click="categorySearch(ability)">
                {{ ability }}
             </span>
@@ -41,6 +42,7 @@ export default {
    props: ['sendNori'],
    data() {
       return {
+         eval: ['쉽게 할 수 있어요', '아이들이 좋아해요', '교육적이에요'],
          thumbnail: '',
          categories: ['언어지능', '논리수학지능', '음악지능', '신체운동지능', '공간지능', '자연지능', '대인지능', '개인내지능'],
       };
@@ -90,9 +92,11 @@ export default {
    },
 
    mounted() {
+      console.log(this.sendNori);
+
       //이미지 없을 경우, 기본 이미지
       if (this.sendNori.thumb == null) {
-         this.thumbnail = require('@/assets/cv-bg.png');
+         this.thumbnail = require('@/assets/img/characters/wpwk-default.png');
       } else {
          this.thumbnail = this.sendNori.thumb;
       }
