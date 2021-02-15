@@ -206,11 +206,11 @@
                     // margin-top: 20px;
                     display: flex;
 
-                    i{
-                        color:$navi-main;
+                    i {
+                        color: $navi-main;
                     }
 
-                    .cap{
+                    .cap {
                         padding: 0;
                         display: block;
                         font-size: 8pt;
@@ -224,7 +224,7 @@
                         width: 50%;
                         text-align: center;
 
-                        &::after{
+                        &::after {
                             content: '';
                             width: 1px;
                             height: 20px;
@@ -234,8 +234,10 @@
                             background-color: rgb(223, 223, 223);
                         }
 
-                        &.out{
-                            i,.cap{
+                        &.out {
+
+                            i,
+                            .cap {
                                 color: rgb(75, 23, 22);
                             }
                         }
@@ -245,8 +247,10 @@
                         width: 50%;
                         text-align: center;
 
-                        &.fin{
-                            i,.cap{
+                        &.fin {
+
+                            i,
+                            .cap {
                                 color: $navi-success;
                             }
                         }
@@ -260,20 +264,21 @@
 
     //Evaluations.vue
     .ev-container {
-        margin-top: 20px;
+        // margin-top: 20px;
         // background-color: blue;
         height: 90vh;
         padding-bottom: 100px;
 
         // 평가페이지 최상단 타이틀 부분
-        .top-wrapper{
+        .top-wrapper {
+            margin-top: 2vh;
             display: flex;
             flex-direction: column;
             align-items: center;
 
             height: 190px;
 
-            .ev-title{
+            .ev-title {
                 position: relative;
                 top: -160px;
                 font-size: 16px;
@@ -281,42 +286,79 @@
                 color: rgb(70, 70, 70);
             }
 
-            
-            .ev-bubble{
+
+            .ev-bubble {
                 width: 240px;
             }
-            
-            .ev-wk{
+
+            .ev-wk {
                 position: relative;
                 top: -10px;
                 width: 100px;
             }
         }
-        .sub{
+
+        .sub {
             display: block;
             text-align: center;
             margin: 0px auto;
             color: gray;
             font-size: 12px;
         }
-        
+
         //평가 버튼들 존재
         .eb-wrapper {
-            // background-color: red;
             .eval-group {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+                padding: 0px 40px;
+
+                .ev-row {
+                    height: 13vh;
+                    width: 100%;
+                    margin-bottom: 15px;
+
+                    display: flex;
+                    justify-content: space-between;
+
+                    button {
+                        height: inherit;
+                        width: 48%;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        border: 1px solid rgb(227, 227, 227);
+
+                        .v-btn__content {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+
+                            font-size: 1em;
+                            font-weight: 600;
+                            color: rgb(46, 46, 46);
+                            // text-overflow:ellipsis;
+
+                            .emoji {
+                                font-size: 20pt;
+                                margin-bottom: 3px;
+                            }
+
+                        }
+                    }
+                }
+
                 button {
                     // color: red;
                     // background-color: blue !important;
-                    width: 80%;
+                    width: 50%;
                     border: 1px solid rgb(227, 227, 227);
-                    margin-bottom: 2px;
+                    // margin-bottom: 2px;
                 }
             }
 
-            .btn-group{
+            .btn-group {
                 width: 80%;
                 margin: 0 auto;
                 margin-top: 20px;
@@ -324,15 +366,18 @@
                 display: flex;
                 justify-content: space-between;
 
-                #submit{
+                #submit {
+                    margin-left: 5%;
                     width: 60%;
-                    border: 2px solid $orange;
-
+                    border: 1px solid $orange;
+                    
                     color: $orange;
-                    font-weight: 600;
+                    font-weight: 400;
                 }
-                #report{
-                    width: 30%;
+                
+                #report {
+                    margin-right: 5%;
+                    width: 10%;
                     color: red;
                 }
             }
@@ -345,20 +390,18 @@
             position: absolute;
             z-index: 100;
             left: 50%;
-            bottom: -75px;
+            bottom: 0px;
             transform: translateX(-50%);
-            margin-bottom: 25px;
-            //    background-color: white;
 
             width: 100%;
-            height: 100px;
+            height: 50px;
 
             // 최하단 좌우 이동 버튼
             .footer-eval {
                 width: 100%;
                 display: flex;
 
-                .cap{
+                .cap {
                     padding: 0;
                     display: block;
                     font-size: 8pt;
@@ -377,7 +420,7 @@
                     text-align: center;
                     position: relative;
 
-                    &::after{
+                    &::after {
                         content: '';
                         width: 1px;
                         height: 20px;
@@ -394,7 +437,7 @@
                     text-align: center;
                     position: relative;
 
-                    &::after{
+                    &::after {
                         content: '';
                         width: 1px;
                         height: 20px;
@@ -425,7 +468,7 @@
         right: 40px;
         z-index: 200;
 
-        #btn-comment{
+        #btn-comment {
             background-color: red;
             width: 5.5vh;
             height: 5.5vh;
@@ -438,9 +481,9 @@
                 right: 5px;
                 width: 50px !important;
                 height: 50px !important;
-             }
-            
-        
+            }
+
+
         }
 
         display: inline;
@@ -493,7 +536,7 @@
         top: -60px;
 
         overflow-x: hidden;
-        overflow-y: auto;
+        // overflow-y: auto;
         width: 100%;
         height: 42vh;
     }

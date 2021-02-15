@@ -1,8 +1,9 @@
 @import "../common";
 
-.v-dialog.v-dialog--persistent {
+.v-dialog.v-dialog--persistent{
     // $img_x: -40px;
     // $img_y: 0px;
+    overflow: hidden !important;
 
     // 모달 창 위의 이미지
     .modal-left-hand,

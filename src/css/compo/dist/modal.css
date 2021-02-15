@@ -11,6 +11,9 @@
   font-weight: 600;
 }
 
+.v-dialog.v-dialog--persistent {
+  overflow: hidden !important;
+}
 .v-dialog.v-dialog--persistent .modal-left-hand,
 .v-dialog.v-dialog--persistent .modal-right-hand,
 .v-dialog.v-dialog--persistent .modal-foot {

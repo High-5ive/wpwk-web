@@ -2,19 +2,25 @@
    <div class="eb-wrapper">
       <!-- {{ evaluationCal }} -->
       <div class="eval-group">
+         <div class="ev-row">
+            <v-btn outlined rounded @click="eval2" :class="{ selected: ev2 }"><span class="emoji">&#128118;</span>아이가 너무 좋아해요</v-btn>
+            <v-btn outlined rounded @click="eval5" :class="{ selected: ev5 }"><span class="emoji">&#128525;</span>더 놀자고 해요</v-btn>
+         </div>
+         <div class="ev-row">
+            <v-btn outlined rounded @click="eval4" :class="{ selected: ev4 }"><span class="emoji">&#128176;</span>재료 준비하기 쉬워요</v-btn>
+            <v-btn outlined rounded @click="eval6" :class="{ selected: ev6 }"><span class="emoji">&#127960;</span>어디서든 할 수 있어요</v-btn>
+         </div>
+         <div class="ev-row">
+            <v-btn outlined rounded @click="eval7" :class="{ selected: ev7 }"><span class="emoji">&#128079;</span>호기심이 해결됐어요</v-btn>
+            <v-btn outlined rounded @click="eval8" :class="{ selected: ev8 }"><span class="emoji">&#127891;</span>교육적이에요!</v-btn>
+         </div>
          <!-- <v-btn outlined rounded @click="eval1" :class="{ selected: ev1 }"><span>&#128277;</span>층간 소음이 없어요</v-btn> -->
-         <v-btn outlined rounded @click="eval2" :class="{ selected: ev2 }"><span>&#128118;</span>아이가 너무 좋아해요</v-btn>
          <!-- <v-btn outlined rounded @click="eval3" :class="{ selected: ev3 }"><span>&#128558;</span>유익한 내용이에요</v-btn> -->
-         <v-btn outlined rounded @click="eval4" :class="{ selected: ev4 }"><span>&#128176;</span>재료 준비하기 쉬워요</v-btn>
-         <v-btn outlined rounded @click="eval5" :class="{ selected: ev5 }"><span>&#128525;</span>관련된걸 더 하자고 해요</v-btn>
-         <v-btn outlined rounded @click="eval6" :class="{ selected: ev6 }"><span>&#127960;</span>어디서든 할 수 있어요</v-btn>
-         <v-btn outlined rounded @click="eval7" :class="{ selected: ev7 }"><span>&#128079;</span>아이의 호기심이 해결됐어요</v-btn>
-         <v-btn outlined rounded @click="eval8" :class="{ selected: ev8 }"><span>&#127891;</span>교육적이에요!</v-btn>
          <!-- <v-btn outlined rounded @click="eval9" :class="{ selected: ev9 }"><span>&#128378;</span>아이가 한참 놀아도 안질려해요</v-btn> -->
       </div>
       <div class="btn-group">
          <v-btn id="submit" :class="{ possible: evaluationCal != '', disable: evaluationCal.length == '' }" outlined rounded @click="submit">평가하기</v-btn>
-         <v-btn id="report" outlined rounded @click="dialog = true">신고하기</v-btn>
+         <v-btn id="report" outlined rounded @click="dialog = true">신고</v-btn>
       </div>
 
       <!-- 신고하기 모달 -->
@@ -140,10 +146,6 @@ export default {
 .selected {
    background-color: rgb(255, 246, 180);
    border: rgb(237, 230, 177) 1px solid !important;
-}
-
-.possible {
-   // background-color: rgb(255, 236, 236);
 }
 
 #report-modal.v-card.v-sheet {
