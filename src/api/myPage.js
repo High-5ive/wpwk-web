@@ -5,42 +5,42 @@ import { instance } from './index.js';
 //   headers: { "access-token": localStorage.getItem("access-token") }
 // };
 
-function findMyContents(page, success, fail) {
+function findMyContents(id, page, success, fail) {
   let token = window.localStorage.getItem('accessToken');
   let config = { headers: { Authorization: `Bearer ${token}` } };
 
   instance
-    .get(`mypage/contents/page/${page}`, config)
+    .get(`mypage/contents/${id}/page/${page}`, config)
     .then(success)
     .catch(fail);
 }
 
-function findMyBoard(page, success, fail) {
+function findMyBoard(id, page, success, fail) {
   let token = window.localStorage.getItem('accessToken');
   let config = { headers: { Authorization: `Bearer ${token}` } };
 
   instance
-    .get(`mypage/board/page/${page}`, config)
+    .get(`mypage/board/${id}/page/${page}`, config)
     .then(success)
     .catch(fail);
 }
 
-function findContentsByFavorite(page, success, fail) {
+function findContentsByFavorite(id, page, success, fail) {
   let token = window.localStorage.getItem('accessToken');
   let config = { headers: { Authorization: `Bearer ${token}` } };
 
   instance
-    .get(`mypage/favoriteContents/page/${page}`, config)
+    .get(`mypage/favoriteContents/${id}/page/${page}`, config)
     .then(success)
     .catch(fail);
 }
 
-function findBoardsByComments(page, success, fail) {
+function findBoardsByComments(id, page, success, fail) {
   let token = window.localStorage.getItem('accessToken');
   let config = { headers: { Authorization: `Bearer ${token}` } };
 
   instance
-    .get(`mypage/commentBoard/page/${page}`, config)
+    .get(`mypage/commentBoard/${id}/page/${page}`, config)
     .then(success)
     .catch(fail);
 }
