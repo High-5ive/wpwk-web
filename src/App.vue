@@ -12,6 +12,11 @@
          <v-toolbar-title
             ><router-link to="/main"><img src="@/assets/wpwk_logo.png"/></router-link
          ></v-toolbar-title>
+         <div class="btn-notification" @click="notificationShow">
+            <v-icon>mdi-bell-ring</v-icon>
+         </div>
+         <notification v-if="showNotification"></notification>
+
          <div class="btn-search" @click="showSearch = !showSearch"><i class="fas fa-search"></i></div>
          <search v-if="showSearch" @searchShow="searchShow"></search>
       </v-app-bar>
@@ -25,13 +30,16 @@
 
 <script>
 import Search from '@/components/main/Search.vue';
+import Notification from '@/components/main/Notification.vue';
+import { confirmNotification } from '@/api/user.js'
 
 export default {
    name: 'App',
-   components: { Search },
+   components: { Search, Notification },
    data: () => ({
       drawer: false,
       showSearch: false,
+      showNotification: false,
       isDesk: false,
 
       width: 0,
@@ -49,6 +57,12 @@ export default {
       window.addEventListener('load', this.handleResize);
    },
    methods: {
+      notificationShow() {
+         if(this.showNotification) {
+            confirmNotification()
+         }
+         this.showNotification = !this.showNotification
+      },
       searchShow(search) {
          this.showSearch = search;
       },
@@ -98,6 +112,13 @@ export default {
          height: 30px;
       }
 
+      .btn-notification {
+         height: 48px;
+         width: 48px;
+         position: absolute;
+         right: 50px;
+      }
+
       .btn-search {
          height: 48px;
          width: 48px;
@@ -114,13 +135,22 @@ export default {
       color: #89ba17;
    }
 
+   .btn-notification i {
+      height: 24px;
+      width: 24px;
+      color: rgba(255, 180, 0);
+      font-size: 23px;
+
+      margin: 13px 0 0 13px;
+   }
+
    .btn-search i {
       height: 24px;
       width: 24px;
       color: rgba(255, 180, 0);
       font-size: 18px;
 
-      margin: 14px 0 0 14px;
+      margin: 13px 0 0 13px;
    }
 
    // 사이드 메뉴

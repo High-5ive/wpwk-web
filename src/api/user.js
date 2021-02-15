@@ -106,6 +106,34 @@ function contentsEvaluations(data, success, fail) {
     .catch(fail);
 }
 
+function getNotification(success, fail) {
+  let token = window.localStorage.getItem('accessToken');
+  let config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
+
+  instance
+    .get('notifications', config)
+    .then(success)
+    .catch(fail)
+}
+
+function confirmNotification(success, fail) {
+  let token = window.localStorage.getItem('accessToken');
+  let config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
+
+  instance
+    .put('notifications/confirm', config)
+    .then(success)
+    .catch(fail)
+}
+
 export {
   login,
   findById,
@@ -116,4 +144,6 @@ export {
   changePwd,
   follow,
   contentsEvaluations,
+  getNotification,
+  confirmNotification
 };
