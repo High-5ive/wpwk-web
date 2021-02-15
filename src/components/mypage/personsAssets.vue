@@ -1,6 +1,5 @@
 <template>
   <div class="article-wrapper">
-    <span> {{ this.personsAssets.length }} 개의 데이터를 찾았습니다. </span>
     <div
       class="as-item-box"
       :class="{ 'for-stripe': !isEven(idx) }"

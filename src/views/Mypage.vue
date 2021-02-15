@@ -61,7 +61,9 @@
         @click="switchValue(1)"
       >
         <span class="as-top">작성 글</span>
-        <!-- <span class="as-bottom">{{ personsArticles.length }}</span> -->
+        <span v-if="showValue == 1" class="as-bottom">{{
+          personsAssets.length
+        }}</span>
       </div>
       <div class="divider"></div>
       <div
@@ -70,7 +72,9 @@
         @click="switchValue(2)"
       >
         <span class="as-top">댓글단 글</span>
-        <!-- <span class="as-bottom">{{ personsCommentArticles.length }}</span> -->
+        <span v-if="showValue == 2" class="as-bottom">{{
+          personsAssets.length
+        }}</span>
       </div>
       <div class="divider"></div>
       <div
@@ -79,7 +83,9 @@
         @click="switchValue(3)"
       >
         <span class="as-top">작성 노리</span>
-        <!-- <span class="as-bottom">{{ personsContents.length }}</span> -->
+        <span v-if="showValue == 3" class="as-bottom">{{
+          personsAssetsWithPhoto.length
+        }}</span>
       </div>
       <div class="divider"></div>
       <div
@@ -88,12 +94,10 @@
         @click="switchValue(4)"
       >
         <span class="as-top">관심 노리</span>
-        <!-- <span class="as-bottom">{{ personsLikeContents.length }}</span> -->
+        <span v-if="showValue == 4" class="as-bottom">{{
+          personsAssetsWithPhoto.length
+        }}</span>
       </div>
-      <div
-        v-if="$route.params.userId === userInfo.userId"
-        class="divider"
-      ></div>
       <div
         v-if="$route.params.userId === userInfo.userId"
         class="asset-navi"
@@ -381,14 +385,14 @@ export default {
   // max-width: 500px;
   @include desktop {
     height: 100%;
-    max-width: 400px;
-    margin-left: -200px;
+    max-width: 500px;
+    margin-left: -250px;
     left: 50%;
   }
   @include tablet {
-    max-width: 400px;
+    max-width: 500px;
     left: 50%;
-    margin-left: -200px;
+    margin-left: -250px;
   }
   position: relative;
   height: 100%;
@@ -471,23 +475,30 @@ export default {
   .middle {
     // background-color: lightgray;
     margin-top: -5px;
-    height: 10%;
+    height: 80px;
     width: 90%;
     display: flex;
-    justify-content: center;
     align-items: center;
-    padding-bottom: 5px;
+    padding: 10px 5px;
+    box-shadow: 0 4px 4px lightgray;
+    border-radius: 10px;
+    .divider {
+      width: 0px;
+      border-left: lightgray 1px solid;
+      height: 35px;
+    }
 
     .asset-navi {
       .as-top {
         font-size: 11pt;
       }
-      // .as-bottom {
-      //    font-size: 15pt;
-      // }
-      // .v-icon {
-      //    font-size: 23pt;
-      // }
+      .as-bottom {
+        font-size: 11pt;
+        background-color: #f4b740;
+        color: white;
+        border-radius: 20px;
+        padding: 0 10px;
+      }
       width: 20%;
       height: 60px;
       padding: 5px;
@@ -496,34 +507,11 @@ export default {
       justify-content: center;
       align-items: center;
       padding-bottom: 5px;
-      // .as-bottom {
-      //    margin-bottom: 5px;
-      // }
     }
-    // .as-item-box {
-    //   width: 100%;
-    //   display: flex;
-    //   align-items: center;
-    //   justify-content: space-between;
-    //   padding: 10px;
-    //   .as-left {
-    //     display: flex;
-    //     flex-direction: column;
-    //     width: 80%;
-    //     .as-info {
-    //       color: gray;
-    //     }
-    //   }
-    //   .as-right {
-    //     width: 40px;
-    //     border: lightgray 1px solid;
-    //     // line-height와 height를 일치시키면, 텍스트 한줄 중앙 정렬
-    //     height: 40px;
-    //     line-height: 40px;
-    //     border-radius: 25px;
-    //     text-align: center;
-    //   }
-    // }
+    .selected-navi {
+      border-bottom: #f4b740 5px solid;
+      padding-bottom: 0;
+    }
   }
   .bottom {
     position: relative;
@@ -567,6 +555,10 @@ export default {
       }
     }
     .nori-wrapper {
+      width: 100%;
+      .for-stripe {
+        background-color: #f2f1f2;
+      }
       .item-box {
         width: 100%;
         display: flex;

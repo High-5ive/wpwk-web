@@ -1,8 +1,5 @@
 <template>
   <div class="nori-wrapper">
-    <span>
-      {{ this.personsAssetsWithPhoto.length }} 개의 데이터를 찾았습니다.</span
-    >
     <div
       :class="{ 'for-stripe': !isEven(idx) }"
       class="item-box"
