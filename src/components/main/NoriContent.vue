@@ -5,9 +5,22 @@
       <div class="img-wrapper">
          <img :src="thumbnail" alt="" @click="contentsClick(sendNori)" />
          <!-- 이미지 위에 표시되는 뱃지들이 위치합니다 -->
-         <!-- <div class="itemLength">{{ sendNori.itemList.length }}</div> -->
          <div class="badge-cate">
-            <span class="badge-eval">{{ sendNori.evalAcs }}</span>
+            <!-- 1 : 접근성 -->
+            <span v-if="eval_result != 0 && eval_result == 1" class="badge-eval acs">
+               <v-icon>mdi-home-search-outline</v-icon>
+               접근성</span
+            >
+            <!-- 2 : 흥미성 -->
+            <span v-else-if="eval_result != 0 && eval_result == 2" class="badge-eval fun">
+               <v-icon>mdi-heart-circle</v-icon>
+               흥미성</span
+            >
+            <!-- 3 : 교육성 -->
+            <span v-else-if="eval_result != 0 && eval_result == 3" class="badge-eval edu">
+               <v-icon>mdi-head-lightbulb-outline</v-icon>
+               교육성</span
+            >
             <span v-for="(ability, idx) in sendNori.abilities" :key="idx" @click="categorySearch(ability)">
                {{ ability }}
             </span>
@@ -42,7 +55,7 @@ export default {
    props: ['sendNori'],
    data() {
       return {
-         eval: ['쉽게 할 수 있어요', '아이들이 좋아해요', '교육적이에요'],
+         eval_result: 0,
          thumbnail: '',
          categories: ['언어지능', '논리수학지능', '음악지능', '신체운동지능', '공간지능', '자연지능', '대인지능', '개인내지능'],
       };
@@ -89,10 +102,38 @@ export default {
             }
          );
       },
+      calcEvalResult: function() {
+         var acs = this.sendNori.evalAcs; // 1
+         var fun = this.sendNori.evalFun; // 2
+         var edu = this.sendNori.evalEdu; // 3
+
+         if (acs + fun + edu == 0) {
+            return;
+         }
+
+         if (acs >= fun) {
+            if (acs >= edu) {
+               // acs > fun, edu
+               this.eval_result = 1;
+            } else {
+               // edu > acs > fun
+               this.eval_result = 3;
+            }
+         } else {
+            if (fun >= edu) {
+               // fun > edu, acs
+               this.eval_result = 2;
+            } else {
+               // edu > fun > acs
+               this.eval_result = 3;
+            }
+         }
+      },
    },
 
    mounted() {
       console.log(this.sendNori);
+      this.calcEvalResult();
 
       //이미지 없을 경우, 기본 이미지
       if (this.sendNori.thumb == null) {

@@ -41,17 +41,45 @@
             left: 3%;
 
             span{
-                background-color: $orange;
-                border-radius: 20px;
-                padding : 3px;
+                border-radius: 4px;
+                padding : 3px 6px;
                 margin-right: 6px;
 
                 font-weight : 600;
                 font-size: 10pt;
                 color: white;
+                // border: 2px solid white;
+
+                &:nth-child(1){
+                    background-color: rgb(250, 146, 19);
+                }
+                &:nth-child(2){
+                    background-color: rgb(255, 174, 0);
+                }
+                &:nth-child(3){
+                    background-color: rgb(247, 191, 68);
+                }
 
                 &.badge-eval{
-                    background-color: red
+                    box-shadow: 2px 2px 0px 0px #4e4e4e59;
+                    border-radius: 15px;
+                    padding-right: 10px;
+
+                    i {
+                        color: white;
+                        font-size: 12pt;
+                        padding-bottom: 3px;
+                    }
+
+                    &.acs{
+                        background-color: rgb(66, 140, 66);
+                    }
+                    &.edu{
+                        background-color: rgb(12, 146, 249);
+                    }
+                    &.fun{
+                        background-color: rgb(235, 86, 86);
+                    }
                 }
             }
         }
