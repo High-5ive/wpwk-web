@@ -1,11 +1,25 @@
 <template>
   <div class="article-wrapper">
-    <div class="as-item-box" :class="{'for-stripe':!isEven(idx)}" v-for="(article, idx) in personsAssets" :key="idx" >
+    <span> {{ this.personsAssets.length }} 개의 데이터를 찾았습니다. </span>
+    <div
+      class="as-item-box"
+      :class="{ 'for-stripe': !isEven(idx) }"
+      v-for="(article, idx) in personsAssets"
+      :key="idx"
+      @click="moveBoard(idx)"
+    >
       <div class="as-left">
-        <div class="as-content">{{ article.content | truncate(15, '...') }}</div>  
-        <div class="as-info"><span v-if="showValue === 2">{{ article.user }}</span> {{ article.created_at | truncate(10, ' ') }} 조회 {{ article.views }}</div>
+        <div class="as-content">
+          {{ article.content | truncate(15, '...') }}
+        </div>
+        <div class="as-info">
+          <span v-if="showValue === 2">{{ article.nickname }}</span>
+          {{ article.createdAt | truncate(10, ' ') }} 조회 {{ article.views }}
+        </div>
       </div>
-      <div class="as-right">{{ article.comments.length }}</div>
+      <div class="as-right">
+        <v-icon>mdi-arrow-right</v-icon>
+      </div>
     </div>
   </div>
 </template>
@@ -14,20 +28,26 @@ export default {
   name: 'personsAssets',
   props: {
     personsAssets: Array,
-    showValue: Number
+    showValue: Number,
   },
   methods: {
     // 짝수인지(스트라이프 스타일링)
-    isEven: function (idx) {
+    isEven: function(idx) {
       if (idx % 2) {
-        return false
+        return false;
       } else {
-        return true
+        return true;
       }
     },
-  }
-}
+    moveBoard: function(idx) {
+      this.$router.push({
+        name: 'ArticleDetail',
+        params: {
+          article: this.personsAssets[idx],
+        },
+      });
+    },
+  },
+};
 </script>
-<style lang="">
-
-</style>
+<style lang=""></style>

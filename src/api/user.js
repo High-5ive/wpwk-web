@@ -5,7 +5,6 @@ import {
 // const config = {
 //   headers: { "access-token": localStorage.getItem("access-token") }
 // };
-
 function registerUser(user, success, fail) {
   instance
     .post(`users`, JSON.stringify(user))
@@ -119,6 +118,16 @@ function contentsEvaluations(data, success, fail) {
     .catch(fail);
 }
 
+function findUserAbility(success, fail) {
+  let token = window.localStorage.getItem('accessToken');
+  let config = { headers: { Authorization: `Bearer ${token}` } };
+
+  instance
+    .get(`users/abilities`, config)
+    .then(success)
+    .catch(fail);
+}
+
 export {
   login,
   findById,
@@ -130,4 +139,5 @@ export {
   getUserInfo,
   follow,
   contentsEvaluations,
+  findUserAbility,
 };

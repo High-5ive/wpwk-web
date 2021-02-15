@@ -80,12 +80,15 @@ export default {
          hashtags: [],
          contents: Object,
       };
+
    },
    created() {
-      //컨텐츠 ID 에 맞는 ItemList axios 호출
       this.getContentsItems();
+      //컨텐츠 ID 에 맞는 ItemList axios 호출
    },
+
    methods: {
+
       evaluation(value) {
          this.evaluationValue = value;
       },
