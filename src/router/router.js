@@ -23,6 +23,7 @@ import Community from '../views/Community.vue';
 import ArticleDetail from '../views/ArticleDetail.vue';
 import Mypage from '../views/Mypage.vue';
 import ContentsCreate from '../views/ContentsCreate.vue';
+import ContentsUpdate from '../views/ContentsUpdate.vue';
 import ContentsView from '../views/ContentsView.vue';
 import LandingPage from '@/views/user/LandingPage.vue';
 import Login from '@/views/user/Login.vue';
@@ -102,6 +103,16 @@ const routes = [{
     components: {
       side: SideMenu,
       default: Mypage,
+    },
+    props: true,
+  },
+  {
+    path: '/contentsupdate/:id',
+    name: 'ContentsUpdate',
+    beforeEnter: onlyAuthUser,
+    components: {
+      side: SideMenu,
+      default: ContentsUpdate,
     },
     props: true,
   },

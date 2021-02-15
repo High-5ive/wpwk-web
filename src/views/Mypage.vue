@@ -98,6 +98,7 @@
           personsAssetsWithPhoto.length
         }}</span>
       </div>
+      <div class="divider" v-if="$route.params.userId === userInfo.userId"></div>
       <div
         v-if="$route.params.userId === userInfo.userId"
         class="asset-navi"
@@ -105,10 +106,10 @@
         @click="showValue = 5"
       >
         <span class="as-top">시청 분석</span>
-        <!-- <v-icon class="as-bottom">mdi-television-classic</v-icon> -->
+        <v-icon v-if="showValue==5" class="as-bottom">mdi-television-classic</v-icon>
       </div>
     </div>
-    <div :class="{ bottom: showValue }">
+    <div :class="{'bottom': showValue == 5 || ((showValue === 1 ||showValue === 2) && personsAssets.length > 0) || ((showValue === 3 ||showValue === 4) &&personsAssetsWithPhoto.length > 0) }">
       <persons-assets
         v-if="showValue === 1 || showValue === 2"
         :showValue="showValue"
@@ -145,6 +146,57 @@
         </v-dialog>
       </v-row>
     </div>
+    <!-- 비밀번호 변경 모달 -->
+      <div>
+         <v-row justify="center">
+            <v-dialog v-model="dialog" persistent max-width="330px">
+               <v-card id="report-modal" class="pwd-modal">
+                  <v-card-title class="nf"> 비밀번호 변경하기 </v-card-title>
+                  <!-- 나중에 input으로 바꿀 수 있음 일단 기본적인 내용만 -->
+                  <div class="input-wrapper">
+                     <v-text-field
+                        label="현재 비밀번호"
+                        v-model="curPwd"
+                        :rules="[rules.required]"
+                        :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
+                        :type="show3 ? 'text' : 'password'"
+                        counter
+                        @click:append="show3 = !show3"
+                     ></v-text-field>
+                     <v-text-field
+                        label="새 비밀번호"
+                        v-model="newPwd1"
+                        :rules="[rules.min, rules.vali]"
+                        :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                        :type="show1 ? 'text' : 'password'"
+                        hint="영문과 숫자를 포함해 6-20자 여야 합니다"
+                        counter
+                        @click:append="show1 = !show1"
+                     ></v-text-field>
+                     <v-text-field
+                        label="새 비밀번호"
+                        v-model="newPwd2"
+                        :rules="[rules.correspond]"
+                        :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
+                        :type="show2 ? 'text' : 'password'"
+                        hint="새 비밀번호를 다시 입력해 주십시오."
+                        counter
+                        @click:append="show2 = !show2"
+                     ></v-text-field>
+                           
+                  </div>
+                  <v-card-actions>
+                     <v-spacer></v-spacer>
+                     <v-btn color="error" text @click="dialog = false"> 취소 </v-btn>
+                     <v-btn color="green darken-1" text @click="changePassword"> 변경하기 </v-btn>
+                  </v-card-actions>
+               </v-card>
+               <img class="modal-right-hand" src="@/assets/img/characters/modal_right_hand.png" />
+               <img class="modal-left-hand" src="@/assets/img/characters/modal_left_hand.png" />
+               <img class="modal-foot" src="@/assets/img/characters/modal_foot.png" />
+            </v-dialog>
+         </v-row>
+      </div>
   </div>
 </template>
 <script>
@@ -156,7 +208,6 @@ import { findMyContents } from '@/api/myPage.js';
 import { findMyBoard } from '@/api/myPage.js';
 import { findContentsByFavorite } from '@/api/myPage.js';
 import { findBoardsByComments } from '@/api/myPage.js';
-import { findUserAbility } from '@/api/user.js';
 import { mapState } from 'vuex';
 import Chart from '@/components/mypage/Chart.vue';
 import personsAssets from '@/components/mypage/personsAssets.vue';
@@ -201,25 +252,26 @@ export default {
       // showValue(1 작성한글, 2 댓글단 글, 3 작성 노리, 4 관심 노리, 5 시청분석)
       showValue: 0,
       personsAssets: [], // 글(사진 없는)
-      personsAssetsWithPhoto: [], //노리(사진 있는)
-      // abilities 데이터는 src/assets/js/chart.js에서 axios요청하기
-      personsAbilities: [],
+      personsAssetsWithPhoto: [], //노리(사진 있는) 
     };
   },
   created() {
-    this.findUserAbility();
     this.getUserInfo();
+    this.isMypage();
   },
   methods: {
+     isMypage: function () {
+        if (this.$route.params.userId === this.userInfo.userId) {
+           this.showValue = 5
+        }
+     },
     getUserInfo: function() {
       const targetUser = {
         targetId: this.$route.params.userId,
       };
-      console.log('targetUYesr', targetUser);
       getUserInfo(
         targetUser,
         (success) => {
-          console.log(success);
           this.isfollowed = success.data.isFollowed;
           this.userNickname = success.data.findUser.nickname;
           this.followers = success.data.findUser.followed;
@@ -238,8 +290,7 @@ export default {
       };
       follow(
         targetUser,
-        (success) => {
-          console.log(success, '팔로우 완료');
+        () => {
           this.isfollowed = !this.isfollowed;
           if (this.isfollowed == false) {
             this.followers--;
@@ -274,8 +325,7 @@ export default {
         };
         changePwd(
           passwords,
-          (success) => {
-            console.log(success);
+          () => {
             alert('비밀번호 변경이 완료되었습니다.');
             this.curPwd = '';
             this.newPwd1 = '';
@@ -299,9 +349,7 @@ export default {
           this.userId,
           page,
           (success) => {
-            console.log(success);
             this.personsAssets = success.data;
-            console.log(personsAssets);
             this.showValue = 1;
           },
           (fail) => {
@@ -313,7 +361,6 @@ export default {
           this.userId,
           page,
           (success) => {
-            console.log(success);
             this.personsAssets = success.data;
             this.showValue = 2;
           },
@@ -328,7 +375,6 @@ export default {
           (success) => {
             this.personsAssetsWithPhoto = success.data;
             this.showValue = 3;
-            console.log(success);
           },
           (fail) => {
             console.log(fail);
@@ -339,7 +385,6 @@ export default {
           this.userId,
           page,
           (success) => {
-            console.log(success);
             this.personsAssetsWithPhoto = success.data;
             this.showValue = 4;
           },
@@ -352,22 +397,11 @@ export default {
     //회원 탈퇴 요청
     secession: function() {
       deleteUser(
-        (response) => {
-          console.log('탈퇴', response);
+        () => {
+          this.$router.push('/')
         },
         (error) => {
           console.log(error);
-        }
-      );
-    },
-    findUserAbility: function() {
-      findUserAbility(
-        (success) => {
-          console.log(success);
-          this.personsAbilities = success.data;
-        },
-        (fail) => {
-          console.log(fail);
         }
       );
     },
@@ -394,9 +428,10 @@ export default {
     left: 50%;
     margin-left: -250px;
   }
+  overflow: hidden !important;
   position: relative;
   height: 100%;
-  // border: red dashed 1px;
+//   border: red dashed 1px;
   width: 100%;
   .top-wrapper {
     height: 20%;
@@ -405,8 +440,8 @@ export default {
     .user-info-wrapper {
       img {
         position: absolute;
-        left: -180px;
-        top: 25px;
+        left: -185px;
+        top: 30px;
         width: 180px;
         transform: rotateY(180deg);
         // height: 150px;
@@ -414,8 +449,8 @@ export default {
       .in-bubble {
         white-space: nowrap;
         position: absolute;
-        left: -135px;
-        top: 38px;
+        left: -140px;
+        top: 43px;
         .username {
           display: inlnine;
           font-size: 18pt;
@@ -427,9 +462,9 @@ export default {
         border-radius: 20px;
         padding: 10px;
         position: absolute;
-        left: 10px;
+        left: 13px;
         width: 170px;
-        top: 15px;
+        top: 20px;
         display: flex;
         flex-direction: column;
         height: 120px;
@@ -499,6 +534,13 @@ export default {
         border-radius: 20px;
         padding: 0 10px;
       }
+      .v-icon {
+         font-size: 13pt;
+        background-color: #f4b740;
+        color: white;
+        border-radius: 20px;
+        padding: 4px 10px;
+      }
       width: 20%;
       height: 60px;
       padding: 5px;
@@ -514,8 +556,17 @@ export default {
     }
   }
   .bottom {
+   //   max-height:calc(100%-20%-80px) !important;
+      position: fixed;
+      // background-color: red;
     position: relative;
-    max-height: 55%;
+    @include desktop {
+       max-height: 350px !important;
+    }
+    @include tablet {
+       max-height: 350px !important;
+    }
+    max-height: 465px !important;
     overflow: scroll;
     border-radius: 10px;
     border: lightgray 1px solid;
@@ -543,36 +594,36 @@ export default {
             color: gray;
           }
         }
-        .as-right {
-          width: 40px;
-          border: lightgray 1px solid;
-          // line-height와 height를 일치시키면, 텍스트 한줄 중앙 정렬
-          height: 40px;
-          line-height: 40px;
-          border-radius: 25px;
-          text-align: center;
-        }
+      //   .as-right {
+      //     width: 40px;
+      //     border: lightgray 1px solid;
+      //     // line-height와 height를 일치시키면, 텍스트 한줄 중앙 정렬
+      //     height: 40px;
+      //     line-height: 40px;
+      //     border-radius: 25px;
+      //     text-align: center;
+      //   }
       }
     }
     .nori-wrapper {
+      // height: 100% !important;
       width: 100%;
       .for-stripe {
         background-color: #f2f1f2;
       }
       .item-box {
+         display: block;
         width: 100%;
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: space-around;
         padding: 10px;
         .asp-left {
-          width: 30%;
+          width: 40%;
           img {
             width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px;
+            max-height: 80px;
+            object-fit: cover;
           }
         }
         .asp-middle {
@@ -600,7 +651,7 @@ export default {
   .footer-wrapper {
     // background-color: red;
     position: absolute;
-    bottom: 30px;
+    bottom: 10px;
     right: 10px;
     .user-action {
       color: gray;

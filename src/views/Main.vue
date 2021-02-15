@@ -23,6 +23,7 @@ import NoriContent from '@/components/main/NoriContent.vue';
 import SpeedDial from '@/components/main/SpeedDial.vue';
 import Loading from '@/components/main/Loading.vue';
 import { findContentsByPage } from '@/api/contents.js';
+import { findUserAbility } from '@/api/user.js';
 import infiniteLoading from 'vue-infinite-loading';
 
 export default {
@@ -43,6 +44,7 @@ export default {
    },
    created() {
       this.getNoriList();
+      this.findUserAbility();
    },
    methods: {
       getNoriList() {
@@ -145,6 +147,16 @@ export default {
       goCreate: function() {
          this.$router.push({ name: 'ContentsCreate' });
       },
+      findUserAbility: function() {
+         findUserAbility(
+         (success) => {
+            this.$store.dispatch('getUsersAbilities', success.data)
+         },
+         (fail) => {
+            console.log(fail);
+         }
+         );
+    },
    },
 };
 </script>

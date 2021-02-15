@@ -16,10 +16,28 @@ function createContents(param, success, fail) {
     .then(success)
     .catch(fail)
 }
+function updateContents(param, success, fail) {
+  let token = window.localStorage.getItem('accessToken');
+  let config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
+  instance
+    .put(`contents`, param, config)
+    .then(success)
+    .catch(fail)
+}
 
 function createTags(id, param, success, fail) {
   instance
     .post(`tags/contents/${id}`, param)
+    .then(success)
+    .catch(fail);
+}
+function updateTags(id, param, success, fail) {
+  instance
+    .put(`tags/contents/${id}`, param)
     .then(success)
     .catch(fail);
 }
@@ -198,7 +216,9 @@ function unFavoriteContents(id, success, fail) {
 }
 export {
   createContents,
+  updateContents,
   createTags,
+  updateTags,
   findAllContents,
   findContentsById,
   findContentsByPage,

@@ -1,24 +1,25 @@
 <template>
-  <div class="nori-wrapper">
-    <div
-      :class="{ 'for-stripe': !isEven(idx) }"
-      class="item-box"
-      v-for="(nori, idx) in personsAssetsWithPhoto"
-      :key="idx"
-      @click="moveContents(idx)"
-    >
-      <div class="asp-left">
-        <img :src="nori.thumb" alt="" />
-      </div>
-      <div class="asp-middle">
-        <div>{{ nori.title | truncate(12, '...') }}</div>
-        <span v-if="showValue === 4" class="asp-info">{{ nori.nickname }}</span>
-        <div class="asp-info">{{ nori.createdAt }} 조회 {{ nori.views }}</div>
-      </div>
-      <div class="asp-right">
-        <v-icon>mdi-arrow-right</v-icon>
+  <div style="overflow:hidden;">
+    <div class="nori-wrapper">
+      <div
+        :class="{ 'for-stripe': !isEven(idx) }"
+        class="item-box"
+        v-for="(nori, idx) in personsAssetsWithPhoto"
+        :key="idx"
+        @click="moveContents(idx)"
+      >
+        <div class="asp-left">
+          <img v-if="typeof(nori.thumb) === 'string' " :src="nori.thumb" alt="" />
+          <img v-if="typeof(nori.thumb) === 'object' " src="@/assets/cv-bg.png" alt="" />
+        </div>
+        <div class="asp-middle">
+          <div>{{ nori.title | truncate(10, '...') }}</div>
+          <span v-if="showValue === 4" class="asp-info">{{ nori.nickname }}</span>
+          <div class="asp-info">{{ nori.createdAt | truncate(10, ' ') }} 조회 {{ nori.views }}</div>
+        </div>
       </div>
     </div>
+
   </div>
 </template>
 <script>
@@ -46,6 +47,17 @@ export default {
       });
     },
   },
+  // computed: {
+  //   thumbnail: function (idx) {
+  //     if (this.personsAssetsWithPhoto[idx].thumb === null) {
+  //       console.log('없음')
+  //     }
+  //     return this.nori.thumb
+  //   }
+  // },
+  // created: function () {
+  //   console.log(this.personsAssetsWithPhoto[5].thumb)
+  // }
 };
 </script>
 <style lang=""></style>

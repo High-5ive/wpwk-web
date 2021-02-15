@@ -1,7 +1,7 @@
 <template>
    <div class="photo-item-wrapper d-flex align-center justify-space-around">
       <div class="image-wrapper">
-         <img :src="item.youtube.thumbnailSrc" :alt="item.youtube.title" />
+         <img :src="item.youtubeThumbnail" :alt="item.youtube.title" />
       </div>
       <div class="desc-wrapper d-flex align-center justify-center">
          <div class="text nf nf-600" @click="onEdit" v-if="item.description && editInput == false">{{ item.description }}</div>
