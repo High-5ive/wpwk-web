@@ -1,27 +1,25 @@
 <template>
-    <div>
-        <ReportListItem 
-        v-for="(report, idx) in reports"
-        :key="idx"
-        :report="report"
-        />
-    </div>
+  <div>
+    <ReportListItem
+      v-for="(report, idx) in reports"
+      :key="idx"
+      :report="report"
+    />
+  </div>
 </template>
 
 <script>
-import ReportListItem from './ReportListItem'
+import ReportListItem from './ReportListItem';
 
 export default {
-    name: "ReportList",
-    components: {
-        ReportListItem
-    },
-    props: {
-        reports: Array,
-    }
-}
+  name: 'ReportList',
+  components: {
+    ReportListItem,
+  },
+  props: {
+    reports: Array,
+  },
+};
 </script>
 
-<style lang="">
-
-</style>
+<style lang=""></style>
