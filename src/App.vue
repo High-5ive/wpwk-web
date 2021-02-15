@@ -12,7 +12,7 @@
          <v-toolbar-title
             ><router-link to="/main"><img src="@/assets/wpwk_logo.png"/></router-link
          ></v-toolbar-title>
-         <div class="btn-search" @click="showSearch = !showSearch"><i class="fas fa-search"></i></div>
+         <div class="btn-search" @click="openSearch"><i class="fas fa-search"></i></div>
          <search v-if="showSearch" @searchShow="searchShow"></search>
       </v-app-bar>
 
@@ -70,7 +70,18 @@ export default {
             this.isDesk = false; //햄버거 버튼 보일지 말지
          }
       },
+      openSearch() {
+         this.showSearch = !this.showSearch;
+         // if (this.showSearch) {
+         //    // 이미 검색창이 떠있으면 -> 사라지는 효과 적용
+         //    var elem = document.querySelector('.search-container');
+         //    elem.classList.add('disapper');
+         // } else {
+         //    // 검색창이 없으면 -> 띄우고 사라지는 효과 삭제
+         // }
+      },
    },
+   watch: {},
 };
 </script>
 
@@ -196,5 +207,36 @@ export default {
    @include desktop {
       margin-left: 140px !important;
    }
+}
+
+.search-container {
+   @keyframes slide-in-top {
+      0% {
+         transform: translateY(-50px);
+         opacity: 0;
+      }
+      100% {
+         transform: translateY(0);
+         opacity: 1;
+      }
+   }
+
+   animation: slide-in-top 0.5s;
+   // background-color: red !important;
+}
+
+.disapper {
+   @keyframes slide-out-top {
+      0% {
+         transform: translateY();
+         opacity: 1;
+      }
+      100% {
+         transform: translateY(-50px);
+         opacity: 0;
+      }
+   }
+   animation: slide-out-top 1s;
+   animation-fill-mode: forwards;
 }
 </style>

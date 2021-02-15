@@ -315,7 +315,14 @@
                 padding: 0px 40px;
 
                 .ev-row {
-                    height: 13vh;
+                    min-height: 13vh;
+
+                    @media (min-height: 1110px) {
+                        & {
+                            min-height: 19vh;
+                        }
+                      }
+
                     width: 100%;
                     margin-bottom: 15px;
 

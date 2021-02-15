@@ -250,11 +250,16 @@
   padding: 0px 40px;
 }
 .cv-container .ev-container .eb-wrapper .eval-group .ev-row {
-  height: 13vh;
+  min-height: 13vh;
   width: 100%;
   margin-bottom: 15px;
   display: flex;
   justify-content: space-between;
+}
+@media (min-height: 1110px) {
+  .cv-container .ev-container .eb-wrapper .eval-group .ev-row {
+    min-height: 19vh;
+  }
 }
 .cv-container .ev-container .eb-wrapper .eval-group .ev-row button {
   height: inherit;

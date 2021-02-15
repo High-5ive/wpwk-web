@@ -135,10 +135,24 @@ export default {
             }
          }
       },
+
+      // 뱃지 이펙트는 포기
+      // https://codepen.io/ChrisJohnson/pen/ZJXzgZ
+      // badgeAnima: function() {
+      //    var elem = document.querySelectorAll('.flip-container');
+      //    console.log(elem);
+      //    elem.forEach((item) => {
+      //       item.addEventListener('click', () => {
+      //          console.log('flip');
+      //          document.querySelector('#flip-toggle').classList.toggle('flip');
+      //       });
+      //    });
+      // },
    },
 
    mounted() {
       this.calcEvalResult();
+      // this.badgeAnima();
 
       //이미지 없을 경우, 기본 이미지
       if (this.sendNori.thumb == null) {
