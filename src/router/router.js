@@ -77,7 +77,7 @@ const routes = [{
   },
   {
     path: '/cmmu',
-    name: 'community',
+    name: 'Community',
     beforeEnter: onlyAuthUser,
     components: {
       side: SideMenu,
@@ -93,7 +93,6 @@ const routes = [{
       side: SideMenu,
       default: ArticleDetail,
     },
-    props: true,
   },
   {
     path: '/mypage/:userId',
@@ -183,6 +182,7 @@ const routes = [{
   {
     path: '/admin',
     name: 'Admin',
+    beforeEnter: onlyAuthUser,
     components: {
       side: SideMenu,
       default: Admin,

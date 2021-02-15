@@ -1,6 +1,6 @@
 <template>
   <div class="comment-wrapper">
-    <CommentListItem
+    <comment-list-item
       v-for="(comment, idx) in comments"
       :key="idx"
       :comment="comment"
@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import CommentListItem from './CommentListItem';
+import CommentListItem from './CommentListItem.vue';
 
 export default {
   name: 'CommentList',

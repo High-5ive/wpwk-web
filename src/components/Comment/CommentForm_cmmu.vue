@@ -4,38 +4,32 @@
       <div class="close-btn" @click="$router.push('/cmmu')">
          <v-icon>mdi-arrow-left</v-icon>
       </div>
-      <input @keypress.enter="createComment" class="input-box nf" type="text" v-model="content" placeholder="댓글을 작성해주세요." />
+      <input @keypress.enter="createComment" class="input-box nf" type="text" v-model="comment" placeholder="댓글을 작성해주세요." />
       <button @click="createComment" class="btn-send"><v-icon>mdi-send</v-icon></button>
    </div>
 </template>
 
 <script>
-import moment from 'moment';
-
 export default {
    name: 'CommentFormCmmu',
    data: function() {
       return {
-         content: '',
+         comment: '',
       };
    },
    methods: {
       createComment: function() {
-         if (this.content == '') {
+         if (this.comment == '') {
             alert('내용을 입력해주세요');
             return;
          }
 
          // 임의의 사용자 이름 설정
-         const username = 'abc';
-         const now = moment().format('YYYY-MM-DD HH:mm:ss');
          const comment = {
-            content: this.content,
-            user: username,
-            created_at: now,
+            comment: this.comment,
          };
          this.$emit('createComment', comment);
-         this.content = '';
+         this.comment = '';
       },
    },
 };
@@ -76,6 +70,7 @@ export default {
       height: 50px;
 
       background-color: rgb(247, 179, 179);
+      cursor:pointer;
       // border-right: 1px solid $main-green;
 
       i {

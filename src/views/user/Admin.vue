@@ -24,6 +24,7 @@ const reports = [
 ]
 
 import ReportList from "@/components/Admin/ReportList.vue";
+import { mapState } from "vuex"
 
 export default {
     name: "Admin",
@@ -35,7 +36,19 @@ export default {
             reports: []
         }
     },
+    methods: {
+        isAdmin:function() {
+            if(this.userInfo.status != 2) {
+                alert("접근할 수 없습니다");
+                this.$router.push('/main');
+            }                    
+        }
+    },
+    computed: {
+        ...mapState(["userInfo"])
+    },
     created: function () {
+        this.isAdmin()
         this.reports = reports
     }
 }

@@ -69,6 +69,7 @@ export default new Vuex.Store({
         let userInfo = {
           userId: decode.userId,
           nickname: decode.nickname,
+          status: decode.status
         };
 
         commit('loginSuccess', userInfo);

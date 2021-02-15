@@ -114,7 +114,7 @@ export default {
          if (this.$router.currentRoute.name == 'Main') {
             console.log('메인페이지에서 커뮤니티로 넘어가기');
             this.$router.push({
-               name: 'community',
+               name: 'Community',
                params: { createdArticle: article },
             });
          } else {
