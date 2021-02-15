@@ -52,7 +52,7 @@ var _default = new _vuex["default"].Store({
       localStorage.removeItem('accessToken');
 
       _router["default"].push({
-        name: 'Login'
+        path: '/'
       }); // axios.defaults.headers.common["auth-token"] = undefined;
 
     },
