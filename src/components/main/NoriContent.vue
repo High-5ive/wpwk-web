@@ -25,6 +25,7 @@
                {{ ability }}
             </span>
          </div>
+         <div class="badge-time">{{ time }}</div>
       </div>
 
       <!-- 하단 설명글 -->
@@ -56,6 +57,7 @@ export default {
    data() {
       return {
          eval_result: 0,
+         time: '',
          thumbnail: '',
          categories: ['언어지능', '논리수학지능', '음악지능', '신체운동지능', '공간지능', '자연지능', '대인지능', '개인내지능'],
       };
@@ -102,7 +104,11 @@ export default {
             }
          );
       },
+
+      // 카테고리 정보와 시간값의 필터링이 적용됨
       calcEvalResult: function() {
+         this.time = this.sendNori.spendTime.substr(0, 5);
+
          var acs = this.sendNori.evalAcs; // 1
          var fun = this.sendNori.evalFun; // 2
          var edu = this.sendNori.evalEdu; // 3
@@ -132,7 +138,6 @@ export default {
    },
 
    mounted() {
-      console.log(this.sendNori);
       this.calcEvalResult();
 
       //이미지 없을 경우, 기본 이미지

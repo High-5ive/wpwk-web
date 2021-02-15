@@ -68,6 +68,19 @@
 .content-wrapper .img-wrapper .badge-cate span.badge-eval.fun {
   background-color: #eb5656;
 }
+.content-wrapper .badge-time {
+  position: relative;
+  bottom: 60px;
+  left: 86.5%;
+  font-weight: 600;
+  font-size: 8pt;
+  color: white;
+  width: 40px;
+  background-color: rgba(0, 0, 0, 0.411);
+  border-radius: 5px;
+  padding: 2px 0px;
+  text-align: center;
+}
 .content-wrapper .desc-wrapper {
   height: 30%;
   font-size: 10pt;
