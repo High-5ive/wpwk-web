@@ -7,7 +7,21 @@
     </div>
 
     <!-- 댓글 내용 -->
-    <p class="content nf">{{ comment.comment }}</p>
+    <div>
+      <p v-if="!isEditMode" class="content nf">{{ comment.comment }}</p>
+      <div>
+        <input
+          v-if="isEditMode"
+          type="text"
+          id="editComment"
+          class="content nf edit"
+          v-model="comment.comment"
+          @keyup.enter="updateComment"
+          @keyup.esc="isEditMode = false"
+        />
+      </div>
+      <span v-if="isEditMode" class="hint">취소하려면 ESC를 누르세요.</span>
+    </div>
 
     <!-- 삭제버튼이 들어감. fixed로 우측 고정 -->
 
@@ -16,7 +30,7 @@
         mdi-delete-forever
       </v-icon>
       <!-- 수정버튼 Icon 이벤트 수정-->
-      <v-icon @click="updateComment">
+      <v-icon @click="changeMode">
         mdi-tooltip-edit-outline
       </v-icon>
     </div>
@@ -24,41 +38,69 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
+import { modifyComment } from "@/api/communityComment.js";
 export default {
   data: function() {
     return {
       // commentItem: this.comment,
+      isEditMode: false,
     };
   },
-  name: 'CommentListItem',
+  name: "CommentListItem",
   props: {
     comment: Object,
   },
   methods: {
     deleteComment: function() {
-      if (confirm('댓글을 삭제 하시겠습니까?') == true) {
-        this.$emit('deleteComment', this.comment);
+      if (confirm("댓글을 삭제 하시겠습니까?") == true) {
+        this.$emit("deleteComment", this.comment);
       } else {
         return;
       }
     },
     updateComment: function() {
-      var inputString = prompt(
-        '댓글 수정할 내용을 적어주세요',
-        '기본 값 문자열'
+      modifyComment(
+        this.comment,
+        () => {
+          this.isEditMode = false; 
+        },
+        (error) => {
+          console.log(error);
+        }
       );
-
-      if (inputString) {
-        this.comment.comment = inputString;
-        this.$emit('updateComment', this.comment);
-      }
     },
+    changeMode: function() {
+      this.isEditMode = this.isEditMode === false ? true : false;      
+      if(this.isEditMode === true) {
+        setTimeout(() => {
+          document.getElementById('editComment').focus();
+        }, 100);        
+      } else {
+        this.updateComment()
+      }
+    }
   },
   computed: {
-    ...mapState(['userInfo']),
+    ...mapState(["userInfo"]),
   },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+input {
+  width: 80%;
+  border-radius: 20px;
+  padding: 5px 20px;
+}
+
+input:focus {
+  outline: none;
+  background: #f8d899;
+}
+
+.hint {
+  color: #a9a9a9;
+  font-size: 8px;
+}
+</style>

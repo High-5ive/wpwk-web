@@ -94,6 +94,7 @@
             padding: 10px;
 
             .likes-btn{
+                cursor: pointer;
                 color: rgb(218, 5, 5);
             }
 
@@ -132,6 +133,6 @@
         // height:50%;
 
         padding-bottom: 50px;   //댓글 작성 폼으로 인해 가려진 부분 올려주기
-    }
+    }    
     //CommentForm
 }

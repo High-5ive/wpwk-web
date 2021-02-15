@@ -45,8 +45,24 @@ function removeBoardComment(id, boardId, success, fail) {
     .catch(fail);
 }
 
+// 게시글 댓글 삭제
+function modifyComment(boardComment, success, fail) {
+  let token = window.localStorage.getItem("accessToken");
+  let config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  instance
+  .put(`/boardComments`, boardComment, config)
+  .then(success)
+  .catch(fail);
+}
+
 export {
   findBoardCommentsByBoardId,
   createBoardComment,
   removeBoardComment,
+  modifyComment,
 };

@@ -17,7 +17,7 @@
     <div class="feature-wrapper">
       <!-- 좋아요 버튼 -->
       <div class="likes-btn" @click="setLike">
-        <v-icon v-if="article.likes" color="red"> mdi-heart-multiple </v-icon>
+        <v-icon v-if="article.liked" color="red"> mdi-heart-multiple </v-icon>
         <v-icon v-else color="red"> mdi-heart-multiple-outline </v-icon>
         <span class="nf"> 좋아요! </span>
       </div>
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { updateLikes } from "@/api/community.js";
+import { updateLikes, cancelLikes } from "@/api/community.js";
 
 export default {
   name: "Article",
@@ -52,14 +52,6 @@ export default {
   },
   data: function() {
     return {
-      id: "",
-      category: "",
-      img: "",
-      content: "",
-      // 임의의 articleId값 부여
-      articleId: 0,
-      likes: 0,
-      comments: "",
     };
   },
   methods: {
@@ -95,24 +87,30 @@ export default {
     //============= axios =============
     // 좋아요 수 수정
     setLike: function() {
-      console.log("좋아요 클릭", this.likes);
-      console.log("게시글 좋아요", this.id);
-
-      const params = {
-        likes: 1,
-      };
-
-      //좋아요 누른 게시글 검증 필요
-      updateLikes(
-        this.id,
-        params,
-        (res) => {
-          console.log(res);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+      if (!this.article.liked) {
+        updateLikes(
+          { id: this.article.id },
+          () => {
+            this.article.liked = true;
+            this.article.likes += 1;
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      } else {
+        this.article.liked = true;
+        cancelLikes(
+          this.article.id,
+          () => {
+            this.article.liked = false;
+            this.article.likes -= 1;
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }
     },
 
     //====================================

@@ -75,7 +75,7 @@ function findBoardsByCategory(category, page, success, fail) {
 }
 
 // 좋아요 올리기
-function updateLikes(id, params, success, fail) {
+function updateLikes(id, success, fail) {
   let token = window.localStorage.getItem("accessToken");
   let config = {
     headers: {
@@ -84,7 +84,22 @@ function updateLikes(id, params, success, fail) {
   };
 
   instance
-    .put(`boards/${id}/likes`, JSON.stringify(params), config)
+    .post(`boards/like`, id, config)
+    .then(success)
+    .catch(fail);
+}
+
+// 좋아요 취소
+function cancelLikes(id, success, fail) {
+  let token = window.localStorage.getItem("accessToken");
+  let config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  instance
+    .delete(`boards/like/${id}`, config)
     .then(success)
     .catch(fail);
 }
@@ -104,12 +119,29 @@ function deleteById(id, success, fail) {
     .catch(fail);
 }
 
+// 게시글 수정
+function modifyBoard(board, success, fail) {
+  let token = window.localStorage.getItem("accessToken");
+  let config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  instance
+    .put(`boards`, board, config)
+    .then(success)
+    .catch(fail);
+}
+
 export {
   findAllBoards,
-  updateLikes,
   findBoardsByPage,
   findBoardsByCategory,
   createBoard,
   findBoardsById,
-  deleteById
+  deleteById,
+  updateLikes,
+  cancelLikes,
+  modifyBoard,
 };
