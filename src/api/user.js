@@ -3,7 +3,6 @@ import { instance } from './index.js';
 // const config = {
 //   headers: { "access-token": localStorage.getItem("access-token") }
 // };
-
 function registerUser(user, success, fail) {
   instance
     .post(`users`, JSON.stringify(user))
@@ -23,15 +22,28 @@ function login(user, success, fail) {
     .catch(fail);
 }
 
+function getUserInfo(targetUser, success, fail) {
+  let token = window.localStorage.getItem("accessToken");
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  };
+  instance
+    .get(`users/${targetUser.targetId}`, config)
+    .then(success)
+    .catch(fail)
+}
+
 function follow(userId, success, fail) {
   let token = window.localStorage.getItem('accessToken');
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
-    },
+    }
   };
   instance
-    .post(`users/following/${userId}`, config)
+    .post(`users/following`, userId, config)
     .then(success)
     .catch(fail);
 }
@@ -125,6 +137,16 @@ function confirmNotification(id, success, fail) {
     .catch(fail);
 }
 
+function findUserAbility(success, fail) {
+  let token = window.localStorage.getItem('accessToken');
+  let config = { headers: { Authorization: `Bearer ${token}` } };
+
+  instance
+    .get(`users/abilities`, config)
+    .then(success)
+    .catch(fail);
+}
+
 export {
   login,
   findById,
@@ -133,8 +155,10 @@ export {
   kakaoLogin,
   deleteUser,
   changePwd,
+  getUserInfo,
   follow,
   contentsEvaluations,
   getNotification,
   confirmNotification,
+  findUserAbility,
 };

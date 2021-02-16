@@ -17,29 +17,24 @@
       </div>
     </div>
 
-    <!-- 하단 설명글 -->
-    <div class="desc-wrapper">
-      <h1>{{ sendNori.title }}</h1>
-      <span
-        v-for="(tag, idx) in sendNori.tagList"
-        :key="'tag' + idx"
-        @click="tagSearch(tag.name)"
-      >
-        #{{ tag.name }}
-      </span>
-      <h6>{{ sendNori.nickname }}</h6>
-      <div v-if="sendNori.favorite" class="btn-like" @click="doUnLike">
-        <v-icon>
-          mdi-heart
-        </v-icon>
-      </div>
-      <div v-if="!sendNori.favorite" class="btn-unlike" @click="doLike">
-        <v-icon>
-          mdi-heart
-        </v-icon>
+      <!-- 하단 설명글 -->
+      <div class="desc-wrapper">
+         <h1>{{ sendNori.title }}</h1>
+         <span v-for="(tag, idx) in sendNori.tagList" :key="'tag' + idx" @click="tagSearch(tag.name)"> #{{ tag.name }} </span>
+         <h6 @click="toPersonsProfile">{{ sendNori.nickname }}</h6>
+         <div v-if="sendNori.favorite" class="btn-like" @click="doUnLike">
+            <v-icon>
+               mdi-heart
+            </v-icon>
+         </div>
+         <div v-if="!sendNori.favorite" class="btn-unlike" @click="doLike">
+            <v-icon>
+               mdi-heart
+            </v-icon>
+         </div>
       </div>
     </div>
-  </div>
+  <!-- </div> -->
 </template>
 
 <script>
@@ -112,6 +107,9 @@ export default {
         }
       );
     },
+    toPersonsProfile: function () {
+      this.$router.push({ name: 'mypage', params: { userId: this.sendNori.userId } })
+    }
   },
 
   mounted() {

@@ -10,7 +10,7 @@
     <div v-else class="cv-card-wrapper">
       <div class="card-top-wrapper">
         <p class="title nf">{{ this.title }}</p>
-        <p class="writer nf">{{ this.writer }}</p>
+        <p class="writer nf" @click="$router.push({ name: 'mypage', params: { userId: writerId } })">{{ this.writer }}</p>
       </div>
 
       <CardList :cards="cards" @evaluationPage="evaluation" />
@@ -72,6 +72,7 @@ import CommentFormView from '../components/Comment/CommentForm_view.vue';
 import { findContentsItemById } from '@/api/contents.js';
 import { findContentsComment } from '@/api/contents.js';
 import { deleteContentsComment } from '@/api/contents.js';
+import { deleteContents } from '@/api/contents.js';
 import { updateContentsComment } from '@/api/contents.js';
 import { createContentsComment } from '@/api/contents.js';
 import { findContentsById } from '@/api/contents.js';
@@ -209,6 +210,20 @@ export default {
     closeModal() {
       this.dialog = false;
     },
+    deleteContent: function () {
+        
+      deleteContents(
+         this.contents.id,
+         () => {
+            alert('노리 삭제가 완료되었습니다.')
+            this.$router.push('/main')
+         },
+         (fail) => {
+            console.log(fail)
+         }
+      )
+         
+   }
   },
 
   watch: {

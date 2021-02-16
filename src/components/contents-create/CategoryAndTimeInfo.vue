@@ -22,7 +22,7 @@
                      </div>
                   </div>
                   <div class="cc-dialog-middle-wrapper">
-                     <div v-for="(category, idx) in categories" :key="idx" class="category-wrapper" :class="{ 'selected-cate': selectedCateInfo.category }">
+                     <div v-for="(category, idx) in categories" :key="idx" class="category-wrapper">
                         <div @click="onCategorySelect(category)">{{ category }}</div>
                      </div>
                   </div>
@@ -66,7 +66,7 @@
                         <div class="dialog-footer-left" @click="dialog = false">
                            뒤로
                         </div>
-                        <div class="dialog-footer-right" @click="createContent">
+                        <div class="dialog-footer-right" @click="createOrUpdate">
                            완료
                         </div>
                      </div>
@@ -80,7 +80,9 @@
 <script>
 // import CategoryItem from "./CategoryItem.vue";
 import { createContents } from '@/api/contents.js';
+import { updateContents } from '@/api/contents.js';
 import { createTags } from '@/api/contents.js';
+import { updateTags } from '@/api/contents.js';
 import { recommendTags } from '@/api/tags.js';
 import firebase from 'firebase';
 import Loading from '@/components/main/Loading.vue';
@@ -93,26 +95,22 @@ export default {
    props: {
       title: String,
       itemList: Array,
+      cateInfo: Array,
+      timeInfo: Object,
+      tagList: Array,
+      isEdit: Boolean,
+      userId: Number,
+      contentsId: Number,
    },
    data: function() {
       return {
-         contentsId: '',
+         // contentsId: '',
          dialog: false,
          time: {
             hour: 0,
             minute: 0,
          },
          selectedCategories: [0, 0, 0, 0, 0, 0, 0, 0],
-         selectedCateInfo: {
-            언어지능: false,
-            논리수학지능: true,
-            음악지능: false,
-            신체운동지능: false,
-            공간지능: false,
-            자연지능: false,
-            대인지능: false,
-            개인내지능: false,
-         },
          hashtagResult: [],
          hashtag: '',
          hashtagId: '',
@@ -131,9 +129,17 @@ export default {
       };
    },
    methods: {
+      createOrUpdate: function () {
+         if (this.isEdit == true) {
+            this.updateContent();
+         } else {
+            this.createContent();
+         }
+      },
       onNextClicked: function() {
          if (this.itemList.length > 0 && this.title.length > 0) {
             this.dialog = true;
+            this.getContentsInfo()
          } else {
             alert('내용을 작성해 주세요.');
          }
@@ -268,7 +274,7 @@ export default {
       },
       uploadFiles: function() {
          for (var i = 0; i < this.sendItemList.length; i++) {
-            if (this.sendItemList[i].type === 'photo') {
+            if (this.sendItemList[i].type === 'photo' && this.sendItemList[i].photo.file !== 0) {
                const storageRef = firebase
                   .storage()
                   .ref(`${this.sendItemList[i].photo.file.name}`)
@@ -352,7 +358,79 @@ export default {
                      // contentsCreate에서 itemList가 새롭게 추가되는 버그 있음
                   }
                );
-            }, 2000);
+            }, 2500);
+         } else {
+            alert('필수정보(시간, 카테고리)를 입력해 주십시오.');
+         }
+      },
+      //컨텐츠 수정요청
+      updateContent: function() {
+         if (this.time.minute !== 0 && this.selectedCategories.reduce((a, b) => a + b) >= 1) {
+            this.isLoading = true;
+            this.sendItemList = this.itemList;
+            this.getImageCnt();
+
+            // 파이어베이스 파일업로드
+            this.uploadFiles();
+
+            setTimeout(() => {
+               this.setImageAddressList();
+
+               let cnt = 1;
+               for (let i = 0; i < this.sendItemList.length; i++) {
+                  this.sendItemList[i].pageNo = cnt++;
+               }
+
+               var abilitiesStr = '';
+               for (let i = 0; i < this.selectedCategories.length; i++) {
+                  abilitiesStr = abilitiesStr.concat(this.selectedCategories[i]);
+               }
+
+               const content = {
+                  id: this.contentsId,
+                  userId: this.userId,
+                  title: this.title,
+                  contentsItemList: this.sendItemList,
+                  spendTime: this.time.hour + ':' + this.time.minute + ':00',
+                  ability: abilitiesStr,
+               };
+
+               //contents.js 안의 정의 되어있는 axios 호출
+               const tags = {
+                  tagList: this.sendHashtags,
+               };
+               console.log(content.contentsItemList)
+               updateContents(
+                  content,
+                  () => {
+                     console.log(this.contentsId)
+                     console.log(content.contentsItemList)
+                     // this.contentsId = this;
+                     console.log(content);
+                     //컨텐츠 제작후 태그 제작 요청
+                     updateTags(
+                        this.contentsId,
+                        tags,
+                        () => {
+                           this.isLoading = false;
+                           this.dialog = false;
+                           alert('컨텐츠 수정에 성공 했습니다.');
+                           this.$router.push('/main');
+                        },
+                        (error) => {
+                           console.log('error tag msg ', error);
+                           this.dialog = false;
+                        }
+                     );
+                  },
+                  (error) => {
+                     console.log('create contents err msg', error);
+                     alert('컨텐츠 제작에 실패 했습니다.');
+                     this.dialog = false;
+                     // contentsCreate에서 itemList가 새롭게 추가되는 버그 있음
+                  }
+               );
+            }, 2500);
          } else {
             alert('필수정보(시간, 카테고리)를 입력해 주십시오.');
          }
@@ -377,6 +455,28 @@ export default {
             }
          }
       },
+      
+      getContentsInfo: function () {
+         this.time = this.timeInfo
+         this.selectedCategories = this.cateInfo
+         // console.log(document.querySelectorAll('.category-wrapper'))
+         setTimeout(() => {
+            var elems = document.querySelectorAll('.category-wrapper');
+            for (let i = 0; i < 8; i++) {
+               if (this.selectedCategories[i] === 1) {
+                  const targetDiv = elems[i]
+                  targetDiv.classList.add('selected-cate')
+               }
+            }
+         }, 100);
+         for (let i = 0;i < this.tagList.length;i++) {
+            if (this.hashtags.indexOf(this.tagList[i].name) === -1) {
+               this.hashtags.push(this.tagList[i].name)
+               this.sendHashtags.push(':'+this.tagList[i].id)
+            }
+         }      
+      },
+      
    },
 };
 </script>

@@ -176,6 +176,8 @@ export default {
     isAdded: function () {
       if (this.isAdded==false) {
         this.videoAdded = false
+      } else {
+        this.videoAdded = true
       }
     }
   }

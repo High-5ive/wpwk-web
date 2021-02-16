@@ -5,15 +5,18 @@
       <!-- <div v-if="this.article.itemList.length">
             <img @click="articleDetail" :src="img" />
          </div> -->
-      <div class="category">
-        {{ article.category }}
+         <div class="category">
+            {{ article.category }}
+         </div>
+         <div class="nickname nf nf-600" @click="$router.push({ name: 'mypage', params: { userId: userId } })">
+            {{ article.nickname }}
+         </div>
+         <div class="content nf">{{ article.content }}</div>
       </div>
-      <div class="nickname nf nf-600">
+      <!-- <div class="nickname nf nf-600">
         {{ article.writer }}
-      </div>
-      <div class="content nf">{{ article.content }}</div>
-    </div>
-
+      </div> -->
+      
     <div class="feature-wrapper">
       <!-- 좋아요 버튼 -->
       <div class="likes-btn" @click="setLike">
@@ -55,26 +58,7 @@ export default {
     };
   },
   methods: {
-   //  getCard: function() {
-   //    // console.log(this.article);
-   //    this.articleId = this.article.id;
-   //    this.category = this.article.category;
-   //    this.writer = this.article.writer;
-   //    this.content = this.article.content;
-   //    this.likes = this.article.likes;
-   //    this.comments = this.article.comments;
-   //    // if (this.article.itemList.length) {
-   //    //    this.img = this.article.itemList[0].photo.preview;
-   //    // }
 
-   //    // 좋아요 목록에 있는 지 체크
-   //    // [err] 좋아요 목록 데이터 수정
-   //    // for (var i = 0; i < this.likeList.length; i++) {
-   //    //    if (this.likeList[i] === '수진맘') {
-   //    //       this.like = 1;
-   //    //    }
-   //    // }
-   //  },
     articleDetail: function() {
       // 실제로는 id값만 보내서 article정보를 받지만 일단 모두 전달
       // this.$router.push({ name: 'articleDetail', params: { articleId: this.articleId }})
