@@ -338,11 +338,11 @@ export default {
                createContents(
                   content,
                   (success) => {
-                     this.contentsId = success.data;
+                     const contentsId = success.data;
                      // console.log(contentsId);
                      //컨텐츠 제작후 태그 제작 요청
                      createTags(
-                        this.contentsId,
+                        contentsId,
                         tags,
                         () => {
                            this.isLoading = false;
@@ -544,6 +544,7 @@ export default {
             flex-wrap: wrap;
 
             .category-wrapper {
+               cursor: pointer;
                width: 110px;
                margin: 10px;
                padding: 5px;
@@ -675,6 +676,7 @@ export default {
                }
 
                .dialog-footer-left {
+                  cursor: pointer;
                   position: relative;
                   height: 50px;
                   width: 50%;
@@ -693,17 +695,21 @@ export default {
                   &.out {
                      i,
                      .cap {
+                        cursor: pointer;
                         color: rgb(75, 23, 22);
                      }
                   }
                }
                .dialog-footer-right {
+                  
                   width: 50%;
                   text-align: center;
 
                   &.fin {
+                     
                      i,
                      .cap {
+                        cursor: pointer;
                         color: $navi-success;
                      }
                   }

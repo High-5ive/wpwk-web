@@ -2,13 +2,16 @@
    <div style="overflow: hidden;" class="mp-container d-flex flex-column align-center">
       <div class="top-wrapper">
          <div class="user-info-wrapper">
-            <img src="@/assets/img/characters/eval_bubble.png" alt="" />
+            <img src="@/assets/img/characters/mypage_bg2.png" alt="" />
             <div class="in-bubble">
                <!-- 나중에는 페이지 들어오기전에 유저정보(id, 별명, 작성글 목록 등) 요청 후 응담 내용으로 보여주기-->
-               <span class="username">{{ userNickname }}님</span>
-
+               <span class="username">{{ userNickname }},</span>
                <!-- 팔로우 버튼 (타유저프로필일때) -->
                <!-- 언팔로우 버튼 (타유저 구독한 상태일때) -->
+            </div>
+            <div v-if="$route.params.userId === userInfo.userId" class="user-action-wrapper">
+               <a class="user-action" href="#" @click="dialog = true">비밀번호 변경</a>
+               <a class="user-action" href="#" @click="dialog2 = true">회원탈퇴</a>
             </div>
             <div class="mp-top-right">
                <div class="user-info">
@@ -21,22 +24,22 @@
                      <span class="f-text">팔로잉</span>
                   </div>
                </div>
-               <div v-if="$route.params.userId !== userInfo.userId" class="follow-buttons">
-                  <button @click="followSomeone" v-if="isfollowed" class="infos-button unfollow-button">
-                     <v-icon>
-                        mdi-account-check
-                     </v-icon>
-                     <span>
-                        구독 취소
-                     </span>
-                  </button>
-                  <button @click="followSomeone" v-if="!isfollowed" class="infos-button follow-button">
-                     <v-icon>
-                        mdi-account-plus
-                     </v-icon>
-                     구독
-                  </button>
-               </div>
+            </div>
+            <div v-if="$route.params.userId !== userInfo.userId" class="follow-buttons">
+               <button @click="followSomeone" v-if="isfollowed" class="infos-button unfollow-button">
+                  <v-icon>
+                     mdi-account-check
+                  </v-icon>
+                  <span>
+                     구독 취소
+                  </span>
+               </button>
+               <button @click="followSomeone" v-if="!isfollowed" class="infos-button follow-button">
+                  <v-icon>
+                     mdi-account-plus
+                  </v-icon>
+                  구독
+               </button>
             </div>
          </div>
       </div>
@@ -71,11 +74,8 @@
          <persons-assets-with-photo v-if="showValue === 3 || showValue === 4" :showValue="showValue" :personsAssetsWithPhoto="personsAssetsWithPhoto" />
          <chart v-if="showValue == 5" />
       </div>
-      <div v-if="$route.params.userId === userInfo.userId" class="footer-wrapper">
-         <a class="user-action" href="#" @click="dialog = true">비밀번호 변경</a>
-         <a class="user-action" href="#" @click="dialog2 = true">회원탈퇴</a>
-      </div>
-      <div class="divider"></div>
+      <img class="mp-default-img" v-if="(personsAssets.length ==0 || psersonsAssetsWithPhoto.length == 0) && showValue !== 5" src="@/assets/img/characters/mypage-box.png" alt="">
+      
       <!-- 회원탈퇴 모달 -->
       <div>
          <v-row justify="center">
@@ -218,8 +218,8 @@ export default {
          getUserInfo(
             targetUser,
             (success) => {
-               this.isfollowed = success.data.isFollowed;
                this.userNickname = success.data.findUser.nickname;
+               this.isfollowed = success.data.isFollowed;
                this.followers = success.data.findUser.followed;
                this.followings = success.data.findUser.following;
                this.userId = success.data.findUser.id;
@@ -291,8 +291,9 @@ export default {
                this.userId,
                page,
                (success) => {
+                  console.log(success.data)
+                  this.showValue = 1;                    
                   this.personsAssets = success.data;
-                  this.showValue = 1;
                },
                (fail) => {
                   console.log(fail);
@@ -315,7 +316,7 @@ export default {
                this.userId,
                page,
                (success) => {
-                  this.personsAssetsWithPhoto = success.data;
+                  this.personsAssetsWithPhoto = success.data;                  
                   this.showValue = 3;
                },
                (fail) => {
@@ -359,6 +360,7 @@ export default {
 
 .mp-container {
    // max-width: 500px;
+   background-color: #fffedd;
    @include desktop {
       height: 100%;
       max-width: 500px;
@@ -375,6 +377,10 @@ export default {
    height: 100%;
    //   border: red dashed 1px;
    width: 100%;
+   .mp-default-img {
+      margin-top: 100px;
+      width: 200px;
+   }
    .top-wrapper {
       height: 20%;
       position: relative;
@@ -382,31 +388,51 @@ export default {
       .user-info-wrapper {
          img {
             position: absolute;
-            left: -185px;
-            top: 30px;
-            width: 180px;
+            left: -180px;
+            top: 15px;
+            width: 350px;
+            height: 150px;
             transform: rotateY(180deg);
             // height: 150px;
          }
          .in-bubble {
             white-space: nowrap;
             position: absolute;
-            left: -140px;
-            top: 43px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            left: -130px;
+            top: 50px;
             .username {
                display: inlnine;
                font-size: 18pt;
                font-weight: 600;
             }
          }
+         .user-action-wrapper {
+            top: 100px;
+            left: -78px;
+            width: 150px;
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            font-size: 9pt;
+            .user-action {
+               color: gray;
+               margin: 0 5px;
+            }
+         }
          .mp-top-right {
-            background-color: #f2f1f2;
-            border-radius: 20px;
+            // background-color: #f2f1f2;
+            // border-left: lightgray 1px solid;
+            // border-radius: 20px;
             padding: 10px;
             position: absolute;
-            left: 13px;
+            left: -10px;
             width: 170px;
-            top: 20px;
+            top: -5px;
             display: flex;
             flex-direction: column;
             height: 120px;
@@ -428,36 +454,41 @@ export default {
                   }
                }
             }
-            .follow-buttons {
-               .follow-button {
-                  background-color: #a2d646;
-               }
-               .unfollow-button {
-                  background-color: rgb(184, 184, 184);
-               }
-               .infos-button {
-                  font-size: 10pt;
-                  // margin-left: 10px;
-                  border-radius: 10px;
-                  padding: 5px 10px;
-                  width: 100px;
-                  &:focus {
-                     outline: none;
-                  }
+         }
+         .follow-buttons {
+            position: absolute;
+            top: 75px;
+            left: -55px;
+            .follow-button {
+               background-color: #a2d646;
+            }
+            .unfollow-button {
+               background-color: rgb(184, 184, 184);
+            }
+            .infos-button {
+               margin-top: 25px;
+               font-size: 10pt;
+               // margin-left: 10px;
+               border-radius: 10px;
+               padding: 5px 10px;
+               width: 100px;
+               &:focus {
+                  outline: none;
                }
             }
          }
       }
    }
    .middle {
-      // background-color: lightgray;
-      margin-top: -5px;
+      border: rgb(52, 52, 52) 2.5px solid;
+      background-color: white;
+      margin-top: 30px;
       height: 80px;
       width: 90%;
       display: flex;
       align-items: center;
       padding: 10px 5px;
-      box-shadow: 0 4px 4px lightgray;
+      // box-shadow: 0 4px 4px lightgray;
       border-radius: 10px;
       .divider {
          width: 0px;
@@ -500,6 +531,8 @@ export default {
       }
    }
    .bottom {
+      border: rgb(52, 52, 52) 2.5px solid;
+      background-color: white;
       //   max-height:calc(100%-20%-80px) !important;
       position: fixed;
       // background-color: red;
@@ -513,7 +546,6 @@ export default {
       max-height: 465px !important;
       overflow: scroll;
       border-radius: 10px;
-      border: lightgray 1px solid;
       margin-top: 20px;
       width: 90%;
       &::-webkit-scrollbar {
@@ -596,15 +628,6 @@ export default {
       }
    }
 
-   .footer-wrapper {
-      // background-color: red;
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      .user-action {
-         color: gray;
-         margin: 0 5px;
-      }
-   }
+   
 }
 </style>

@@ -235,7 +235,8 @@ export default {
       position: relative;
 
       .v-main__wrap .cv-container,
-      .v-main__wrap .cc-container {
+      .v-main__wrap .cc-container, 
+      .v-main__wrap .cu-container {
          @include desktop {
             padding: 0 20% !important;
          }

@@ -35,7 +35,7 @@
       <div class="cc-footer d-flex flex-column">
          <div class="footer-buttons d-flex justify-center align-center">
             <div class="btn-wrapper">
-               <YoutubeCreate :isAdded="youtubeAdded" @select-video="onSelectVideo" class="footerButtons" />
+               <YoutubeCreate @select-video="onSelectVideo" class="footerButtons" />
             </div>
             <div class="btn-wrapper">
                <v-icon @click="axiosFileSelect" class="footer-button-photo">
@@ -49,11 +49,11 @@
          </div>
          <div class="footer-navi d-flex justify-space-between">
             <div @click="cancleCreate" class="left-button out">
-               <v-icon>mdi-backspace-outline</v-icon>
-               <span class="cap">나가기</span>
+               <v-icon>mdi-close</v-icon>
+               <span class="cap">취소</span>
             </div>
             <div class="right-button fin">
-               <category-and-time-info :userId="userId" :isEdit="isForEdit" :cateInfo="selectedCategories" :timeInfo="time" :tagList="hashtags" :title="title" :itemList="itemList" />
+               <category-and-time-info :contentsId="contentsId" :userId="userId" :isEdit="isForEdit" :cateInfo="selectedCategories" :timeInfo="time" :tagList="hashtags" :title="title" :itemList="itemList" />
             </div>
          </div>
          <div v-if="itemList.length === 0" class="background-text">
@@ -89,9 +89,9 @@ export default {
    },
    data: function() {
       return {
+         contentsId: 0,
          title: '',
          itemList: [],
-         youtubeAdded: false,
          uploadPercentage: 0,
          selectedCategories: [0, 0, 0, 0, 0, 0, 0, 0],
          time: {
@@ -173,9 +173,6 @@ export default {
       },
       // 항목 삭제
       deleteItem: function(index) {
-         if (this.itemList[index].type == 'youtube') {
-            this.youtubeAdded = false;
-         }
          this.itemList.splice(index, 1);
       },
       // 유튜브 추가
@@ -192,7 +189,6 @@ export default {
          };
          if (this.itemList.length <= 9) {
             this.itemList.push(newItem);
-            this.youtubeAdded = true;
          } else {
             alert('항목은 최대 10개 까지 넣을 수 있습니다.');
          }
@@ -332,6 +328,7 @@ export default {
                height: 80%;
                // background-color: yellow;
                .text {
+                  cursor: pointer;
                   max-height: 100%;
                   width: 100%;
                   text-align: center;
@@ -389,6 +386,7 @@ export default {
                      outline: none;
                   }
                   .text {
+                     cursor: pointer;
                      text-align: center;
                      width: 100%;
                      max-height: 100%;
@@ -535,6 +533,7 @@ export default {
          }
 
          .left-button {
+            cursor: pointer;
             position: relative;
             height: 50px;
             width: 50%;
@@ -559,6 +558,7 @@ export default {
             }
          }
          .right-button {
+            cursor: pointer;
             width: 50%;
             text-align: center;
             background-color: white;
