@@ -224,7 +224,6 @@ export default {
         comment.id,
         this.$route.params.articleId,
         () => {
-          alert('댓글이 삭제되었습니다.');
           this.getArticleComments();
         },
         (error) => {
@@ -237,7 +236,6 @@ export default {
         this.$route.params.articleId,
         comment,
         () => {
-          alert('댓글이 등록되었습니다.');
           this.getArticleComments();
         },
         (error) => {
