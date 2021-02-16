@@ -22,7 +22,6 @@ export default {
   created() {
     this.findAllReports();
     this.isAdmin();
-    this.reports = reports;
   },
   methods: {
     findAllReports: function() {

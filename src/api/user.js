@@ -1,6 +1,4 @@
-import {
-  instance
-} from './index.js';
+import { instance } from './index.js';
 
 // const config = {
 //   headers: { "access-token": localStorage.getItem("access-token") }
@@ -26,16 +24,16 @@ function login(user, success, fail) {
 }
 
 function follow(userId, success, fail) {
-  let token = window.localStorage.getItem("accessToken");
+  let token = window.localStorage.getItem('accessToken');
   const config = {
     headers: {
-      Authorization: `Bearer ${token}`
-    }
+      Authorization: `Bearer ${token}`,
+    },
   };
   instance
     .post(`users/following/${userId}`, config)
     .then(success)
-    .catch(fail)
+    .catch(fail);
 }
 
 function changePwd(param, success, fail) {
@@ -96,8 +94,8 @@ function contentsEvaluations(data, success, fail) {
   let token = window.localStorage.getItem('accessToken');
   let config = {
     headers: {
-      Authorization: `Bearer ${token}`
-    }
+      Authorization: `Bearer ${token}`,
+    },
   };
 
   instance

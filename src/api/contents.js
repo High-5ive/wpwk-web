@@ -187,8 +187,6 @@ function unFavoriteContents(id, success, fail) {
     .delete(`contents/favorite/${id}`, config)
     .then(success)
     .catch(fail);
-<<<<<<< HEAD
-=======
 }
 
 function reportSubmit(data, success, fail) {
@@ -202,7 +200,6 @@ function reportSubmit(data, success, fail) {
     .post('contentsReport', data, config)
     .then(success)
     .catch(fail);
->>>>>>> feature-contents-report
 }
 
 export {
@@ -221,8 +218,5 @@ export {
   createContentsComment,
   favoriteContents,
   unFavoriteContents,
-<<<<<<< HEAD
-=======
   reportSubmit,
->>>>>>> feature-contents-report
 };
