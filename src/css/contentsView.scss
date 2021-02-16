@@ -6,23 +6,23 @@
     height: 90vh;
     overflow: hidden;
     // background-color: orange;
-    z-index: 0;
+
 
     // ContentsView.vue
     .cv-card-wrapper {
         margin-top: 20px;
         // background-color: blue;
         height: 90vh;
-        padding-bottom: 100px;        
+        padding-bottom: 100px;
 
         .card-top-wrapper {
-            height: 50px;            
-            z-index: 0;
+            height: 50px;
+
             //카드의 제목 '아이와 함께 노는 물감놀이~'
             .title {
-                padding-left: 5%;
                 font-family: 'Poor Story', sans-serif !important;
                 font-size: 20px !important;
+                font-weight: 600;
 
                 text-align: center;
                 margin-bottom: 2px;
@@ -33,50 +33,20 @@
                 font-size: 13px !important;
                 color: gray;
             }
-        }
 
-        .card-top-option {
-            padding-right: 5%;
-
-            .dots {
-                float: right;
-                margin-right: 1%;
-                cursor: pointer;
-            }
-
-            .dots:hover{
-                background-color: #e3e3e3;
-                border-radius: 50%;                
-            }
-
-            .dropdown-menu {                
-                display: block;
-                float: right;
-                width: 30%;
-                height: 15%;
-                box-shadow: 10px 10px 30px #d3d3d3;
-                border-radius: 15px;
-                padding: 10px;
-                margin:1%;                                          
-            }
-
-            @media screen and (max-width: 768px){
-                .dropdown-menu {
-                    width: 50%;
+            //@responsive 카드 데스크탑일 때 폰트 더 크게
+            @include desktop {
+                .title {
+                    font-size: 22px !important;
+                    font-weight: 600;
+                    margin-bottom: 3px;
+                }
+    
+                .writer {
+                    font-size: 16px !important;
                 }
             }
 
-            .menu-detail {
-                padding: 3%;
-                cursor: pointer;
-                span {
-                    padding-left: 10%;
-                }
-            }
-
-            .menu-detail:hover {
-                background-color: #e3e3e3;
-            }
         }
 
         //CardList.vue
@@ -87,26 +57,11 @@
 
             // background-color: darkcyan;
             height: 90vh;
-
+            
             // 카드 한장
             // Card.vue
             .card-wrapper {
-                animation: 1s ease-out 0s 1 slideInFromTop;
-
-                @keyframes slideInFromTop {
-                    0% {
-                        transform: translateY(-30px);
-                        opacity: 0;
-                    }
-
-                    100% {
-                        transform: translateY(0);
-                        opacity: 1;
-                    }
-                }
-
                 $card_radisu: 40px; //카드의 모서를 둥글게
-
                 // background-color: pink;
                 border-radius: $card_radisu;
                 border: 1px rgb(230, 230, 230) solid;
@@ -143,15 +98,8 @@
                         border-bottom: 1px solid rgb(199, 199, 199);
                     }
                 }
-
+                
                 .card-desc {
-
-                    // background-image: url('../assets/cv-bg.png');
-                    // background-repeat: no-repeat;
-                    // background-position: bottom;
-                    // background-size: cover;
-                    // opacity: 0.5;
-
                     border-radius: 0px 0px $card_radisu $card_radisu;
 
                     // overflow: scroll;
@@ -250,11 +198,11 @@
                     // margin-top: 20px;
                     display: flex;
 
-                    i{
-                        color:$navi-main;
+                    i {
+                        color: $navi-main;
                     }
 
-                    .cap{
+                    .cap {
                         padding: 0;
                         display: block;
                         font-size: 8pt;
@@ -268,18 +216,20 @@
                         width: 50%;
                         text-align: center;
 
-                        &::after{
+                        &::after {
                             content: '';
                             width: 1px;
                             height: 20px;
                             position: absolute;
-                            top: 4px;
+                            top: 12px;
                             right: -1px;
                             background-color: rgb(223, 223, 223);
                         }
 
-                        &.out{
-                            i,.cap{
+                        &.out {
+
+                            i,
+                            .cap {
                                 color: rgb(75, 23, 22);
                             }
                         }
@@ -289,8 +239,10 @@
                         width: 50%;
                         text-align: center;
 
-                        &.fin{
-                            i,.cap{
+                        &.fin {
+
+                            i,
+                            .cap {
                                 color: $navi-success;
                             }
                         }
@@ -304,20 +256,21 @@
 
     //Evaluations.vue
     .ev-container {
-        margin-top: 20px;
+        // margin-top: 20px;
         // background-color: blue;
         height: 90vh;
         padding-bottom: 100px;
 
         // 평가페이지 최상단 타이틀 부분
-        .top-wrapper{
+        .top-wrapper {
+            margin-top: 2vh;
             display: flex;
             flex-direction: column;
             align-items: center;
 
             height: 190px;
 
-            .ev-title{
+            .ev-title {
                 position: relative;
                 top: -160px;
                 font-size: 16px;
@@ -325,42 +278,86 @@
                 color: rgb(70, 70, 70);
             }
 
-            
-            .ev-bubble{
+
+            .ev-bubble {
                 width: 240px;
             }
-            
-            .ev-wk{
+
+            .ev-wk {
                 position: relative;
                 top: -10px;
                 width: 100px;
             }
         }
-        .sub{
+
+        .sub {
             display: block;
             text-align: center;
             margin: 0px auto;
             color: gray;
             font-size: 12px;
         }
-        
+
         //평가 버튼들 존재
         .eb-wrapper {
-            // background-color: red;
             .eval-group {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+                padding: 0px 40px;
+
+                .ev-row {
+                    min-height: 13vh;
+
+                    @media (min-height: 1110px) {
+                        & {
+                            min-height: 19vh;
+                        }
+                      }
+
+                    width: 100%;
+                    margin-bottom: 15px;
+
+                    display: flex;
+                    justify-content: space-between;
+
+                    button {
+                        height: inherit;
+                        width: 48%;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        border: 1px solid rgb(227, 227, 227);
+
+                        .v-btn__content {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+
+                            font-size: 1em;
+                            font-weight: 600;
+                            color: rgb(46, 46, 46);
+                            // text-overflow:ellipsis;
+
+                            .emoji {
+                                font-size: 20pt;
+                                margin-bottom: 3px;
+                            }
+
+                        }
+                    }
+                }
+
                 button {
                     // color: red;
                     // background-color: blue !important;
-                    width: 80%;
+                    width: 50%;
                     border: 1px solid rgb(227, 227, 227);
-                    margin-bottom: 2px;
+                    // margin-bottom: 2px;
                 }
             }
 
-            .btn-group{
+            .btn-group {
                 width: 80%;
                 margin: 0 auto;
                 margin-top: 20px;
@@ -368,15 +365,18 @@
                 display: flex;
                 justify-content: space-between;
 
-                #submit{
+                #submit {
+                    margin-left: 5%;
                     width: 60%;
-                    border: 2px solid $orange;
-
+                    border: 1px solid $orange;
+                    
                     color: $orange;
-                    font-weight: 600;
+                    font-weight: 400;
                 }
-                #report{
-                    width: 30%;
+                
+                #report {
+                    margin-right: 5%;
+                    width: 10%;
                     color: red;
                 }
             }
@@ -389,20 +389,18 @@
             position: absolute;
             z-index: 100;
             left: 50%;
-            bottom: -75px;
+            bottom: 0px;
             transform: translateX(-50%);
-            margin-bottom: 25px;
-            //    background-color: white;
 
             width: 100%;
-            height: 100px;
+            height: 50px;
 
             // 최하단 좌우 이동 버튼
             .footer-eval {
                 width: 100%;
                 display: flex;
 
-                .cap{
+                .cap {
                     padding: 0;
                     display: block;
                     font-size: 8pt;
@@ -421,12 +419,12 @@
                     text-align: center;
                     position: relative;
 
-                    &::after{
+                    &::after {
                         content: '';
                         width: 1px;
                         height: 20px;
                         position: absolute;
-                        top: 4px;
+                        top: 12px;
                         right: -1px;
                         background-color: rgb(223, 223, 223);
                     }
@@ -438,12 +436,12 @@
                     text-align: center;
                     position: relative;
 
-                    &::after{
+                    &::after {
                         content: '';
                         width: 1px;
                         height: 20px;
                         position: absolute;
-                        top: 4px;
+                        top: 12px;
                         right: -1px;
                         background-color: rgb(223, 223, 223);
                     }
@@ -469,7 +467,7 @@
         right: 40px;
         z-index: 200;
 
-        #btn-comment{
+        #btn-comment {
             background-color: red;
             width: 5.5vh;
             height: 5.5vh;
@@ -482,9 +480,9 @@
                 right: 5px;
                 width: 50px !important;
                 height: 50px !important;
-             }
-            
-        
+            }
+
+
         }
 
         display: inline;
@@ -537,7 +535,7 @@
         top: -60px;
 
         overflow-x: hidden;
-        overflow-y: auto;
+        // overflow-y: auto;
         width: 100%;
         height: 42vh;
     }

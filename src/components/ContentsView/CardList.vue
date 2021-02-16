@@ -58,6 +58,7 @@ export default {
    },
    methods: {
       nextPage() {
+         // this.doNotEffect;
          this.pageNum++;
       },
       prevPage() {
@@ -91,6 +92,16 @@ export default {
             });
          });
       },
+      // doNotEffect: function() {
+      //    console.log('이펙트 삭제!');
+      //    var elem = document.querySelector('.card-wrapper');
+
+      //    if (elem.classList.contains('effect')) {
+      //       elem.classList.remove('effect');
+      //       console.log('존재하니 삭제완료', elem);
+      //    }
+      //    // console.log(elem);
+      // },
    },
    components: {
       Card,

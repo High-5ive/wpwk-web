@@ -47,7 +47,7 @@ const store = new Vuex.Store({
       alert('정상적으로 로그아웃 되었습니다')
       localStorage.removeItem('accessToken');
       router.push({
-        name: 'Login'
+        path: '/'
       })
       // axios.defaults.headers.common["auth-token"] = undefined;
     },

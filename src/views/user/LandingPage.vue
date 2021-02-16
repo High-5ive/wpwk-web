@@ -1,6 +1,7 @@
 <template>
    <div class="ld-container">
       <div class="wrapper">
+         <p>보육 콘텐츠 큐레이션 플랫폼</p>
          <div class="images">
             <img id="charc" src="@/assets/img/landing/ld_main.png" alt="" />
             <!-- <img id="ball" src="@/assets/img/landing/ld_ball.png" alt="" />
@@ -11,7 +12,6 @@
 
          <div class="title">
             <!-- <text-anima></text-anima> -->
-            <p>보육 콘텐츠 큐레이션 플랫폼</p>
             <div class="box">
                <div class="text animated wobble nf nf-600">위파위키</div>
                <span class="nf nf-600">with parents with kids</span>
@@ -69,6 +69,20 @@ export default {
       width: 400px;
       height: 100%;
 
+      p {
+         position: absolute;
+         top: 19vh;
+         left: 50%;
+         transform: translate(-50%, 0);
+
+         // background-color: #374857;
+         // border-radius: 4px;
+         color: #374857;
+         // padding: 0px 6px;
+
+         font-size: 9pt;
+         font-weight: 600;
+      }
       .images {
          img {
             position: absolute;
@@ -106,16 +120,6 @@ export default {
          display: flex;
          flex-direction: column;
          align-items: center;
-
-         p {
-            // background-color: #374857;
-            // border-radius: 4px;
-            color: #374857;
-            // padding: 0px 6px;
-
-            font-size: 9pt;
-            font-weight: 600;
-         }
 
          span {
             font-size: 0.9em;
