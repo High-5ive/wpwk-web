@@ -95,7 +95,7 @@ export default {
          this.$router.push('/main');
       },
       handleResize() {
-         // $breakpoint-mobile: 411px;
+         // $breakpoint-mobile: 375px;
          // $breakpoint-tablet: 600px;
          // $breakpoint-desktop: 1264px;
 

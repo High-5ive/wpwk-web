@@ -93,7 +93,6 @@ export default {
       width: 60px;
       height: 50px;
 
-      background-color: rgb(247, 179, 179);
       cursor: pointer;
       // border-right: 1px solid $main-green;
 

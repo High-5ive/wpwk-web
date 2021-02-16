@@ -12,20 +12,22 @@
 }
 
 .nickname {
-  font-size: 14pt !important;
+  font-size: 14pt;
   font-weight: 600;
   color: #303030;
 }
 
 .content {
-  font-size: 12pt !important;
+  font-size: 12pt;
   color: #303030;
 }
 
-.container {
+.cm-container {
   height: 100%;
+  overflow: hidden;
+  padding: 10px;
 }
-.container .article-wrapper {
+.cm-container .article-wrapper {
   margin-bottom: 10px;
   background-color: white;
   border-radius: 8px;
@@ -33,11 +35,11 @@
   display: flex;
   flex-direction: column;
 }
-.container .article-wrapper .content-wrapper {
+.cm-container .article-wrapper .content-wrapper {
   border-bottom: 1px solid #dadada;
   height: 200px;
 }
-.container .article-wrapper .content-wrapper .category {
+.cm-container .article-wrapper .content-wrapper .category {
   display: inline;
   background-color: #e6e6e6;
   color: #878787;
@@ -45,39 +47,39 @@
   font-size: 8pt;
   padding: 4px 8px 4px 8px;
 }
-.container .article-wrapper .content-wrapper .nickname {
+.cm-container .article-wrapper .content-wrapper .nickname {
   padding-left: 10px;
   padding-top: 10px;
 }
-.container .article-wrapper .content-wrapper .content {
+.cm-container .article-wrapper .content-wrapper .content {
   padding-left: 10px;
   padding-top: 5px;
 }
-.container .article-wrapper .feature-wrapper {
+.cm-container .article-wrapper .feature-wrapper {
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 10px;
 }
-.container .article-wrapper .feature-wrapper .likes-btn {
+.cm-container .article-wrapper .feature-wrapper .likes-btn {
   cursor: pointer;
   color: #da0505;
 }
-.container .article-wrapper .feature-wrapper .info-btn {
+.cm-container .article-wrapper .feature-wrapper .info-btn {
   display: flex;
   align-items: center;
   font-size: 10pt;
 }
-.container .article-wrapper .feature-wrapper .info-btn .comment {
+.cm-container .article-wrapper .feature-wrapper .info-btn .comment {
   color: #636363;
   margin-right: 10px;
 }
-.container .article-wrapper .feature-wrapper .info-btn .v-icon {
+.cm-container .article-wrapper .feature-wrapper .info-btn .v-icon {
   margin-right: 5px;
   font-size: 15pt;
 }
-.container .article-wrapper .feature-wrapper .info-btn span {
+.cm-container .article-wrapper .feature-wrapper .info-btn span {
   color: #ff6565;
   padding-bottom: 1px;
 }

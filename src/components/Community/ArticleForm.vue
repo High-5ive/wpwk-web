@@ -9,7 +9,7 @@
       </div>
 
       <!-- 이미지 추가 -->
-      <div class="add-img-btn nf" @click="axiosFileSelect"><v-icon> mdi-image-multiple </v-icon> 사진 추가</div>
+      <div class="add-img-btn" @click="axiosFileSelect"><v-icon> mdi-image-multiple </v-icon>&nbsp;add</div>
       <input type="file" id="fileUpload" ref="files" style="display:none" @change="axiosFileChange" multiple />
 
       <div class="photo-wrapper">
@@ -158,8 +158,7 @@ export default {
          height: 100%;
          text-align: center;
 
-         font-family: 'Poor Story';
-         font-size: 14pt;
+         font-size: 12pt;
 
          &:focus {
             outline: none;
@@ -173,6 +172,10 @@ export default {
       padding: 15px;
       border-radius: 30px;
       box-shadow: 0px 9px 20px 0px #56565629;
+
+      font-size: 10pt;
+      color: rgb(70, 70, 70);
+      font-weight: 600;
    }
 
    .photo-wrapper {

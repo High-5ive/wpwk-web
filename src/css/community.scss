@@ -5,12 +5,11 @@
 // ㄴ ArticleList
 //    ㄴ Article
 
-.container {
+.cm-container {
   height: 100%;
-
-  .v-input {
-    // background-color: red;
-  }
+  // background-color: rgb(205, 54, 104) !important;
+  overflow: hidden;
+  padding: 10px;
 
   //Article.vue
   .article-wrapper {

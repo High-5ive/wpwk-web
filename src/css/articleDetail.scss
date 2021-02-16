@@ -8,10 +8,11 @@
 
 //ArticleDetail
 .ad-container {
-    height: 100%;
-    // background-color: rgba(255, 0, 0, 0.098);
+    height: inherit;
     padding: 10px;
     padding-top: 40px;
+
+    overflow: hidden;
 
     .article-wrapper {
         margin-bottom: 10px;
@@ -25,6 +26,7 @@
         flex-direction: column;
         
         .content-wrapper {
+            // border: 1px dashed blue;
             border-bottom: 1px solid rgb(218, 218, 218);
             height: 200px;
             
