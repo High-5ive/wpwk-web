@@ -45,6 +45,7 @@
   justify-content: space-between;
 }
 .comment-wrapper .comment-item .top-wrapper .nickname {
+  cursor: pointer;
   font-size: 10pt;
 }
 .comment-wrapper .comment-item .top-wrapper .created {

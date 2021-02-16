@@ -88,6 +88,7 @@
     margin-bottom: 3px;
   }
   .cv-container .cv-card-wrapper .card-top-wrapper .writer {
+    cursor: pointer;
     font-size: 14px !important;
   }
 }

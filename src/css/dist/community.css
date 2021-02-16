@@ -36,6 +36,7 @@
   flex-direction: column;
 }
 .cm-container .article-wrapper .content-wrapper {
+  cursor: pointer;
   border-bottom: 1px solid #dadada;
   height: 200px;
 }
@@ -72,6 +73,7 @@
   font-size: 10pt;
 }
 .cm-container .article-wrapper .feature-wrapper .info-btn .comment {
+  cursor: pointer;
   color: #636363;
   margin-right: 10px;
 }

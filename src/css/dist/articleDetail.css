@@ -49,6 +49,7 @@
   padding: 4px 8px 4px 8px;
 }
 .ad-container .article-wrapper .content-wrapper .nickname {
+  cursor: pointer;
   padding-left: 10px;
   padding-top: 10px;
 }

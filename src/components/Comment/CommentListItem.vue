@@ -2,7 +2,7 @@
    <div class="comment-item">
       <!-- 작성자, 생성일 등 맨 위 -->
       <div class="top-wrapper">
-         <span class="nickname">{{ comment.writer }}</span>
+         <span class="nickname" @click="$router.push({ name: 'mypage', params: { userId: comment.userId } })">{{ comment.writer }}</span>
          <span class="created">{{ comment.createdAt }}</span>
       </div>
 
