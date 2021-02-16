@@ -39,11 +39,14 @@ export default {
       this.$router.push({
         name: 'ArticleDetail',
         params: {
-          article: this.personsAssets[idx],
+          articleId: this.personsAssets[idx].id,
         },
       });
     },
   },
+  created: function () {
+    console.log(this.personsAssets)
+  }
 };
 </script>
 <style lang=""></style>

@@ -41,7 +41,6 @@ export default {
          if (this.video.snippet.thumbnails.default.url.length == 0) {
             const video = {
                thumbnailSrc: '@/assets/img/contents-create/yt-img.png',
-               title: _.unescape(this.video.snippet.title),
                videoId: this.video.id.videoId,
                videoCaption: this.video.snippet.description,
             };
@@ -50,7 +49,6 @@ export default {
          } else {
             const video = {
                thumbnailSrc: `https://img.youtube.com/vi/${this.video.id.videoId}/hqdefault.jpg`,
-               title: _.unescape(this.video.snippet.title),
                videoId: this.video.id.videoId,
                videoCaption: this.video.snippet.description,
             };

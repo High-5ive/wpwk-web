@@ -32,7 +32,7 @@
       <div class="desc-wrapper">
          <h1>{{ sendNori.title }}</h1>
          <span v-for="(tag, idx) in sendNori.tagList" :key="'tag' + idx" @click="tagSearch(tag.name)"> #{{ tag.name }} </span>
-         <h6>{{ sendNori.nickname }}</h6>
+         <h6 @click="$router.push({ name: 'mypage', params: { userId: sendNori.userId } })">{{ sendNori.nickname }}</h6>
          <div v-if="sendNori.favorite" class="btn-like" @click="doUnLike">
             <v-icon>
                mdi-heart
