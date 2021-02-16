@@ -195,5 +195,13 @@
                 color: white;
             }
         }
+        
+        @media (min-width:1024px) {
+            .btn-unlike:hover {
+                background-color: $main-orange;
+                transition: 0.3s;
+                cursor: pointer;
+            }
+        }
     };
 }
