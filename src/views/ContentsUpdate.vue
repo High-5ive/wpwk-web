@@ -69,6 +69,7 @@
 <script>
 import { findContentsById } from '@/api/contents.js'
 import { findContentsItemById } from '@/api/contents.js'
+import { mapState } from 'vuex'
 import draggable from 'vuedraggable';
 import YoutubeCreate from '@/components/contents-create/YoutubeCreate.vue';
 import ContentsYoutubeItem from '@/components/contents-create/ContentsYoutubeItem.vue';
@@ -228,6 +229,7 @@ export default {
           (success) => {
             this.contentsId = success.data.id
             this.userId = success.data.userId
+            console.log(this.userInfo.userId, this.userId)
             this.hashtags = success.data.tagList
             this.title = success.data.title
             this.selectedCategories = success.data.ability.split('').map((v) => {
@@ -248,7 +250,6 @@ export default {
                   if(res[i].youtubeId) {
                     const newItem = {
                       type: 'youtube',
-                      id: res[i].id,
                       youtube: {},
                       youtubeThumbnail: res[i].youtubeThumbnail,
                       youtubeId: res[i].youtubeId,
@@ -261,7 +262,6 @@ export default {
                   } else if (res[i].imageAddress !== null) {
                     const newItem = {
                       type: 'photo',
-                      id: res[i].id,
                       youtube: {},
                       photo: {preview: res[i].imageAddress, file: 0},
                       video: '',
@@ -272,7 +272,6 @@ export default {
                   } else {
                     const newItem = {
                       type: 'text',
-                      id: res[i].id,
                       youtube: {},
                       photo: {},
                       video: '',
@@ -288,10 +287,19 @@ export default {
             console.log(fail)
           }
         )
+      },
+      isWriter: function () {
+         if (this.userId !== this.userInfo.userId) {
+            this.$router.push('/main')
+         }
       }
+   },
+   computed: {
+      ...mapState(['userInfo'])
    },
    created: function () {
      this.getContents()
+     this.isWriter()
    }
 };
 </script>

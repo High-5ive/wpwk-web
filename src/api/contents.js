@@ -29,6 +29,19 @@ function updateContents(param, success, fail) {
     .catch(fail)
 }
 
+function deleteContents(contentsId, success, fail) {
+  let token = window.localStorage.getItem('accessToken');
+  let config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
+  instance
+    .delete(`contents/${contentsId}`, config)
+    .then(success)
+    .catch(fail)
+}
+
 function createTags(id, param, success, fail) {
   instance
     .post(`tags/contents/${id}`, param)
@@ -217,6 +230,7 @@ function unFavoriteContents(id, success, fail) {
 export {
   createContents,
   updateContents,
+  deleteContents,
   createTags,
   updateTags,
   findAllContents,

@@ -10,6 +10,7 @@
       <div v-else class="cv-card-wrapper">
          <div class="card-top-wrapper">
             <p class="title nf">{{ this.title }}</p>
+            <!-- <button @click="deleteContent">삭제</button> -->
             <p class="writer nf" @click="$router.push({ name: 'mypage', params: { userId: writerId } })">{{ this.writer }}</p>
          </div>
 
@@ -54,6 +55,8 @@ import { findContentsComment } from '@/api/contents.js';
 import { deleteContentsComment } from '@/api/contents.js';
 import { updateContentsComment } from '@/api/contents.js';
 import { createContentsComment } from '@/api/contents.js';
+import { deleteContents } from '@/api/contents.js';
+import { mapState } from 'vuex'
 
 export default {
    name: 'ContentsView',
@@ -65,6 +68,7 @@ export default {
    },
    data: function() {
       return {
+         contentsId: 0,
          cards: Array,
          title: '',
          writer: '',
@@ -81,6 +85,9 @@ export default {
          contents: Object,
       };
 
+   },
+   computed: {
+      ...mapState(['userInfo'])
    },
    created() {
       this.getContentsItems();
@@ -154,10 +161,10 @@ export default {
          this.writerId = contents.userId;
          this.writer = contents.nickname;
          this.title = contents.title;
-         var contentsId = contents.id;
+         this.contentsId = contents.id;
 
          findContentsItemById(
-            contentsId,
+            this.contentsId,
             (success) => {
                console.log('get ContentsItem suc ', success.data);
                this.cards = success.data;
@@ -168,7 +175,7 @@ export default {
          );
 
          findContentsComment(
-            contentsId,
+            this.contentsId,
             (success) => {
                console.log('get Contents Comments success', success.data);
                this.comments = success.data;
@@ -183,6 +190,22 @@ export default {
       closeModal() {
          this.dialog = false;
       },
+      deleteContent: function () {
+         if (this.userInfo.userId === this.writerId) {
+            deleteContents(
+               this.contentsId,
+               () => {
+                  alert('노리 삭제가 완료되었습니다.')
+                  this.$router.push('/main')
+               },
+               (fail) => {
+                  console.log(fail)
+               }
+            )
+         } else {
+            this.$router.push('/main')
+         }
+      }
    },
 
    watch: {

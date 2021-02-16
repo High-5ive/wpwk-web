@@ -363,6 +363,7 @@ export default {
             alert('필수정보(시간, 카테고리)를 입력해 주십시오.');
          }
       },
+      //컨텐츠 수정요청
       updateContent: function() {
          if (this.time.minute !== 0 && this.selectedCategories.reduce((a, b) => a + b) >= 1) {
             this.isLoading = true;
@@ -471,7 +472,7 @@ export default {
          for (let i = 0;i < this.tagList.length;i++) {
             if (this.hashtags.indexOf(this.tagList[i].name) === -1) {
                this.hashtags.push(this.tagList[i].name)
-               this.sendHashtags.push(this.tagList[i].id)
+               this.sendHashtags.push(':'+this.tagList[i].id)
             }
          }      
       },
