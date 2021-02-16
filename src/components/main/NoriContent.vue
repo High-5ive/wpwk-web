@@ -161,16 +161,6 @@ export default {
          this.thumbnail = this.sendNori.thumb;
       }
    },
-
-   watch: {
-      sendNori: function() {
-         if (this.sendNori.thumb == null) {
-            this.thumbnail = require('@/assets/cv-bg.png');
-         } else {
-            this.thumbnail = this.sendNori.thumb;
-         }
-      },
-   },
 };
 </script>
 

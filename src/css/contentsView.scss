@@ -96,10 +96,12 @@
             .card-wrapper {
                 $card_radisu: 40px; //카드의 모서를 둥글게
                 // background-color: pink;
+
+                
                 border-radius: $card_radisu;
                 border: 1px rgb(230, 230, 230) solid;
                 box-shadow: 0px 9px 20px 0px #5656560f;
-
+                
                 width: 100%;
                 height: 90%;
 
@@ -159,9 +161,11 @@
                     // 카드 desc 하단에 백그라운드 이미지- 가상 요소로 추가함
                     &::before {
                         content: "";
-                        background: url('../assets/cv-bg.png');
+                        background: url('../assets/cv-bg2.png');
                         background-size: cover;
                         background-position: bottom;
+
+                        // background-color: skyblue;
                         opacity: 0.4;
                         position: absolute;
                         top: 0px;
@@ -567,7 +571,8 @@
         // background-color: red;
         top: -60px;
 
-        overflow-x: hidden;
+        // overflow를 주고 반응형 뷰를 끄면 우측에 패딩이 생김
+        // overflow-x: hidden;
         // overflow-y: auto;
         width: 100%;
         height: 42vh;

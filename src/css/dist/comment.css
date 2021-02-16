@@ -27,6 +27,7 @@
   align-items: center;
   height: 60vh;
   overflow-y: scroll;
+  background-color: white;
 }
 .comment-wrapper .comment-item {
   display: block;
