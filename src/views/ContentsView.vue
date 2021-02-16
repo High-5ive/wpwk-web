@@ -29,7 +29,17 @@
       </div>
       <div class="card-top-wrapper">
         <p class="title nf">{{ contents.title }}</p>
-        <p class="writer nf">{{ contents.nickname }}</p>
+        <p
+          class="writer nf"
+          @click="
+            $router.push({
+              name: 'mypage',
+              params: { userId: contents.userId },
+            })
+          "
+        >
+          {{ contents.nickname }}
+        </p>
       </div>
 
       <CardList :cards="cards" @evaluationPage="evaluation" />
@@ -88,12 +98,15 @@ import CardList from "@/components/ContentsView/CardList";
 import Evaluations from "@/components/ContentsView/Evaluations";
 import ContentsCommentList from "@/components/Comment/ContentsCommentList";
 import CommentFormView from "../components/Comment/CommentForm_view.vue";
-import { findContentsItemById } from "@/api/contents.js";
-import { findContentsComment } from "@/api/contents.js";
-import { deleteContentsComment } from "@/api/contents.js";
-import { updateContentsComment } from "@/api/contents.js";
-import { createContentsComment } from "@/api/contents.js";
-import { findContentsById } from "@/api/contents.js";
+import {
+  deleteContentsComment,
+  updateContentsComment,
+  createContentsComment,
+  findContentsById,
+  findContentsComment,
+  findContentsItemById,
+  deleteContents,
+} from "@/api/contents.js";
 import { mapState } from "vuex";
 
 export default {
@@ -125,7 +138,7 @@ export default {
     this.getContentsItems();
   },
   computed: {
-    ...mapState(["userInfo"])
+    ...mapState(["userInfo"]),
   },
   methods: {
     evaluation(value) {
@@ -230,7 +243,19 @@ export default {
     },
 
     editContent: function() {
-      this.$router.push({name:'ContentsUpdate', params: this.contents.id});
+      this.$router.push({ name: "ContentsUpdate", params: this.contents.id });
+    },
+    deleteContent: function() {
+      deleteContents(
+        this.contents.id,
+        () => {
+          alert("노리 삭제가 완료되었습니다.");
+          this.$router.push("/main");
+        },
+        (fail) => {
+          console.log(fail);
+        }
+      );
     },
   },
 

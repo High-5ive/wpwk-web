@@ -5,11 +5,12 @@ import jwt_decode from 'jwt-decode';
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   state: {
     // 컴포넌트 간에 공유할 data
     isLogin: false, // 로그인 여부
     userInfo: null,
+    usersAbilities: [],
   },
   mutations: {
     // state의 변화를 일으키는 곳, state 조작은 여기서만 하길 권장
@@ -28,11 +29,15 @@ export default new Vuex.Store({
 
     //로그아웃 시
     logout(state) {
-      // localStorage.removeItem('accessToken');
-      localStorage.clear;
+      localStorage.removeItem('accessToken');
+      // localStorage.clear;
       state.isLogin = false;
       state.userInfo = null;
     },
+
+    usersAbilities(state, usersAbilities) {
+      state.usersAbilities = usersAbilities
+    }
   },
   actions: {
     doLogout({
@@ -84,6 +89,14 @@ export default new Vuex.Store({
       router.push({
         name: 'Login'
       })
+    },
+
+    getUsersAbilities({
+      commit
+    }, usersAbilities) {
+      commit('usersAbilities', usersAbilities)
     }
   },
 });
+
+export default store

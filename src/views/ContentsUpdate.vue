@@ -1,6 +1,6 @@
 <template>
    <!-- 노리 제작 헤더 -->
-   <div class="cc-container">
+   <div class="cu-container">
       <v-text-field id="input-title" v-model="title" label="제목" hint="ex) [11세]집에서 할 수 있는 축구게임"></v-text-field>
       <guideline class="guide" style="margin-right: 10px" />
       <v-divider></v-divider>
@@ -52,7 +52,7 @@
                취소
             </div>
             <div class="right-button">
-               <category-and-time-info :userId="userId" :isEdit="isForEdit" :cateInfo="selectedCategories" :timeInfo="time" :tagList="hashtags" :title="title" :itemList="itemList" />
+               <category-and-time-info :contentsId="contentsId" :userId="userId" :isEdit="isForEdit" :cateInfo="selectedCategories" :timeInfo="time" :tagList="hashtags" :title="title" :itemList="itemList" />
             </div>
          </div>
          <div v-if="itemList.length === 0" class="background-text">
@@ -67,6 +67,9 @@
 </template>
 
 <script>
+import { findContentsById } from '@/api/contents.js'
+import { findContentsItemById } from '@/api/contents.js'
+import { mapState } from 'vuex'
 import draggable from 'vuedraggable';
 import YoutubeCreate from '@/components/contents-create/YoutubeCreate.vue';
 import ContentsYoutubeItem from '@/components/contents-create/ContentsYoutubeItem.vue';
@@ -76,7 +79,7 @@ import Guideline from '@/components/contents-create/Guideline.vue';
 import CategoryAndTimeInfo from '@/components/contents-create/CategoryAndTimeInfo.vue';
 
 export default {
-   name: 'ContentsCreate',
+   name: 'ContentsUpdate',
    components: {
       draggable,
       YoutubeCreate,
@@ -89,17 +92,18 @@ export default {
    data: function() {
       return {
          title: '',
+         contentsId: 0,
+         userId: 0,
          itemList: [],
-         youtubeAdded: false,
-         uploadPercentage: 0,
          selectedCategories: [0, 0, 0, 0, 0, 0, 0, 0],
          time: {
            hour: 0,
            minute: 0,
          },
-         userId: 0,
          hashtags: [],
-         isForEdit: false,
+         youtubeAdded: false,
+         uploadPercentage: 0,
+         isForEdit: true,
       };
    },
    methods: {
@@ -218,14 +222,97 @@ export default {
       cancleCreate: function() {
          this.$router.push('/main');
       },
+      getContents: function () {
+        const targetContentsId = this.$route.params.id
+        findContentsById(
+          targetContentsId,
+          (success) => {
+            this.contentsId = success.data.id
+            this.userId = success.data.userId
+            console.log(this.userInfo.userId, this.userId)
+            this.hashtags = success.data.tagList
+            this.title = success.data.title
+            this.selectedCategories = success.data.ability.split('').map((v) => {
+              return Number(v)
+            })
+            this.time.hour = success.data.spendTime.split(':').map((v) => {
+              return Number(v)
+            })[0]
+            this.time.minute = success.data.spendTime.split(':').map((v) => {
+              return Number(v)
+            })[1]
+            findContentsItemById(
+              targetContentsId,
+              (success) => {
+                const res = success.data
+                console.log(res)
+                for (let i = 0; i < res.length; i++) {
+                  if(res[i].youtubeId) {
+                    const newItem = {
+                      type: 'youtube',
+                      youtube: {},
+                      youtubeThumbnail: res[i].youtubeThumbnail,
+                      youtubeId: res[i].youtubeId,
+                      youtubeTitle: res[i].youtubeTitle,
+                      photo: {},
+                      description: res[i].description
+                    }
+                    this.youtubeAdded = true
+                    this.itemList.push(newItem)
+                  } else if (res[i].imageAddress !== null) {
+                    const newItem = {
+                      type: 'photo',
+                      youtube: {},
+                      photo: {preview: res[i].imageAddress, file: 0},
+                      video: '',
+                      description: res[i].description,
+                      imageAddress: res[i].imageAddress
+                    }
+                    this.itemList.push(newItem)
+                  } else {
+                    const newItem = {
+                      type: 'text',
+                      youtube: {},
+                      photo: {},
+                      video: '',
+                      description: res[i].description
+                    }
+                    this.itemList.push(newItem)
+                  }
+                }
+              }
+            )
+          },
+          (fail) => {
+            console.log(fail)
+          }
+        )
+      },
+      isWriter: function () {
+         console.log(this.userId, this.userInfo.userId)
+         setTimeout(() => {
+            if (Number(this.userId) !== Number(this.userInfo.userId)) {
+               this.$router.push('/main')
+            }
+
+         },100)
+
+      }
    },
+   computed: {
+      ...mapState(['userInfo'])
+   },
+   created: function () {
+     this.getContents()
+     this.isWriter()
+   }
 };
 </script>
 
 <style lang="scss">
 @import 'src/css/common.scss';
 // 트렐로 배경색 : rgb(235,236,240)
-.cc-container {
+.cu-container {
    @include desktop {
       max-width: 500px;
       left: 50%;

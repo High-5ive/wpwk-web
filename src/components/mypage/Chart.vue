@@ -5,28 +5,88 @@
 </template>
 <script>
 import Chart from 'chart.js'
-import myChartData from '@/assets/js/chartData.js'
+import { mapState } from 'vuex';
 
 export default {
   name: "Chart",
   data: function () {
     return {
-      chartData: myChartData
+      personsAbilities: [],
+      maxAbility: 0
     }
   },
+  created: function () {    
+    this.getAbilities()
+  },
   methods: {
-    createChart: function (charId, chartData) {
+    getAbilities: function () {
+       this.personsAbilities = this.usersAbilities.abilities
+       const maxAb = Math.max.apply(null, this.personsAbilities)
+       if (maxAb > 20) {
+          this.maxAbility = maxAb
+       } else {
+         this.maxAbility = 20
+      
+       }
+     },
+    createChart: function (charId) {
       const ctx = document.getElementById(charId)
-      const myChart = new Chart (ctx, {
-        type: chartData.type,
-        data: chartData.data,
-        options: chartData.options,
+      new Chart (ctx, {
+        type: 'radar',
+        data: {
+          labels: ['언어지능', '논리수학지능', '음악지능', '신체운동지능', '공간지능', '자연지능', '대인지능', '개인내지능'],
+          datasets:[
+            {
+              label: '내 성향',
+              data: this.personsAbilities,
+              backgroundColor: "#f4b8407b",
+              borderColor: "#f4b740",
+              borderWidth: 1,
+          }],
+        },
+        options: {
+          elements: {
+            point: {
+              radius: 0
+            }
+          },
+          responsive: true,
+          maintainAspectRatio:true,
+          scale: {
+            angleLines: {
+              display: true,
+            },
+            ticks: {
+              display: false,
+              beginAtZero: true,
+              max: this.maxAbility,
+              min: 0,
+              stepSize: this.maxAbility / 5,
+            },
+            pointLabels: {
+              fontSize: 15,
+            }
+          },
+          
+          legend: {
+            display: false,
+          },
+          tooltips: {
+            callbacks: {
+              label: function (tooltipItem) {
+                return tooltipItem.yLabel;
+              }
+            }
+          }
+        },
       })
-      console.log(myChart)
     }
   },
   mounted () {
-    this.createChart('myChart', this.chartData)
+    this.createChart('myChart')
+  },
+  computed: {
+    ...mapState(['usersAbilities'])
   }
 }
 </script>
