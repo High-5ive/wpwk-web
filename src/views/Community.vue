@@ -1,8 +1,5 @@
 <template>
   <div class="container">
-    <div v-if="loading">
-      <loading></loading>
-    </div>
     <v-select
       v-model="subject"
       :items="subjects"
@@ -25,7 +22,6 @@
 <script>
 import ArticleList from "@/components/Community/ArticleList";
 import SpeedDial from "@/components/main/SpeedDial.vue";
-import Loading from "@/components/main/Loading.vue";
 import { findBoardsByPage, createBoard } from "@/api/community.js";
 import infiniteLoading from "vue-infinite-loading";
 
@@ -35,7 +31,6 @@ export default {
     ArticleList,
     SpeedDial,
     infiniteLoading,
-    Loading,
   },
   props: {
     createdArticle: Object,
@@ -57,7 +52,6 @@ export default {
       subject: "",
       articleFromMain: "",
       page: 1,
-      loading: true,
     };
   },
   watch: {
@@ -69,22 +63,22 @@ export default {
   },
   methods: {
     //============= axios =============
-    getBoards() {
-      this.page = 1;
-      this.articles = [];
-      findBoardsByPage(
-        this.page,
-        (res) => {
-          console.log(res.data);
-          this.articles = res.data;
-          this.page += 1;
-          this.loading = false;
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    },
+    // getBoards() {
+    //   this.articles = [];
+    //   this.page = 1;
+    //   findBoardsByPage(
+    //     this.page,
+    //     (res) => {
+    //       console.log(res.data);
+    //       this.articles = res.data;
+    //       this.page += 1;
+    //       this.loading = false;
+    //     },
+    //     (error) => {
+    //       console.log(error);
+    //     }
+    //   );
+    // },
 
     // 무한 스크롤
     infiniteHandler($state) {
@@ -128,8 +122,8 @@ export default {
       //
     },
   },
-  created: function() {
-    this.getBoards(); //생성되자마자 게시글 조회
+  created: function() {    
+    // this.getBoards(); //생성되자마자 게시글 조회
   },
 };
 </script>

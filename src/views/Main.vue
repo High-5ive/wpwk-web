@@ -1,8 +1,8 @@
 <template>
    <div class="main-container">
-      <div v-if="loading">
+      <!-- <div v-if="loading">
          <loading></loading>
-      </div>
+      </div> -->
       <div v-if="!loading" class="noriList-wrapper">
          <div class="nori-wrapper" v-for="(nori, idx) in NoriList" :key="idx">
             <nori-content :sendNori="nori"> </nori-content>
@@ -21,7 +21,7 @@
 <script>
 import NoriContent from '@/components/main/NoriContent.vue';
 import SpeedDial from '@/components/main/SpeedDial.vue';
-import Loading from '@/components/main/Loading.vue';
+// import Loading from '@/components/main/Loading.vue';
 import { findContentsByPage } from '@/api/contents.js';
 import { findUserAbility } from '@/api/user.js';
 import infiniteLoading from 'vue-infinite-loading';
@@ -31,7 +31,7 @@ export default {
       NoriContent,
       SpeedDial,
       infiniteLoading,
-      Loading,
+      // Loading,
    },
    data() {
       return {
@@ -39,11 +39,11 @@ export default {
          abilities: ['언어지능', '논리수학지능', '음악지능', '신체운동지능', '공간지능', '자연지능', '대인지능', '개인내지능'],
          infLoading: false,
          page: 1,
-         loading: true,
+         loading: false,
       };
    },
    created() {
-      this.getNoriList();
+      // this.getNoriList();
       this.findUserAbility();
    },
    methods: {
@@ -128,7 +128,7 @@ export default {
                      }
 
                      this.NoriList = this.NoriList.concat(noriList);
-                     $state.loaded();
+                     $state.loaded();                     
                      this.page += 1;
                      if (this.NoriList.length / 10 == 0) {
                         $state.complete();

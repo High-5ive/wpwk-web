@@ -8,7 +8,7 @@
          <div class="category">
             {{ article.category }}
          </div>
-         <div class="nickname" @click="$router.push({ name: 'mypage', params: { userId: userId } })">
+         <div class="nickname" @click="$router.push({ name: 'mypage', params: { userId: article.userId } })">
             {{ article.writer }}
          </div>
          <div class="content">{{ article.content }}</div>
