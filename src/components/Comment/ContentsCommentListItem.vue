@@ -52,11 +52,7 @@ export default {
   },
   methods: {
     deleteComment: function() {
-      if (confirm('댓글을 삭제 하시겠습니까?') == true) {
-        this.$emit('deleteComment', this.comment);
-      } else {
-        return;
-      }
+      this.$emit('deleteComment', this.comment);
     },
     updateComment: function() {
       this.$emit('updateComment', this.comment);

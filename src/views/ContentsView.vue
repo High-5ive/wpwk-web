@@ -94,10 +94,10 @@
 </template>
 
 <script>
-import CardList from "@/components/ContentsView/CardList";
-import Evaluations from "@/components/ContentsView/Evaluations";
-import ContentsCommentList from "@/components/Comment/ContentsCommentList";
-import CommentFormView from "../components/Comment/CommentForm_view.vue";
+import CardList from '@/components/ContentsView/CardList';
+import Evaluations from '@/components/ContentsView/Evaluations';
+import ContentsCommentList from '@/components/Comment/ContentsCommentList';
+import CommentFormView from '../components/Comment/CommentForm_view.vue';
 import {
   deleteContentsComment,
   updateContentsComment,
@@ -106,11 +106,11 @@ import {
   findContentsComment,
   findContentsItemById,
   deleteContents,
-} from "@/api/contents.js";
-import { mapState } from "vuex";
+} from '@/api/contents.js';
+import { mapState } from 'vuex';
 
 export default {
-  name: "ContentsView",
+  name: 'ContentsView',
   components: {
     CardList,
     Evaluations,
@@ -138,7 +138,7 @@ export default {
     this.getContentsItems();
   },
   computed: {
-    ...mapState(["userInfo"]),
+    ...mapState(['userInfo']),
   },
   methods: {
     evaluation(value) {
@@ -151,16 +151,15 @@ export default {
     deleteComment: function(comment) {
       const deleteId = this.comments.indexOf(comment);
       this.comments.splice(deleteId, 1);
-      console.log("deleteComment", deleteId);
+      console.log('deleteComment', deleteId);
 
       deleteContentsComment(
         comment.id,
         (success) => {
-          alert("댓글을 삭제 했습니다.");
-          console.log("댓글을 삭제 succ.", success);
+          console.log('댓글을 삭제 succ.', success);
         },
         (fail) => {
-          console.log("댓글을 삭제 fail.", fail);
+          alert('댓글을 삭제 fail.' + fail);
         }
       );
     },
@@ -169,31 +168,43 @@ export default {
         commentId: comment.id,
         comment: comment.comment,
       };
-
+      console.log('update comment =', comment, data);
       updateContentsComment(
         data,
         (success) => {
           console.log(success);
-          alert("댓글 수정을 완료 했습니다.");
         },
         (fail) => {
           console.log(fail);
-          alert("댓글을 수정하는데 실패 했습니다.");
+          alert('댓글을 수정하는데 실패 했습니다.');
         }
       );
+
+      console.log('update comment =', comment);
     },
 
     createComment: function(comment) {
-      console.log(comment);
-
-      this.comments.push(comment);
+      this.comments.unshift(comment);
       createContentsComment(
         comment,
         (success) => {
           console.log(success);
+          this.findContentsComment();
         },
         (fail) => {
           console.log(fail);
+        }
+      );
+    },
+    findContentsComment: function() {
+      findContentsComment(
+        this.contents.id,
+        (success) => {
+          console.log('get Contents Comments success', success.data);
+          this.comments = success.data;
+        },
+        (fail) => {
+          console.log('get Contents Comment fail', fail);
         }
       );
     },
@@ -217,18 +228,17 @@ export default {
           this.cards = success.data;
         },
         (fail) => {
-          console.log("get ContentsItem fail ", fail);
+          console.log('get ContentsItem fail ', fail);
         }
       );
-
       findContentsComment(
         contentsId,
         (success) => {
-          //console.log('get Contents Comments success', success.data);
+          console.log('get Contents Comments success', success.data);
           this.comments = success.data;
         },
         (fail) => {
-          console.log("get Contents Comment fail", fail);
+          console.log('get Contents Comment fail', fail);
         }
       );
     },
@@ -243,14 +253,14 @@ export default {
     },
 
     editContent: function() {
-      this.$router.push({ name: "ContentsUpdate", params: this.contents.id });
+      this.$router.push({ name: 'ContentsUpdate', params: this.contents.id });
     },
     deleteContent: function() {
       deleteContents(
         this.contents.id,
         () => {
-          alert("노리 삭제가 완료되었습니다.");
-          this.$router.push("/main");
+          alert('노리 삭제가 완료되었습니다.');
+          this.$router.push('/main');
         },
         (fail) => {
           console.log(fail);
@@ -269,5 +279,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import "src/css/contentsView.scss";
+@import 'src/css/contentsView.scss';
 </style>
