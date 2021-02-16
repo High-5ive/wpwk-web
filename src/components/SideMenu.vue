@@ -59,6 +59,10 @@ export default {
          }
       }
 
+      span {
+         cursor: pointer;
+      }
+
       .mypage {
          text-decoration: underline;
          font-size: 14px;

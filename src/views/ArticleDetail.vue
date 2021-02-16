@@ -22,7 +22,7 @@
             <span>게시글 삭제하기</span>
           </div>
         </div>
-        <div class="nickname nf nf-600">
+        <div class="nickname nf nf-600" @click="$router.push({ name: 'mypage', params: { userId: article.userId } })">
           {{ article.writer }}
         </div>
         <div class="content nf">{{ article.content }}</div>

@@ -10,7 +10,7 @@
       >
         <div class="asp-left">
           <img v-if="typeof(nori.thumb) === 'string' " :src="nori.thumb" alt="" />
-          <img v-if="typeof(nori.thumb) === 'object' " src="@/assets/cv-bg.png" alt="" />
+          <img v-if="typeof(nori.thumb) === 'object' " src="@/assets/img/characters/wpwk-default.png" alt="" />
         </div>
         <div class="asp-middle">
           <div>{{ nori.title | truncate(10, '...') }}</div>
@@ -47,17 +47,7 @@ export default {
       });
     },
   },
-  // computed: {
-  //   thumbnail: function (idx) {
-  //     if (this.personsAssetsWithPhoto[idx].thumb === null) {
-  //       console.log('없음')
-  //     }
-  //     return this.nori.thumb
-  //   }
-  // },
-  // created: function () {
-  //   console.log(this.personsAssetsWithPhoto[5].thumb)
-  // }
+
 };
 </script>
 <style lang=""></style>

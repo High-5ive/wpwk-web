@@ -45,6 +45,7 @@
                                  v-model.trim="hashtag"
                                  @keypress.enter="addHashtag"
                                  style="padding: 0; margin: 0;"
+                                 autocomplete="off"
                               ></v-text-field>
                               <ul v-if="hashtagResult.length" class="hashtag-list" tabindex="0" @mouseover="removeValue">
                                  <li v-for="tag in hashtagResult" :key="tag.id" @click="changeValue(tag)" @keyup.enter="selectValue('enter', tag)" tabindex="-1">
@@ -301,7 +302,7 @@ export default {
          }
       },
       createContent: function() {
-         if (this.time.minute !== 0 && this.selectedCategories.reduce((a, b) => a + b) >= 1) {
+         if ((this.time.minute !== 0 || this.time.hour !== 0) && this.selectedCategories.reduce((a, b) => a + b) >= 1) {
             this.isLoading = true;
             this.sendItemList = this.itemList;
             this.getImageCnt();

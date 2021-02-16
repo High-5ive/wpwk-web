@@ -52,7 +52,6 @@ export default {
       } else {
         const video = {
           thumbnailSrc: `https://img.youtube.com/vi/${this.video.id.videoId}/hqdefault.jpg`,
-          title: _.unescape(this.video.snippet.title),
           videoId: this.video.id.videoId,
           videoCaption: this.video.snippet.description
         }
