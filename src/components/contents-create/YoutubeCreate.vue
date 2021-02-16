@@ -18,8 +18,8 @@
                   <v-row>
                      <!-- 검색창 -->
                      <div class="searchbar-wrapper d-flex align-center justify-space-around" style="width: 100%">
-                        <v-text-field label="검색어를 입력하세요" v-model="query" @keypress.enter="onSearchInput" style="margin-right: 30px;"></v-text-field>
-                        <v-btn color="#f4b740" @click="onSearchInput">검색</v-btn>
+                        <v-text-field v-model="query" @keypress.enter="onSearchInput" style="margin-right: 30px;"></v-text-field>
+                        <v-btn outlined rounded color="blue" @click="onSearchInput">Search</v-btn>
                      </div>
                      <!-- 검색 결과 하위 컴포넌트로 보내줌 -->
                      <YoutubeItem
@@ -171,9 +171,15 @@ export default {
          }
       }
       .v-card__text {
+         height: 60vh;
+
          .container {
             width: 90%;
             padding: 10px;
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+
             .youtube-result-basic {
                padding: 12px;
             }
@@ -181,14 +187,26 @@ export default {
                background-color: #f2f1f2;
             }
             .row {
+               position: relative;
                .infinite-loading-container {
                   margin-top: 10px;
                   width: 100%;
                }
+
                .searchbar-wrapper {
                   width: 100%;
+                  padding: 0px 20px;
+
+                  .v-input__slot::before {
+                     border-bottom: 2px solid rgba(0, 0, 0, 0.87) !important;
+                  }
+
                   .v-btn {
                      color: #f2f1f2;
+                     border: none;
+                     font-size: 12pt;
+                     font-weight: 600;
+                     color: rgb(33, 33, 33) !important;
                   }
                }
                .youtube-search-item-wrapper {
@@ -196,31 +214,40 @@ export default {
                   height: 100%;
                   // border-bottom: 1px solid gray;
                   .image-wrapper {
+                     border: 1px rgb(199, 199, 199) solid;
                      width: 40%;
                      img {
                         width: 100%;
-                        height: 100%;
+                        height: 100px;
+                        object-fit: cover;
                      }
                   }
                   .middle-wrapper {
-                     width: 30%;
+                     width: 40%;
                      div {
                         height: 40%;
                         overflow: hidden;
                         display: -webkit-box;
                         -webkit-line-clamp: 3;
                         -webkit-box-orient: vertical;
+
+                        font-weight: 600;
+                        color: rgb(46, 46, 46);
                      }
                   }
                   .right-wrapper {
                      width: 15%;
                      button {
-                        background-color: #89ba17;
-                        white-space: nowrap;
-                        padding: 5px 10px 5px 10px;
-                        border-radius: 15px;
+                        background-color: #3cc45c;
+                        // white-space: nowrap;
+                        padding: 5px;
+                        border-radius: 30px;
                         box-shadow: 0 4px 4px lightgray;
-                        color: #f2f1f2;
+
+                        i {
+                           font-size: 16pt;
+                           color: white;
+                        }
                      }
                   }
                }
