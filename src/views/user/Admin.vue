@@ -1,57 +1,53 @@
 <template>
-    <div class="ad-container nf nf-600">
-        <p> 신 고 목 록 </p>
-        <ReportList :reports="reports" />
-    </div>
+  <div class="ad-container nf nf-600">
+    <p>신 고 목 록</p>
+    <ReportList :reports="reports" />
+  </div>
 </template>
 
 <script>
-const reports = [
-    {
-        creator: "나다",  // nickname
-        reporter: "너다",   // nickname
-        title: "아이 창의력 키우는, 손바닥 물감 놀이! 재밌어요!",
-        contentsId: 1,
-        comment: "재미가 없어요.",
-    },
-    {
-        creator: "나",   // nickname
-        reporter: "너",   // nickname
-        title: "아이 창의력 키우는, 손바닥 물감 놀이! 재밌어요!",
-        contentsId: 1,
-        comment: "노잼이예요.",
-    }
-]
-
-import ReportList from "@/components/Admin/ReportList.vue";
-import { mapState } from "vuex"
-
+import ReportList from '@/components/Admin/ReportList.vue';
+import { findAllReports } from '@/api/admin.js';
+import { mapState } from 'vuex';
 export default {
-    name: "Admin",
-    components: {
-        ReportList
-    },
-    data: function () {
-        return {
-            reports: []
+  name: 'Admin',
+  components: {
+    ReportList,
+  },
+  data: function() {
+    return {
+      reports: [],
+    };
+  },
+  created() {
+    this.findAllReports();
+    this.isAdmin();
+    this.reports = reports;
+  },
+  methods: {
+    findAllReports: function() {
+      findAllReports(
+        (success) => {
+          console.log('find all Reports suc', success);
+          this.reports = success.data;
+        },
+        (fail) => {
+          console.log(fail);
         }
+      );
     },
-    methods: {
-        isAdmin:function() {
-            if(this.userInfo.status != 2) {
-                alert("접근할 수 없습니다");
-                this.$router.push('/main');
-            }                    
-        }
+
+    isAdmin: function() {
+      if (this.userInfo.status != 2) {
+        alert('접근할 수 없습니다');
+        this.$router.push('/main');
+      }
     },
-    computed: {
-        ...mapState(["userInfo"])
-    },
-    created: function () {
-        this.isAdmin()
-        this.reports = reports
-    }
-}
+  },
+  computed: {
+    ...mapState(['userInfo']),
+  },
+};
 </script>
 
 <style lang="scss">

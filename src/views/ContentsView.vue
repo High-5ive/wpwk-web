@@ -45,7 +45,11 @@
             />
 
             <div class="cm-wrapper">
+<<<<<<< HEAD
               <ContentsCommentList
+=======
+              <CommentList
+>>>>>>> feature-admin
                 :comments="this.comments"
                 @deleteComment="deleteComment"
                 @updateComment="updateComment"
@@ -81,7 +85,11 @@ export default {
   components: {
     CardList,
     Evaluations,
+<<<<<<< HEAD
     ContentsCommentList,
+=======
+    CommentList,
+>>>>>>> feature-admin
     CommentFormView,
   },
   data: function() {
@@ -166,6 +174,7 @@ export default {
     },
 
     getContentsItems: function() {
+<<<<<<< HEAD
       var contentsId = this.$route.params.id;
       findContentsById(
         contentsId,
@@ -181,6 +190,15 @@ export default {
       //console.log(contents);
       this.writer = this.contents.nickname;
       this.title = this.contents.title;
+=======
+      var contents = this.$route.params.nori;
+      this.contents = contents;
+      //console.log(contents);
+      this.writer = contents.nickname;
+      this.title = contents.title;
+
+      var contentsId = contents.id;
+>>>>>>> feature-admin
 
       findContentsItemById(
         contentsId,
