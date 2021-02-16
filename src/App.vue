@@ -180,10 +180,12 @@ export default {
    }
 
    .btn-menu i {
+      cursor:pointer;
       color: #89ba17;
    }
 
    .btn-notification i {
+      cursor:pointer;
       height: 24px;
       width: 24px;
       color: rgba(255, 180, 0);
@@ -193,6 +195,7 @@ export default {
    }
 
    .btn-search i {
+      cursor:pointer;
       height: 24px;
       width: 24px;
       color: rgba(255, 180, 0);

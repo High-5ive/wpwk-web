@@ -524,6 +524,7 @@ export default {
     }
 
     .asset-navi {
+      cursor:pointer;
       .as-top {
         font-size: 11pt;
       }
@@ -581,6 +582,7 @@ export default {
         background-color: #f2f1f2;
       }
       .as-item-box {
+        cursor:pointer;
         width: 100%;
         display: flex;
         align-items: center;
@@ -612,7 +614,8 @@ export default {
         background-color: #f2f1f2;
       }
       .item-box {
-         display: block;
+        cursor:pointer;
+        display: block;
         width: 100%;
         display: flex;
         align-items: center;
