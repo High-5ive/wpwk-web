@@ -26,4 +26,17 @@ function contentsReportUpdate(data, success, fail) {
     .catch(fail);
 }
 
-export { findAllReports, contentsReportUpdate };
+function notificationBroadcast(data, success, fail) {
+  let token = window.localStorage.getItem('accessToken');
+  let config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  instance
+    .post(`notifications/broadcast`, data, config)
+    .then(success)
+    .catch(fail);
+}
+
+export { findAllReports, contentsReportUpdate, notificationBroadcast };

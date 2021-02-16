@@ -1,13 +1,22 @@
 <template>
   <div class="ad-container nf nf-600">
-    <p>신 고 목 록</p>
-    <ReportList :reports="reports" />
+    <div class="ad-top-wrapper">
+      <p>전체 공지사항 등록</p>
+      <div class="noti-wrapper">
+        <input @keypress.enter="createNotification" class="noti-input-box nf" type="text" v-model="broadcastNotification" placeholder="공지사항을 작성해주세요." />
+        <button @click="createNotification"><v-icon>mdi-send</v-icon></button>
+      </div>
+    </div>
+    <div class="ad-bottom-wrapper">
+      <p>신 고 목 록</p>
+      <ReportList :reports="reports" />
+    </div>
   </div>
 </template>
 
 <script>
 import ReportList from '@/components/Admin/ReportList.vue';
-import { findAllReports } from '@/api/admin.js';
+import { findAllReports, notificationBroadcast } from '@/api/admin.js';
 import { mapState } from 'vuex';
 export default {
   name: 'Admin',
@@ -17,6 +26,7 @@ export default {
   data: function() {
     return {
       reports: [],
+      broadcastNotification: '',
     };
   },
   created() {
@@ -42,6 +52,22 @@ export default {
         this.$router.push('/main');
       }
     },
+    createNotification: function() {
+      var data = {
+          message: this.broadcastNotification
+      };
+
+      notificationBroadcast(
+        data,
+        (res) => {
+          console.log(res)
+        },
+        (err) => {
+          console.log(err)
+        }
+      );
+      this.broadcastNotification = ''
+    }
   },
   computed: {
     ...mapState(['userInfo']),
