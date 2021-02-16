@@ -135,9 +135,6 @@ export {
   changePwd,
   follow,
   contentsEvaluations,
-<<<<<<< HEAD
-=======
   getNotification,
   confirmNotification,
->>>>>>> notification
 };

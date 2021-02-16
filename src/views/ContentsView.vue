@@ -8,9 +8,28 @@
 
     <!-- 카드페이지 -->
     <div v-else class="cv-card-wrapper">
+      <div class="card-top-option">
+        <div
+          v-if="userInfo.userId == contents.userId"
+          class="dots"
+          @click="menuToggle"
+        >
+          <v-icon>mdi-dots-horizontal</v-icon>
+        </div>
+        <div v-if="menu" aria-expanded="false" class="dropdown-menu">
+          <div class="menu-detail" @click="editContent">
+            <v-icon>mdi-tooltip-edit-outline</v-icon>
+            <span>노리 수정하기</span>
+          </div>
+          <div class="menu-detail" @click="deleteContent">
+            <v-icon>mdi-delete-forever</v-icon>
+            <span>노리 삭제하기</span>
+          </div>
+        </div>
+      </div>
       <div class="card-top-wrapper">
-        <p class="title nf">{{ this.title }}</p>
-        <p class="writer nf">{{ this.writer }}</p>
+        <p class="title nf">{{ contents.title }}</p>
+        <p class="writer nf">{{ contents.nickname }}</p>
       </div>
 
       <CardList :cards="cards" @evaluationPage="evaluation" />
@@ -46,7 +65,7 @@
 
             <div class="cm-wrapper">
               <ContentsCommentList
-                :comments="this.comments"
+                :comments="comments"
                 @deleteComment="deleteComment"
                 @updateComment="updateComment"
               />
@@ -65,19 +84,20 @@
 </template>
 
 <script>
-import CardList from '@/components/ContentsView/CardList';
-import Evaluations from '@/components/ContentsView/Evaluations';
-import ContentsCommentList from '@/components/Comment/ContentsCommentList';
-import CommentFormView from '../components/Comment/CommentForm_view.vue';
-import { findContentsItemById } from '@/api/contents.js';
-import { findContentsComment } from '@/api/contents.js';
-import { deleteContentsComment } from '@/api/contents.js';
-import { updateContentsComment } from '@/api/contents.js';
-import { createContentsComment } from '@/api/contents.js';
-import { findContentsById } from '@/api/contents.js';
+import CardList from "@/components/ContentsView/CardList";
+import Evaluations from "@/components/ContentsView/Evaluations";
+import ContentsCommentList from "@/components/Comment/ContentsCommentList";
+import CommentFormView from "../components/Comment/CommentForm_view.vue";
+import { findContentsItemById } from "@/api/contents.js";
+import { findContentsComment } from "@/api/contents.js";
+import { deleteContentsComment } from "@/api/contents.js";
+import { updateContentsComment } from "@/api/contents.js";
+import { createContentsComment } from "@/api/contents.js";
+import { findContentsById } from "@/api/contents.js";
+import { mapState } from "vuex";
 
 export default {
-  name: 'ContentsView',
+  name: "ContentsView",
   components: {
     CardList,
     Evaluations,
@@ -87,10 +107,9 @@ export default {
   data: function() {
     return {
       cards: Array,
-      title: '',
-      writer: '',
       evaluationValue: false,
       dialog: false,
+      menu: false,
       comments: [],
       time: {
         hour: 0,
@@ -105,6 +124,9 @@ export default {
     //컨텐츠 ID 에 맞는 ItemList axios 호출
     this.getContentsItems();
   },
+  computed: {
+    ...mapState(["userInfo"])
+  },
   methods: {
     evaluation(value) {
       this.evaluationValue = value;
@@ -116,22 +138,20 @@ export default {
     deleteComment: function(comment) {
       const deleteId = this.comments.indexOf(comment);
       this.comments.splice(deleteId, 1);
-      console.log('deleteComment', deleteId);
+      console.log("deleteComment", deleteId);
 
       deleteContentsComment(
         comment.id,
         (success) => {
-          alert('댓글을 삭제 했습니다.');
-          console.log('댓글을 삭제 succ.', success);
+          alert("댓글을 삭제 했습니다.");
+          console.log("댓글을 삭제 succ.", success);
         },
         (fail) => {
-          console.log('댓글을 삭제 fail.', fail);
+          console.log("댓글을 삭제 fail.", fail);
         }
       );
     },
     updateComment: function(comment) {
-      // console.log(comment);
-
       var data = {
         commentId: comment.id,
         comment: comment.comment,
@@ -141,11 +161,11 @@ export default {
         data,
         (success) => {
           console.log(success);
-          alert('댓글 수정을 완료 했습니다.');
+          alert("댓글 수정을 완료 했습니다.");
         },
         (fail) => {
           console.log(fail);
-          alert('댓글을 수정하는데 실패 했습니다.');
+          alert("댓글을 수정하는데 실패 했습니다.");
         }
       );
     },
@@ -171,36 +191,31 @@ export default {
         contentsId,
         (success) => {
           this.contents = success.data;
-          console.log(success);
         },
         (fail) => {
           console.log(fail);
         }
       );
 
-      //console.log(contents);
-      this.writer = this.contents.nickname;
-      this.title = this.contents.title;
-
       findContentsItemById(
         contentsId,
         (success) => {
-          console.log('get ContentsItem suc ', success.data);
+          //console.log('get ContentsItem suc ', success.data);
           this.cards = success.data;
         },
         (fail) => {
-          console.log('get ContentsItem fail ', fail);
+          console.log("get ContentsItem fail ", fail);
         }
       );
 
       findContentsComment(
         contentsId,
         (success) => {
-          console.log('get Contents Comments success', success.data);
+          //console.log('get Contents Comments success', success.data);
           this.comments = success.data;
         },
         (fail) => {
-          console.log('get Contents Comment fail', fail);
+          console.log("get Contents Comment fail", fail);
         }
       );
     },
@@ -208,6 +223,14 @@ export default {
     // 현재 떠있는 댓글창을 닫기
     closeModal() {
       this.dialog = false;
+    },
+
+    menuToggle: function() {
+      this.menu = this.menu == false ? true : false;
+    },
+
+    editContent: function() {
+      this.$router.push({name:'ContentsUpdate', params: this.contents.id});
     },
   },
 
@@ -221,5 +244,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import 'src/css/contentsView.scss';
+@import "src/css/contentsView.scss";
 </style>

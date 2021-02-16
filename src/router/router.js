@@ -114,7 +114,7 @@ const routes = [{
     },
   },
   {
-    path: '/view/:nori',
+    path: '/view/:id',
     name: 'ContentsView',
     beforeEnter: onlyAuthUser,
     components: {
