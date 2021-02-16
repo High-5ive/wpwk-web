@@ -38,7 +38,7 @@ export default {
 
     isAdmin: function() {
       if (this.userInfo.status != 2) {
-        alert('접근할 수 없습니다');
+        alert('접근할 수 없는 페이지입니다');
         this.$router.push('/main');
       }
     },
