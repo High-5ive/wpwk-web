@@ -50,6 +50,7 @@
 .cv-container .cv-card-wrapper .card-top-wrapper .title {
   font-family: "Poor Story", sans-serif !important;
   font-size: 20px !important;
+  font-weight: 600;
   text-align: center;
   margin-bottom: 2px;
 }
@@ -58,13 +59,22 @@
   font-size: 13px !important;
   color: gray;
 }
+@media (min-width: 1264px) {
+  .cv-container .cv-card-wrapper .card-top-wrapper .title {
+    font-size: 22px !important;
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+  .cv-container .cv-card-wrapper .card-top-wrapper .writer {
+    font-size: 16px !important;
+  }
+}
 .cv-container .cv-card-wrapper .cl-container {
   padding: 20px;
   padding-bottom: 100px;
   height: 90vh;
 }
 .cv-container .cv-card-wrapper .cl-container .card-wrapper {
-  animation: 1s ease-out 0s 1 slideInFromTop;
   border-radius: 40px;
   border: 1px #e6e6e6 solid;
   box-shadow: 0px 9px 20px 0px #5656560f;
@@ -73,16 +83,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-@keyframes slideInFromTop {
-  0% {
-    transform: translateY(-30px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
 }
 .cv-container .cv-card-wrapper .cl-container .card-wrapper .card-content {
   height: 40vh;
@@ -132,6 +132,19 @@
   right: 0px;
   bottom: 0px;
   border-radius: 0px 0px 40px 40px;
+}
+.cv-container .cv-card-wrapper .cl-container .card-wrapper.effect {
+  animation: 1s ease-out 0s 1 slideInFromTop;
+}
+@keyframes slideInFromTop {
+  0% {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 .cv-container .cv-card-wrapper .cl-container .cl-footer {
   display: flex;

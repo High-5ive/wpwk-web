@@ -22,6 +22,7 @@
             .title {
                 font-family: 'Poor Story', sans-serif !important;
                 font-size: 20px !important;
+                font-weight: 600;
 
                 text-align: center;
                 margin-bottom: 2px;
@@ -31,6 +32,19 @@
                 text-align: center;
                 font-size: 13px !important;
                 color: gray;
+            }
+
+            //@responsive 카드 데스크탑일 때 폰트 더 크게
+            @include desktop {
+                .title {
+                    font-size: 22px !important;
+                    font-weight: 600;
+                    margin-bottom: 3px;
+                }
+    
+                .writer {
+                    font-size: 16px !important;
+                }
             }
 
         }
@@ -43,27 +57,11 @@
 
             // background-color: darkcyan;
             height: 90vh;
-
+            
             // 카드 한장
             // Card.vue
             .card-wrapper {
                 $card_radisu: 40px; //카드의 모서를 둥글게
-
-                animation: 1s ease-out 0s 1 slideInFromTop;
-
-                @keyframes slideInFromTop {
-                    0% {
-                        transform: translateY(-30px);
-                        opacity: 0;
-                    }
-
-                    100% {
-                        transform: translateY(0);
-                        opacity: 1;
-                    }
-                }
-
-
                 // background-color: pink;
                 border-radius: $card_radisu;
                 border: 1px rgb(230, 230, 230) solid;
@@ -100,15 +98,8 @@
                         border-bottom: 1px solid rgb(199, 199, 199);
                     }
                 }
-
+                
                 .card-desc {
-
-                    // background-image: url('../assets/cv-bg.png');
-                    // background-repeat: no-repeat;
-                    // background-position: bottom;
-                    // background-size: cover;
-                    // opacity: 0.5;
-
                     border-radius: 0px 0px $card_radisu $card_radisu;
 
                     // overflow: scroll;
@@ -146,6 +137,23 @@
                         bottom: 0px;
 
                         border-radius: 0px 0px $card_radisu $card_radisu;
+                    }
+                }
+
+                &.effect{
+
+                    animation: 1s ease-out 0s 1 slideInFromTop;
+    
+                    @keyframes slideInFromTop {
+                        0% {
+                            transform: translateY(-30px);
+                            opacity: 0;
+                        }
+    
+                        100% {
+                            transform: translateY(0);
+                            opacity: 1;
+                        }
                     }
                 }
             }
