@@ -1,6 +1,7 @@
 import axios from "axios";
 import { API_BASE_URL } from "../config";
 import store from "@/store/store"
+import router from "../router/router"
 
 const instance = axios.create({
   baseURL: API_BASE_URL,
@@ -19,13 +20,14 @@ instance.interceptors.response.use(
     if(errors.response.status === 403) {
       if(errors.response.data === "email") {
         alert("이메일을 인증해주세요")
-      } else {
-        alert("해당 계정은 비활성화 되었습니다")
+      } else {        
+        router.push("/");
       }
     }
 
     // 세션이 만료된 경우
-    else if(errors.response.status === 401) {
+    else if(errors.response.status === 401 
+      && localStorage.getItem('accessToken') != null) {
       store.dispatch("expired") 
     } 
     return Promise.reject(errors);

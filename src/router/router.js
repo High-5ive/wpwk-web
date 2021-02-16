@@ -49,8 +49,7 @@ const onlyAuthUser = (to, from, next) => {
 const onlyNoneAuthUser = (to, from, next) => {
   if (localStorage.getItem('accessToken') === null) {
     next();
-  } else {
-    alert('이미 로그인 되어 있습니다');
+  } else {    
     next('/main');
   }
 };
