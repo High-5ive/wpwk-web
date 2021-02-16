@@ -8,21 +8,18 @@
          <div class="category">
             {{ article.category }}
          </div>
-         <div class="nickname nf nf-600" @click="$router.push({ name: 'mypage', params: { userId: userId } })">
+         <div class="nickname" @click="$router.push({ name: 'mypage', params: { userId: userId } })">
             {{ article.writer }}
          </div>
-         <div class="content nf">{{ article.content }}</div>
+         <div class="content">{{ article.content }}</div>
       </div>
-      <!-- <div class="nickname nf nf-600">
-        {{ article.writer }}
-      </div> -->
 
       <div class="feature-wrapper">
          <!-- 좋아요 버튼 -->
          <div class="likes-btn" @click="setLike">
             <v-icon v-if="article.liked" color="red"> mdi-heart-multiple </v-icon>
             <v-icon v-else color="red"> mdi-heart-multiple-outline </v-icon>
-            <span class="nf"> 좋아요! </span>
+            <span> 좋아요! </span>
          </div>
          <!-- 게시글 상세보기 -->
          <div class="info-btn">
@@ -30,8 +27,8 @@
                mdi-comment-multiple-outline
             </v-icon>
             <div class="comment">
-               <div v-if="article.comments != 0" @click="articleDetail" class="nf">댓글 {{ article.comments }}</div>
-               <div v-else @click="articleDetail" class="nf">
+               <div v-if="article.comments != 0" @click="articleDetail">댓글 {{ article.comments }}</div>
+               <div v-else @click="articleDetail">
                   댓글쓰기
                </div>
             </div>

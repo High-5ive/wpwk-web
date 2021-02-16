@@ -1,4 +1,5 @@
 @import "common";
+@import "./main/compoCmmu";
 
 //ArticleDetail
 // ㄴ CommentList
@@ -38,9 +39,14 @@
             }
             
             .nickname {
-                font-size: 10pt;
-                padding: 5px 0px 8px 5px;
-            }
+                padding-left: 10px;
+                padding-top: 10px;
+              }
+              
+              .content {
+                padding-left: 10px;
+                padding-top: 5px;
+              }
 
             .dots {
                 float: right;

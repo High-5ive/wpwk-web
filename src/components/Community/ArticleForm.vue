@@ -102,7 +102,6 @@ export default {
       },
 
       createArticle: function() {
-
          const article = {
             category: this.subject,
             itemList: this.itemList,

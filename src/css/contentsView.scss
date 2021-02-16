@@ -35,8 +35,7 @@
 
             //카드의 제목 '아이와 함께 노는 물감놀이~'
             .title {
-                font-family: 'Poor Story', sans-serif !important;
-                font-size: 20px !important;
+                font-size: 14pt !important;
                 font-weight: 600;
 
                 text-align: center;
@@ -52,13 +51,13 @@
             //@responsive 카드 데스크탑일 때 폰트 더 크게
             @include desktop {
                 .title {
-                    font-size: 22px !important;
+                    font-size: 20px !important;
                     font-weight: 600;
                     margin-bottom: 3px;
                 }
     
                 .writer {
-                    font-size: 16px !important;
+                    font-size: 14px !important;
                 }
             }
 

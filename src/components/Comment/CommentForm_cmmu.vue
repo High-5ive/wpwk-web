@@ -4,7 +4,7 @@
       <div class="close-btn" @click="$router.push('/cmmu')">
          <v-icon>mdi-arrow-left</v-icon>
       </div>
-      <input @keypress.enter="createComment" class="input-box nf" type="text" v-model="comment" placeholder="댓글을 작성해주세요." />
+      <input @keypress.enter="createComment" class="input-box" type="text" v-model="comment" placeholder="댓글을 작성해주세요." />
       <button @click="createComment" class="btn-send"><v-icon>mdi-send</v-icon></button>
    </div>
 </template>
@@ -70,7 +70,7 @@ export default {
       height: 50px;
 
       background-color: rgb(247, 179, 179);
-      cursor:pointer;
+      cursor: pointer;
       // border-right: 1px solid $main-green;
 
       i {
@@ -91,6 +91,8 @@ export default {
       &:focus {
          outline: none;
       }
+
+      font-size: 10pt;
    }
 
    .btn-send {

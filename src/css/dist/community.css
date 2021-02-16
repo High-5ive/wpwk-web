@@ -11,6 +11,17 @@
   font-weight: 600;
 }
 
+.nickname {
+  font-size: 14pt !important;
+  font-weight: 600;
+  color: #303030;
+}
+
+.content {
+  font-size: 12pt !important;
+  color: #303030;
+}
+
 .container {
   height: 100%;
 }
@@ -35,8 +46,12 @@
   padding: 4px 8px 4px 8px;
 }
 .container .article-wrapper .content-wrapper .nickname {
-  font-size: 10pt;
-  padding: 5px 0px 8px 5px;
+  padding-left: 10px;
+  padding-top: 10px;
+}
+.container .article-wrapper .content-wrapper .content {
+  padding-left: 10px;
+  padding-top: 5px;
 }
 .container .article-wrapper .feature-wrapper {
   height: 40px;
@@ -46,6 +61,7 @@
   padding: 10px;
 }
 .container .article-wrapper .feature-wrapper .likes-btn {
+  cursor: pointer;
   color: #da0505;
 }
 .container .article-wrapper .feature-wrapper .info-btn {
