@@ -82,7 +82,7 @@
   font-size: 12pt;
 }
 .lj-container .wrapper .feature-wrapper {
-  margin-top: 10px;
+  margin-top: 26px;
   text-align: center;
 }
 .lj-container .wrapper .feature-wrapper .find_pw {
@@ -119,22 +119,25 @@
   color: gray;
 }
 .lj-container .wrapper .social-wrapper {
-  background-color: white;
   width: 200px;
   height: 100px;
   padding: 10px;
   border-radius: 20px;
   margin-top: 20px;
 }
-.lj-container .wrapper .social-wrapper P {
-  text-align: center;
-  font-family: "Poor Story";
-  font-size: 10pt;
-  color: gray;
-}
 .lj-container .wrapper .social-wrapper .btn-social-group {
   display: flex;
   justify-content: center;
+}
+.lj-container .wrapper .social-wrapper .btn-social-group .btn-social {
+  border-radius: 20px;
+  border: 1px solid #e1e1e1;
+  overflow: hidden;
+  width: 40px;
+  height: 40px;
+}
+.lj-container .wrapper .social-wrapper .btn-social-group .btn-social.kakao {
+  background-color: #f8eb00;
 }
 .lj-container .wrapper .social-wrapper .btn-social-group .btn-social:nth-child(1) {
   margin-right: 20px;

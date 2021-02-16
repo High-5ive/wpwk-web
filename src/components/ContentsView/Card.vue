@@ -56,11 +56,9 @@ export default {
          var elem = document.querySelector('.card-wrapper');
 
          if (elem.classList.contains('effect')) {
-            console.log('1');
             elem.classList.remove('effect');
             elem.classList.add('otherEff');
          } else if (elem.classList.contains('otherEff')) {
-            console.log('2');
             elem.classList.remove('otherEff');
             elem.classList.add('effect');
          } else {

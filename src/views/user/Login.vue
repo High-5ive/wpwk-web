@@ -52,7 +52,6 @@
             </p>
          </div>
          <div class="social-wrapper">
-            <p>SNS 간편 로그인</p>
             <!-- 네이버 아이디로 로그인 버튼 노출 영역 -->
             <div class="btn-social-group">
                <naver-login class="btn-social"></naver-login>

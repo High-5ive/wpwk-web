@@ -1,21 +1,26 @@
 <template>
    <div class="sm-container">
       <div class="user-wrapper">
-         <p>
-            <span>{{ userInfo.nickname }}</span
-            >님 환영합니다
-         </p>
-         <span class="mypage" @click="$router.push({ name: 'mypage', params: { userId: userInfo.userId } }).catch(() => {})">내 정보 보기</span>
-         <span class="logout" @click="$store.dispatch('doLogout')">로그아웃</span>
+         <img class="corner" src="@/assets/img/characters/corner_wk.png" alt="" />
+         <div class="eye1"></div>
+         <div class="eye2"></div>
+         <div class="user-real-wrapper">
+            <div class="first">
+               <span>welcome,</span>
+               <span>{{ userInfo.nickname }}</span> <span class="admin-badge" v-if="userInfo.status == 1">관리자</span>
+            </div>
+            <div class="second">
+               <span class="mypage" @click="$router.push({ name: 'mypage', params: { userId: userInfo.userId } }).catch(() => {})">내 정보 보기</span>
+               <span class="logout" @click="$store.dispatch('doLogout')">로그아웃</span>
+            </div>
+            <span class="admin" v-if="userInfo.status == 1" click="$router.push('/admin')">관리자 페이지</span>
+         </div>
       </div>
       <div class="link-wrapper">
          <div class="img-btn" @click="$router.push('/main').catch(() => {})"><img src="@/assets/img/characters/banner-cmmu.png" alt="" /> <span class="nf">노리</span></div>
          <div class="img-btn" @click="$router.push('/cmmu').catch(() => {})"><img src="@/assets/img/characters/banner-nori.png" alt="" /> <span class="nf">커뮤니티</span></div>
       </div>
       <div class="ad-wrapper">
-         <!-- <div class="ad">AD Banner</div> -->
-         <!-- <div class="ad">AD Banner</div> -->
-         <!-- <div class="ad">AD Banner</div> -->
          <div class="copyright">
             본 사이트의 저작권은 SSAFY 4기 High5ive팀에게 있습니다.
             <br />Copyright © High5ive All Rights Reserved.
@@ -43,37 +48,119 @@ export default {
    background-color: transparent !important;
 
    .user-wrapper {
-      // display: flex;
-      // flex-direction: column;
+      position: relative;
       text-align: center;
       margin-bottom: 50px;
       padding-top: 56px;
+      width: 100%;
 
-      p {
-         font-size: 20px;
-         color: $pink;
-         margin-bottom: 0px;
+      // 코너에 들어가는 캐릭터
+      .corner {
+         position: absolute;
+         top: 0;
+         left: 0;
+         width: 80px;
+         z-index: -10;
+      }
 
-         span {
-            font-weight: 600;
+      $eye_x: 58px;
+      $eye_y: 46px;
+
+      @keyframes eye-move {
+         from {
+            transform: translate(2px, 0px);
+            // opacity: 0;
+         }
+         to {
+            transform: translate(-8px, 2px);
+            // opacity: 1;
          }
       }
 
-      span {
-         cursor: pointer;
+      .eye1,
+      .eye2 {
+         position: absolute;
+         left: $eye_x;
+         top: $eye_y;
+         width: 6px;
+         height: 8px;
+         border-radius: 20px;
+         background-color: rgb(38, 38, 38);
+
+         animation: eye-move 4s 1s infinite alternate;
       }
 
-      .mypage {
-         text-decoration: underline;
-         font-size: 14px;
-         margin-top: 0px;
-         margin-right: 12px;
+      .eye2 {
+         left: calc(#{$eye_x} - 14px);
+         top: calc(#{$eye_y} + 1px);
       }
 
-      .logout {
-         text-decoration: underline;
-         font-size: 13px;
-         color: grey;
+      .user-real-wrapper {
+         width: 280px;
+         margin: 0 auto;
+
+         .first {
+            text-align: left;
+            font-size: 20px;
+            margin-bottom: 0px;
+            font-weight: 600;
+
+            padding: 0px 20px;
+
+            .admin-badge {
+               background-color: rgb(206, 21, 21);
+               font-size: 4pt;
+               font-weight: 600;
+               color: white;
+               padding: 2px 6px;
+               border-radius: 4px;
+               margin-left: 2px;
+            }
+
+            span:nth-child(1) {
+               display: block;
+               color: rgb(118, 118, 118);
+               padding-bottom: 0px;
+               font-size: 16px;
+            }
+            span:nth-child(2) {
+               color: rgb(41, 41, 41);
+               font-size: 30px;
+            }
+         }
+
+         .second {
+            display: flex;
+            margin-top: 10px;
+            margin-left: 24px;
+
+            .mypage {
+               cursor: pointer;
+               display: inline;
+               text-decoration: underline;
+               font-size: 11px;
+               margin-right: 12px;
+            }
+
+            .logout {
+               cursor: pointer;
+               display: inline;
+               text-decoration: underline;
+               font-size: 11px;
+               color: grey;
+            }
+         }
+
+         .admin {
+            cursor: pointer;
+            display: flex;
+            margin-top: 4px;
+            margin-left: 24px;
+
+            text-decoration: underline;
+            font-size: 11px;
+            color: rgb(228, 31, 31);
+         }
       }
    }
 

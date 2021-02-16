@@ -7,11 +7,9 @@
 </template>
 <script></script>
 <style scoped>
-.kakao {
-   width: 40px;
-}
-
 .kakao-button {
    width: 100%;
+   height: 100%;
+   transform: scale(0.8);
 }
 </style>
