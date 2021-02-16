@@ -5,26 +5,22 @@
         <div class="reporter">{{ this.reporterNickname }}</div>님의 신고
         <i class="fas fa-hand-point-right"></i>
         <div class="creator">{{ this.creatorNickname }}</div>님의 컨텐츠
-          <v-btn
-            outlined
-            rounded
-            small
-            color="primary"
-            @click="moveContents"
-          >
-            확인
-          </v-btn>
       </div>
 
-      <div class="contents-title nf nf-600">
-        {{ this.contents.title }}
+      <div class="title-wrapper">
+        <div class="contents-title nf nf-600">
+          {{ this.contents.title }}
+        </div>
+        <v-btn outlined rounded color="primary" @click="moveContents">
+          <v-icon> mdi-content-save-move-outline </v-icon> 컨텐츠 확인
+        </v-btn>
       </div>
 
       <div class="reason nf">신고 사유: {{ this.comment }}</div>
 
       <!-- 신고 처리 버튼 -->
       <div v-if="done" class="done nf nf-600">
-        {{ this.choose }} 처리가 완료됐습니다.
+        {{ this.result }} 처리가 완료됐습니다.
       </div>
       <div v-else class="buttons">
         <v-btn outlined rounded small @click="waitContents"> 문제없음 </v-btn>
@@ -56,6 +52,7 @@ export default {
       url: '',
       choose: '',
       done: '',
+      result: ''
     };
   },
   methods: {
@@ -94,6 +91,7 @@ export default {
           console.log('report 처리 실패', fail);
         }
       );
+      this.result = '문제없음'
     },
     warnContents: function() {
       var warn = confirm('경고 처리 하시겠습니까?');
@@ -116,6 +114,7 @@ export default {
           console.log('report 처리 실패', fail);
         }
       );
+      this.result = '경고'
     },
     deleteContents: function() {
       var deleteC = confirm('삭제 처리 하시겠습니까?');
@@ -138,6 +137,7 @@ export default {
           console.log('report 처리 실패', fail);
         }
       );
+      this.result = '삭제'
     },
     moveContents: function() {
       this.$router.push({
@@ -148,6 +148,14 @@ export default {
   },
   created: function() {
     this.getReport();
+
+    if(this.status == 'CHECK') {
+      this.result = '문제없음'
+    } else if(this.status == 'WARN') {
+      this.result = '경고'
+    } else {
+      this.result = '삭제'
+    }
   },
   watch: {
     choose: function() {
