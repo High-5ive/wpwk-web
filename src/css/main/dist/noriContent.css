@@ -17,6 +17,7 @@
   border-radius: 30px;
   object-position: 50% 50%;
 }
+
 @media (min-width: 411px) and (max-width: 599px) {
   .content-wrapper .img-wrapper img {
     object-position: 50% 50%;
