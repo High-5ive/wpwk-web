@@ -187,7 +187,24 @@ function unFavoriteContents(id, success, fail) {
     .delete(`contents/favorite/${id}`, config)
     .then(success)
     .catch(fail);
+<<<<<<< HEAD
+=======
 }
+
+function reportSubmit(data, success, fail) {
+  let token = window.localStorage.getItem('accessToken');
+  let config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  instance
+    .post('contentsReport', data, config)
+    .then(success)
+    .catch(fail);
+>>>>>>> feature-contents-report
+}
+
 export {
   createContents,
   createTags,
@@ -204,4 +221,8 @@ export {
   createContentsComment,
   favoriteContents,
   unFavoriteContents,
+<<<<<<< HEAD
+=======
+  reportSubmit,
+>>>>>>> feature-contents-report
 };
