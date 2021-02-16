@@ -1,0 +1,38 @@
+@import 'common';
+
+.notification-container {
+    position: fixed;
+    top: 55px;
+    right: 50px;
+    background-color: rgb(255, 255, 255);
+    width: 200px;
+    height: 300px;
+    z-index: 10;
+    padding: 20px 0px 20px 0px;
+
+    overflow: scroll;
+    // border-radius: 10px;
+    border: lightgray 1px solid;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    .notification-wrapper {
+        width: 100%;
+        font-size: 15px;
+
+        .for-stripe {
+            background-color: #F2F1F2;
+        }
+
+        .notification {
+            width: 100%;
+            padding: 6px;
+        }
+
+        .notificationEmpty {
+            padding: 100px 40px 50px 50px;
+            font-display: center;
+        }
+    }
+}

@@ -104,6 +104,27 @@ function contentsEvaluations(data, success, fail) {
     .catch(fail);
 }
 
+function getNotification(success, fail) {
+  let token = window.localStorage.getItem('accessToken');
+  let config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  instance
+    .get('notifications/main', config)
+    .then(success)
+    .catch(fail);
+}
+
+function confirmNotification(id, success, fail) {
+  instance
+    .put(`notifications/confirm/${id}`)
+    .then(success)
+    .catch(fail);
+}
+
 export {
   login,
   findById,
@@ -114,4 +135,9 @@ export {
   changePwd,
   follow,
   contentsEvaluations,
+<<<<<<< HEAD
+=======
+  getNotification,
+  confirmNotification,
+>>>>>>> notification
 };
