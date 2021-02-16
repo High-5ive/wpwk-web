@@ -28,7 +28,7 @@ export default {
    },
    methods: {
       getSelectedArticles: function() {
-         if (this.subject_select == 'All') {
+         if (this.subject_select === "전체보기") {
             this.selected_articles = this.articles;
          } else {
             for (var i = 0; i < this.articles.length; i++) {

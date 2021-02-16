@@ -44,7 +44,15 @@ export default {
     return {
       dialog: false,
       articles: [], //게시글들이 모여있는 리스트
-      subjects: ["All", "동네정보", "육아정보", "잡담"],
+      subjects: [
+        "전체보기",
+        "맛집정보 나눔",
+        "교육정보 나눔",
+        "육아정보 나눔",
+        "요리정보 나눔",
+        "생활정보 나눔",
+        "잡담",
+      ],
       subject_select: "",
       subject: "",
       articleFromMain: "",
@@ -60,7 +68,7 @@ export default {
     // },
   },
   methods: {
-    //============= axios =============    
+    //============= axios =============
     getBoards() {
       this.page = 1;
       this.articles = [];
@@ -111,7 +119,7 @@ export default {
         article,
         () => {
           alert("게시 글 등록이 완료되었습니다.");
-          this.getBoards()
+          this.getBoards();
         },
         (error) => {
           console.log(error);
