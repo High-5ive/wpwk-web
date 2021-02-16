@@ -47,6 +47,8 @@
             // 카드 한장
             // Card.vue
             .card-wrapper {
+                $card_radisu: 40px; //카드의 모서를 둥글게
+
                 animation: 1s ease-out 0s 1 slideInFromTop;
 
                 @keyframes slideInFromTop {
@@ -61,7 +63,6 @@
                     }
                 }
 
-                $card_radisu: 40px; //카드의 모서를 둥글게
 
                 // background-color: pink;
                 border-radius: $card_radisu;

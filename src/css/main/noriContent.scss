@@ -6,9 +6,11 @@
     min-width: inherit;
     max-width: inherit;
     height: inherit;
+    position: relative;
    //  bordere-radius: 50px;
 
    //  box-shadow: 0px 3px 0px 0px #8e8e8edb;
+  
 
    padding: 10px;
    padding-bottom: 0px;
@@ -33,6 +35,32 @@
                 object-position: 0px -50px;
             };
         }
+        // box-shadow: 0px 9px 20px 0px #56565629;
+
+        @media(min-width:1264px) {
+            &::before {
+                content: '';
+                width: 400px;
+                height: 180px;
+                position: absolute;
+                top: 20px;
+                left: 50px;
+                z-index: -5;
+            }
+            
+            &:hover {
+                width: 105%;
+                height: 75%;
+                transition: 0.3s;
+                transform: translate(-10px, -10px);
+            }
+            &:hover::before {
+                transform: translate(0px, -5x);
+                box-shadow: 0px 15px 25px 0px #0000008c;
+
+            }
+        }
+    
         
         // 개인내지능, 공간지능 등 카테고리 표시
         .badge-cate{
