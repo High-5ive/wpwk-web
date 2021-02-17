@@ -32,42 +32,38 @@
 <script>
 import { mapState } from 'vuex';
 export default {
-   data: function() {
-      return {
-         // commentItem: this.comment,
-         isEditMode: false,
-      };
-   },
-   name: 'CommentListItem',
-   props: {
-      comment: Object,
-   },
-   methods: {
-      deleteComment: function() {
-         if (confirm('댓글을 삭제 하시겠습니까?') == true) {
-            this.$emit('deleteComment', this.comment);
-         } else {
-            return;
-         }
-      },
-      updateComment: function() {
-         this.$emit('updateComment', this.comment);
-         this.isEditMode = false;
-      },
-      changeMode: function() {
-         this.isEditMode = this.isEditMode === false ? true : false;
-         if (this.isEditMode === true) {
-            setTimeout(() => {
-               document.getElementById('editComment').focus();
-            }, 100);
-         } else {
-            this.updateComment();
-         }
-      },
-   },
-   computed: {
-      ...mapState(['userInfo']),
-   },
+  data: function() {
+    return {
+      // commentItem: this.comment,
+      isEditMode: false,
+    };
+  },
+  name: 'CommentListItem',
+  props: {
+    comment: Object,
+  },
+  methods: {
+    deleteComment: function() {
+      this.$emit('deleteComment', this.comment);
+    },
+    updateComment: function() {
+      this.$emit('updateComment', this.comment);
+      this.isEditMode = false;
+    },
+    changeMode: function() {
+      this.isEditMode = this.isEditMode === false ? true : false;
+      if (this.isEditMode === true) {
+        setTimeout(() => {
+          document.getElementById('editComment').focus();
+        }, 100);
+      } else {
+        this.updateComment();
+      }
+    },
+  },
+  computed: {
+    ...mapState(['userInfo']),
+  },
 };
 </script>
 

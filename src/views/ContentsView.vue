@@ -80,105 +80,117 @@ import CardList from '@/components/ContentsView/CardList';
 import Evaluations from '@/components/ContentsView/Evaluations';
 import ContentsCommentList from '@/components/Comment/ContentsCommentList';
 import CommentFormView from '../components/Comment/CommentForm_view.vue';
-import { deleteContentsComment, 
-         updateContentsComment, 
-         createContentsComment, 
-         findContentsById, 
-         findContentsComment, 
-         findContentsItemById, 
-         deleteContents } from '@/api/contents.js';
+import {
+  deleteContentsComment,
+  updateContentsComment,
+  createContentsComment,
+  findContentsById,
+  findContentsComment,
+  findContentsItemById,
+  deleteContents,
+} from '@/api/contents.js';
 import { mapState } from 'vuex';
 
 export default {
-   name: 'ContentsView',
-   components: {
-      CardList,
-      Evaluations,
-      ContentsCommentList,
-      CommentFormView,
-   },
-   data: function() {
-      return {
-         cards: Array,
-         evaluationValue: false,
-         dialog: false,
-         menu: false,
-         comments: [],
-         time: {
-            hour: 0,
-            minute: 0,
-         },
-         selectedCategories: [],
-         hashtags: [],
-         contents: Object,
-         url: "",
+  name: 'ContentsView',
+  components: {
+    CardList,
+    Evaluations,
+    ContentsCommentList,
+    CommentFormView,
+  },
+  data: function() {
+    return {
+      cards: Array,
+      evaluationValue: false,
+      dialog: false,
+      menu: false,
+      comments: [],
+      time: {
+        hour: 0,
+        minute: 0,
+      },
+      selectedCategories: [],
+      hashtags: [],
+      contents: Object,
+      url: "",
+    };
+  },
+  created() {
+    //컨텐츠 ID 에 맞는 ItemList axios 호출
+    this.getContentsItems();
+  },
+  computed: {
+    ...mapState(['userInfo']),
+  },
+  methods: {
+    evaluation(value) {
+      this.evaluationValue = value;
+    },
+    back: function() {
+      this.evaluationValue = false;
+      this.$router.go(this.$router.currentRoute);
+    },
+    deleteComment: function(comment) {
+      const deleteId = this.comments.indexOf(comment);
+      this.comments.splice(deleteId, 1);
+      console.log('deleteComment', deleteId);
+
+      deleteContentsComment(
+        comment.id,
+        (success) => {
+          console.log('댓글을 삭제 succ.', success);
+        },
+        (fail) => {
+          alert('댓글을 삭제 fail.' + fail);
+        }
+      );
+    },
+    updateComment: function(comment) {
+      var data = {
+        commentId: comment.id,
+        comment: comment.comment,
       };
-   },
-   created() {
-      //컨텐츠 ID 에 맞는 ItemList axios 호출
-      this.url = location.href;
-      this.getContentsItems();
-   },
-   computed: {
-      ...mapState(['userInfo']),
-   },
-   methods: {
-      evaluation(value) {
-         this.evaluationValue = value;
-      },
-      back: function() {
-         this.evaluationValue = false;
-         this.$router.go(this.$router.currentRoute);
-      },
-      deleteComment: function(comment) {
-         const deleteId = this.comments.indexOf(comment);
-         this.comments.splice(deleteId, 1);
-         console.log('deleteComment', deleteId);
+      console.log('update comment =', comment, data);
+      updateContentsComment(
+        data,
+        (success) => {
+          console.log(success);
+        },
+        (fail) => {
+          console.log(fail);
+          alert('댓글을 수정하는데 실패 했습니다.');
+        }
+      );
 
-         deleteContentsComment(
-            comment.id,
-            (success) => {
-               alert('댓글을 삭제 했습니다.');
-               console.log('댓글을 삭제 succ.', success);
-            },
-            (fail) => {
-               console.log('댓글을 삭제 fail.', fail);
-            }
-         );
-      },
-      updateComment: function(comment) {
-         var data = {
-            commentId: comment.id,
-            comment: comment.comment,
-         };
+      console.log('update comment =', comment);
+    },
 
-         updateContentsComment(
-            data,
-            (success) => {
-               console.log(success);
-               alert('댓글 수정을 완료 했습니다.');
-            },
-            (fail) => {
-               console.log(fail);
-               alert('댓글을 수정하는데 실패 했습니다.');
-            }
-         );
-      },
-
-      createComment: function(comment) {
-         console.log(comment);
-
-         this.comments.push(comment);
-         createContentsComment(
-            comment,
-            (success) => {
-               console.log(success);
-            },
-            (fail) => {
-               console.log(fail);
-            }
-         );
-      },
+    createComment: function(comment) {
+      this.comments.unshift(comment);
+      createContentsComment(
+        comment,
+        (success) => {
+          console.log(success);
+          this.findContentsComment();
+        },
+        (fail) => {
+          console.log(fail);
+        }
+      );
+    },
+    findContentsComment: function() {
+      findContentsComment(
+        this.contents.id,
+        (success) => {
+          console.log('get Contents Comments success', success.data);
+          this.comments = success.data;
+        },
+        (fail) => {
+          console.log('get Contents Comment fail', fail);
+        }
+      );
+    },
 
       getContentsItems: function() {
          var contentsId = this.$route.params.id;
@@ -192,28 +204,27 @@ export default {
             }
          );
 
-         findContentsItemById(
-            contentsId,
-            (success) => {
-               //console.log('get ContentsItem suc ', success.data);
-               this.cards = success.data;
-            },
-            (fail) => {
-               console.log('get ContentsItem fail ', fail);
-            }
-         );
-
-         findContentsComment(
-            contentsId,
-            (success) => {
-               //console.log('get Contents Comments success', success.data);
-               this.comments = success.data;
-            },
-            (fail) => {
-               console.log('get Contents Comment fail', fail);
-            }
-         );
-      },
+      findContentsItemById(
+        contentsId,
+        (success) => {
+          //console.log('get ContentsItem suc ', success.data);
+          this.cards = success.data;
+        },
+        (fail) => {
+          console.log('get ContentsItem fail ', fail);
+        }
+      );
+      findContentsComment(
+        contentsId,
+        (success) => {
+          console.log('get Contents Comments success', success.data);
+          this.comments = success.data;
+        },
+        (fail) => {
+          console.log('get Contents Comment fail', fail);
+        }
+      );
+    },
 
       // 현재 떠있는 댓글창을 닫기
       closeModal() {
