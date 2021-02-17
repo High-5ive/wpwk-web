@@ -122,13 +122,13 @@ export default {
    computed: {
       ...mapState(['userInfo']),
    },
-   created: function() {
-      this.getNotifications();
-   },
    watch: {
       showNotification: function() {
          this.getNotifications();
       },
+      userInfo: function () {
+         this.getNotifications();
+      }
    },
 };
 </script>
