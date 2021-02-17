@@ -33,6 +33,7 @@
       </div>
       <div class="middle-button" @click="reset">
         <v-icon>mdi-eraser</v-icon> <span class="cap">지우기</span>
+      </div>
       <div class="right-button" @click="createArticle">
         <v-icon>mdi-pencil</v-icon> <span class="cap">글작성</span>
       </div>
@@ -147,39 +148,38 @@ export default {
 
 <style lang="scss" scoped>
 @import "src/css/common.scss";
-
 //v-select 했을 때, 세부 선택 박스 하단으로 붙이기
 .v-list.v-select-list.v-sheet.theme--light {
-  margin-top: 40px;
+   margin-top: 40px;
 }
 
 .af-container {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  // background-color: lightblue;
+   height: 100%;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   // background-color: lightblue;
 
-  .category-wrapper {
-    height: 40px; //v-select의 높이 조절
-    width: 90% !important;
+   .category-wrapper {
+      height: 40px; //v-select의 높이 조절
+      width: 90% !important;
 
-    .v-input {
+      .v-input {
+         // background-color: red;
+         padding: 0px 40px;
+         // margin-bottom: 0px !important;
+      }
+   }
+
+   .input-wrapper {
       // background-color: red;
-      padding: 0px 40px;
-      // margin-bottom: 0px !important;
-    }
-  }
-
-  .input-wrapper {
-    // background-color: red;
-    min-height: 100px;
-    height: 50%;
-    width: 80%;
-    margin: 20px;
-    padding: 20px;
-    border: 1px solid rgb(165, 165, 165);
-    border-radius: 20px;
+      min-height: 100px;
+      height: 50%;
+      width: 80%;
+      margin: 20px;
+      padding: 20px;
+      border: 1px solid rgb(165, 165, 165);
+      border-radius: 20px;
 
       input {
          // background-color: blue;
@@ -207,121 +207,113 @@ export default {
       font-weight: 600;
    }
 
-  .add-img-btn {
-    display: inline;
-    background-color: white;
-    padding: 15px;
-    border-radius: 30px;
-    box-shadow: 0px 9px 20px 0px #56565629;
-  }
+   .photo-wrapper {
+      width: 100%;
+      height: 100%;
+      padding: 20px;
+      margin-top: 20px;
 
-  .photo-wrapper {
-    width: 100%;
-    height: 100%;
-    padding: 20px;
-    margin-top: 20px;
+      white-space: nowrap;
+      overflow-x: scroll;
 
-    white-space: nowrap;
-    overflow-x: scroll;
+      .photo-item {
+         display: inline-block;
+         // transform: rotate(-1deg);
+         border: 1px solid rgb(223, 223, 223);
+         box-shadow: 0px 9px 20px 0px #56565629;
 
-    .photo-item {
-      display: inline-block;
-      // transform: rotate(-1deg);
-      border: 1px solid rgb(223, 223, 223);
-      box-shadow: 0px 9px 20px 0px #56565629;
+         margin-right: 10px;
 
-      margin-right: 10px;
+         //사진을 감싸고 있는 녀석
+         width: 200px;
+         height: 200px;
+         padding: 10px 10px 30px 10px;
 
-      //사진을 감싸고 있는 녀석
-      width: 200px;
-      height: 200px;
-      padding: 10px 10px 30px 10px;
+         //삭제 버튼
+         button {
+            margin-top: 5px;
+            margin-right: 2px;
+            float: right;
 
-      //삭제 버튼
-      button {
-        margin-top: 5px;
-        margin-right: 2px;
-        float: right;
-
-        &:focus {
-          outline: none;
-        }
+            &:focus {
+               outline: none;
+            }
+         }
       }
-    }
-  }
+   }
 
-  // 최하단 좌우 이동 버튼
-  .af-footer {
-    display: flex;
-    position: absolute;
-    z-index: 100;
-    bottom: 30px;
-    margin-bottom: 25px;
-    padding: 0 10%;
+   // 최하단 좌우 이동 버튼
+   .af-footer {
+      display: flex;
+      position: absolute;
+      z-index: 100;
+      bottom: 30px;
+      margin-bottom: 25px;
+      padding: 0 10%;
 
-    height: 50px;
-    width: 100%;
-
-    .cap {
-      padding: 0;
-      display: block;
-      font-size: 8pt;
-      font-weight: 600;
-      color: $navi-cap;
-    }
-
-    i {
-      color: $navi-main;
-    }
-
-    .left-button {
       height: 50px;
-      width: 30%;
-      text-align: center;
-      position: relative;
+      width: 100%;
 
-      i,
       .cap {
-        color: $navi-danger;
+         padding: 0;
+         display: block;
+         font-size: 8pt;
+         font-weight: 600;
+         color: $navi-cap;
       }
 
-      &::after {
-        content: "";
-        width: 1px;
-        height: 20px;
-        position: absolute;
-        top: 12px;
-        right: -1px;
-        background-color: rgb(223, 223, 223);
+      i {
+         color: $navi-main;
       }
-    }
 
-    .middle-button {
-      height: 50px;
-      width: 30%;
-      text-align: center;
-      position: relative;
+      .left-button {
+         height: 50px;
+         width: 30%;
+         text-align: center;
+         position: relative;
 
-      &::after {
-        content: "";
-        width: 1px;
-        height: 20px;
-        position: absolute;
-        top: 12px;
-        right: -1px;
-        background-color: rgb(223, 223, 223);
+         i,
+         .cap {
+            color: $navi-danger;
+         }
+
+         &::after {
+            content: '';
+            width: 1px;
+            height: 20px;
+            position: absolute;
+            top: 12px;
+            right: -1px;
+            background-color: rgb(223, 223, 223);
+         }
       }
-    }
 
-    .right-button {
-      width: 40%;
-      text-align: center;
+      .middle-button {
+         height: 50px;
+         width: 30%;
+         text-align: center;
+         position: relative;
 
-      i,
-      .cap {
-        color: $navi-success;
+         &::after {
+            content: '';
+            width: 1px;
+            height: 20px;
+            position: absolute;
+            top: 12px;
+            right: -1px;
+            background-color: rgb(223, 223, 223);
+         }
       }
-    }
-  }
+
+      .right-button {
+         width: 40%;
+         text-align: center;
+
+         i,
+         .cap {
+            color: $navi-success;
+         }
+      }
+   }
 }
 </style>
