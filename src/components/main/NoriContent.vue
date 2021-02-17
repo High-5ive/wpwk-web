@@ -1,6 +1,6 @@
 <template lang="">
    <!-- 전체 한 덩어리 -->
-   <div class="content-wrapper rotate-in-2-bl-ccw">
+   <div class="content-wrapper">
       <!-- 이미지썸네일과 뱃지들 -->
       <div class="img-wrapper">
          <img :src="thumbnail" alt="" @click="contentsClick(sendNori)" />
@@ -128,31 +128,32 @@ export default {
          }
       },
 
-      // flipBadge: function() {
-      //    var elem = document.querySelectorAll('.flip-container');
-      //    console.log(elem);
-      //    elem.forEach((item) => {
-      //       item.classList.toggle('hover');
-      //    });
-      // },
+      testEffect: function() {
+         const elem3 = document.querySelectorAll('.content-wrapper');
+         let currentPos = window.pageYOffset;
 
-      // 뱃지 이펙트는 포기
-      //https://codepen.io/ChrisJohnson/pen/ZJXzgZ
-      // badgeAnima: function() {
-      //    var elem = document.querySelectorAll('.flip-container');
-      //    console.log(elem);
-      //    elem.forEach((item) => {
-      //       item.addEventListener('click', () => {
-      //          console.log('flip');
-      //          document.querySelector('#flip-toggle').classList.toggle('flip');
-      //       });
-      //    });
-      // },
+         const update = () => {
+            // console.log(2);
+            const newPos = window.pageYOffset;
+            const diff = newPos - currentPos;
+            const speed = diff * 0.03;
+
+            elem3.forEach((item) => {
+               item.style.transform = `skewY(${speed}deg)`;
+            });
+
+            currentPos = newPos;
+
+            requestAnimationFrame(update);
+         };
+
+         update();
+      },
    },
 
    mounted() {
       this.calcEvalResult();
-      // this.badgeAnima();
+      // this.testEffect();
 
       //이미지 없을 경우, 기본 이미지
       if (this.sendNori.thumb == null) {
@@ -189,7 +190,7 @@ export default {
          padding: 10px 0;
          padding-left: 55px !important;
          // background-color: #f5cd79;
-         box-shadow: 0 5px 10px rgb(255, 255, 255);
+         box-shadow: 0 5px 10px rgb(23, 23, 23);
          color: #fff;
          text-shadow: 0 1px 1px rgba(255, 255, 255, 0.2);
          text-transform: uppercase;

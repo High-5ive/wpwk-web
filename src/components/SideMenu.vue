@@ -7,13 +7,13 @@
          <div class="user-real-wrapper">
             <div class="first">
                <span>welcome,</span>
-               <span>{{ userInfo.nickname }}</span> <span class="admin-badge" v-if="userInfo.status == 1">관리자</span>
+               <span>{{ userInfo.nickname }}</span> <span class="admin-badge" v-if="userInfo.status == 2">관리자</span>
             </div>
             <div class="second">
                <span class="mypage" @click="$router.push({ name: 'mypage', params: { userId: userInfo.userId } }).catch(() => {})">내 정보 보기</span>
                <span class="logout" @click="$store.dispatch('doLogout')">로그아웃</span>
             </div>
-            <span class="admin" v-if="userInfo.status == 1" click="$router.push('/admin')">관리자 페이지</span>
+            <span class="admin" v-if="userInfo.status == 2" click="$router.push('/admin')">관리자 페이지</span>
          </div>
       </div>
       <div class="link-wrapper">
