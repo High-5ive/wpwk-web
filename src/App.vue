@@ -16,7 +16,7 @@
             <v-icon>mdi-bell</v-icon>
          </div>
          <!-- <div class="notificationNum"></div> -->
-         <div v-if="this.notifications.length" class="notificationNum"></div>
+         <div v-if="notifications.length > 0" class="notificationNum"></div>
          <notification v-if="showNotification"></notification>
 
          <div class="btn-search" @click="showSearch = !showSearch">
