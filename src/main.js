@@ -4,6 +4,7 @@ import vuetify from './plugins/vuetify';
 import store from "./store/store"
 import router from './router/router'
 import firebase from "firebase"
+import VueClipboard from 'vue-clipboard2'
 
 var filter = function(text, length, clamp){
   clamp = clamp || '...';
@@ -12,6 +13,8 @@ var filter = function(text, length, clamp){
   var content = node.textContent;
   return content.length > length ? content.slice(0, length) + clamp : content;
 };
+
+Vue.use(VueClipboard)
 
 Vue.filter('truncate', filter);
 

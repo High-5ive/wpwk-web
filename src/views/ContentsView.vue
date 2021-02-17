@@ -22,6 +22,12 @@
                   <span>노리 삭제하기</span>
                </div>
             </div>
+
+            <button type="button"
+               v-clipboard:copy="url"
+               v-clipboard:success="onCopy"
+               v-clipboard:error="onError"><v-icon>mdi-share</v-icon>
+            </button>
          </div>
          <div class="card-top-wrapper">
             <p class="title">{{ contents.title }}</p>
@@ -74,7 +80,13 @@ import CardList from '@/components/ContentsView/CardList';
 import Evaluations from '@/components/ContentsView/Evaluations';
 import ContentsCommentList from '@/components/Comment/ContentsCommentList';
 import CommentFormView from '../components/Comment/CommentForm_view.vue';
-import { deleteContentsComment, updateContentsComment, createContentsComment, findContentsById, findContentsComment, findContentsItemById, deleteContents } from '@/api/contents.js';
+import { deleteContentsComment, 
+         updateContentsComment, 
+         createContentsComment, 
+         findContentsById, 
+         findContentsComment, 
+         findContentsItemById, 
+         deleteContents } from '@/api/contents.js';
 import { mapState } from 'vuex';
 
 export default {
@@ -99,10 +111,12 @@ export default {
          selectedCategories: [],
          hashtags: [],
          contents: Object,
+         url: "",
       };
    },
    created() {
       //컨텐츠 ID 에 맞는 ItemList axios 호출
+      this.url = location.href;
       this.getContentsItems();
    },
    computed: {
@@ -225,6 +239,9 @@ export default {
             }
          );
       },
+      onCopy: function() {
+         alert("링크가 복사되었습니다")
+      }
    },
 
    watch: {
