@@ -37,14 +37,14 @@ import Search from '@/components/main/Search.vue';
 import Notification from '@/components/main/Notification.vue';
 import { confirmNotification, getNotification } from '@/api/user.js';
 import { mapState } from 'vuex';
-import vClickOutside from 'v-click-outside'
+import vClickOutside from 'v-click-outside';
 
 export default {
    name: 'App',
    components: { Search, Notification },
    directives: {
-    clickOutside: vClickOutside.directive
-  },
+      clickOutside: vClickOutside.directive,
+   },
    data: () => ({
       drawer: false,
       showSearch: false,
@@ -93,9 +93,9 @@ export default {
          }
          this.showNotification = !this.showNotification;
       },
-      onClickOutside (event) {
+      onClickOutside() {
          this.showNotification = false;
-         console.log(event)
+         // console.log(event)
       },
       searchShow(search) {
          this.showSearch = search;
@@ -126,9 +126,9 @@ export default {
       showNotification: function() {
          this.getNotifications();
       },
-      userInfo: function () {
+      userInfo: function() {
          this.getNotifications();
-      }
+      },
    },
 };
 </script>
@@ -244,7 +244,7 @@ export default {
       position: relative;
 
       .v-main__wrap .cv-container,
-      .v-main__wrap .cc-container, 
+      .v-main__wrap .cc-container,
       .v-main__wrap .cu-container {
          @include desktop {
             padding: 0 20% !important;

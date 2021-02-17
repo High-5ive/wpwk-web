@@ -50,8 +50,13 @@
   right: 40px;
   width: 160px;
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  flex-direction: row-reverse;
+}
+.cv-container .cv-card-wrapper .card-top-option .dots {
+  margin-left: 10px;
+}
+.cv-container .cv-card-wrapper .card-top-option .dots i, .cv-container .cv-card-wrapper .card-top-option .share-btn i {
+  color: #c1c1c1 !important;
 }
 .cv-container .cv-card-wrapper .card-top-option .dropdown-menu {
   background-color: white;

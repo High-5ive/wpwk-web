@@ -31,7 +31,7 @@
                      mdi-account-check
                   </v-icon>
                   <span>
-                  구독 취소
+                     구독 취소
                   </span>
                </button>
                <button @click="followSomeone" v-if="!isfollowed" class="infos-button follow-button">
@@ -74,23 +74,22 @@
          <persons-assets-with-photo v-if="showValue === 3 || showValue === 4" :showValue="showValue" :personsAssetsWithPhoto="personsAssetsWithPhoto" />
          <chart v-if="showValue == 5" />
       </div>
-      <img class="mp-default-img" v-if="((personsAssets.length ==0 || personsAssetsWithPhoto.length == 0) && ( showValue !== 5 && showValue !== 0)) || showValue == 0" src="@/assets/img/characters/mypage-box.png" alt="">
+      <img
+         class="mp-default-img"
+         v-if="(personsAssets.length == 0 && (showValue == 1 || showValue == 2)) || (personsAssetsWithPhoto.length == 0 && (showValue == 3 || showValue == 4)) || showValue == 0"
+         src="@/assets/img/characters/mypage-box.png"
+         alt=""
+      />
       <!-- 팔로잉리스트모달 -->
       <div>
          <v-row justify="center">
             <v-dialog v-model="dialogFollowing" persistent max-width="330px">
                <v-card id="follow-modal" class="seccesion-modal">
-                  <v-card-title class="nf">
-                     {{ userNickname }}님의 팔로잉
-                  </v-card-title>
+                  <v-card-title class="nf"> {{ userNickname }}님의 팔로잉 </v-card-title>
                   <div class="followList">
-                     <div 
-                        class="followListitems"
-                        v-for="(following, idx) in followingList"
-                        :key="idx"
-                        @click="toPersonsPage(following.id)"
-                     >{{ following.nickname }}
-                     <!-- <div class="follow-list-item" :class="{'for-stripe': idx / 2 !== 0}">
+                     <div class="followListitems" v-for="(following, idx) in followingList" :key="idx" @click="toPersonsPage(following.id)">
+                        {{ following.nickname }}
+                        <!-- <div class="follow-list-item" :class="{'for-stripe': idx / 2 !== 0}">
                         {{ following.nickname }}
                      </div> -->
                      </div>
@@ -108,19 +107,12 @@
          <v-row justify="center">
             <v-dialog v-model="dialogFollower" persistent max-width="330px">
                <v-card id="follow-modal" class="seccesion-modal">
-                  <v-card-title class="nf">
-                     {{ userNickname }}님의 팔로워
-                  </v-card-title>
+                  <v-card-title class="nf"> {{ userNickname }}님의 팔로워 </v-card-title>
                   <div class="followList">
-                     <div 
-                        class="followListitems"
-                        v-for="(follower, idx) in followedList"
-                        :key="idx"
-                        
-                     >
-                     <div @click="toPersonsPage(follower.id)" class="follow-list-item" :class="{'for-stripe': idx / 2 !== 0}">
-                        {{ follower.nickname }}
-                     </div>
+                     <div class="followListitems" v-for="(follower, idx) in followedList" :key="idx">
+                        <div @click="toPersonsPage(follower.id)" class="follow-list-item" :class="{ 'for-stripe': idx / 2 !== 0 }">
+                           {{ follower.nickname }}
+                        </div>
                      </div>
                   </div>
                   <v-card-actions>
@@ -280,12 +272,12 @@ export default {
          };
          const targetUserFollowed = {
             userId: this.$route.params.userId,
-            option: 'followed'
+            option: 'followed',
          };
          const targetUserFollowing = {
             userId: this.$route.params.userId,
-            option: 'following'
-         }
+            option: 'following',
+         };
          getUserInfo(
             targetUser,
             (success) => {
@@ -297,18 +289,15 @@ export default {
                getFollowList(
                   targetUserFollowed,
                   (success) => {
-                     this.followedList = success.data
-                     getFollowingList(
-                        targetUserFollowing,
-                        (success) => {
-                           this.followingList = success.data
-                        }
-                     )
+                     this.followedList = success.data;
+                     getFollowingList(targetUserFollowing, (success) => {
+                        this.followingList = success.data;
+                     });
                   },
                   (fail) => {
-                     console.log(fail)
+                     console.log(fail);
                   }
-               )
+               );
             },
             (fail) => {
                console.log(fail);
@@ -322,7 +311,7 @@ export default {
          };
          const targetUserFollowed = {
             userId: this.$route.params.userId,
-            option: 'followed'
+            option: 'followed',
          };
          if (Number(targetUser.targetId) !== this.userInfo.userId) {
             follow(
@@ -337,18 +326,18 @@ export default {
                   getFollowList(
                      targetUserFollowed,
                      (success) => {
-                        this.followedList = success.data
+                        this.followedList = success.data;
                      },
                      (fail) => {
-                        console.log(fail)
+                        console.log(fail);
                      }
-                  )
+                  );
                },
                (error) => {
                   console.log(error);
                }
             );
-         } 
+         }
       },
       //비밀번호 변경 validation
       checkPW(str) {
@@ -392,7 +381,7 @@ export default {
                this.userId,
                page,
                (success) => {
-                  this.showValue = 1;                    
+                  this.showValue = 1;
                   this.personsAssets = success.data;
                },
                (fail) => {
@@ -416,7 +405,7 @@ export default {
                this.userId,
                page,
                (success) => {
-                  this.personsAssetsWithPhoto = success.data;                  
+                  this.personsAssetsWithPhoto = success.data;
                   this.showValue = 3;
                },
                (fail) => {
@@ -448,11 +437,11 @@ export default {
             }
          );
       },
-      toPersonsPage: function (userId) {
-         this.$router.push({ name: 'mypage', params: { userId: userId } }).catch()
-         this.dialogFollower = false
-         this.dialogFollowing = false
-      }
+      toPersonsPage: function(userId) {
+         this.$router.push({ name: 'mypage', params: { userId: userId } }).catch();
+         this.dialogFollower = false;
+         this.dialogFollowing = false;
+      },
    },
    computed: {
       ...mapState(['userInfo']),
@@ -461,8 +450,8 @@ export default {
       $route() {
          this.getUserInfo();
          this.isMypage();
-      }
-   }
+      },
+   },
 };
 </script>
 <style lang="scss">
@@ -472,17 +461,7 @@ export default {
 .mp-container {
    // max-width: 500px;
    background-color: #fffedd;
-   @include desktop {
-      height: 100%;
-      max-width: 500px;
-      margin-left: -250px;
-      left: 50%;
-   }
-   @include tablet {
-      max-width: 500px;
-      left: 50%;
-      margin-left: -250px;
-   }
+
    overflow: hidden !important;
    position: relative;
    height: 100%;
@@ -570,7 +549,7 @@ export default {
             top: 95px;
             left: -138px;
             .follow-button {
-               $color1:rgb(30, 111, 14);
+               $color1: rgb(30, 111, 14);
                border: 2px solid $color1;
                color: $color1;
                i {
@@ -748,8 +727,6 @@ export default {
          padding: 0 10px;
       }
    }
-
-   
 }
 #follow-modal {
    .followList {
@@ -759,31 +736,29 @@ export default {
       border: lightgray 1px solid;
       overflow: hidden;
       .followListitems {
-            cursor: pointer;
-            width: 100%;
-            padding: 10px 20px;
+         cursor: pointer;
+         width: 100%;
+         padding: 10px 20px;
 
-            &:nth-child(2n){
+         &:nth-child(2n) {
             background-color: #f2f1f2;
-
-            }
-            &:nth-child(2n+1){
+         }
+         &:nth-child(2n + 1) {
             background-color: #ffffff;
-            }
-            // &:last-child{
-            // border-radius: 0px 0px 20px 20px;
-            // }
-            // &:first-child{
-            // border-radius: 20px 20px 0px 0px ;
-            // background-color: #ff5151;
-            // }
-         
+         }
+         // &:last-child{
+         // border-radius: 0px 0px 20px 20px;
+         // }
+         // &:first-child{
+         // border-radius: 20px 20px 0px 0px ;
+         // background-color: #ff5151;
+         // }
 
          // .follow-list-item {
 
          // }
          // .for-stripe {
-            // background-color: #f2f1f2;
+         // background-color: #f2f1f2;
 
          // }
          // &:nth-last-child(){
@@ -791,6 +766,6 @@ export default {
 
          // }
       }
-      }
+   }
 }
 </style>

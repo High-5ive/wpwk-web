@@ -173,7 +173,7 @@ export default {
    .ribbon {
       position: absolute;
       top: -16px;
-      right: 14px;
+      right: 13px;
       width: 100px;
       height: 100px;
       overflow: hidden;

@@ -13,7 +13,7 @@
                <span class="mypage" @click="$router.push({ name: 'mypage', params: { userId: userInfo.userId } }).catch(() => {})">내 정보 보기</span>
                <span class="logout" @click="$store.dispatch('doLogout')">로그아웃</span>
             </div>
-            <span class="admin" v-if="userInfo.status == 2" click="$router.push('/admin')">관리자 페이지</span>
+            <span class="admin" v-if="userInfo.status == 2" @click="$router.push('/admin')">관리자 페이지</span>
          </div>
       </div>
       <div class="link-wrapper">

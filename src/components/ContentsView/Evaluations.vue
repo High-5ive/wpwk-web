@@ -21,7 +21,7 @@
                </v-icon>
                <span class="cap">홈으로</span>
             </div>
-            <div class="right-button material-ripple">
+            <div class="right-button material-ripple" @click="$router.push({ name: 'mypage', params: { userId: contentsInfo.userId } })">
                <v-icon>
                   mdi-dots-horizontal-circle-outline
                </v-icon>
@@ -59,6 +59,9 @@ export default {
          console.log(this.evaluation);
          this.$emit('evaluationPage', this.evaluation);
       },
+   },
+   mounted() {
+      console.log(this.contentsInfo.userId);
    },
 };
 </script>
