@@ -73,25 +73,6 @@
 .content-wrapper .img-wrapper .badge-cate span:nth-child(3) {
   background-color: #f7bf44;
 }
-.content-wrapper .img-wrapper .badge-cate span.badge-eval {
-  box-shadow: 2px 2px 0px 0px #4e4e4e59;
-  border-radius: 15px;
-  padding-right: 10px;
-}
-.content-wrapper .img-wrapper .badge-cate span.badge-eval i {
-  color: white;
-  font-size: 12pt;
-  padding-bottom: 3px;
-}
-.content-wrapper .img-wrapper .badge-cate span.badge-eval.acs {
-  background-color: #428c42;
-}
-.content-wrapper .img-wrapper .badge-cate span.badge-eval.edu {
-  background-color: #0c92f9;
-}
-.content-wrapper .img-wrapper .badge-cate span.badge-eval.fun {
-  background-color: #eb5656;
-}
 .content-wrapper .badge-time {
   position: relative;
   bottom: 60px;

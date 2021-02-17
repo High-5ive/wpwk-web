@@ -91,29 +91,6 @@
                 &:nth-child(3){
                     background-color: rgb(247, 191, 68);
                 }
-
-                // 평가항목
-                &.badge-eval{
-                    box-shadow: 2px 2px 0px 0px #4e4e4e59;
-                    border-radius: 15px;
-                    padding-right: 10px;
-
-                    i {
-                        color: white;
-                        font-size: 12pt;
-                        padding-bottom: 3px;
-                    }
-
-                    &.acs{
-                        background-color: rgb(66, 140, 66);
-                    }
-                    &.edu{
-                        background-color: rgb(12, 146, 249);
-                    }
-                    &.fun{
-                        background-color: rgb(235, 86, 86);
-                    }
-                }
             }
         }
     };

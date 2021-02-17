@@ -1,26 +1,17 @@
 <template lang="">
    <!-- 전체 한 덩어리 -->
-   <div class="content-wrapper rotate-in-2-bl-ccw">
+   <div class="content-wrapper">
       <!-- 이미지썸네일과 뱃지들 -->
       <div class="img-wrapper">
          <img :src="thumbnail" alt="" @click="contentsClick(sendNori)" />
          <!-- 이미지 위에 표시되는 뱃지들이 위치합니다 -->
          <div class="badge-cate">
-            <!-- 1 : 접근성 -->
-            <span v-if="eval_result != 0 && eval_result == 1" class="badge-eval acs">
-               <v-icon>mdi-home-search-outline</v-icon>
-               접근성</span
-            >
-            <!-- 2 : 흥미성 -->
-            <span v-else-if="eval_result != 0 && eval_result == 2" class="badge-eval fun">
-               <v-icon>mdi-heart-circle</v-icon>
-               흥미성</span
-            >
-            <!-- 3 : 교육성 -->
-            <span v-else-if="eval_result != 0 && eval_result == 3" class="badge-eval edu">
-               <v-icon>mdi-head-lightbulb-outline</v-icon>
-               교육성</span
-            >
+            <div class="ribbon">
+               <span v-if="eval_result != 0 && eval_result == 1" class="ribbon__content acs"><v-icon>mdi-home-search-outline</v-icon> 접근성</span>
+               <span v-else-if="eval_result != 0 && eval_result == 2" class="ribbon__content fun"><v-icon>mdi-heart-circle</v-icon> 흥미성</span>
+               <span v-else-if="eval_result != 0 && eval_result == 3" class="ribbon__content edu"><v-icon>mdi-head-lightbulb-outline</v-icon> 교육성</span>
+            </div>
+            <!-- <span v-if="eval_result != 0">무의미한공백으로</span> -->
             <span v-for="(ability, idx) in sendNori.abilities" :key="idx" @click="categorySearch(ability)">
                {{ ability }}
             </span>
@@ -137,23 +128,32 @@ export default {
          }
       },
 
-      // 뱃지 이펙트는 포기
-      //https://codepen.io/ChrisJohnson/pen/ZJXzgZ
-      // badgeAnima: function() {
-      //    var elem = document.querySelectorAll('.flip-container');
-      //    console.log(elem);
-      //    elem.forEach((item) => {
-      //       item.addEventListener('click', () => {
-      //          console.log('flip');
-      //          document.querySelector('#flip-toggle').classList.toggle('flip');
-      //       });
-      //    });
-      // },
+      testEffect: function() {
+         const elem3 = document.querySelectorAll('.content-wrapper');
+         let currentPos = window.pageYOffset;
+
+         const update = () => {
+            // console.log(2);
+            const newPos = window.pageYOffset;
+            const diff = newPos - currentPos;
+            const speed = diff * 0.03;
+
+            elem3.forEach((item) => {
+               item.style.transform = `skewY(${speed}deg)`;
+            });
+
+            currentPos = newPos;
+
+            requestAnimationFrame(update);
+         };
+
+         update();
+      },
    },
 
    mounted() {
       this.calcEvalResult();
-      // this.badgeAnima();
+      // this.testEffect();
 
       //이미지 없을 경우, 기본 이미지
       if (this.sendNori.thumb == null) {
@@ -167,4 +167,55 @@ export default {
 
 <style lang="scss">
 @import '@/css/main/noriContent.scss';
+
+// https://codepen.io/Souflogi/pen/Ybmybv
+.badge-cate {
+   .ribbon {
+      position: absolute;
+      top: -16px;
+      right: 14px;
+      width: 100px;
+      height: 100px;
+      overflow: hidden;
+
+      .ribbon__content {
+         left: -30px;
+         top: 30px;
+         -webkit-transform: rotate(45deg);
+         -ms-transform: rotate(45deg);
+         transform: rotate(45deg);
+         position: absolute;
+         display: block;
+         width: 225px;
+         padding: 10px 0;
+         padding-left: 55px !important;
+         // background-color: #f5cd79;
+         box-shadow: 0 5px 10px rgb(23, 23, 23);
+         color: #fff;
+         text-shadow: 0 1px 1px rgba(255, 255, 255, 0.2);
+         text-transform: uppercase;
+         // text-align: center;
+
+         &.acs {
+            background-color: rgb(66, 140, 66) !important;
+            border: 2px solid rgb(25, 97, 70);
+            outline: 5px solid rgb(60, 94, 60);
+         }
+         &.edu {
+            background-color: rgb(12, 146, 249) !important;
+            border: 2px solid rgb(37, 74, 167);
+            outline: 5px solid rgb(20, 81, 128);
+         }
+         &.fun {
+            background-color: rgb(235, 86, 86) !important;
+            border: 2px solid rgb(181, 40, 40);
+            outline: 5px solid rgb(191, 65, 65);
+         }
+
+         i {
+            color: white !important;
+         }
+      }
+   }
+}
 </style>
