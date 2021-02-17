@@ -80,32 +80,32 @@ export default {
     //   );
     // },
 
-    // 무한 스크롤
-    infiniteHandler($state) {
-      findBoardsByPage(
-        this.page,
-        (res) => {
-          setTimeout(() => {
-            if (res.data.length) {
-              var articleList = res.data;
+      // 무한 스크롤
+      infiniteHandler($state) {
+         findBoardsByPage(
+            this.page,
+            (res) => {
+               setTimeout(() => {
+                  if (res.data.length) {
+                     var articleList = res.data;
 
-              this.articles = this.articles.concat(articleList);
-              $state.loaded();
-              this.page += 1;
-              if (this.articles.length / 10 == 0) {
-                $state.complete();
-              }
-            } else {
-              $state.complete();
+                     this.articles = this.articles.concat(articleList);
+                     $state.loaded();
+                     this.page += 1;
+                     if (this.articles.length / 10 == 0) {
+                        $state.complete();
+                     }
+                  } else {
+                     $state.complete();
+                  }
+               }, 1000);
+            },
+            (error) => {
+               console.log(error);
             }
-          }, 1000);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    },
-    //====================================
+         );
+      },
+      //====================================
 
     createArticle: function(article) {
       console.log("article : " + article.category);
@@ -129,5 +129,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import "src/css/community.scss";
+@import 'src/css/community.scss';
 </style>

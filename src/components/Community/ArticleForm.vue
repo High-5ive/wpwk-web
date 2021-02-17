@@ -14,27 +14,18 @@
       <input type="text" v-model="content" placeholder="글을 작성해주세요." />
     </div>
 
-    <!-- 이미지 추가 -->
-    <div class="add-img-btn nf" @click="axiosFileSelect">
-      <v-icon> mdi-image-multiple </v-icon> 사진 추가
-    </div>
-    <input
-      type="file"
-      id="fileUpload"
-      ref="files"
-      style="display:none"
-      @change="axiosFileChange"
-      multiple
-    />
+      <!-- 이미지 추가 -->
+      <div class="add-img-btn" @click="axiosFileSelect"><v-icon> mdi-image-multiple </v-icon>&nbsp;add</div>
+      <input type="file" id="fileUpload" ref="files" style="display:none" @change="axiosFileChange" multiple />
 
-    <div class="photo-wrapper">
-      <div class="photo-item" v-for="(item, idx) in itemList" :key="idx">
-        <ArticlePhotoItem :item="item" :idx="idx" @deleteItem="deleteItem" />
-        <button @click="deleteItem(idx)">
-          <v-icon>mdi-trash-can</v-icon>
-        </button>
+      <div class="photo-wrapper">
+         <div class="photo-item" v-for="(item, idx) in itemList" :key="idx">
+            <ArticlePhotoItem :item="item" :idx="idx" @deleteItem="deleteItem" />
+            <button @click="deleteItem(idx)">
+               <v-icon>mdi-trash-can</v-icon>
+            </button>
+         </div>
       </div>
-    </div>
 
     <div class="af-footer">
       <div class="left-button" @click="closeModal">
@@ -42,7 +33,6 @@
       </div>
       <div class="middle-button" @click="reset">
         <v-icon>mdi-eraser</v-icon> <span class="cap">지우기</span>
-      </div>
       <div class="right-button" @click="createArticle">
         <v-icon>mdi-pencil</v-icon> <span class="cap">글작성</span>
       </div>
@@ -191,20 +181,31 @@ export default {
     border: 1px solid rgb(165, 165, 165);
     border-radius: 20px;
 
-    input {
-      // background-color: blue;
-      width: 100%;
-      height: 100%;
-      text-align: center;
+      input {
+         // background-color: blue;
+         width: 100%;
+         height: 100%;
+         text-align: center;
 
-      font-family: "Poor Story";
-      font-size: 14pt;
+         font-size: 12pt;
 
-      &:focus {
-        outline: none;
+         &:focus {
+            outline: none;
+         }
       }
-    }
-  }
+   }
+
+   .add-img-btn {
+      display: inline;
+      background-color: white;
+      padding: 15px;
+      border-radius: 30px;
+      box-shadow: 0px 9px 20px 0px #56565629;
+
+      font-size: 10pt;
+      color: rgb(70, 70, 70);
+      font-weight: 600;
+   }
 
   .add-img-btn {
     display: inline;

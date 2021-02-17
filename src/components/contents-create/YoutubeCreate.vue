@@ -53,14 +53,10 @@ export default {
       YoutubeItem,
       infiniteLoading,
    },
-   props: {
-      isAdded: Boolean,
-   },
    data: function() {
       return {
          dialog: false,
          infLoading: false,
-         videoAdded: false,
          videos: [],
          query: '',
          nextPageToken: '',
@@ -88,7 +84,6 @@ export default {
 
       onSelectVideo: function(video) {
          this.$emit('select-video', video);
-         this.videoAdded = true;
          this.dialog = false;
          this.infLoading = false;
          this.query = '';
@@ -109,15 +104,9 @@ export default {
          }
       },
       onYoutubeClick: function() {
-         if (this.videoAdded == true) {
-            alert('유튜브 항목은 한 개만 넣을 수 있습니다');
-            this.dialog = false;
-            this.infLoading = false;
-            this.query = '';
-            this.videos = [];
-         } else {
-            this.dialog = true;
-         }
+     
+         this.dialog = true;
+
       },
 
       // 무한 스크롤 (다음 페이지에 있는 요청결과 가져와서 원래 video list 와 합치기)
@@ -145,15 +134,6 @@ export default {
                   }
                }, 1000);
             });
-      },
-   },
-   watch: {
-      isAdded: function() {
-         if (this.isAdded == false) {
-            this.videoAdded = false;
-         } else {
-            this.videoAdded = true;
-         }
       },
    },
 };

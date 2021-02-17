@@ -45,7 +45,7 @@
                   justify="center"
                 >
                   <div class="display-3">
-                    {{ slide }} Slide
+                    {{ slide }}
                   </div>
                 </v-row>
               </v-sheet>
@@ -71,7 +71,7 @@ export default {
         'deep-purple accent-4',
       ],
       slides: [
-        'First',
+        '하나',
         'Second',
         'Third',
         'Fourth',

@@ -8,6 +8,7 @@
   padding-bottom: 0px;
 }
 .content-wrapper .img-wrapper {
+  cursor: pointer;
   width: 100%;
   height: 70%;
 }
@@ -18,7 +19,7 @@
   border-radius: 30px;
   object-position: 50% 50%;
 }
-@media (min-width: 411px) and (max-width: 599px) {
+@media (min-width: 375px) and (max-width: 599px) {
   .content-wrapper .img-wrapper img {
     object-position: 50% 50%;
   }
@@ -32,9 +33,9 @@
   .content-wrapper .img-wrapper::before {
     content: "";
     width: 400px;
-    height: 180px;
+    height: 100px;
     position: absolute;
-    top: 20px;
+    top: 100px;
     left: 50px;
     z-index: -5;
   }
@@ -55,6 +56,7 @@
   left: 3%;
 }
 .content-wrapper .img-wrapper .badge-cate span {
+  cursor: pointer;
   border-radius: 4px;
   padding: 3px 6px;
   margin-right: 6px;
@@ -109,15 +111,18 @@
   padding: 2px 20px 0px 20px;
 }
 .content-wrapper .desc-wrapper h1 {
+  cursor: pointer;
   color: #282828;
   font-size: 20px;
 }
 .content-wrapper .desc-wrapper span {
+  cursor: pointer;
   color: #EF960C;
   font-weight: 600;
   margin-right: 10px;
 }
 .content-wrapper .desc-wrapper h6 {
+  cursor: pointer;
   color: #282828;
   margin-top: 4px;
   font-size: 12px;
@@ -151,5 +156,13 @@
   line-height: 40px;
 }
 .content-wrapper .desc-wrapper .btn-unlike i {
+  cursor: pointer;
   color: white;
+}
+@media (min-width: 1024px) {
+  .content-wrapper .desc-wrapper .btn-unlike:hover {
+    background-color: #f4b740;
+    transition: 0.3s;
+    cursor: pointer;
+  }
 }

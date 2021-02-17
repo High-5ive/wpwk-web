@@ -86,14 +86,14 @@ export default {
       },
       findUserAbility: function() {
          findUserAbility(
-         (success) => {
-            this.$store.dispatch('getUsersAbilities', success.data)
-         },
-         (fail) => {
-            console.log(fail);
-         }
+            (success) => {
+               this.$store.dispatch('getUsersAbilities', success.data);
+            },
+            (fail) => {
+               console.log(fail);
+            }
          );
-    },
+      },
    },
 };
 </script>

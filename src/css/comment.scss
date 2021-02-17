@@ -3,9 +3,13 @@
 
 //CommentList.vue
 .comment-wrapper {
+    // border: 1px dashed red;
     margin: 2px;
     align-items: center;
-    height: 100%;
+    height: 60vh;
+
+    overflow-y: scroll;
+    background-color: white;
 
     //CommentListItem.vue
     .comment-item {
@@ -27,6 +31,7 @@
             justify-content: space-between;
 
             .nickname {
+                cursor:pointer;
                 font-size: 10pt;
             }
 

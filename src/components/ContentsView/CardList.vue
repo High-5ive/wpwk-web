@@ -9,21 +9,21 @@
             </div>
          </div>
          <div class="footer-navi">
-            <div class="left-button out material-ripple" v-if="this.pageNum == 1" @click="[prevPage(), ripple()]">
+            <div class="left-button out material-ripple" v-on:keyup.left="prevPage()" v-if="this.pageNum == 1" @click="[prevPage(), ripple()]">
                <v-icon>mdi-backspace-outline</v-icon>
                <span class="cap">홈으로</span>
             </div>
-            <div class="left-button material-ripple" v-else @click="[prevPage(), ripple()]">
+            <div class="left-button material-ripple" v-on:keyup.left="prevPage()" v-else @click="[prevPage(), ripple()]">
                <v-icon>mdi-chevron-left</v-icon>
                <span class="cap">이전</span>
             </div>
-            <div class="right-button fin material-ripple" v-if="pageNum === this.cards.length" @click="[evaluationValue(), ripple()]">
+            <div class="right-button fin material-ripple" v-on:keyup.right="evaluationValue()" v-if="pageNum === this.cards.length" @click="[evaluationValue(), ripple()]">
                <v-icon>
                   mdi-flag
                </v-icon>
                <span class="cap">종료</span>
             </div>
-            <div class="right-button material-ripple" v-else @click="[nextPage(), ripple()]">
+            <div class="right-button material-ripple" v-on:keyup.right="nextPage()" v-else @click="[nextPage(), ripple()]">
                <v-icon :disabled="pageNum >= this.cards.length">
                   mdi-chevron-right
                </v-icon>
@@ -58,7 +58,6 @@ export default {
    },
    methods: {
       nextPage() {
-         // this.doNotEffect;
          this.pageNum++;
       },
       prevPage() {
@@ -92,16 +91,6 @@ export default {
             });
          });
       },
-      // doNotEffect: function() {
-      //    console.log('이펙트 삭제!');
-      //    var elem = document.querySelector('.card-wrapper');
-
-      //    if (elem.classList.contains('effect')) {
-      //       elem.classList.remove('effect');
-      //       console.log('존재하니 삭제완료', elem);
-      //    }
-      //    // console.log(elem);
-      // },
    },
    components: {
       Card,

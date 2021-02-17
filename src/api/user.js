@@ -48,6 +48,31 @@ function follow(userId, success, fail) {
     .catch(fail);
 }
 
+function getFollowList(param, success, fail) {
+  let token = window.localStorage.getItem('accessToken');
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  instance
+    .get(`users/follow/${param.option}/${param.userId}`, config)
+    .then(success)
+    .catch(fail)
+}
+function getFollowingList(param, success, fail) {
+  let token = window.localStorage.getItem('accessToken');
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  instance
+    .get(`users/follow/${param.option}/${param.userId}`, config)
+    .then(success)
+    .catch(fail)
+}
+
 function changePwd(param, success, fail) {
   let token = window.localStorage.getItem('accessToken');
   const config = {
@@ -157,6 +182,8 @@ export {
   changePwd,
   getUserInfo,
   follow,
+  getFollowList,
+  getFollowingList,
   contentsEvaluations,
   getNotification,
   confirmNotification,

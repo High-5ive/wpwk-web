@@ -12,20 +12,21 @@
 }
 
 .nickname {
-  font-size: 14pt !important;
+  font-size: 14pt;
   font-weight: 600;
   color: #303030;
 }
 
 .content {
-  font-size: 12pt !important;
+  font-size: 12pt;
   color: #303030;
 }
 
 .ad-container {
-  height: 100%;
+  height: inherit;
   padding: 10px;
   padding-top: 40px;
+  overflow: hidden;
 }
 .ad-container .article-wrapper {
   margin-bottom: 10px;
@@ -48,6 +49,7 @@
   padding: 4px 8px 4px 8px;
 }
 .ad-container .article-wrapper .content-wrapper .nickname {
+  cursor: pointer;
   padding-left: 10px;
   padding-top: 10px;
 }

@@ -49,7 +49,23 @@
   top: 30px;
   right: 40px;
   width: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.cv-container .cv-card-wrapper .card-top-option .dropdown-menu {
   background-color: white;
+  border: 1px gray solid;
+  padding: 10px;
+}
+.cv-container .cv-card-wrapper .card-top-option .dropdown-menu .menu-detail {
+  font-size: 10pt;
+}
+.cv-container .cv-card-wrapper .card-top-option .dropdown-menu .menu-detail i {
+  font-size: 14pt;
+}
+.cv-container .cv-card-wrapper .card-top-option .dropdown-menu .menu-detail:nth-child(1) {
+  margin-bottom: 10px;
 }
 .cv-container .cv-card-wrapper .card-top-wrapper {
   height: 50px;
@@ -72,6 +88,7 @@
     margin-bottom: 3px;
   }
   .cv-container .cv-card-wrapper .card-top-wrapper .writer {
+    cursor: pointer;
     font-size: 14px !important;
   }
 }
@@ -128,7 +145,7 @@
 }
 .cv-container .cv-card-wrapper .cl-container .card-wrapper .card-desc::before {
   content: "";
-  background: url("../assets/cv-bg.png");
+  background: url("../assets/cv-bg2.png");
   background-size: cover;
   background-position: bottom;
   opacity: 0.4;
@@ -383,7 +400,7 @@
   box-shadow: 0px 8px 12px 0px #56565669;
   border-radius: 50px;
 }
-@media (min-width: 411px) and (max-width: 599px) {
+@media (min-width: 375px) and (max-width: 599px) {
   .cv-container .comment-modal #btn-comment {
     right: 5px;
     width: 50px !important;
@@ -415,7 +432,6 @@
 #comment-box.theme--light.v-card .cm-wrapper {
   position: relative;
   top: -60px;
-  overflow-x: hidden;
   width: 100%;
   height: 42vh;
 }

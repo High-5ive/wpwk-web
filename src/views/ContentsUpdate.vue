@@ -32,10 +32,10 @@
          </div>
       </draggable>
       <!-- 항목 추가 위한 버튼들 -->
-      <div class="footer d-flex flex-column">
+      <div class="cc-footer d-flex flex-column">
          <div class="footer-buttons d-flex justify-center align-center">
             <div class="btn-wrapper">
-               <YoutubeCreate :isAdded="youtubeAdded" @select-video="onSelectVideo" class="footerButtons" />
+               <YoutubeCreate @select-video="onSelectVideo" class="footerButtons" />
             </div>
             <div class="btn-wrapper">
                <v-icon @click="axiosFileSelect" class="footer-button-photo">
@@ -49,7 +49,8 @@
          </div>
          <div class="footer-navi d-flex justify-space-between">
             <div @click="cancleCreate" class="left-button nf nf-600">
-               취소
+               <v-icon>mdi-close</v-icon>
+               <span class="cap">취소</span>
             </div>
             <div class="right-button">
                <category-and-time-info :contentsId="contentsId" :userId="userId" :isEdit="isForEdit" :cateInfo="selectedCategories" :timeInfo="time" :tagList="hashtags" :title="title" :itemList="itemList" />
@@ -101,7 +102,6 @@ export default {
            minute: 0,
          },
          hashtags: [],
-         youtubeAdded: false,
          uploadPercentage: 0,
          isForEdit: true,
       };
@@ -159,7 +159,6 @@ export default {
 
       // 사진 업로드 시 itemList에 넣기
       createItemPhoto: function(p) {
-         console.log(p);
          const newItem = {
             type: 'photo',
             youtube: {},
@@ -176,9 +175,6 @@ export default {
       },
       // 항목 삭제
       deleteItem: function(index) {
-         if (this.itemList[index].type == 'youtube') {
-            this.youtubeAdded = false;
-         }
          this.itemList.splice(index, 1);
       },
       // 유튜브 추가
@@ -191,11 +187,10 @@ export default {
             youtubeId: video.videoId,
             youtubeTitle: video.title,
             photo: {},
-            description: video.videoCaption,
+            description: '',
          };
          if (this.itemList.length <= 9) {
             this.itemList.push(newItem);
-            this.youtubeAdded = true;
          } else {
             alert('항목은 최대 10개 까지 넣을 수 있습니다.');
          }
@@ -229,7 +224,6 @@ export default {
           (success) => {
             this.contentsId = success.data.id
             this.userId = success.data.userId
-            console.log(this.userInfo.userId, this.userId)
             this.hashtags = success.data.tagList
             this.title = success.data.title
             this.selectedCategories = success.data.ability.split('').map((v) => {
@@ -245,7 +239,6 @@ export default {
               targetContentsId,
               (success) => {
                 const res = success.data
-                console.log(res)
                 for (let i = 0; i < res.length; i++) {
                   if(res[i].youtubeId) {
                     const newItem = {
@@ -257,7 +250,6 @@ export default {
                       photo: {},
                       description: res[i].description
                     }
-                    this.youtubeAdded = true
                     this.itemList.push(newItem)
                   } else if (res[i].imageAddress !== null) {
                     const newItem = {
@@ -289,7 +281,6 @@ export default {
         )
       },
       isWriter: function () {
-         console.log(this.userId, this.userInfo.userId)
          setTimeout(() => {
             if (Number(this.userId) !== Number(this.userInfo.userId)) {
                this.$router.push('/main')
@@ -311,29 +302,40 @@ export default {
 
 <style lang="scss">
 @import 'src/css/common.scss';
+
 // 트렐로 배경색 : rgb(235,236,240)
 .cu-container {
-   @include desktop {
-      max-width: 500px;
-      left: 50%;
-      margin-left: -250px;
-   }
-   @include tablet {
-      max-width: 500px;
-      left: 50%;
-      margin-left: -250px;
-   }
+   // @include desktop {
+   //    max-width: 500px;
+   //    left: 50%;
+   //    margin-left: -250px;
+   // }
+   // @include tablet {
+   //    max-width: 500px;
+   //    left: 50%;
+   //    margin-left: -250px;
+   // }
    padding: 0 10px;
    position: relative;
+
    .guide {
       position: absolute;
       top: 10px;
       right: 10px;
+
+      @include desktop {
+         // top: 10%;
+         right: 20%;
+      }
    }
 
-   #input-title {
-      margin-top: 0px !important;
+   .v-input.v-text-field {
+      margin-top: 20px;
+      #input-title {
+         margin-top: 0px !important;
+      }
    }
+
    .contents {
       margin-bottom: 100px;
    }
@@ -407,6 +409,7 @@ export default {
                height: 80%;
                // background-color: yellow;
                .text {
+                  cursor: pointer;
                   max-height: 100%;
                   width: 100%;
                   text-align: center;
@@ -464,6 +467,7 @@ export default {
                      outline: none;
                   }
                   .text {
+                     cursor: pointer;
                      text-align: center;
                      width: 100%;
                      max-height: 100%;
@@ -526,65 +530,68 @@ export default {
       // z-index: 500;
    }
 
-   .footer {
+   .cc-footer {
+      //@responsive 콘텐츠 제작 10% 마진처리
       @include desktop {
-         width: 500px;
+         padding: 0 10% !important;
       }
-      @include tablet {
-         width: 500px;
-      }
+
       width: 100%;
-      position: fixed;
       z-index: 100;
+      position: fixed;
       bottom: 0px;
+      left: 0px;
       display: flex;
       direction: column;
       justify-content: center;
-
       align-items: center;
+
       .footer-buttons {
          height: 50px;
-         margin: 0 auto;
          width: 200px;
-         padding-left: 20px;
-         background-color: #ffffff;
-         border-radius: 30px;
-         border: rgb(179, 179, 179) 4px solid;
 
-         // border: 1px solid gray;
-         // box-shadow: 0 4px 4px lightgray;
+         margin: 0 auto;
+         padding-left: 20px;
+         margin-bottom: 30px;
+
+         border-radius: 30px;
+         background-color: #ffffff;
+         box-shadow: 0px 9px 20px 0px #56565664;
+
+         $btn-color: rgb(85, 85, 85);
 
          .row.footerButtons {
             // background-color: red !important;
+
             width: 30px;
             height: 30px;
-            margin-right: 22px !important;
-            margin-left: 4px !important;
+            margin-right: 18px !important;
+            margin-left: 0px !important;
 
             .mdi-youtube {
-               font-size: 25pt;
-               color: rgb(179, 179, 179);
+               font-size: 20pt;
+               color: $btn-color;
                &:hover {
-                  color: #f1afad;
+                  color: #ab0f0a;
                }
             }
          }
          .footer-button-photo {
-            font-size: 25pt;
+            font-size: 20pt;
             // margin-left: 20px;
             margin-right: 18px;
-            color: rgb(179, 179, 179);
+            color: $btn-color;
             &:hover {
-               color: #a8c7f1;
+               color: #0e4ba0;
             }
          }
          .footer-button-text {
-            font-size: 25pt;
+            font-size: 20pt;
             // margin-left: 20px;
             margin-right: 18px;
-            color: rgb(179, 179, 179);
+            color: $btn-color;
             &:hover {
-               color: #fcf592;
+               color: #edc112;
             }
          }
       }
@@ -592,19 +599,57 @@ export default {
          width: 100%;
          margin-top: 20px;
          height: 50px;
+         box-shadow: 0px -16px 20px 0px #5656560a;
+
+         i {
+            color: $navi-main;
+         }
+
+         .cap {
+            padding: 0;
+            display: block;
+            font-size: 8pt;
+            font-weight: 600;
+            color: $navi-cap;
+         }
+
          .left-button {
-            background-color: #f4b740;
+            cursor: pointer;
+            position: relative;
+            height: 50px;
             width: 50%;
-            padding-top: 12px;
             text-align: center;
-            font-size: 13pt;
+            background-color: white;
+
+            &::after {
+               content: '';
+               width: 1px;
+               height: 20px;
+               position: absolute;
+               top: 12px;
+               right: -1px;
+               background-color: rgb(223, 223, 223);
+            }
+
+            &.out {
+               i,
+               .cap {
+                  color: rgb(75, 23, 22);
+               }
+            }
          }
          .right-button {
-            background-color: #a2d646;
-            padding-top: 12px;
+            cursor: pointer;
             width: 50%;
             text-align: center;
-            font-size: 13pt;
+            background-color: white;
+
+            &.fin {
+               i,
+               .cap {
+                  color: $navi-success;
+               }
+            }
          }
       }
 

@@ -25,7 +25,9 @@
 .comment-wrapper {
   margin: 2px;
   align-items: center;
-  height: 100%;
+  height: 60vh;
+  overflow-y: scroll;
+  background-color: white;
 }
 .comment-wrapper .comment-item {
   display: block;
@@ -43,6 +45,7 @@
   justify-content: space-between;
 }
 .comment-wrapper .comment-item .top-wrapper .nickname {
+  cursor: pointer;
   font-size: 10pt;
 }
 .comment-wrapper .comment-item .top-wrapper .created {

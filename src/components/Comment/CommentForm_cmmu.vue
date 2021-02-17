@@ -39,18 +39,18 @@ export default {
 @import 'src/css/common.scss';
 
 .comment-cmmu-footer {
-   position: absolute;
+   position: fixed;
    z-index: 100;
    left: 0;
-   bottom: 0;
+   bottom: 0px;
    // transform: translateX(-50%);
 
    height: 50px;
    width: 100%;
 
    @include desktop {
-      // margin-left: 400px;
-      // width: calc(100% - 400px);
+      margin-left: 400px;
+      width: calc(100% - 400px);
    }
 
    background-color: white;

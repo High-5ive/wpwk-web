@@ -83,6 +83,8 @@ export default {
       text-align: center;
 
       .img-btn {
+         cursor: pointer;
+
          width: 280px;
          height: 180px;
          // border: 1px solid rgb(208, 208, 208);

@@ -30,7 +30,8 @@
 
       <!-- 하단 설명글 -->
       <div class="desc-wrapper">
-         <h1>{{ sendNori.title }}</h1>
+         <h1 @click="contentsClick(sendNori)">{{ sendNori.title }}</h1>
+
          <span v-for="(tag, idx) in sendNori.tagList" :key="'tag' + idx" @click="tagSearch(tag.name)"> #{{ tag.name }} </span>
          <h6 @click="$router.push({ name: 'mypage', params: { userId: sendNori.userId } })">{{ sendNori.nickname }}</h6>
          <div v-if="sendNori.favorite" class="btn-like" @click="doUnLike">
@@ -160,16 +161,6 @@ export default {
       } else {
          this.thumbnail = this.sendNori.thumb;
       }
-   },
-
-   watch: {
-      sendNori: function() {
-         if (this.sendNori.thumb == null) {
-            this.thumbnail = require('@/assets/cv-bg.png');
-         } else {
-            this.thumbnail = this.sendNori.thumb;
-         }
-      },
    },
 };
 </script>

@@ -39,15 +39,15 @@ export default {
             {
               label: '내 성향',
               data: this.personsAbilities,
-              backgroundColor: "#f4b8407b",
-              borderColor: "#f4b740",
+              backgroundColor: "#12711a70",
+              borderColor: "#12711a",
               borderWidth: 1,
           }],
         },
         options: {
           elements: {
             point: {
-              radius: 0
+              radius: 0,
             }
           },
           responsive: true,
@@ -64,13 +64,14 @@ export default {
               stepSize: this.maxAbility / 5,
             },
             pointLabels: {
-              fontSize: 15,
+              fontSize: 11,
             }
           },
           
           legend: {
             display: false,
           },
+
           tooltips: {
             callbacks: {
               label: function (tooltipItem) {
@@ -90,6 +91,11 @@ export default {
   }
 }
 </script>
-<style lang="">
+<style lang="scss">
+.as-chart{
+// background-color:#12711a;
+// background-color:#ffec99;
+
+}
   
 </style>
