@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="cm-container">
     <v-select
       v-model="subject"
       :items="subjects"
