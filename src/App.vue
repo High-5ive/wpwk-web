@@ -12,7 +12,7 @@
          <v-toolbar-title
             ><router-link to="/main"><img src="@/assets/wpwk_logo.png"/></router-link
          ></v-toolbar-title>
-         <div class="btn-notification" @click="notificationShow">
+         <div class="btn-notification" @click="notificationShow" v-click-outside="onClickOutside">
             <v-icon>mdi-bell</v-icon>
          </div>
          <!-- <div class="notificationNum"></div> -->
@@ -37,9 +37,14 @@ import Search from '@/components/main/Search.vue';
 import Notification from '@/components/main/Notification.vue';
 import { confirmNotification, getNotification } from '@/api/user.js';
 import { mapState } from 'vuex';
+import vClickOutside from 'v-click-outside'
+
 export default {
    name: 'App',
    components: { Search, Notification },
+   directives: {
+    clickOutside: vClickOutside.directive
+  },
    data: () => ({
       drawer: false,
       showSearch: false,
@@ -87,6 +92,10 @@ export default {
             }
          }
          this.showNotification = !this.showNotification;
+      },
+      onClickOutside (event) {
+         this.showNotification = false;
+         console.log(event)
       },
       searchShow(search) {
          this.showSearch = search;
