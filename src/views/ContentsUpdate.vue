@@ -159,7 +159,6 @@ export default {
 
       // 사진 업로드 시 itemList에 넣기
       createItemPhoto: function(p) {
-         console.log(p);
          const newItem = {
             type: 'photo',
             youtube: {},
@@ -188,7 +187,7 @@ export default {
             youtubeId: video.videoId,
             youtubeTitle: video.title,
             photo: {},
-            description: video.videoCaption,
+            description: '',
          };
          if (this.itemList.length <= 9) {
             this.itemList.push(newItem);
@@ -225,7 +224,6 @@ export default {
           (success) => {
             this.contentsId = success.data.id
             this.userId = success.data.userId
-            console.log(this.userInfo.userId, this.userId)
             this.hashtags = success.data.tagList
             this.title = success.data.title
             this.selectedCategories = success.data.ability.split('').map((v) => {
@@ -241,7 +239,6 @@ export default {
               targetContentsId,
               (success) => {
                 const res = success.data
-                console.log(res)
                 for (let i = 0; i < res.length; i++) {
                   if(res[i].youtubeId) {
                     const newItem = {
@@ -284,7 +281,6 @@ export default {
         )
       },
       isWriter: function () {
-         console.log(this.userId, this.userInfo.userId)
          setTimeout(() => {
             if (Number(this.userId) !== Number(this.userInfo.userId)) {
                this.$router.push('/main')

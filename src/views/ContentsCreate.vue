@@ -156,7 +156,6 @@ export default {
 
       // 사진 업로드 시 itemList에 넣기
       createItemPhoto: function(p) {
-         console.log(p);
          const newItem = {
             type: 'photo',
             youtube: {},
@@ -185,7 +184,7 @@ export default {
             youtubeId: video.videoId,
             youtubeTitle: video.title,
             photo: {},
-            description: video.videoCaption,
+            description: '',
          };
          if (this.itemList.length <= 9) {
             this.itemList.push(newItem);

@@ -2,10 +2,10 @@
    <div style="overflow: hidden;" class="mp-container d-flex flex-column align-center">
       <div class="top-wrapper">
          <div class="user-info-wrapper">
-            <img src="@/assets/img/characters/mypage_bg2.png" alt="" />
+            <img src="@/assets/img/characters/mypage_bg3.png" alt="" />
             <div class="in-bubble">
                <!-- 나중에는 페이지 들어오기전에 유저정보(id, 별명, 작성글 목록 등) 요청 후 응담 내용으로 보여주기-->
-               <span class="username">{{ userNickname }},</span>
+               <span class="username nf nf-600">{{ userNickname }}</span>
                <!-- 팔로우 버튼 (타유저프로필일때) -->
                <!-- 언팔로우 버튼 (타유저 구독한 상태일때) -->
             </div>
@@ -15,13 +15,13 @@
             </div>
             <div class="mp-top-right">
                <div class="user-info">
-                  <div class="user-info-item">
-                     <span class="f-number">{{ followers }}</span>
-                     <span class="f-text">팔로워</span>
+                  <div class="user-info-item" @click="dialogFollower = true">
+                     <span class="nf nf-600 f-number">{{ followers }}</span>
+                     <span class="nf nf-600 f-text">팔로워</span>
                   </div>
-                  <div class="user-info-item">
-                     <span class="f-number">{{ followings }}</span>
-                     <span class="f-text">팔로잉</span>
+                  <div class="user-info-item" @click="dialogFollowing = true">
+                     <span class="nf nf-600 f-number">{{ followings }}</span>
+                     <span class="nf nf-600 f-text">팔로잉</span>
                   </div>
                </div>
             </div>
@@ -31,7 +31,7 @@
                      mdi-account-check
                   </v-icon>
                   <span>
-                     구독 취소
+                  구독 취소
                   </span>
                </button>
                <button @click="followSomeone" v-if="!isfollowed" class="infos-button follow-button">
@@ -74,8 +74,63 @@
          <persons-assets-with-photo v-if="showValue === 3 || showValue === 4" :showValue="showValue" :personsAssetsWithPhoto="personsAssetsWithPhoto" />
          <chart v-if="showValue == 5" />
       </div>
-      <img class="mp-default-img" v-if="(personsAssets.length ==0 || psersonsAssetsWithPhoto.length == 0) && showValue !== 5" src="@/assets/img/characters/mypage-box.png" alt="">
-      
+      <img class="mp-default-img" v-if="((personsAssets.length ==0 || personsAssetsWithPhoto.length == 0) && ( showValue !== 5 && showValue !== 0)) || showValue == 0" src="@/assets/img/characters/mypage-box.png" alt="">
+      <!-- 팔로잉리스트모달 -->
+      <div>
+         <v-row justify="center">
+            <v-dialog v-model="dialogFollowing" persistent max-width="330px">
+               <v-card id="follow-modal" class="seccesion-modal">
+                  <v-card-title class="nf">
+                     {{ userNickname }}님의 팔로잉
+                  </v-card-title>
+                  <div class="followList">
+                     <div 
+                        class="followListitems"
+                        v-for="(following, idx) in followingList"
+                        :key="idx"
+                        @click="toPersonsPage(following.id)"
+                     >{{ following.nickname }}
+                     <!-- <div class="follow-list-item" :class="{'for-stripe': idx / 2 !== 0}">
+                        {{ following.nickname }}
+                     </div> -->
+                     </div>
+                  </div>
+                  <v-card-actions>
+                     <v-spacer></v-spacer>
+                     <v-btn color="error" text @click="dialogFollowing = false"> 닫기 </v-btn>
+                  </v-card-actions>
+               </v-card>
+            </v-dialog>
+         </v-row>
+      </div>
+      <!-- 팔로워리스트모달 -->
+      <div>
+         <v-row justify="center">
+            <v-dialog v-model="dialogFollower" persistent max-width="330px">
+               <v-card id="follow-modal" class="seccesion-modal">
+                  <v-card-title class="nf">
+                     {{ userNickname }}님의 팔로워
+                  </v-card-title>
+                  <div class="followList">
+                     <div 
+                        class="followListitems"
+                        v-for="(follower, idx) in followedList"
+                        :key="idx"
+                        
+                     >
+                     <div @click="toPersonsPage(follower.id)" class="follow-list-item" :class="{'for-stripe': idx / 2 !== 0}">
+                        {{ follower.nickname }}
+                     </div>
+                     </div>
+                  </div>
+                  <v-card-actions>
+                     <v-spacer></v-spacer>
+                     <v-btn color="error" text @click="dialogFollower = false"> 닫기 </v-btn>
+                  </v-card-actions>
+               </v-card>
+            </v-dialog>
+         </v-row>
+      </div>
       <!-- 회원탈퇴 모달 -->
       <div>
          <v-row justify="center">
@@ -152,6 +207,8 @@ import { deleteUser } from '@/api/user.js';
 import { changePwd } from '@/api/user.js';
 import { getUserInfo } from '@/api/user.js';
 import { follow } from '@/api/user.js';
+import { getFollowList } from '@/api/user.js';
+import { getFollowingList } from '@/api/user.js';
 import { findMyContents } from '@/api/myPage.js';
 import { findMyBoard } from '@/api/myPage.js';
 import { findContentsByFavorite } from '@/api/myPage.js';
@@ -175,6 +232,8 @@ export default {
          userId: 0,
          dialog: false,
          dialog2: false,
+         dialogFollower: false,
+         dialogFollowing: false,
          show1: false,
          show2: false,
          show3: false,
@@ -182,6 +241,8 @@ export default {
          followings: 0,
          userNickname: '',
          isfollowed: '',
+         followedList: [],
+         followingList: [],
          curPwd: '',
          newPwd1: '',
          newPwd2: '',
@@ -209,12 +270,22 @@ export default {
       isMypage: function() {
          if (this.$route.params.userId === this.userInfo.userId) {
             this.showValue = 5;
+         } else {
+            this.showValue = 0;
          }
       },
       getUserInfo: function() {
          const targetUser = {
             targetId: this.$route.params.userId,
          };
+         const targetUserFollowed = {
+            userId: this.$route.params.userId,
+            option: 'followed'
+         };
+         const targetUserFollowing = {
+            userId: this.$route.params.userId,
+            option: 'following'
+         }
          getUserInfo(
             targetUser,
             (success) => {
@@ -223,9 +294,24 @@ export default {
                this.followers = success.data.findUser.followed;
                this.followings = success.data.findUser.following;
                this.userId = success.data.findUser.id;
+               getFollowList(
+                  targetUserFollowed,
+                  (success) => {
+                     this.followedList = success.data
+                     getFollowingList(
+                        targetUserFollowing,
+                        (success) => {
+                           this.followingList = success.data
+                        }
+                     )
+                  },
+                  (fail) => {
+                     console.log(fail)
+                  }
+               )
             },
-            (error) => {
-               console.log(error);
+            (fail) => {
+               console.log(fail);
             }
          );
       },
@@ -234,20 +320,35 @@ export default {
          const targetUser = {
             targetId: this.$route.params.userId,
          };
-         follow(
-            targetUser,
-            () => {
-               this.isfollowed = !this.isfollowed;
-               if (this.isfollowed == false) {
-                  this.followers--;
-               } else {
-                  this.followers++;
+         const targetUserFollowed = {
+            userId: this.$route.params.userId,
+            option: 'followed'
+         };
+         if (Number(targetUser.targetId) !== this.userInfo.userId) {
+            follow(
+               targetUser,
+               () => {
+                  this.isfollowed = !this.isfollowed;
+                  if (this.isfollowed == false) {
+                     this.followers--;
+                  } else {
+                     this.followers++;
+                  }
+                  getFollowList(
+                     targetUserFollowed,
+                     (success) => {
+                        this.followedList = success.data
+                     },
+                     (fail) => {
+                        console.log(fail)
+                     }
+                  )
+               },
+               (error) => {
+                  console.log(error);
                }
-            },
-            (error) => {
-               console.log(error);
-            }
-         );
+            );
+         } 
       },
       //비밀번호 변경 validation
       checkPW(str) {
@@ -291,7 +392,6 @@ export default {
                this.userId,
                page,
                (success) => {
-                  console.log(success.data)
                   this.showValue = 1;                    
                   this.personsAssets = success.data;
                },
@@ -348,10 +448,21 @@ export default {
             }
          );
       },
+      toPersonsPage: function (userId) {
+         this.$router.push({ name: 'mypage', params: { userId: userId } }).catch()
+         this.dialogFollower = false
+         this.dialogFollowing = false
+      }
    },
    computed: {
       ...mapState(['userInfo']),
    },
+   watch: {
+      $route() {
+         this.getUserInfo();
+         this.isMypage();
+      }
+   }
 };
 </script>
 <style lang="scss">
@@ -392,8 +503,8 @@ export default {
             top: 15px;
             width: 350px;
             height: 150px;
-            transform: rotateY(180deg);
             // height: 150px;
+            transform: rotateY(180deg);
          }
          .in-bubble {
             white-space: nowrap;
@@ -405,17 +516,16 @@ export default {
             top: 50px;
             .username {
                display: inlnine;
-               font-size: 18pt;
+               font-size: 22pt;
                font-weight: 600;
             }
          }
          .user-action-wrapper {
             top: 100px;
-            left: -78px;
+            left: -160px;
             width: 150px;
             position: absolute;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: space-around;
             font-size: 9pt;
@@ -431,47 +541,58 @@ export default {
             padding: 10px;
             position: absolute;
             left: -10px;
-            width: 170px;
-            top: -5px;
+            width: 140px;
+            top: -10px;
             display: flex;
-            flex-direction: column;
             height: 120px;
             align-items: center;
-            justify-content: space-around;
+            justify-content: center;
             .user-info {
                width: 100%;
                display: flex;
                justify-content: space-around;
                .user-info-item {
+                  cursor: pointer;
                   display: flex;
                   flex-direction: column;
                   align-items: center;
                   .f-number {
-                     font-size: 18pt;
+                     font-size: 15pt;
                   }
                   .f-text {
-                     font-size: 10pt;
+                     font-size: 9pt;
                   }
                }
             }
          }
          .follow-buttons {
             position: absolute;
-            top: 75px;
-            left: -55px;
+            top: 95px;
+            left: -138px;
             .follow-button {
-               background-color: #a2d646;
+               $color1:rgb(30, 111, 14);
+               border: 2px solid $color1;
+               color: $color1;
+               i {
+                  color: $color1;
+               }
             }
             .unfollow-button {
-               background-color: rgb(184, 184, 184);
+               $color2: rgb(96, 96, 96);
+               border: 2px solid $color2;
+               color: $color2;
+               i {
+                  color: $color2;
+               }
             }
             .infos-button {
-               margin-top: 25px;
-               font-size: 10pt;
-               // margin-left: 10px;
-               border-radius: 10px;
-               padding: 5px 10px;
-               width: 100px;
+               font-size: 9pt;
+               border-radius: 15px;
+               padding: 3px 0px;
+               width: 85px;
+               i {
+                  font-size: 14pt;
+               }
                &:focus {
                   outline: none;
                }
@@ -629,5 +750,47 @@ export default {
    }
 
    
+}
+#follow-modal {
+   .followList {
+      width: 80%;
+      margin: 20px 30px;
+      border-radius: 20px;
+      border: lightgray 1px solid;
+      overflow: hidden;
+      .followListitems {
+            cursor: pointer;
+            width: 100%;
+            padding: 10px 20px;
+
+            &:nth-child(2n){
+            background-color: #f2f1f2;
+
+            }
+            &:nth-child(2n+1){
+            background-color: #ffffff;
+            }
+            // &:last-child{
+            // border-radius: 0px 0px 20px 20px;
+            // }
+            // &:first-child{
+            // border-radius: 20px 20px 0px 0px ;
+            // background-color: #ff5151;
+            // }
+         
+
+         // .follow-list-item {
+
+         // }
+         // .for-stripe {
+            // background-color: #f2f1f2;
+
+         // }
+         // &:nth-last-child(){
+         //    border-radius: 0px 0px 20px 20px;
+
+         // }
+      }
+      }
 }
 </style>

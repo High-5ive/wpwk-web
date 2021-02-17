@@ -363,7 +363,7 @@ export default {
                      // contentsCreate에서 itemList가 새롭게 추가되는 버그 있음
                   }
                );
-            }, 2500);
+            }, 2000);
          } else {
             alert('필수정보(시간, 카테고리)를 입력해 주십시오.');
          }
