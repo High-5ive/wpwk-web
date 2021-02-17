@@ -7,11 +7,13 @@
       <v-icon v-else-if="type =='LIKE'" class='icon4'> mdi-account-heart </v-icon>
       <v-icon v-else-if="type =='COMMENT'" class='icon5'> mdi-comment-edit </v-icon>
       <v-icon v-else class='icon6'> mdi-account-arrow-left </v-icon>
-      {{ message }}
+      <span @click='goMypage'> {{ message }} </span>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
     name: 'NotificationItem',
     data: function () {
@@ -26,6 +28,9 @@ export default {
             this.type = this.notification.messageType
             this.message = this.notification.message
         },
+        goMypage: function () {
+            this.$router.push({ name: 'mypage', params: { userId: this.userInfo.userId }})
+        }
         // getIcon: function() {
         //     switch(this.type) {
         //         case 'ADMIN_MESSAGE':
@@ -55,7 +60,10 @@ export default {
     created: function() {
         this.getNotification()
         // this.getIcon()
-    }
+    },
+    computed: {
+      ...mapState(['userInfo']),
+   },
 }
 </script>
 
