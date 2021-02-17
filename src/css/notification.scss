@@ -19,7 +19,7 @@
 
     .notification-wrapper {
         width: 100%;
-        font-size: 15px;
+        font-size: 12pt;
 
         .for-stripe {
             background-color: #F2F1F2;
@@ -28,6 +28,28 @@
         .notification {
             width: 100%;
             padding: 6px;
+
+            .icon-message {
+
+                .icon1 {
+                    color: black;
+                }
+                .icon2 {
+                    color: red;
+                }
+                .icon3 {
+                    color: rgb(255, 153, 0);
+                }
+                .icon4 {
+                    color: red;
+                }
+                .icon5 {
+                    color: green;
+                }
+                .icon6 {
+                    color: blue;
+                }
+            }
         }
 
         .notificationEmpty {

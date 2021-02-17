@@ -1,9 +1,15 @@
 <template>
    <div class="notification-container">
        <div v-if="this.notifications.length" class="notification-wrapper">
-           <div class="notification" :class="{'for-stripe':!isEven(idx)}" v-for="(notification, idx) in notifications" :key="idx"> {{ notification.message }} </div>
+           <div class="notification">
+               <NotificationItem
+               :class="{'for-stripe':!isEven(idx)}"
+               v-for="(notification, idx) in notifications"
+               :key="idx"
+               :notification="notification"/>
+            </div>
        </div>
-       <div else class="notification-wrapper">
+       <div v-else class="notification-wrapper">
            <div class="notificationEmpty nf"> 알림이 없습니다. </div>
        </div>
    </div>
@@ -11,13 +17,17 @@
 
 <script>
 import { getNotification } from '@/api/user.js'
+import NotificationItem from './NotificationItem.vue'
 
 export default {
    name: 'Notification',
    data: function () {
       return {
-          notifications: []
+          notifications: [],
       }
+   },
+   components: {
+       NotificationItem
    },
    methods: {
        isEven: function (idx) {
