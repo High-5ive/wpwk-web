@@ -1,15 +1,12 @@
 <template>
    <div class="main-container">
-      <!-- <div v-if="loading">
-         <loading></loading>
-      </div> -->
-      <div v-if="!loading" class="noriList-wrapper">
+      <div class="noriList-wrapper">
          <div class="nori-wrapper" v-for="(nori, idx) in NoriList" :key="idx">
             <nori-content :sendNori="nori"> </nori-content>
             <br />
          </div>
          <div class="nori-wrapper spinner">
-            <infinite-loading spinner="spiral" @infinite="infiniteHandler">
+            <infinite-loading spinner="waveDots" @infinite="infiniteHandler">
                <div slot="no-more" class="nf">더 이상 컨텐츠가 없어요 :)</div>
             </infinite-loading>
          </div>
@@ -21,7 +18,6 @@
 <script>
 import NoriContent from '@/components/main/NoriContent.vue';
 import SpeedDial from '@/components/main/SpeedDial.vue';
-// import Loading from '@/components/main/Loading.vue';
 import { findContentsByPage } from '@/api/contents.js';
 import { findUserAbility } from '@/api/user.js';
 import infiniteLoading from 'vue-infinite-loading';
@@ -31,7 +27,6 @@ export default {
       NoriContent,
       SpeedDial,
       infiniteLoading,
-      // Loading,
    },
    data() {
       return {
@@ -43,66 +38,9 @@ export default {
       };
    },
    created() {
-      // this.getNoriList();
       this.findUserAbility();
    },
    methods: {
-      getNoriList() {
-         findContentsByPage(
-            this.page,
-            (res) => {
-               this.NoriList = res.data;
-               for (var i = 0; i < this.NoriList.length; i++) {
-                  if (this.NoriList[i].ability != null) {
-                     let abilityList = [];
-                     for (var j = 0; j < this.NoriList[i].ability.length; j++) {
-                        if (this.NoriList[i].ability.charAt(j) == '1') {
-                           abilityList.push(this.abilities[j]);
-                        }
-                     }
-
-                     // 각 컨텐츠마다 지능
-                     this.NoriList[i].abilities = abilityList;
-                  }
-               }
-               this.page += 1;
-               this.loading = false;
-            },
-            (error) => {
-               console.log(error);
-            }
-         );
-      },
-
-      // getNoriListByTag() {
-      //    this.page = 1;
-      //    console.log('태그 검색');
-      //    findContentsByTag(
-      //       this.$route.query.tag,
-      //       this.page,
-      //       (res) => {
-      //          this.NoriList = res.data;
-      //          for (var i = 0; i < this.NoriList.length; i++) {
-      //             if (this.NoriList[i].ability != null) {
-      //                let abilityList = [];
-      //                for (var j = 0; j < this.NoriList[i].ability.length; j++) {
-      //                   if (this.NoriList[i].ability.charAt(j) == '1') {
-      //                      abilityList.push(this.abilities[j]);
-      //                   }
-      //                }
-
-      //                // 각 컨텐츠마다 지능
-      //                this.NoriList[i].abilities = abilityList;
-      //             }
-      //          }
-      //          this.page += 1;
-      //          this.loading = false;
-      //       },
-      //       (error) => {
-      //          console.log(error);
-      //       }
-      //    );
-      // },
 
       // 무한 스크롤 (다음 페이지에 있는 요청결과 가져와서 원래 video list 와 합치기)
       infiniteHandler($state) {

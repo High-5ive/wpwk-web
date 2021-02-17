@@ -11,7 +11,7 @@
     ></v-select>
     <article-list :articles="articles" :subject_select="subject" />
     <div class="nori-wrapper spinner">
-      <infinite-loading spinner="spiral" @infinite="infiniteHandler">
+      <infinite-loading spinner="waveDots" @infinite="infiniteHandler">
         <div slot="no-more" class="nf">더 이상 컨텐츠가 없어요 :)</div>
       </infinite-loading>
     </div>
