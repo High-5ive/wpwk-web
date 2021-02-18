@@ -1,5 +1,5 @@
 <template>
-   <div style="overflow: hidden;" class="mp-container d-flex flex-column align-center">
+   <div class="mp-container d-flex flex-column align-center">
       <div class="top-wrapper">
          <div class="user-info-wrapper">
             <img src="@/assets/img/characters/mypage_bg3.png" alt="" />
@@ -476,7 +476,7 @@ export default {
    // max-width: 500px;
    background-color: #fffedd;
 
-   overflow: hidden !important;
+   // overflow: hidden !important;
    position: relative;
    height: 100%;
    //   border: red dashed 1px;

@@ -1,5 +1,5 @@
 <template>
-  <div style="overflow:hidden;">
+  <div>
     <div class="nori-wrapper">
       <div
         :class="{ 'for-stripe': !isEven(idx) }"

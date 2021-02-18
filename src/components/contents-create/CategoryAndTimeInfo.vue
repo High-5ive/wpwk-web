@@ -370,7 +370,7 @@ export default {
       },
       //컨텐츠 수정요청
       updateContent: function() {
-         if (this.time.minute !== 0 && this.selectedCategories.reduce((a, b) => a + b) >= 1) {
+         if ((this.time.minute !== 0 || this.time.hour !== 0) && this.selectedCategories.reduce((a, b) => a + b) >= 1) {
             this.isLoading = true;
             this.sendItemList = this.itemList;
             this.getImageCnt();

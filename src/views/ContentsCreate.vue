@@ -338,6 +338,7 @@ export default {
                   display: none;
                }
                textarea {
+                  cursor: auto;
                   width: 100%;
                   height: 100%;
                   padding: 8px;
@@ -373,6 +374,7 @@ export default {
                   width: 40%;
                   height: 70%;
                   textarea {
+                     cursor: auto !important;
                      width: 100%;
                      height: 100%;
                      padding: 8px;
@@ -395,6 +397,7 @@ export default {
                   .text::-webkit-scrollbar {
                      display: none;
                   }
+                  
                }
             }
          }
