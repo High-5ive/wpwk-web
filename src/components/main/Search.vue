@@ -1,6 +1,6 @@
 <template>
    <div class="search-container">
-      <div class="search-wrapper">
+      <div class="search-wrapper" v-click-outside="onClickOutsideSearch">
          <div class="search">
             <v-text-field v-model="searchValue" @keypress.enter="search" label="" hint="ex) 종이접기, 놀이"></v-text-field>
             <v-btn outlined rounded color="blue" @click="search">Search</v-btn>
@@ -37,12 +37,16 @@ import SearchItem from './SearchItem.vue';
 import SearchItemPopularMostViewed from './SearchItemPopularMostViewed.vue';
 import { getPopularContents } from '@/api/contents.js'
 import { getMostViewedCountContents } from '@/api/contents.js'
+import vClickOutside from 'v-click-outside';
 
 export default {
    name: 'Search',
    components: {
       SearchItem,
       SearchItemPopularMostViewed,
+   },
+   directives: {
+      clickOutside: vClickOutside.directive,
    },
    data: function() {
       return {
@@ -55,6 +59,9 @@ export default {
       };
    },
    methods: {
+      onClickOutsideSearch: function () {
+         this.$emit('searchShow', this.searchShow);
+      },
       search: function() {
          this.$router.push({
             name: 'SearchResult',
