@@ -357,8 +357,14 @@ export default {
             };
             changePwd(
                passwords,
-               () => {
-                  alert('비밀번호 변경이 완료되었습니다.');
+               (res) => {
+                  // 기존 비밀번호가 일치하지 않는 경우
+                  if(res.status === 204) {
+                     alert('현재 비밀번호가 일치하지 않습니다.');
+                  }                  
+                  if(res.status === 200) {
+                     alert('비밀번호 변경이 완료되었습니다.');
+                  }
                   this.curPwd = '';
                   this.newPwd1 = '';
                   this.newPwd2 = '';
@@ -430,6 +436,9 @@ export default {
       secession: function() {
          deleteUser(
             () => {
+               // 로그아웃 추가
+               alert("회원탈퇴가 완료되었습니다")
+               this.$store.dispatch('doLogout')
                this.$router.push('/');
             },
             (error) => {

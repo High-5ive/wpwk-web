@@ -9,7 +9,7 @@
       <!-- 카드페이지 -->
       <div v-else class="cv-card-wrapper">
          <div class="card-top-option">
-            <div v-if="userInfo.userId == contents.userId" class="dots" @click="menuToggle">
+            <div v-if="userInfo.userId == contents.userId || userInfo.status === 2" class="dots" @click="menuToggle">
                <v-icon>mdi-dots-horizontal</v-icon>
             </div>
             <div v-if="menu" aria-expanded="false" class="dropdown-menu">

@@ -113,7 +113,7 @@ export default {
         article,
         () => {
           alert("게시 글 등록이 완료되었습니다.");
-          this.getBoards();
+          
         },
         (error) => {
           console.log(error);
