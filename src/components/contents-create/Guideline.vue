@@ -27,7 +27,7 @@
           <!-- 가이드라인 안의 슬라이드 -->
           <v-carousel
             cycle
-            height="700"
+            height="auto"
             hide-delimiter-background
             show-arrows-on-hover
           >
