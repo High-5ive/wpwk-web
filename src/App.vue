@@ -126,12 +126,22 @@ export default {
    },
    watch: {
       showNotification: function() {
-         this.getNotifications();
+         if(this.userInfo) {
+            this.getNotifications();
+         }
       },
       userInfo: function() {
-         this.getNotifications();
+         if(this.userInfo) {
+            this.getNotifications();
+         }
       },
    },
+   created: function() {
+      console.log('hi')
+      if(this.userInfo) {
+         this.getNotifications();
+      }
+   }
 };
 </script>
 
