@@ -4,7 +4,7 @@
       <div class="top-wrapper">
          <span class="nickname" @click="$router.push({ name: 'mypage', params: { userId: comment.userId } })">{{ comment.nickname }}</span>
 
-         <span class="created">{{ comment.createdAt }}</span>
+         <span class="created">{{ comment.createdAt | moment('add', '9 hours', 'YYYY.MM.DD H:mm') }}</span>
       </div>
 
       <!-- 댓글 내용 -->

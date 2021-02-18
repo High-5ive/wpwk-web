@@ -2,8 +2,9 @@
   <div class="ad-container">
     <div class="article-wrapper">
       <div class="content-wrapper">
-        <div class="category">
-          {{ article.category }}
+        <div class="at-category-time">
+          <span class="at-category">{{ article.category }}</span>
+          <span class="at-timeinfo">{{ article.createdAt | moment('add', '9 hours', 'YYYY.MM.DD H:mm') }}</span>
         </div>
         <div
           v-if="userInfo.userId == article.userId"

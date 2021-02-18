@@ -27,7 +27,7 @@
         <v-btn outlined rounded small @click="warnContents"> 경고 </v-btn>
         <v-btn outlined rounded small @click="deleteContents"> 삭제 </v-btn>
       </div>
-      <div class="date">신고 날짜 : {{ this.createdAt }} </div>
+      <div class="date">신고 날짜 : {{ this.createdAt | moment('add', '9 hours', 'YYYY-MM-DD HH:mm') }} </div>
     </div>
   </div>
 </template>

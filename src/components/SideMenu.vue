@@ -47,7 +47,7 @@ export default {
             // 본인이 본인을 조회한 경우 -> 새로고침?
             if (now.split('/')[2] == this.userInfo.userId) {
                // 원래 새로고침 해야하는데, 새로고침하면 시청분석이 날라가서 캐치로 받음
-               this.$router.push({ name: 'mypage', params: { userId: userInfo.userId } }).catch(() => {});
+               this.$router.push({ name: 'mypage', params: { userId: this.userInfo.userId } }).catch(() => {});
             } else {
                // 그 외엔 다시 내 페이지로 이동
                this.$router.push({ name: 'mypage', params: { userId: this.userInfo.userId } });

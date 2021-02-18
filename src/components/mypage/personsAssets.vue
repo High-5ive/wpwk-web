@@ -13,7 +13,7 @@
         </div>
         <div class="as-info">
           <span v-if="showValue === 2">{{ article.writer }}</span>
-          {{ article.createdAt | truncate(10, ' ') }} 조회 {{ article.views }}
+          {{ article.createdAt | moment('add', '9 hours', 'YYYY.MM.DD')  }} 조회 {{ article.views }}
         </div>
       </div>
     </div>

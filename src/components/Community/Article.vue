@@ -5,8 +5,9 @@
          <!-- <div v-if="this.article.itemList.length">
             <img @click="articleDetail" :src="img" />
          </div> -->
-         <div class="category">
-            {{ article.category }}
+         <div class="category-time">
+            <span class="cm-category">{{ article.category }}</span>
+            <span class="cm-timeinfo">{{ article.createdAt | moment('add', '9 hours', 'YYYY.MM.DD H:mm') }}</span>
          </div>
          <div class="nickname" @click="$router.push({ name: 'mypage', params: { userId: article.userId } })">
             {{ article.writer }}
