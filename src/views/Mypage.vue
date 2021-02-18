@@ -739,6 +739,15 @@ export default {
       }
       .as-chart {
          padding: 0 10px;
+         @include desktop {
+            width: 400px;
+            margin-left: 400px;
+         }
+         @include tablet {
+            width: 400px;
+            margin-left: 25%;
+         }
+         
       }
    }
 }
