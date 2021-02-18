@@ -89,7 +89,6 @@ export default {
       }
    },
    created: function () {
-      console.log('여기아닌가')
       this.getPopularContent()
       this.getMostViewedCountContent()
    }

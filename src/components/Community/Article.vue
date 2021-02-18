@@ -12,7 +12,7 @@
          <div class="nickname" @click="$router.push({ name: 'mypage', params: { userId: article.userId } })">
             {{ article.writer }}
          </div>
-         <div class="content">{{ article.content }}</div>
+         <div class="content" v-html="content"></div>
       </div>
 
       <div class="feature-wrapper">
@@ -93,14 +93,11 @@ export default {
 
       //====================================
    },
-   created: function() {
-      // this.getCard();
-   },
-   //   watch: {
-   //     subject_select: function() {
-   //       this.getCard();
-   //     },
-   //   },
+   computed: {
+      content: function() {
+         return this.article.content.replace(/(?:\r\n|\r|\n)/g, '<br />');
+      }
+   },    
 };
 </script>
 

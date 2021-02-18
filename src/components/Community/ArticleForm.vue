@@ -5,7 +5,7 @@
       </div>
 
       <div class="input-wrapper">
-         <input type="text" v-model="content" placeholder="글을 작성해주세요." />
+         <textarea class="article-content" v-model="content" placeholder="글을 작성해주세요."  />
       </div>
 
       <!-- 이미지 추가 -->
@@ -303,5 +303,12 @@ export default {
          }
       }
    }
+}
+
+.article-content {
+   width: 100%;
+   height: 100%;
+   resize: none;
+   outline: none;
 }
 </style>

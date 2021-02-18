@@ -31,7 +31,7 @@
         >
           {{ article.writer }}
         </div>
-        <div class="content">{{ article.content }}</div>
+        <div class="content" v-html="content"></div>
 
         <div v-if="itemList.length">
           <div v-for="(item, idx) in itemList" :key="idx">
@@ -170,10 +170,14 @@ export default {
         "생활정보 나눔",
         "잡담",
       ],
+      comment:"",
     };
   },
   computed: {
     ...mapState(["userInfo"]),
+    content: function() {
+      return this.article.content.replace(/(?:\r\n|\r|\n)/g, '<br />');
+    }
   },
   methods: {
     getArticle: function() {
@@ -184,7 +188,7 @@ export default {
           this.article = res.data;
 
           this.editContent = this.article.content;
-          this.editCategory = this.article.category;
+          this.editCategory = this.article.category;          
         },
         (error) => {
           console.log(error);
@@ -294,7 +298,7 @@ export default {
   },
   created: function() {
     this.getArticle();
-    this.getArticleComments();
+    this.getArticleComments();    
   },
 };
 </script>
