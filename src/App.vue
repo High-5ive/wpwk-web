@@ -88,10 +88,8 @@ export default {
                   console.log(fail);
                }
             );
-            
          } else {
             this.showNotification = !this.showNotification;
-
          }
       },
       onClickOutsideNotification() {
@@ -124,21 +122,21 @@ export default {
    },
    watch: {
       showNotification: function() {
-         if(this.userInfo) {
+         if (this.userInfo) {
             this.getNotifications();
          }
       },
       userInfo: function() {
-         if(this.userInfo) {
+         if (this.userInfo) {
             this.getNotifications();
          }
       },
    },
    created: function() {
-      if(this.userInfo) {
+      if (this.userInfo) {
          this.getNotifications();
       }
-   }
+   },
 };
 </script>
 
@@ -148,6 +146,39 @@ export default {
 #inspire {
    // position: relative !important;
    // background-color: blue;
+
+   /* 스크롤바 전체 */
+   ::-webkit-scrollbar {
+      width: 12px;
+   } /* 스크롤 바 */
+
+   /* 스크롤 막대 여백(남는거) */
+   ::-webkit-scrollbar-track {
+      background-color: transparent;
+   } /* 스크롤 바 밑의 배경 */
+
+   /* 스크롤 막대 */
+   ::-webkit-scrollbar-thumb {
+      background: #ffbb0f38;
+      border-radius: 10px;
+
+      /* 스크롤바와 남는 여백 사이에 공백을 주고 싶을 때 */
+      background-clip: padding-box;
+      border: 1px solid transparent;
+   } /* 실질적 스크롤 바 */
+
+   ::-webkit-scrollbar-thumb:hover {
+      background: #ffbb0f4b;
+   } /* 실질적 스크롤 바 위에 마우스를 올려다 둘 때 */
+
+   ::-webkit-scrollbar-thumb:active {
+      background: #ffbb0f52;
+   } /* 실질적 스크롤 바를 클릭할 때 */
+
+   ::-webkit-scrollbar-button {
+      display: none;
+   } /* 스크롤 바 상 하단 버튼 */
+
    font-family: 'Poor Story' sans-serif !important;
 
    padding-right: 0px !important;
