@@ -91,6 +91,9 @@ export default {
 
       //부모에게 모달 닫으라고 전달
       closeModal() {
+         this.content = '';
+         this.itemList = [];
+         this.subject = '';
          this.$emit('emit-close', false);
       },
 
@@ -102,6 +105,7 @@ export default {
       },
 
       createArticle: function() {
+         const completeBtn = document.querySelector('.right-button')
          if (this.subject === '') {
             alert('카테고리를 선택해 주세요');
             return;
@@ -117,7 +121,8 @@ export default {
             itemList: this.itemList,
             content: this.content,
          };
-
+         // 글 작성 텍스트 인풋에서 포커스아웃시킴
+         completeBtn.focus()
          this.$emit('createArticle', article);
          this.content = '';
          this.itemList = [];

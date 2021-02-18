@@ -81,30 +81,30 @@ export default {
     // },
 
       // 무한 스크롤
-      infiniteHandler($state) {
-         findBoardsByPage(
-            this.page,
-            (res) => {
-               setTimeout(() => {
-                  if (res.data.length) {
-                     var articleList = res.data;
+    infiniteHandler($state) {
+        findBoardsByPage(
+          this.page,
+          (res) => {
+              setTimeout(() => {
+                if (res.data.length) {
+                    var articleList = res.data;
 
-                     this.articles = this.articles.concat(articleList);
-                     $state.loaded();
-                     this.page += 1;
-                     if (this.articles.length / 10 == 0) {
-                        $state.complete();
-                     }
-                  } else {
-                     $state.complete();
-                  }
-               }, 1000);
-            },
-            (error) => {
-               console.log(error);
-            }
-         );
-      },
+                    this.articles = this.articles.concat(articleList);
+                    $state.loaded();
+                    this.page += 1;
+                    if (this.articles.length / 10 == 0) {
+                      $state.complete();
+                    }
+                } else {
+                    $state.complete();
+                }
+              }, 1000);
+          },
+          (error) => {
+              console.log(error);
+          }
+        );
+    },
       //====================================
 
     createArticle: function(article) {
@@ -113,7 +113,7 @@ export default {
         article,
         () => {
           alert("게시 글 등록이 완료되었습니다.");
-          this.getBoards();
+          this.$router.go(this.$router.currentRoute);
         },
         (error) => {
           console.log(error);
@@ -122,9 +122,9 @@ export default {
       //
     },
   },
-  created: function() {    
-    // this.getBoards(); //생성되자마자 게시글 조회
-  },
+  // mounted: function() {    
+  //   // this.getBoards(); //생성되자마자 게시글 조회
+  // },
 };
 </script>
 
