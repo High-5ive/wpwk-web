@@ -10,7 +10,7 @@ function findBoardCommentsByBoardId(boardId, page, success, fail) {
   };
 
   instance
-    .get(`/boardComments/boards/${boardId}/page/${page}`, config)
+    .get(`boardComments/boards/${boardId}/page/${page}`, config)
     .then(success)
     .catch(fail);
 }
@@ -25,7 +25,7 @@ function createBoardComment(boardId, comment, success, fail) {
     };
 
     instance
-    .post(`/boardComments/${boardId}`, comment, config)
+    .post(`boardComments/${boardId}`, comment, config)
     .then(success)
     .catch(fail);
 }
@@ -40,7 +40,7 @@ function removeBoardComment(id, boardId, success, fail) {
     };
 
     instance
-    .delete(`/boardComments/${id}/boards/${boardId}`, config)
+    .delete(`boardComments/${id}/boards/${boardId}`, config)
     .then(success)
     .catch(fail);
 }
@@ -55,7 +55,7 @@ function modifyComment(boardComment, success, fail) {
   };
 
   instance
-  .put(`/boardComments`, boardComment, config)
+  .put(`boardComments`, boardComment, config)
   .then(success)
   .catch(fail);
 }

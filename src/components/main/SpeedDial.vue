@@ -15,7 +15,7 @@
             <v-btn class="sub-btns" fab dark small color="yellow darken-1" @click="changeCommuModal(true)" @mouseover="ttHover">
                <span class="my-tooltip">커뮤니티 글 작성</span><v-icon>mdi-pencil</v-icon>
             </v-btn>
-            <v-btn class="sub-btns" fab dark small color="red" @mouseover="ttHover"> <span class="my-tooltip">즐겨찾기 이동</span><v-icon>mdi-heart</v-icon> </v-btn>
+            <v-btn class="sub-btns" fab dark small color="red" @click="getFavorites" @mouseover="ttHover"> <span class="my-tooltip">즐겨찾기 이동</span><v-icon>mdi-heart</v-icon> </v-btn>
             <v-btn class="sub-btns" fab dark small color="indigo" @click="scrollTop" @mouseover="ttHover"> <span class="my-tooltip">맨 위로 이동</span><v-icon>mdi-chevron-up</v-icon> </v-btn>
          </v-speed-dial>
       </v-card>
@@ -145,6 +145,13 @@ export default {
             item.classList.add('tt-hover');
          });
       },
+
+      getFavorites() {
+         this.$router.push({
+            name: 'SearchResult',
+            params: { searchValue: "favorites", type: 'favorites' },
+         });
+      }
    },
    mounted: function() {
       window.addEventListener('scroll', this.scrollListener);

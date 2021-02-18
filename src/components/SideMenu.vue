@@ -17,8 +17,8 @@
          </div>
       </div>
       <div class="link-wrapper">
-         <div class="img-btn" @click="goRouter('/main')"><img src="@/assets/img/characters/banner-cmmu.png" alt="" /> <span class="nf">노리</span></div>
-         <div class="img-btn" @click="goRouter('/cmmu')"><img src="@/assets/img/characters/banner-nori.png" alt="" /> <span class="nf">커뮤니티</span></div>
+         <div class="img-btn" @click="goRouter('/main')"><img src="@/assets/img/characters/banner-cmmu.png" alt="" /> <span class="nf">노리공간</span></div>
+         <div class="img-btn" @click="goRouter('/cmmu')"><img src="@/assets/img/characters/banner-nori.png" alt="" /> <span class="nf">소통공간</span></div>
       </div>
       <div class="ad-wrapper">
          <div class="copyright">

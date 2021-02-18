@@ -282,12 +282,12 @@ export default {
       },
       isWriter: function () {
          setTimeout(() => {
-            if (Number(this.userId) !== Number(this.userInfo.userId)) {
+            if (this.userInfo.status !== 2 && 
+                  this.userId !== this.userInfo.userId) {
                this.$router.push('/main')
             }
 
          },100)
-
       }
    },
    computed: {

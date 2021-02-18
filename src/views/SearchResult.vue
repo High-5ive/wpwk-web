@@ -7,7 +7,7 @@
          <NoriContent class="nori-wrapper" v-for="(nori, idx) in NoriList" :key="idx" :sendNori="nori" />
          <br />
          <div class="nori-wrapper spinner">
-            <infinite-loading spinner="spiral" @infinite="infiniteHandler">
+            <infinite-loading spinner="waveDots" @infinite="infiniteHandler">
                <div slot="no-more" class="nf">더 이상 컨텐츠가 없어요 :)</div>
             </infinite-loading>
          </div>
@@ -20,14 +20,14 @@
 import NoriContent from '@/components/main/NoriContent.vue';
 import SpeedDial from '@/components/main/SpeedDial.vue';
 import Loading from '@/components/main/Loading.vue';
-import { findContentsByTag, findContentsByKeyword, findContentsByCategory } from '@/api/contents.js';
+import { findContentsByTag, findContentsByKeyword, findContentsByCategory, findContentsByFavorites } from '@/api/contents.js';
 import infiniteLoading from 'vue-infinite-loading';
+import { mapState } from 'vuex'
 
 export default {
    name: 'SearchResult',
    data: function() {
-      return {
-         noriList: [],
+      return {         
          NoriList: [],
          abilities: ['언어지능', '논리수학지능', '음악지능', '신체운동지능', '공간지능', '자연지능', '대인지능', '개인내지능'],
          infLoading: false,
@@ -148,11 +148,40 @@ export default {
             this.error()
          );
       },
+      getNoriListByFavorites() {
+         this.page = 1;
+         console.log('즐겨찾기 검색');
+         findContentsByFavorites(
+            this.page,
+            (res) => {
+               this.NoriList = res.data;
+               for (var i = 0; i < this.NoriList.length; i++) {
+                  if (this.NoriList[i].ability != null) {
+                     let abilityList = [];
+                     for (var j = 0; j < this.NoriList[i].ability.length; j++) {
+                        if (this.NoriList[i].ability.charAt(j) == '1') {
+                           abilityList.push(this.abilities[j]);
+                        }
+                     }
+                     // 각 컨텐츠마다 지능
+                     this.NoriList[i].abilities = abilityList;
+                  }
+               }
+               this.page += 1;
+               this.loading = false;
+            },
+            (err) => {
+               console.log(err);
+            }            
+         );
+      },
       getSearchList() {
          if (this.$route.params.type === 'tag') {
             this.getNoriListByTag();
          } else if (this.$route.params.type === 'keyword') {
             this.getNoriListByKeyword();
+         } else if (this.$route.params.type === 'favorites') {
+            this.getNoriListByFavorites();
          } else {
             this.getNoriListByCategory();
          }
@@ -203,6 +232,27 @@ export default {
                },
                this.error()
             );
+         } else if (this.$route.params.type === 'favorites') {
+            findContentsByFavorites(
+               this.page,
+               (res) => {
+                  setTimeout(() => {
+                     if (res.data.length) {
+                        var noriList = res.data;
+                        this.getAbility();
+                        this.NoriList = this.NoriList.concat(noriList);
+                        $state.loaded();
+                        this.page += 1;
+                        if (this.NoriList.length / 10 == 0) {
+                           $state.complete();
+                        }
+                     } else {
+                        $state.complete();
+                     }
+                  }, 1000);
+               },
+               this.error()
+            );
          }
          else {
             findContentsByCategory(
@@ -231,11 +281,16 @@ export default {
       },
    },
    created: function() {
+      this.NoriList = [];
       this.getSearchList()
+   },
+   computed: {
+      ...mapState(["userInfo"])
    },
    watch: {
       $route() {
          console.log('change')
+         this.NoriList = [];
          this.getSearchList()
       }
    }

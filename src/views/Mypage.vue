@@ -9,7 +9,7 @@
                <!-- 팔로우 버튼 (타유저프로필일때) -->
                <!-- 언팔로우 버튼 (타유저 구독한 상태일때) -->
             </div>
-            <div v-if="isMypage" class="user-action-wrapper">
+            <div v-if="$route.params.userId === userInfo.userId" class="user-action-wrapper">
                <a class="user-action" href="#" @click="dialog = true">비밀번호 변경</a>
                <a class="user-action" href="#" @click="dialog2 = true">회원탈퇴</a>
             </div>
@@ -25,7 +25,7 @@
                   </div>
                </div>
             </div>
-            <div v-if="!isMypage" class="follow-buttons">
+            <div v-if="$route.params.userId !== userInfo.userId" class="follow-buttons">
                <button @click="followSomeone" v-if="isfollowed" class="infos-button unfollow-button">
                   <v-icon>
                      mdi-account-check
@@ -360,8 +360,16 @@ export default {
             };
             changePwd(
                passwords,
-               () => {
-                  alert('비밀번호 변경이 완료되었습니다.');
+               (res) => {
+                  // 기존 비밀번호가 일치하지 않는 경우
+                  if(res.status === 204) {
+                     alert('현재 비밀번호가 일치하지 않습니다.');
+                  }                  
+                  if(res.status === 200) {
+                     alert('비밀번호 변경이 완료되었습니다.');
+                     this.$store.dispatch('doLogout')
+                     this.$router.push('/');
+                  }
                   this.curPwd = '';
                   this.newPwd1 = '';
                   this.newPwd2 = '';
@@ -433,6 +441,9 @@ export default {
       secession: function() {
          deleteUser(
             () => {
+               // 로그아웃 추가
+               alert("회원탈퇴가 완료되었습니다")
+               this.$store.dispatch('doLogout')
                this.$router.push('/');
             },
             (error) => {

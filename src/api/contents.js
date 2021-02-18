@@ -129,6 +129,20 @@ function findContentsByKeyword(keyword, page, success, fail) {
     .catch(fail);
 }
 
+function findContentsByFavorites(page, success, fail) {
+  let token = window.localStorage.getItem('accessToken');
+  let config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  instance
+    .get(`contents/favorites/page/${page}`, config)
+    .then(success)
+    .catch(fail);
+}
+
 function findContentsComment(id, success, fail) {
   instance
     .get(`contentsComments/${id}`)
@@ -272,6 +286,7 @@ export {
   findContentsItemById,
   findContentsByKeyword,
   findContentsByCategory,
+  findContentsByFavorites,
   findContentsComment,
   deleteContentsComment,
   updateContentsComment,

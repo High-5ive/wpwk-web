@@ -16,9 +16,16 @@ instance.interceptors.response.use(
   },
   function(errors) {
 
-    // TODO: 권한이 없는 경우(구현 예정)
+    // 탈퇴한 회원인 경우
+    if(errors.response.status === 422) {
+      alert("비활성화된 회원입니다 관리자에게 문의해주세요")
+      localStorage.removeItem("accessToken");
+    }
+
+    // 권한이 없는 경우
     if(errors.response.status === 403) {
       if(errors.response.data === "email") {
+        localStorage.removeItem("accessToken");
         alert("이메일을 인증해주세요")
       } else {        
         router.push("/");
