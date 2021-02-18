@@ -165,6 +165,7 @@ export default {
 <style lang="scss" scoped>
 @import 'src/css/vars';
 @import 'src/css/compo/tooltip';
+@import 'src/css/common';
 
 #create .v-speed-dial {
    position: fixed;
@@ -185,14 +186,27 @@ export default {
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
          }
+         @include desktop {
+            &:hover {
+               background: linear-gradient(90deg, rgba(37, 143, 37, 1) 0%, rgba(25, 191, 156, 1) 100%);
+            }
+            &:hover i {
+               background: none;
+               color: #fff;
+               -webkit-text-fill-color: #fff;
+            }
 
-         &:hover {
-            background: linear-gradient(90deg, rgba(37, 143, 37, 1) 0%, rgba(25, 191, 156, 1) 100%);
          }
-         &:hover i {
-            background: none;
-            color: #fff;
-            -webkit-text-fill-color: #fff;
+
+         @include tablet {
+            &:hover {
+               background: linear-gradient(90deg, rgba(37, 143, 37, 1) 0%, rgba(25, 191, 156, 1) 100%);
+            }
+            &:hover i {
+               background: none;
+               color: #fff;
+               -webkit-text-fill-color: #fff;
+            }
          }
       }
 
