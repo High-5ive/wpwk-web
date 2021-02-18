@@ -14,7 +14,7 @@
         </div>
         <div class="asp-middle">
           <div>{{ nori.title | truncate(10, '...') }}</div>
-          <span v-if="showValue === 4" class="asp-info">{{ nori }}</span>
+          <span v-if="showValue === 4" class="asp-info">{{ nori.nickname }}</span>
           <div class="asp-info">{{ nori.createdAt | truncate(10, ' ') }} 조회 {{ nori.views }}</div>
         </div>
       </div>
