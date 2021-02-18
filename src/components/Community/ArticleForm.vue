@@ -1,21 +1,15 @@
 <template>
-  <div class="af-container">
-    <div class="category-wrapper">
-      <v-select
-        :items="subjects"
-        dense
-        outlined
-        label="주제"
-        v-model="subject"
-      ></v-select>
-    </div>
+   <div class="af-container">
+      <div class="category-wrapper">
+         <v-select :items="subjects" dense outlined label="주제" v-model="subject"></v-select>
+      </div>
 
-    <div class="input-wrapper">
-      <input type="text" v-model="content" placeholder="글을 작성해주세요." />
-    </div>
+      <div class="input-wrapper">
+         <input type="text" v-model="content" placeholder="글을 작성해주세요." />
+      </div>
 
       <!-- 이미지 추가 -->
-      <div class="add-img-btn" @click="axiosFileSelect"><v-icon> mdi-image-multiple </v-icon>&nbsp;add</div>
+      <!-- <div class="add-img-btn" @click="axiosFileSelect"><v-icon> mdi-image-multiple </v-icon>&nbsp;add</div>
       <input type="file" id="fileUpload" ref="files" style="display:none" @change="axiosFileChange" multiple />
 
       <div class="photo-wrapper">
@@ -25,129 +19,115 @@
                <v-icon>mdi-trash-can</v-icon>
             </button>
          </div>
-      </div>
+      </div> -->
 
-    <div class="af-footer">
-      <div class="left-button" @click="closeModal">
-        <v-icon>mdi-close</v-icon> <span class="cap">종료</span>
+      <div class="af-footer">
+         <div class="left-button" @click="closeModal"><v-icon>mdi-close</v-icon> <span class="cap">종료</span></div>
+         <div class="middle-button" @click="reset"><v-icon>mdi-eraser</v-icon> <span class="cap">지우기</span></div>
+         <div class="right-button" @click="createArticle"><v-icon>mdi-pencil</v-icon> <span class="cap">글작성</span></div>
       </div>
-      <div class="middle-button" @click="reset">
-        <v-icon>mdi-eraser</v-icon> <span class="cap">지우기</span>
-      </div>
-      <div class="right-button" @click="createArticle">
-        <v-icon>mdi-pencil</v-icon> <span class="cap">글작성</span>
-      </div>
-    </div>
-  </div>
+   </div>
 </template>
 
 <script>
-import ArticlePhotoItem from "./ArticlePhotoItem";
+// import ArticlePhotoItem from './ArticlePhotoItem';
 
 export default {
-  name: "ArticleForm",
-  data: function() {
-    return {
-      user: "",
-      subject: "",
-      itemList: [],
-      content: "",
-      subjects: [
-        "맛집정보 나눔",
-        "교육정보 나눔",
-        "육아정보 나눔",
-        "요리정보 나눔",
-        "생활정보 나눔",
-        "잡담",
-      ],
-      subject_final: "",
-    };
-  },
-  components: {
-    ArticlePhotoItem,
-  },
-  methods: {
-    axiosFileSelect: function() {
-      var elem = document.getElementById("fileUpload");
-      elem.click();
-    },
-    axiosFileChange: function() {
-      this.axiosFileUpload();
-    },
-    axiosFileUpload: function() {
-      //   console.log(this.$refs.files.files[0]);
-
-      //  this.files = [...this.files, this.$refs.files.files];
-      //  하나의 배열로 넣기
-      for (let i = 0; i < this.$refs.files.files.length; i++) {
-        // console.log(i + '번 째 -> ' + this.$refs.files.files[i].name);
-        const photoFile = {
-          //실제 파일
-          file: this.$refs.files.files[i],
-          //이미지 프리뷰
-          preview: URL.createObjectURL(this.$refs.files.files[i]),
-        };
-        // num = i;
-        this.createItemPhoto(photoFile);
-      }
-    },
-    createItemPhoto: function(p) {
-      const newItem = {
-        photo: p,
+   name: 'ArticleForm',
+   data: function() {
+      return {
+         user: '',
+         subject: '',
+         itemList: [],
+         content: '',
+         subjects: ['맛집정보 나눔', '교육정보 나눔', '육아정보 나눔', '요리정보 나눔', '생활정보 나눔', '잡담'],
+         subject_final: '',
       };
-      if (this.itemList.length <= 9) {
-        this.itemList.push(newItem);
-      } else {
-        alert("항목은 최대 10개 까지 넣을 수 있습니다.");
-      }
-    },
-    deleteItem: function(index) {
-      this.itemList.splice(index, 1);
-    },
-    getSubject: function() {
-      this.subject_final = this.subject;
-    },
+   },
+   components: {
+      // ArticlePhotoItem,
+   },
+   methods: {
+      axiosFileSelect: function() {
+         var elem = document.getElementById('fileUpload');
+         elem.click();
+      },
+      axiosFileChange: function() {
+         this.axiosFileUpload();
+      },
+      axiosFileUpload: function() {
+         //   console.log(this.$refs.files.files[0]);
 
-    //부모에게 모달 닫으라고 전달
-    closeModal() {
-      this.$emit("emit-close", false);
-    },
+         //  this.files = [...this.files, this.$refs.files.files];
+         //  하나의 배열로 넣기
+         for (let i = 0; i < this.$refs.files.files.length; i++) {
+            // console.log(i + '번 째 -> ' + this.$refs.files.files[i].name);
+            const photoFile = {
+               //실제 파일
+               file: this.$refs.files.files[i],
+               //이미지 프리뷰
+               preview: URL.createObjectURL(this.$refs.files.files[i]),
+            };
+            // num = i;
+            this.createItemPhoto(photoFile);
+         }
+      },
+      createItemPhoto: function(p) {
+         const newItem = {
+            photo: p,
+         };
+         if (this.itemList.length <= 9) {
+            this.itemList.push(newItem);
+         } else {
+            alert('항목은 최대 10개 까지 넣을 수 있습니다.');
+         }
+      },
+      deleteItem: function(index) {
+         this.itemList.splice(index, 1);
+      },
+      getSubject: function() {
+         this.subject_final = this.subject;
+      },
 
-    //입력 폼 초기화
-    reset() {
-      this.content = "";
-      this.itemList = [];
-      this.subject = ""; //초기화 시 v-select도 초기화되어야 하는데 미동작
-    },
+      //부모에게 모달 닫으라고 전달
+      closeModal() {
+         this.$emit('emit-close', false);
+      },
 
-    createArticle: function() {
+      //입력 폼 초기화
+      reset() {
+         this.content = '';
+         this.itemList = [];
+         this.subject = ''; //초기화 시 v-select도 초기화되어야 하는데 미동작
+      },
 
-      if(this.subject === "") { 
-         alert('카테고리를 선택해 주세요')
-         return
-      }
+      createArticle: function() {
+         if (this.subject === '') {
+            alert('카테고리를 선택해 주세요');
+            return;
+         }
 
-      if(this.content === "") { 
-         alert('내용을 입력해주세요')
-         return
-      }
+         if (this.content === '') {
+            alert('내용을 입력해주세요');
+            return;
+         }
 
-      const article = {
-        category: this.subject,
-        itemList: this.itemList,
-        content: this.content,
-      };
+         const article = {
+            category: this.subject,
+            itemList: this.itemList,
+            content: this.content,
+         };
 
-      this.$emit("createArticle", article);
-      this.content = "";
-      this.itemList = [];
-    },
-  },
+         this.$emit('createArticle', article);
+         this.content = '';
+         this.itemList = [];
+      },
+   },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "src/css/common.scss";
+@import 'src/css/common.scss';
 //v-select 했을 때, 세부 선택 박스 하단으로 붙이기
 .v-list.v-select-list.v-sheet.theme--light {
    margin-top: 40px;
@@ -267,7 +247,7 @@ export default {
       }
 
       .left-button {
-         cursor: pointer; 
+         cursor: pointer;
          height: 50px;
          width: 30%;
          text-align: center;
@@ -290,7 +270,7 @@ export default {
       }
 
       .middle-button {
-        cursor: pointer; 
+         cursor: pointer;
          height: 50px;
          width: 30%;
          text-align: center;
@@ -308,7 +288,7 @@ export default {
       }
 
       .right-button {
-        cursor: pointer; 
+         cursor: pointer;
          width: 40%;
          text-align: center;
 
