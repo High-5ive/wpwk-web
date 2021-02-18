@@ -12,7 +12,7 @@
             <div v-if="userInfo.userId == contents.userId" class="dots" @click="menuToggle">
                <v-icon>mdi-dots-horizontal</v-icon>
             </div>
-            <div v-if="menu" aria-expanded="false" class="dropdown-menu">
+            <div v-if="menu" aria-expanded="false" class="dropdown-menu" v-click-outside="onClickOutside">
                <div class="menu-detail" @click="editContent">
                   <v-icon>mdi-tooltip-edit-outline</v-icon>
                   <span>노리 수정하기</span>
@@ -78,6 +78,7 @@ import ContentsCommentList from '@/components/Comment/ContentsCommentList';
 import CommentFormView from '../components/Comment/CommentForm_view.vue';
 import { deleteContentsComment, updateContentsComment, createContentsComment, findContentsById, findContentsComment, findContentsItemById, deleteContents } from '@/api/contents.js';
 import { mapState } from 'vuex';
+import vClickOutside from 'v-click-outside';
 
 export default {
    name: 'ContentsView',
@@ -86,6 +87,9 @@ export default {
       Evaluations,
       ContentsCommentList,
       CommentFormView,
+   },
+   directives: {
+      clickOutside: vClickOutside.directive,
    },
    data: function() {
       return {
@@ -113,6 +117,9 @@ export default {
       ...mapState(['userInfo']),
    },
    methods: {
+      onClickOutside() {
+         this.menu = false;
+      },
       evaluation(value) {
          this.evaluationValue = value;
       },

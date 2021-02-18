@@ -12,14 +12,14 @@
          <v-toolbar-title
             ><router-link to="/main"><img src="@/assets/wpwk_logo.png"/></router-link
          ></v-toolbar-title>
-         <div class="btn-notification" @click="notificationShow" v-click-outside="onClickOutside">
+         <div class="btn-notification" @click="notificationShow" v-click-outside="onClickOutsideNotification">
             <v-icon>mdi-bell</v-icon>
          </div>
          <!-- <div class="notificationNum"></div> -->
          <div v-if="notifications.length > 0" class="notificationNum"></div>
          <notification v-if="showNotification"></notification>
 
-         <div class="btn-search" @click="showSearch = !showSearch">
+         <div class="btn-search" @click="showSearch = !showSearch" v-click-outside="onClickOutsideSearch">
             <i class="fas fa-search"></i>
          </div>
          <search v-if="showSearch" @searchShow="searchShow"></search>
@@ -93,9 +93,11 @@ export default {
          }
          this.showNotification = !this.showNotification;
       },
-      onClickOutside() {
+      onClickOutsideNotification() {
          this.showNotification = false;
-         // console.log(event)
+      },
+      onClickOutsideSearch() {
+         this.showSearch = false;
       },
       searchShow(search) {
          this.showSearch = search;
