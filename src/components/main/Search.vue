@@ -18,13 +18,13 @@
             <div class="popularity-wrapper">
                <p class="nf">인기 콘텐츠</p>
                <div class="popularity nf">
-                  <SearchItem v-for="(selectValue, idx) in popularityContents" :key="idx" :selectValue="selectValue" @categorySearchShow="categorySearchShow" />
+                  <search-item-popular-most-viewed v-for="(selectValue, idx) in popularContents" :key="idx" :selectValue="selectValue" @onContentClick="categorySearchShow"/>
                </div>
             </div>
             <div class="recommend-wrapper">
                <p class="nf">추천 콘텐츠</p>
                <div class="popularity nf">
-                  <SearchItem v-for="(selectValue, idx) in popularityContents" :key="idx" :selectValue="selectValue" @categorySearchShow="categorySearchShow" />
+                  <search-item-popular-most-viewed v-for="(selectValue, idx) in mostViewedContents" :key="idx" :selectValue="selectValue" @onContentClick="categorySearchShow"/>
                </div>
             </div>
          </div>
@@ -34,11 +34,15 @@
 
 <script>
 import SearchItem from './SearchItem.vue';
+import SearchItemPopularMostViewed from './SearchItemPopularMostViewed.vue';
+import { getPopularContents } from '@/api/contents.js'
+import { getMostViewedCountContents } from '@/api/contents.js'
 
 export default {
    name: 'Search',
    components: {
       SearchItem,
+      SearchItemPopularMostViewed,
    },
    data: function() {
       return {
@@ -46,7 +50,8 @@ export default {
          searchShow: false,
          categories1: ['언어지능', '논리수학지능', '공간지능', '개인내지능'],
          categories2: ['음악지능', '신체운동지능', '자연지능', '대인지능'],
-         popularityContents: ['뽀로로와 함께', '과자로 집을 만들어봐요!', '재밌는 물감 놀이'],
+         popularContents: [],
+         mostViewedContents: [],
       };
    },
    methods: {
@@ -60,7 +65,34 @@ export default {
       categorySearchShow(search) {
          this.$emit('searchShow', search);
       },
+      getPopularContent: function () {
+         getPopularContents(
+            1,
+            (success) => {
+               this.popularContents = success.data.slice(0, 3)
+            },
+            (fail) => {
+               console.log(fail)
+            }
+         )
+      },
+      getMostViewedCountContent: function () {
+         getMostViewedCountContents(
+            1,
+            (success) => {
+               this.mostViewedContents = success.data.slice(0, 3)
+            },
+            (fail) => {
+               console.log(fail)
+            }
+         )
+      }
    },
+   created: function () {
+      console.log('여기아닌가')
+      this.getPopularContent()
+      this.getMostViewedCountContent()
+   }
 };
 </script>
 

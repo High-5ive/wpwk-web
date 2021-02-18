@@ -249,6 +249,10 @@ export default {
          this.cards = [];
          this.getContentsItems();
       },
+      $route() {
+         this.url = location.href;
+         this.getContentsItems()
+      }
    },
 };
 </script>

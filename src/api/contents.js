@@ -233,6 +233,32 @@ function reportSubmit(data, success, fail) {
     .catch(fail);
 }
 
+function getPopularContents(pageNum, success, fail) {
+  let token = window.localStorage.getItem('accessToken');
+  let config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  instance
+    .get(`contents/likes/page/${pageNum}`, config)
+    .then(success)
+    .catch(fail)
+}
+
+function getMostViewedCountContents(pageNum, success, fail) {
+  let token = window.localStorage.getItem('accessToken');
+  let config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  instance
+    .get(`contents/views/page/${pageNum}`, config)
+    .then(success)
+    .catch(fail)
+}
+
 export {
   createContents,
   updateContents,
@@ -253,4 +279,6 @@ export {
   favoriteContents,
   unFavoriteContents,
   reportSubmit,
+  getPopularContents,
+  getMostViewedCountContents
 };
