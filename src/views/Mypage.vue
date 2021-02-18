@@ -9,7 +9,7 @@
                <!-- 팔로우 버튼 (타유저프로필일때) -->
                <!-- 언팔로우 버튼 (타유저 구독한 상태일때) -->
             </div>
-            <div v-if="$route.params.userId === userInfo.userId" class="user-action-wrapper">
+            <div v-if="isMypage" class="user-action-wrapper">
                <a class="user-action" href="#" @click="dialog = true">비밀번호 변경</a>
                <a class="user-action" href="#" @click="dialog2 = true">회원탈퇴</a>
             </div>
@@ -25,7 +25,7 @@
                   </div>
                </div>
             </div>
-            <div v-if="$route.params.userId !== userInfo.userId" class="follow-buttons">
+            <div v-if="!isMypage" class="follow-buttons">
                <button @click="followSomeone" v-if="isfollowed" class="infos-button unfollow-button">
                   <v-icon>
                      mdi-account-check
@@ -262,8 +262,10 @@ export default {
       isMypage: function() {
          if (this.$route.params.userId === this.userInfo.userId) {
             this.showValue = 5;
+            return true
          } else {
             this.showValue = 0;
+            return false
          }
       },
       getUserInfo: function() {
@@ -292,6 +294,7 @@ export default {
                      this.followedList = success.data;
                      getFollowingList(targetUserFollowing, (success) => {
                         this.followingList = success.data;
+                        this.isMypage()
                      });
                   },
                   (fail) => {
