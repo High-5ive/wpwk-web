@@ -12,7 +12,7 @@
           {{ article.content | truncate(15, '...') }}
         </div>
         <div class="as-info">
-          <span v-if="showValue === 2">{{ article.writer }}</span>
+          <span v-if="showValue === 2">{{ article }}</span>
           {{ article.createdAt | truncate(10, ' ') }} 조회 {{ article.views }}
         </div>
       </div>
