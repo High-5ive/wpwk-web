@@ -29,26 +29,25 @@
     object-position: 0px -50px;
   }
 }
-@media (min-width: 1264px) {
-  .content-wrapper .img-wrapper::before {
-    content: "";
-    width: 400px;
-    height: 100px;
-    position: absolute;
-    top: 100px;
-    left: 50px;
-    z-index: -5;
-  }
-  .content-wrapper .img-wrapper:hover {
-    width: 105%;
-    height: 75%;
-    transition: 0.3s;
-    transform: translate(-10px, -10px);
-  }
-  .content-wrapper .img-wrapper:hover::before {
-    transform: translate(0px, -5x);
-    box-shadow: 0px 15px 25px 0px #0000008c;
-  }
+.content-wrapper .img-wrapper::before {
+  content: "";
+  min-width: 310px;
+  width: 80%;
+  height: 100px;
+  position: absolute;
+  top: 100px;
+  left: 50px;
+  z-index: -5;
+}
+.content-wrapper .img-wrapper:hover {
+  width: 105%;
+  height: 75%;
+  transition: 0.3s;
+  transform: translate(-10px, -10px);
+}
+.content-wrapper .img-wrapper:hover::before {
+  transform: translate(0px, -5x);
+  box-shadow: 0px 15px 25px 0px #0000008c;
 }
 .content-wrapper .img-wrapper .badge-cate {
   position: relative;
