@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import vueMoment from 'vue-moment';
 import App from './App.vue'
 import vuetify from './plugins/vuetify';
 import store from "./store/store"
@@ -19,6 +20,8 @@ Vue.use(VueClipboard)
 Vue.filter('truncate', filter);
 
 Vue.use(router)
+
+Vue.use(vueMoment)
 
 Vue.config.productionTip = false
 
