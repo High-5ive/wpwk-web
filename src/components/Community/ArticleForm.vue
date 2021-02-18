@@ -267,6 +267,7 @@ export default {
       }
 
       .left-button {
+         cursor: pointer; 
          height: 50px;
          width: 30%;
          text-align: center;
@@ -289,6 +290,7 @@ export default {
       }
 
       .middle-button {
+        cursor: pointer; 
          height: 50px;
          width: 30%;
          text-align: center;
@@ -306,6 +308,7 @@ export default {
       }
 
       .right-button {
+        cursor: pointer; 
          width: 40%;
          text-align: center;
 
