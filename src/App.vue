@@ -12,7 +12,7 @@
          <v-toolbar-title
             ><router-link to="/main"><img src="@/assets/wpwk_logo.png"/></router-link
          ></v-toolbar-title>
-         <div class="btn-notification" @click="notificationShow" v-click-outside="onClickOutsideNotification">
+         <div class="btn-notification" @click="notificationShow">
             <v-icon>mdi-bell</v-icon>
          </div>
          <!-- <div class="notificationNum"></div> -->
@@ -97,9 +97,6 @@ export default {
       },
       onClickOutsideNotification() {
          this.showNotification = false;
-      },
-      onClickOutsideSearch() {
-         this.showSearch = false;
       },
       searchShow(search) {
          this.showSearch = search;
