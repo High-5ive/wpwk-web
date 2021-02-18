@@ -63,7 +63,7 @@
          <v-dialog v-model="find_modal" persistent max-width="400">
             <v-card>
                <v-card-title class="headline">
-                  비밀번호 리셋
+                  비밀번호를 초기화합니다.
                </v-card-title>
                <v-card-text>
                   <v-text-field label="Email*" required v-model="email" id="email" placeholder="이메일을 입력하세요."></v-text-field>
@@ -80,10 +80,10 @@
                <v-card-actions>
                   <v-spacer></v-spacer>
                   <v-btn color="green darken-1" text @click="find_modal = false">
-                     Disagree
+                     취소
                   </v-btn>
-                  <v-btn color="green darken-1" text @click="find_modal = false">
-                     Agree
+                  <v-btn color="red darken-1" text @click="find_modal = false">
+                     초기화
                   </v-btn>
                </v-card-actions>
             </v-card>
