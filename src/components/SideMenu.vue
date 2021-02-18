@@ -10,15 +10,15 @@
                <span>{{ userInfo.nickname }}</span> <span class="admin-badge" v-if="userInfo.status == 2">관리자</span>
             </div>
             <div class="second">
-               <span class="mypage" @click="$router.push({ name: 'mypage', params: { userId: userInfo.userId } }).catch(() => {})">내 정보 보기</span>
+               <span class="mypage" @click="goRouter('mypage')">내 정보 보기</span>
                <span class="logout" @click="$store.dispatch('doLogout')">로그아웃</span>
             </div>
-            <span class="admin" v-if="userInfo.status == 2" @click="$router.push('/admin')">관리자 페이지</span>
+            <span class="admin" v-if="userInfo.status == 2" @click="goRouter('/admin')">관리자 페이지</span>
          </div>
       </div>
       <div class="link-wrapper">
-         <div class="img-btn" @click="$router.push('/main').catch(() => {})"><img src="@/assets/img/characters/banner-cmmu.png" alt="" /> <span class="nf">노리</span></div>
-         <div class="img-btn" @click="$router.push('/cmmu').catch(() => {})"><img src="@/assets/img/characters/banner-nori.png" alt="" /> <span class="nf">커뮤니티</span></div>
+         <div class="img-btn" @click="goRouter('/main')"><img src="@/assets/img/characters/banner-cmmu.png" alt="" /> <span class="nf">노리</span></div>
+         <div class="img-btn" @click="goRouter('/cmmu')"><img src="@/assets/img/characters/banner-nori.png" alt="" /> <span class="nf">커뮤니티</span></div>
       </div>
       <div class="ad-wrapper">
          <div class="copyright">
@@ -36,6 +36,33 @@ import { mapState } from 'vuex';
 export default {
    computed: {
       ...mapState(['userInfo']),
+   },
+   methods: {
+      goRouter: function(path) {
+         var now = document.location.pathname;
+         // console.log(now, ' | ', path);
+
+         // 마이페이지로 들어온 경우
+         if (path == 'mypage') {
+            // 본인이 본인을 조회한 경우 -> 새로고침?
+            if (now.split('/')[2] == this.userInfo.userId) {
+               // 원래 새로고침 해야하는데, 새로고침하면 시청분석이 날라가서 캐치로 받음
+               this.$router.push({ name: 'mypage', params: { userId: userInfo.userId } }).catch(() => {});
+            } else {
+               // 그 외엔 다시 내 페이지로 이동
+               this.$router.push({ name: 'mypage', params: { userId: this.userInfo.userId } });
+            }
+            return; //끝내기
+         }
+
+         if (path !== now) {
+            // 현재 페이지랑 가려는 곳이랑 다를 때 -> 정상 이동
+            this.$router.push(path);
+         } else {
+            // 현재 페이지랑 가려는 곳이랑 같을 때 -> 새로고침?
+            this.$router.go(this.$router.currentRoute);
+         }
+      },
    },
 };
 </script>
