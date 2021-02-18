@@ -78,20 +78,22 @@ export default {
          );
       },
       notificationShow: function() {
-         if (this.showNotification) {
-            if (this.notifications) {
-               confirmNotification(
-                  this.userInfo.userId,
-                  (success) => {
-                     console.log(success);
-                  },
-                  (fail) => {
-                     console.log(fail);
-                  }
-               );
-            }
+         if (this.showNotification && this.notifications) {
+            confirmNotification(
+               this.userInfo.userId,
+               (success) => {
+                  console.log(success);
+                  this.showNotification = !this.showNotification;
+               },
+               (fail) => {
+                  console.log(fail);
+               }
+            );
+            
+         } else {
+            this.showNotification = !this.showNotification;
+
          }
-         this.showNotification = !this.showNotification;
       },
       onClickOutsideNotification() {
          this.showNotification = false;
