@@ -56,123 +56,62 @@ export default {
             }
          }
       },
-      success: function() {
-         (res) => {
+      success: function(res) {
             this.NoriList = res.data;
             this.getAbility();
             this.page += 1;
             this.loading = false;
-         };
-      },
-      error: function() {
-         (error) => {
-            console.log(error);
-         };
       },
       //   태그 검색 noriList 요청
       getNoriListByTag() {
          this.page = 1;
-         console.log('태그 검색');
          findContentsByTag(
             this.$route.params.searchValue,
             this.page,
             (res) => {
-               this.NoriList = res.data;
-               for (var i = 0; i < this.NoriList.length; i++) {
-                  if (this.NoriList[i].ability != null) {
-                     let abilityList = [];
-                     for (var j = 0; j < this.NoriList[i].ability.length; j++) {
-                        if (this.NoriList[i].ability.charAt(j) == '1') {
-                           abilityList.push(this.abilities[j]);
-                        }
-                     }
-                     // 각 컨텐츠마다 지능
-                     this.NoriList[i].abilities = abilityList;
-                  }
-               }
-               this.page += 1;
-               this.loading = false;
+               this.success(res);
             },
-            this.error()
+            (err) => {
+               this.error("error : " + err);
+            }
          );
       },
       getNoriListByKeyword() {
          this.page = 1;
-         console.log('키워드 검색');
          findContentsByKeyword(
             this.$route.params.searchValue,
             this.page,
             (res) => {
-               this.NoriList = res.data;
-               for (var i = 0; i < this.NoriList.length; i++) {
-                  if (this.NoriList[i].ability != null) {
-                     let abilityList = [];
-                     for (var j = 0; j < this.NoriList[i].ability.length; j++) {
-                        if (this.NoriList[i].ability.charAt(j) == '1') {
-                           abilityList.push(this.abilities[j]);
-                        }
-                     }
-                     // 각 컨텐츠마다 지능
-                     this.NoriList[i].abilities = abilityList;
-                  }
-               }
-               this.page += 1;
-               this.loading = false;
+               this.success(res);
             },
-            this.error()
+            (err) => {
+               this.error("error : " + err);
+            }
          );
       },
       getNoriListByCategory() {
          this.page = 1;
-         console.log('카테고리 검색');
          findContentsByCategory(
             this.$route.params.searchValue,
             this.page,
             (res) => {
-               this.NoriList = res.data;
-               for (var i = 0; i < this.NoriList.length; i++) {
-                  if (this.NoriList[i].ability != null) {
-                     let abilityList = [];
-                     for (var j = 0; j < this.NoriList[i].ability.length; j++) {
-                        if (this.NoriList[i].ability.charAt(j) == '1') {
-                           abilityList.push(this.abilities[j]);
-                        }
-                     }
-                     // 각 컨텐츠마다 지능
-                     this.NoriList[i].abilities = abilityList;
-                  }
-               }
-               this.page += 1;
-               this.loading = false;
+               this.success(res);
             },
-            this.error()
+            (err) => {
+               this.error("error : " + err);
+            }
          );
       },
       getNoriListByFavorites() {
          this.page = 1;
-         console.log('즐겨찾기 검색');
          findContentsByFavorites(
             this.page,
             (res) => {
-               this.NoriList = res.data;
-               for (var i = 0; i < this.NoriList.length; i++) {
-                  if (this.NoriList[i].ability != null) {
-                     let abilityList = [];
-                     for (var j = 0; j < this.NoriList[i].ability.length; j++) {
-                        if (this.NoriList[i].ability.charAt(j) == '1') {
-                           abilityList.push(this.abilities[j]);
-                        }
-                     }
-                     // 각 컨텐츠마다 지능
-                     this.NoriList[i].abilities = abilityList;
-                  }
-               }
-               this.page += 1;
-               this.loading = false;
+               this.success(res);
             },
             (err) => {
-               console.log(err);
-            }            
+               this.error("error : " + err);
+            }       
          );
       },
       getSearchList() {
@@ -208,7 +147,9 @@ export default {
                      }
                   }, 1000);
                },
-               this.error()
+               (err) => {
+                  console.log(err);
+               }
             );
          } else if (this.$route.params.type === 'keyword'){
             findContentsByKeyword(
@@ -230,7 +171,9 @@ export default {
                      }
                   }, 1000);
                },
-               this.error()
+               (err) => {
+                  console.log(err);
+               }
             );
          } else if (this.$route.params.type === 'favorites') {
             findContentsByFavorites(
@@ -251,7 +194,9 @@ export default {
                      }
                   }, 1000);
                },
-               this.error()
+               (err) => {
+                  console.log(err);
+               }
             );
          }
          else {
@@ -259,23 +204,24 @@ export default {
                this.$route.params.searchValue,
                this.page,
                (res) => {
-                  this.NoriList = res.data;
-                  for (var i = 0; i < this.NoriList.length; i++) {
-                     if (this.NoriList[i].ability != null) {
-                        let abilityList = [];
-                        for (var j = 0; j < this.NoriList[i].ability.length; j++) {
-                           if (this.NoriList[i].ability.charAt(j) == '1') {
-                              abilityList.push(this.abilities[j]);
-                           }
+                  setTimeout(() => {
+                     if (res.data.length) {
+                        var noriList = res.data;
+                        this.getAbility();
+                        this.NoriList = this.NoriList.concat(noriList);
+                        $state.loaded();
+                        this.page += 1;
+                        if (this.NoriList.length / 10 == 0) {
+                           $state.complete();
                         }
-                        // 각 컨텐츠마다 지능
-                        this.NoriList[i].abilities = abilityList;
+                     } else {
+                        $state.complete();
                      }
-                  }
-                  this.page += 1;
-                  this.loading = false;
+                  }, 1000);
                },
-               this.error()
+               (err) => {
+                  console.log(err);
+               }
             );
          }
       },
@@ -289,7 +235,6 @@ export default {
    },
    watch: {
       $route() {
-         console.log('change')
          this.NoriList = [];
          this.getSearchList()
       }

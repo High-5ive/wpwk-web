@@ -37,7 +37,6 @@ export default {
     findAllReports: function() {
       findAllReports(
         (success) => {
-          console.log('find all Reports suc', success);
           this.reports = success.data;
         },
         (fail) => {
@@ -59,8 +58,7 @@ export default {
 
       notificationBroadcast(
         data,
-        (res) => {
-          console.log(res)
+        () => {
         },
         (err) => {
           console.log(err)

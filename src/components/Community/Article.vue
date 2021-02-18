@@ -55,7 +55,6 @@ export default {
    methods: {
       articleDetail: function() {
          // 실제로는 id값만 보내서 article정보를 받지만 일단 모두 전달
-         // this.$router.push({ name: 'articleDetail', params: { articleId: this.articleId }})
          this.$router.push({
             name: 'ArticleDetail',
             params: { articleId: this.article.id },
@@ -90,12 +89,13 @@ export default {
             );
          }
       },
-
-      //====================================
    },
    computed: {
       content: function() {
-         return this.article.content.replace(/(?:\r\n|\r|\n)/g, '<br />');
+         if(this.article.content) {
+            return this.article.content.replace(/(?:\r\n|\r|\n)/g, '<br />');
+         }
+         return "";
       }
    },    
 };

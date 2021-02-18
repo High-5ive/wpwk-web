@@ -19,7 +19,7 @@
          <div v-if="notifications.length > 0" class="notificationNum"></div>
          <notification v-if="showNotification"></notification>
 
-         <div class="btn-search" @click="showSearch = !showSearch" v-click-outside="onClickOutsideSearch">
+         <div class="btn-search" @click="showSearch = !showSearch">
             <i class="fas fa-search"></i>
          </div>
          <search v-if="showSearch" @searchShow="searchShow"></search>
@@ -81,8 +81,7 @@ export default {
          if (this.showNotification && this.notifications) {
             confirmNotification(
                this.userInfo.userId,
-               (success) => {
-                  console.log(success);
+               () => {
                   this.showNotification = !this.showNotification;
                },
                (fail) => {
@@ -136,7 +135,6 @@ export default {
       },
    },
    created: function() {
-      console.log('hi')
       if(this.userInfo) {
          this.getNotifications();
       }

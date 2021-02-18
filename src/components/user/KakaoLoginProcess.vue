@@ -47,7 +47,6 @@ export default {
 
     getToken() {
       var url = this.$route.query.code;
-      console.log('url ', url);
       return url;
     },
   },

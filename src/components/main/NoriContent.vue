@@ -133,7 +133,6 @@ export default {
          let currentPos = window.pageYOffset;
 
          const update = () => {
-            // console.log(2);
             const newPos = window.pageYOffset;
             const diff = newPos - currentPos;
             const speed = diff * 0.03;

@@ -56,12 +56,8 @@ export default {
       goReView: function() {
          alert('초기화면으로 돌아갑니다');
          this.evaluation = false;
-         console.log(this.evaluation);
          this.$emit('evaluationPage', this.evaluation);
       },
-   },
-   mounted() {
-      console.log(this.contentsInfo.userId);
    },
 };
 </script>

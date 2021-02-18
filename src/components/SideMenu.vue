@@ -40,7 +40,6 @@ export default {
    methods: {
       goRouter: function(path) {
          var now = document.location.pathname;
-         // console.log(now, ' | ', path);
 
          // 마이페이지로 들어온 경우
          if (path == 'mypage') {

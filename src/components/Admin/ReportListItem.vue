@@ -83,8 +83,7 @@ export default {
 
       contentsReportUpdate(
         data,
-        (success) => {
-          console.log('report 처리 성공', success);
+        () => {
           this.done = true;
         },
         (fail) => {
@@ -106,8 +105,7 @@ export default {
 
       contentsReportUpdate(
         data,
-        (success) => {
-          console.log('report 처리 성공', success);
+        () => {
           this.done = true;
         },
         (fail) => {
@@ -129,8 +127,7 @@ export default {
 
       contentsReportUpdate(
         data,
-        (success) => {
-          console.log('report 처리 성공', success);
+        () => {
           this.done = true;
         },
         (fail) => {

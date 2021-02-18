@@ -82,7 +82,7 @@ function findContentsById(id, success, fail) {
 
 function findContentsItemById(id, success, fail) {
   instance
-    .get(`/contentsItem/${id}`)
+    .get(`contentsItem/${id}`)
     .then(success)
     .catch(fail);
 }

@@ -130,13 +130,10 @@ export default {
       deleteComment: function(comment) {
          const deleteId = this.comments.indexOf(comment);
          this.comments.splice(deleteId, 1);
-         console.log('deleteComment', deleteId);
 
          deleteContentsComment(
             comment.id,
-            (success) => {
-               console.log('댓글을 삭제 succ.', success);
-            },
+            () => {},
             (fail) => {
                alert('댓글을 삭제 fail.' + fail);
             }
@@ -147,27 +144,21 @@ export default {
             commentId: comment.id,
             comment: comment.comment,
          };
-         console.log('update comment =', comment, data);
          updateContentsComment(
             data,
-            (success) => {
-               console.log(success);
-            },
+            () => {},            
             (fail) => {
                console.log(fail);
                alert('댓글을 수정하는데 실패 했습니다.');
             }
          );
-
-         console.log('update comment =', comment);
       },
 
       createComment: function(comment) {
          this.comments.unshift(comment);
          createContentsComment(
             comment,
-            (success) => {
-               console.log(success);
+            () => {
                this.findContentsComment();
             },
             (fail) => {
@@ -179,7 +170,6 @@ export default {
          findContentsComment(
             this.contents.id,
             (success) => {
-               console.log('get Contents Comments success', success.data);
                this.comments = success.data;
             },
             (fail) => {
@@ -203,7 +193,6 @@ export default {
          findContentsItemById(
             contentsId,
             (success) => {
-               //console.log('get ContentsItem suc ', success.data);
                this.cards = success.data;
             },
             (fail) => {
@@ -213,7 +202,6 @@ export default {
          findContentsComment(
             contentsId,
             (success) => {
-               console.log('get Contents Comments success', success.data);
                this.comments = success.data;
             },
             (fail) => {

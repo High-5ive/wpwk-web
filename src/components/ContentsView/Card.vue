@@ -67,11 +67,7 @@ export default {
       },
    },
    watch: {
-      // pageNum: function() {
-      //    this.getCard();
-      // },
       card: function() {
-         // console.log('2 이펙트를 추가하고');
          this.getCard();
          this.doEffect();
       },

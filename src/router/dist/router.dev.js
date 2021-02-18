@@ -61,8 +61,6 @@ var onlyAuthUser = function onlyAuthUser(to, from, next) {
   if (localStorage.getItem('accessToken') !== null) {
     next();
   } else {
-    // console.log(this.$store.state.userInfo);
-    console.log('onlyAuthUser : ', window.location.href);
     alert('로그인이 필요한 페이지입니다. ');
     next('/');
   }

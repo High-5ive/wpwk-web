@@ -162,7 +162,6 @@ export default {
             user,
             (response) => {
                if (response.status == 201) {
-                  alert('로그인에 성공했습니다.');
                   let token = response.data['accessToken'];
                   localStorage.setItem('accessToken', token); // 토큰 로컬스토리지에 저장
 

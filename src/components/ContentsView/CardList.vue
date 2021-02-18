@@ -9,7 +9,7 @@
             </div>
          </div>
          <div class="footer-navi">
-            <div class="left-button out material-ripple" v-if="this.pageNum == 1" @click="[prevPage(), ripple()]">
+            <div class="left-button out material-ripple" v-if="this.pageNum == 1" @click="goHome">
                <v-icon>mdi-backspace-outline</v-icon>
                <span class="cap">홈으로</span>
             </div>
@@ -66,6 +66,10 @@ export default {
             return;
          }
          this.pageNum--;
+      },
+      goHome: function() {
+         this.$router.push({ name: 'Main' });
+         this.$router.go(this.$router.currentRoute);
       },
       evaluationValue() {
          this.evaluation = true;

@@ -44,9 +44,6 @@ export default {
       });
     },
   },
-  created: function () {
-    console.log(this.personsAssets)
-  }
 };
 </script>
 <style lang=""></style>

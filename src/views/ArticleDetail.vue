@@ -4,7 +4,9 @@
       <div class="content-wrapper">
         <div class="at-category-time">
           <span class="at-category">{{ article.category }}</span>
-          <span class="at-timeinfo">{{ article.createdAt | moment('add', '9 hours', 'YYYY.MM.DD H:mm') }}</span>
+          <span class="at-timeinfo">{{
+            article.createdAt | moment("add", "9 hours", "YYYY.MM.DD H:mm")
+          }}</span>
         </div>
         <div
           v-if="userInfo.userId == article.userId"
@@ -170,25 +172,27 @@ export default {
         "생활정보 나눔",
         "잡담",
       ],
-      comment:"",
+      comment: "",
     };
   },
   computed: {
     ...mapState(["userInfo"]),
     content: function() {
-      return this.article.content.replace(/(?:\r\n|\r|\n)/g, '<br />');
-    }
+      if (this.article.content) {
+        return this.article.content.replace(/(?:\r\n|\r|\n)/g, "<br />");
+      }
+      return "";
+    },
   },
   methods: {
     getArticle: function() {
       findBoardsById(
         this.$route.params.articleId,
         (res) => {
-          console.log(res.data);
           this.article = res.data;
 
           this.editContent = this.article.content;
-          this.editCategory = this.article.category;          
+          this.editCategory = this.article.category;
         },
         (error) => {
           console.log(error);
@@ -201,7 +205,6 @@ export default {
         this.$route.params.articleId,
         this.page,
         (res) => {
-          console.log(res.data);
           this.comments = res.data;
         },
         (error) => {
@@ -236,7 +239,6 @@ export default {
       }
     },
     deleteComment: function(comment) {
-      console.log(comment);
       removeBoardComment(
         comment.id,
         this.$route.params.articleId,
@@ -298,7 +300,7 @@ export default {
   },
   created: function() {
     this.getArticle();
-    this.getArticleComments();    
+    this.getArticleComments();
   },
 };
 </script>

@@ -38,7 +38,6 @@ export default {
       }
 
       const now = moment().format('YYYY-MM-DD HH:mm:ss');
-      console.log(now);
       const comment = {
         comment: this.comment,
         nickname: this.userInfo.nickname,

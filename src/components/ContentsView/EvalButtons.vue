@@ -126,17 +126,14 @@ export default {
             evalFun: this.fun,
             evalAcs: this.acs,
          };
-         console.log('contents info', this.contentsInfo);
 
          contentsEvaluations(
             data,
-            (suc) => {
-               alert('평가 완료');
-               console.log('suc msg', suc);
-               // this.$router.push('/main');
+            () => {
+               alert('평가가 완료되었습니다.');
             },
             (error) => {
-               alert('평가 실패');
+               alert('평가가 실패되었습니다.');
                console.log('error msg', error);
             }
          );
@@ -148,9 +145,8 @@ export default {
          };
          reportSubmit(
             data,
-            (success) => {
+            () => {
                alert('해당 컨텐츠의 신고가 정상적으로 접수 되었습니다.');
-               console.log(success);
             },
             (fail) => {
                alert('해당 컨텐츠의 신고가 실패했습니다.');

@@ -30,7 +30,6 @@ const naverServiceAuth = () => {
                naverLogin.reprompt();
                return;
             }
-            console.log(email);
          } else {
             console.log('callback 처리에 실패하였습니다.');
          }

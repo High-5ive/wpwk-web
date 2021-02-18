@@ -339,7 +339,7 @@ export default {
                   content,
                   (success) => {
                      const contentsId = success.data;
-                     // console.log(contentsId);
+
                      //컨텐츠 제작후 태그 제작 요청
                      createTags(
                         contentsId,
@@ -347,7 +347,6 @@ export default {
                         () => {
                            this.isLoading = false;
                            this.dialog = false;
-                           alert('컨텐츠 제작에 성공 했습니다.');
                            this.$router.push('/main');
                         },
                         (error) => {
@@ -404,14 +403,9 @@ export default {
                const tags = {
                   tagList: this.sendHashtags,
                };
-               console.log(content.contentsItemList);
                updateContents(
                   content,
                   () => {
-                     console.log(this.contentsId);
-                     console.log(content.contentsItemList);
-                     // this.contentsId = this;
-                     console.log(content);
                      //컨텐츠 제작후 태그 제작 요청
                      updateTags(
                         this.contentsId,
@@ -419,7 +413,6 @@ export default {
                         () => {
                            this.isLoading = false;
                            this.dialog = false;
-                           alert('컨텐츠 수정에 성공 했습니다.');
                            this.$router.push('/main');
                         },
                         (error) => {
@@ -464,7 +457,6 @@ export default {
       getContentsInfo: function() {
          this.time = this.timeInfo;
          this.selectedCategories = this.cateInfo;
-         // console.log(document.querySelectorAll('.category-wrapper'))
          setTimeout(() => {
             var elems = document.querySelectorAll('.category-wrapper');
             for (let i = 0; i < 8; i++) {

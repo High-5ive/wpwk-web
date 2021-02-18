@@ -136,19 +136,14 @@ export default {
 
       // 파일 업로드 기능 + 업로드 되자마자 item 만들기
       axiosFileUpload: function() {
-         //  console.log('axiosFileUpload : ', this.$refs.files.files);
-
-         // this.files = [...this.files, this.$refs.files.files];
          //하나의 배열로 넣기
          for (let i = 0; i < this.$refs.files.files.length; i++) {
-            // console.log(i + '번 째 -> ' + this.$refs.files.files[i].name);
             const photoFile = {
                //실제 파일
                file: this.$refs.files.files[i],
                //이미지 프리뷰
                preview: URL.createObjectURL(this.$refs.files.files[i]),
             };
-            // num = i;
             this.uploadPercentage = parseInt(Math.round((ProgressEvent.loded / ProgressEvent.total) * 100));
             this.createItemPhoto(photoFile);
          }

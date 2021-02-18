@@ -15,13 +15,11 @@ export default {
    name: 'Test1',
 
    mounted() {
-      console.log('mounted');
       setTimeout(this.doSome(), 1000);
    },
 
    methods: {
       doSome() {
-         console.log('doSome');
          var words = document.getElementsByClassName('word');
          var wordArray = [];
          var currentWord = 0;
@@ -70,8 +68,6 @@ export default {
                word.appendChild(letter);
                letters.push(letter);
             }
-
-            console.log(letters);
 
             wordArray.push(letters);
          }

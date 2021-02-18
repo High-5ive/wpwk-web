@@ -27,7 +27,7 @@
                <v-icon>mdi-close</v-icon>
             </v-btn>
 
-            <article-form @createArticle="createArticle" @emit-close="changeCommuModal" />
+            <article-form @emit-close="changeCommuModal" />
          </v-card>
       </v-dialog>
    </div>
@@ -79,10 +79,6 @@ export default {
       left(val) {
          this.right = !val;
       },
-
-      // fab: function() {
-      //    this.checkDial();
-      // },
    },
 
    methods: {
@@ -103,23 +99,6 @@ export default {
          this.dialog = state;
       },
 
-      createArticle: function(article) {
-         this.dialog = false;
-         console.log('스피드다이얼 내 현 주소 : ', this.$router.currentRoute.name);
-         console.log('건내받은 아티클 : ', article);
-
-         // ArticleForm.vue로 부터 받은 article 데이터를 여기로 보내지 말고
-         // 자체적으로 비동기 처리하고, 여기선 커뮤니티로 이동하는 라우터만 남기기
-
-         if (this.$router.currentRoute.name == 'Main') {
-            console.log('메인페이지에서 커뮤니티로 넘어가기');
-            this.$router.push('/cmmu');
-         } else {
-            console.log('그외 페이지');
-            this.$emit('emit-create', article);
-         }
-      },
-
       // n초 뒤 툴팁 사라지도록
       checkDial() {
          if (this.fab) {
@@ -130,9 +109,6 @@ export default {
                   item.classList.add('disabled');
                });
             }, 2500);
-            // const data = tooltip.getAttribute('tooltip');
-
-            // console.log(data);
          }
       },
 

@@ -15,14 +15,14 @@
         <div slot="no-more" class="nf">더 이상 컨텐츠가 없어요 :)</div>
       </infinite-loading>
     </div>
-    <speed-dial @emit-create="createArticle"></speed-dial>
+    <speed-dial></speed-dial>
   </div>
 </template>
 
 <script>
 import ArticleList from "@/components/Community/ArticleList";
 import SpeedDial from "@/components/main/SpeedDial.vue";
-import { findBoardsByPage, createBoard } from "@/api/community.js";
+import { findBoardsByPage } from "@/api/community.js";
 import infiniteLoading from "vue-infinite-loading";
 
 export default {
@@ -54,31 +54,8 @@ export default {
       page: 1,
     };
   },
-  watch: {
-    // articleFromMain: function() {
-    //    if (this.articleFromMain !== '') {
-    //       this.createArticle(this.articleFromMain);
-    //    }
-    // },
-  },
   methods: {
     //============= axios =============
-    // getBoards() {
-    //   this.articles = [];
-    //   this.page = 1;
-    //   findBoardsByPage(
-    //     this.page,
-    //     (res) => {
-    //       console.log(res.data);
-    //       this.articles = res.data;
-    //       this.page += 1;
-    //       this.loading = false;
-    //     },
-    //     (error) => {
-    //       console.log(error);
-    //     }
-    //   );
-    // },
 
       // 무한 스크롤
     infiniteHandler($state) {
@@ -104,27 +81,8 @@ export default {
               console.log(error);
           }
         );
-    },
-      //====================================
-
-    createArticle: function(article) {
-      console.log("article : " + article.category);
-      createBoard(
-        article,
-        () => {
-          alert("게시 글 등록이 완료되었습니다.");
-          this.$router.go(this.$router.currentRoute);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-      //
-    },
+    },    
   },
-  // mounted: function() {    
-  //   // this.getBoards(); //생성되자마자 게시글 조회
-  // },
 };
 </script>
 
