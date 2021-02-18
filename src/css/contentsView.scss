@@ -28,11 +28,20 @@
       .dots {
         margin-left: 10px;
         // background-color: red;
+        &:focus {
+          outline: none;
+        }
+      }
+      .share-btn:focus {
+        outline: none;
       }
 
       .dots i,
       .share-btn i {
         color: rgb(193, 193, 193) !important;
+        &:focus {
+          outline: none;
+        }
       }
 
       .dropdown-menu {
