@@ -24,25 +24,34 @@
     flex-direction: column;
 
     .content-wrapper {
-      cursor:pointer;
+      cursor: pointer;
       border-bottom: 1px solid rgb(218, 218, 218);
       height: 200px;
 
-      .category {
-        display: inline;
-        background-color: rgb(230, 230, 230);
-        color: rgb(135, 135, 135);
-        border-radius: 3px;
-        font-size: 8pt;
+      .category-time {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .cm-category {
+          display: inline;
+          background-color: rgb(230, 230, 230);
+          color: rgb(135, 135, 135);
+          border-radius: 3px;
+          font-size: 8pt;
 
-        padding: 4px 8px 4px 8px;
+          padding: 4px 8px 4px 8px;
+        }
+        .cm-timeinfo {
+          font-size: 9pt;
+          color: gray;
+        }
       }
 
       .nickname {
         padding-left: 10px;
         padding-top: 10px;
       }
-      
+
       .content {
         padding-left: 10px;
         padding-top: 5px;
@@ -58,7 +67,7 @@
       padding: 10px;
 
       .likes-btn {
-         cursor: pointer;
+        cursor: pointer;
         color: rgb(218, 5, 5);
       }
 
@@ -73,7 +82,7 @@
         font-size: 10pt;
 
         .comment {
-          cursor:pointer;
+          cursor: pointer;
           color: rgb(99, 99, 99);
           margin-right: 10px;
         }
