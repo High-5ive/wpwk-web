@@ -17,9 +17,9 @@
          </div>
          <!-- <div class="notificationNum"></div> -->
          <div v-if="notifications.length > 0" class="notificationNum"></div>
-         <notification v-if="showNotification"></notification>
+         <notification v-if="showNotification" v-click-outside="onClickOutsideNotification"></notification>
 
-         <div class="btn-search" @click="showSearch = !showSearch" v-click-outside="onClickOutsideSearch">
+         <div class="btn-search" @click="showSearch = !showSearch">
             <i class="fas fa-search"></i>
          </div>
          <search v-if="showSearch" @searchShow="searchShow"></search>
