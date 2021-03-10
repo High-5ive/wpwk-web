@@ -39,7 +39,8 @@ export default {
           router.push({ name: 'Main' });
         },
         (error) => {
-          this.loading = false;
+          alert('카카오 로그인을 할 수 없습니다 관리자에게 문의하세요');
+          router.push({ name: 'Landing' });
           console.log(error);
         }
       );

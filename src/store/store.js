@@ -87,7 +87,7 @@ const store = new Vuex.Store({
       alert('세션이 만료되었습니다.')
       commit('logout');
       router.push({
-        name: 'Login'
+        name: 'Landing'
       })
     },
 

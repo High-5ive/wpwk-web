@@ -133,6 +133,7 @@ const routes = [{
   },
   {
     path: '/',
+    name: 'Landing',
     beforeEnter: onlyNoneAuthUser,
     components: {
       default: LandingPage,
